@@ -1,6 +1,7 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import { greet } from "@monorepo-playground/simple-utils";
+import Image from 'next/image';
+import styles from './page.module.css';
+import {greet} from '@monorepo-playground/simple-utils';
+import {Button} from '@monorepo-playground/design-system';
 
 export default function Home() {
   return (
@@ -35,6 +36,11 @@ export default function Home() {
             </a>{" "}
             center.
           </p>
+          <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+            <Button variant="primary" size="medium">Primary Button</Button>
+            <Button variant="secondary" size="medium">Secondary Button</Button>
+            <Button variant="outline" size="medium">Outline Button</Button>
+          </div>
         </div>
         <div className={styles.ctas}>
           <a

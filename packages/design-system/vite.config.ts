@@ -1,27 +1,50 @@
 /// <reference types="vitest/config" />
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
-
-// https://vite.dev/config/
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {storybookTest} from '@storybook/addon-vitest/vitest-plugin';
 import {playwright} from '@vitest/browser-playwright';
+import dts from 'vite-plugin-dts';
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    dts({
+      tsconfigPath: './tsconfig.app.json',
+      entryRoot: 'src',
+      include: ['src/index.ts', 'src/components/**/*.ts', 'src/components/**/*.tsx'],
+      exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx', 'src/main.tsx', 'src/App.tsx'],
+    })
+  ],
+  build: {
+    lib: {
+      entry: path.resolve(dirname, 'src/index.ts'),
+      name: 'DesignSystem',
+      formats: ['es', 'cjs'],
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`
+    },
+    rollupOptions: {
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+          'react/jsx-runtime': 'jsxRuntime'
+        }
+      }
+    }
+  },
   test: {
     projects: [{
       extends: true,
       plugins: [
-      // The plugin will run tests for the stories defined in your Storybook config
-      // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
-      storybookTest({
-        configDir: path.join(dirname, '.storybook')
-      })],
+        storybookTest({
+          configDir: path.join(dirname, '.storybook')
+        })
+      ],
       test: {
         name: 'storybook',
         browser: {
