@@ -12,10 +12,7 @@ export default function Drawer(props: DrawerProps) {
   const {anchor = 'left', children, className, ...modalProps} = props;
 
   return (
-    <Modal
-      className={className}
-      {...modalProps}
-    >
+    <Modal className={className}{...modalProps}>
       <div className={classNames(styles.drawer, styles[anchor])} tabIndex={-1}>
         {children}
       </div>

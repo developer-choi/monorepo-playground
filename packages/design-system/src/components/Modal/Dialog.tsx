@@ -1,54 +1,9 @@
-import {forwardRef, type HTMLAttributes, type KeyboardEvent, type MouseEvent, type ReactNode} from 'react';
-import Modal from './Modal';
+import Modal, {type ModalProps} from './Modal';
 import styles from './Dialog.module.scss';
-import classNames from 'classnames';
 
-interface DialogContainerProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-}
+export type DialogProps = ModalProps;
 
-const DialogContainer = forwardRef<HTMLDivElement, DialogContainerProps>(function DialogContainer(props, ref) {
-  const {children, className, ...other} = props;
-
-  return (
-    <div
-      ref={ref}
-      tabIndex={-1}
-      className={classNames(styles.container, className)}
-      {...other}
-    >
-      {children}
-    </div>
-  );
-});
-
-type DialogPaperProps = HTMLAttributes<HTMLDivElement>;
-
-function DialogPaper(props: DialogPaperProps) {
-  const {children, className, ...other} = props;
-  return (
-    <div
-      className={`${styles.paper} ${className || ''}`.trim()}
-      {...other}
-    >
-      {children}
-    </div>
-  );
-}
-
-export interface DialogProps {
-  children: ReactNode;
-  className?: string;
-  disableEscapeKeyDown?: boolean;
-  disableBackdropClick?: boolean;
-  onClose?: (
-    event: KeyboardEvent | MouseEvent,
-    reason: 'escapeKeyDown' | 'backdropClick'
-  ) => void;
-  open: boolean;
-}
-
-export default function Dialog(inProps: DialogProps) {
+export default function Dialog(props: DialogProps) {
   const {
     children,
     className,
@@ -57,7 +12,7 @@ export default function Dialog(inProps: DialogProps) {
     onClose,
     open,
     ...other
-  } = inProps;
+  } = props;
 
   return (
     <Modal
@@ -68,11 +23,11 @@ export default function Dialog(inProps: DialogProps) {
       open={open}
       {...other}
     >
-      <DialogContainer>
-        <DialogPaper>
+      <div tabIndex={-1} className={styles.container}>
+        <div className={styles.paper}>
           {children}
-        </DialogPaper>
-      </DialogContainer>
+        </div>
+      </div>
     </Modal>
   );
 }

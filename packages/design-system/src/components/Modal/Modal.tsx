@@ -3,7 +3,6 @@ import {
   type KeyboardEvent,
   type MouseEvent,
   type ReactElement,
-  type ReactNode,
   type Ref,
   useCallback,
   useRef
@@ -12,32 +11,6 @@ import classNames from 'classnames';
 import FocusTrap from './FocusTrap';
 import Portal from './Portal';
 import styles from './Modal.module.scss';
-
-interface ModalRootProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-}
-
-function ModalRoot(props: ModalRootProps) {
-  const {className, children, ...other} = props;
-
-  return (
-    <div
-      className={classNames(styles.modalRoot, className)}
-      {...other}
-    >
-      {children}
-    </div>
-  );
-}
-
-function ModalBackdrop(props: HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={styles.backdrop}
-      {...props}
-    />
-  );
-}
 
 export interface ModalProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   children: ReactElement<{ ref?: Ref<HTMLElement> }>;
@@ -99,20 +72,12 @@ export default function Modal(props: ModalProps) {
 
   return (
     <Portal>
-      <ModalRoot
-        onKeyDown={handleKeyDown}
-        className={className}
-        {...other}
-      >
-        <ModalBackdrop
-          onMouseDown={handleBackdropMouseDown}
-          onClick={handleBackdropClick}
-        />
-
+      <div className={classNames(styles.modalRoot, className)} onKeyDown={handleKeyDown} {...other}>
+        <div className={styles.backdrop} onMouseDown={handleBackdropMouseDown} onClick={handleBackdropClick} />
         <FocusTrap open={open}>
           {children}
         </FocusTrap>
-      </ModalRoot>
+      </div>
     </Portal>
   );
 }
