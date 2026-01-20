@@ -1,0 +1,55 @@
+@use "@/styles/util";
+
+@mixin commonForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.commonForm {
+  @include commonForm;
+}
+
+@mixin commonSubForm {
+  @include commonForm;
+  gap: 8px;
+  
+  &:global(.row) {
+    flex-direction: row;
+    
+    // 가로로 [인풋] - [버튼]이 배치되는 경우 버튼 크기는 더 줄어들면 안됨.
+    > button {
+      flex-shrink: 0;
+    }
+  }
+}
+
+.commonSubForm {
+  @include commonSubForm;
+}
+
+// https://docs.google.com/document/d/1PuIedTgshX2lHkh9YgIW6sv9W7aiyuA_aTxdPlQ6Vm0/edit
+$zIndexes: (
+  mobileBottomNav: 10,
+  pcStickyHeader: 10,
+  modal: 30,
+  errorPageTemplate: 90
+);
+
+// 뷰포트 스크롤만들기용
+.rowBox {
+  @include util.flexCenter;
+  width: 100%;
+  height: 200px;
+  &:nth-child(even) {
+    background: limegreen;
+  }
+  &:nth-child(odd) {
+    background: lightblue;
+  }
+  
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}

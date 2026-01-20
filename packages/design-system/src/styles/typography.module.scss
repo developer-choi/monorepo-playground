@@ -1,0 +1,64 @@
+@mixin fontStyle($size, $lineHeight) {
+  font-size: $size;
+  line-height: $lineHeight;
+  
+  &.bold {
+    font-weight: bold;
+  }
+}
+
+@mixin h1 {
+  @include fontStyle(36px, 50px);
+}
+
+@mixin h2 {
+  @include fontStyle(28px, 40px);
+}
+
+@mixin h3 {
+  @include fontStyle(20px, 32px);
+}
+
+@mixin h4 {
+  @include fontStyle(18px, 24px);
+}
+
+@mixin body1 {
+  @include fontStyle(16px, 24px);
+}
+
+@mixin body2 {
+  @include fontStyle(14px, 20px);
+}
+
+@mixin body3 {
+  @include fontStyle(12px, 16px);
+}
+
+.h1 {
+  @include h1;
+}
+
+.h2 {
+  @include h2;
+}
+
+.h3 {
+  @include h3;
+}
+
+.h4 {
+  @include h4;
+}
+
+.body1 {
+  @include body1;
+}
+
+.body2 {
+  @include body2;
+}
+
+.body3 {
+  @include body3;
+}

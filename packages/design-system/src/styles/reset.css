@@ -1,0 +1,149 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* https://docs.google.com/document/d/1CLI8GDnyOAk2_rE5rE05hddkSFX1Rf86-ExLHOQwBdw/edit#heading=h.2bz2629pkxby */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  
+  /**
+   * https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Styling_tables#spacing_and_layout
+   */
+  table-layout: fixed;
+  width: 100%;
+}
+
+/*************************************************************************************************************
+ * Custom Reset CSS > Form
+ *************************************************************************************************************/
+button, input, textarea {
+  margin: 0;
+  padding: 0;
+  border: none;
+  
+  /* 브라우저가 해당 태그에 직접 기본스타일 지정하고있어서, body로 부터 기본값 상속받기위해 작성함. */
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+}
+
+/**
+ * button은 기본 배경색 disabled 배경색 둘 다 있는데,
+ * button, button:disabled 안하고 button 하나만 배경색 지정해도 둘 다 지정됨.
+ */
+button, input:disabled, textarea:disabled {
+  background: transparent;
+}
+
+/* 이렇게 안하면, 더이상 줄어들지않는 최소길이 (약 150px쯤)가 있어서 작은 컨테이너에 인풋이 들어갔을 때 인풋이 뚫고나오는 문제가 있음. */
+input {
+  min-width: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+/*************************************************************************************************************
+ * Custom Reset CSS > Input type number
+ *************************************************************************************************************/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/*************************************************************************************************************
+ * Custom Reset CSS > Input type search
+ *************************************************************************************************************/
+input::-ms-clear,
+input::-ms-reveal {
+  display:none;width:0;height:0;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration {
+  display:none;
+}
+
+/*************************************************************************************************************
+ * Custom Reset CSS > 기타
+ *************************************************************************************************************/
+* {
+  box-sizing: border-box;
+  
+  /* 1. 이거 안하면, width가 제한된 곳에서 텍스트가 공백없이 다 붙어있는 경우, 영역 뚫고 나감. */
+  /* 2. 그리고 공백이 있는 문자열이 올 경우 단어단위로 줄내림되는 기본 동작도 유지됨.  */
+  word-break: break-word;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; /* 이거 안하면 링크 방문여부에 따른 그 컬러 나옴 */
+}
+
+/* Modal, Non Modal 공통 reset.css */
+dialog {
+  color: inherit;
+  border: none;
+  padding: 0;
+  overflow: visible;
+  
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+}

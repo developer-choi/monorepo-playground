@@ -1,0 +1,62 @@
+@use "sass:map";
+
+// [Design System Stylesheet] https://docs.google.com/document/d/1P05K5UDxKyNkFkSTeH3QiDy2AbXo7hfcHnTERO8yDsU/edit
+// [Checkbox, Radio Markup] https://docs.google.com/document/d/1rqmOi11-M61mjOkk5i63SigHNN8BJYLpka8c73tSLb0/edit?usp=drivesdk
+@mixin hiddenDefaultInputIcon {
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+@mixin textOverflowEllipsis {
+  display: block; // 이거 안하면 ... 표기안됨
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  // line-height: normal; 이 mixin을 사용하는 곳에서는 폰트사이즈보다 큰 line-height를 지정해야 g같은 밑으로가는 글자가 밑에서 안짤림.
+}
+
+/**
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp
+ * n번째 줄에서 ...처리하는 CSS, 브라우저 호환이 안되는 경우가 많아서 1줄만 하는 경우 위 mixin 사용하기
+ * @param lineCount number
+ */
+@mixin textOverflowEllipseMultiline($lineCount) {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: $lineCount;
+  
+  //이거 안하면 ... 표기가 안나오거나 공백없는 긴 문자열이 올 경우 의도하지않은 대로 작동함. 화면을 뚫고나간다던가.
+  //근데 위 textOverflowEllipsis mixin에서는 이거 안써도 문제가 안생김.
+  word-break: break-word;
+}
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin absoluteFull {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+@mixin absoluteCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@function safeMapGet($map, $property) {
+  @if not map.has-key($map, $property) {
+    @error 'property "#{$property}" not found';
+  }
+  
+  @return map.get($map, $property);
+}
