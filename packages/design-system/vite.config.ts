@@ -19,6 +19,11 @@ export default defineConfig({
       exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx'],
     })
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(dirname, './src'),
+    },
+  },
   build: {
     lib: {
       entry: path.resolve(dirname, 'src/index.ts'),
