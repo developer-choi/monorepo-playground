@@ -16,7 +16,7 @@ export default defineConfig({
       tsconfigPath: './tsconfig.app.json',
       entryRoot: 'src',
       include: ['src/index.ts', 'src/components/**/*.ts', 'src/components/**/*.tsx'],
-      exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx', 'src/main.tsx', 'src/App.tsx'],
+      exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx'],
     })
   ],
   build: {
