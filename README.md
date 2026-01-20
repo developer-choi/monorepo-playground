@@ -37,3 +37,6 @@ React/Next.js best practice를 모노레포 예제 패키지 형태로 정리하
 npm install
 npm run dev
 ```
+
+## Best Practice
+[디자인 시스템은 어떻게 만들어야 하나요?](packages/design-system/README.md)
