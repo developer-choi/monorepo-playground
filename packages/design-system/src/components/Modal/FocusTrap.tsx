@@ -26,13 +26,14 @@ function defaultGetTabbable(root: HTMLElement): HTMLElement[] {
 
 export default function FocusTrap(props: FocusTrapProps): JSX.Element {
   const {children, open} = props;
-  const ignoreNextEnforceFocus = useRef(false);
-  const sentinelStart = useRef<HTMLDivElement>(null);
-  const sentinelEnd = useRef<HTMLDivElement>(null);
-  const nodeToRestore = useRef<EventTarget | null>(null);
+
+  const ignoreNextEnforceFocusRef = useRef(false);
+  const lastKeydownRef = useRef<KeyboardEvent | null>(null);
+  const nodeToRestoreRef = useRef<EventTarget | null>(null);
 
   const rootRef = useRef<HTMLElement>(null);
-  const lastKeydown = useRef<KeyboardEvent | null>(null);
+  const sentinelStartRef = useRef<HTMLDivElement>(null);
+  const sentinelEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const rootElement = rootRef.current;
@@ -41,7 +42,7 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
       return;
     }
 
-    nodeToRestore.current = document.activeElement;
+    nodeToRestoreRef.current = document.activeElement;
 
     if (!rootElement.contains(document.activeElement)) {
       if (!rootElement.hasAttribute('tabIndex')) {
@@ -52,11 +53,11 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
     }
 
     return () => {
-      if (nodeToRestore.current) {
-        ignoreNextEnforceFocus.current = true;
+      if (nodeToRestoreRef.current) {
+        ignoreNextEnforceFocusRef.current = true;
 
-        (nodeToRestore.current as HTMLElement).focus();
-        nodeToRestore.current = null;
+        (nodeToRestoreRef.current as HTMLElement).focus();
+        nodeToRestoreRef.current = null;
       }
     };
   }, [open]);
@@ -67,7 +68,7 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
     }
 
     const loopFocus = (nativeEvent: KeyboardEvent) => {
-      lastKeydown.current = nativeEvent;
+      lastKeydownRef.current = nativeEvent;
     };
 
     const contain = () => {
@@ -79,8 +80,8 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
 
       const activeElement = document.activeElement;
 
-      if (!document.hasFocus() || ignoreNextEnforceFocus.current) {
-        ignoreNextEnforceFocus.current = false;
+      if (!document.hasFocus() || ignoreNextEnforceFocusRef.current) {
+        ignoreNextEnforceFocusRef.current = false;
         return;
       }
 
@@ -88,7 +89,7 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
         return;
       }
 
-      const isFocusOutside = activeElement !== sentinelStart.current && activeElement !== sentinelEnd.current;
+      const isFocusOutside = activeElement !== sentinelStartRef.current && activeElement !== sentinelEndRef.current;
 
       if (isFocusOutside) {
         rootElement.focus();
@@ -102,7 +103,7 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
         return;
       }
 
-      const isShiftTab = lastKeydown.current?.shiftKey && lastKeydown.current.key === 'Tab';
+      const isShiftTab = lastKeydownRef.current?.shiftKey && lastKeydownRef.current.key === 'Tab';
 
       if (isShiftTab) {
         const focusPrevious = tabbable[tabbable.length - 1];
@@ -126,13 +127,13 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
     <>
       <div
         tabIndex={open ? 0 : -1}
-        ref={sentinelStart}
+        ref={sentinelStartRef}
         className={styles.sentinel}
       />
       {cloneElement(children, {ref: rootRef})}
       <div
         tabIndex={open ? 0 : -1}
-        ref={sentinelEnd}
+        ref={sentinelEndRef}
         className={styles.sentinel}
       />
     </>
