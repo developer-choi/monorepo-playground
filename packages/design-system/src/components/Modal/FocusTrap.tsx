@@ -41,11 +41,9 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
       return;
     }
 
-    const activeElement = document.activeElement;
+    nodeToRestore.current = document.activeElement;
 
-    nodeToRestore.current = activeElement;
-
-    if (!rootElement.contains(activeElement)) {
+    if (!rootElement.contains(document.activeElement)) {
       if (!rootElement.hasAttribute('tabIndex')) {
         rootElement.setAttribute('tabIndex', '-1');
       }
