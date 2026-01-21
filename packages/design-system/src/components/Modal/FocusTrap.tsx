@@ -67,11 +67,11 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
       return;
     }
 
-    const loopFocus = (nativeEvent: KeyboardEvent) => {
+    const preSaveTabKey = (nativeEvent: KeyboardEvent) => {
       lastKeydownRef.current = nativeEvent;
     };
 
-    const contain = () => {
+    const keepFocusInside = () => {
       const rootElement = rootRef.current;
 
       if (rootElement === null) {
@@ -114,12 +114,12 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
       }
     };
 
-    document.addEventListener('focusin', contain);
-    document.addEventListener('keydown', loopFocus, true);
+    document.addEventListener('keydown', preSaveTabKey, true);
+    document.addEventListener('focusin', keepFocusInside);
 
     return () => {
-      document.removeEventListener('focusin', contain);
-      document.removeEventListener('keydown', loopFocus, true);
+      document.removeEventListener('keydown', preSaveTabKey, true);
+      document.removeEventListener('focusin', keepFocusInside);
     };
   }, [open]);
 
