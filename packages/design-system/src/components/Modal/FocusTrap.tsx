@@ -70,17 +70,6 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
 
     const loopFocus = (nativeEvent: KeyboardEvent) => {
       lastKeydown.current = nativeEvent;
-
-      if (nativeEvent.key !== 'Tab') {
-        return;
-      }
-
-      if (document.activeElement === rootRef.current && nativeEvent.shiftKey) {
-        ignoreNextEnforceFocus.current = true;
-        if (sentinelEnd.current) {
-          sentinelEnd.current.focus();
-        }
-      }
     };
 
     const contain = () => {
