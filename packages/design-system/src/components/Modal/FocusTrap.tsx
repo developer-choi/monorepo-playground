@@ -90,25 +90,28 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
         return;
       }
 
-      let tabbable: ReadonlyArray<HTMLElement> = [];
-      if (activeElement === sentinelStart.current || activeElement === sentinelEnd.current) {
-        tabbable = defaultGetTabbable(rootRef.current!);
+      const isFocusOutside = activeElement !== sentinelStart.current && activeElement !== sentinelEnd.current;
+
+      if (isFocusOutside) {
+        rootElement.focus();
+        return;
       }
 
-      if (tabbable.length > 0) {
-        const isShiftTab = Boolean(
-          lastKeydown.current?.shiftKey && lastKeydown.current?.key === 'Tab',
-        );
+      const tabbable = defaultGetTabbable(rootRef.current!);
 
-        if (isShiftTab) {
-          const focusPrevious = tabbable[tabbable.length - 1];
-          focusPrevious.focus();
-        } else {
-          const focusNext = tabbable[0];
-          focusNext.focus();
-        }
-      } else {
+      if (tabbable.length === 0) {
         rootElement.focus();
+        return;
+      }
+
+      const isShiftTab = lastKeydown.current?.shiftKey && lastKeydown.current.key === 'Tab';
+
+      if (isShiftTab) {
+        const focusPrevious = tabbable[tabbable.length - 1];
+        focusPrevious.focus();
+      } else {
+        const focusNext = tabbable[0];
+        focusNext.focus();
       }
     };
 
