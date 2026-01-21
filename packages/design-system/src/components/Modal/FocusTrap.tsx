@@ -79,19 +79,19 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
         return;
       }
 
-      const activeEl = document.activeElement;
+      const activeElement = document.activeElement;
 
       if (!document.hasFocus() || ignoreNextEnforceFocus.current) {
         ignoreNextEnforceFocus.current = false;
         return;
       }
 
-      if (rootElement.contains(activeEl)) {
+      if (rootElement.contains(activeElement)) {
         return;
       }
 
       let tabbable: ReadonlyArray<HTMLElement> = [];
-      if (activeEl === sentinelStart.current || activeEl === sentinelEnd.current) {
+      if (activeElement === sentinelStart.current || activeElement === sentinelEnd.current) {
         tabbable = defaultGetTabbable(rootRef.current!);
       }
 
