@@ -2123,7 +2123,7 @@
     "gap": {
       "xs": {
         "type": "number",
-        "value": "{primitive.spacing.2}",
+        "value": "{semantic.gap.sm}",
         "description": "Extra small spacing",
         "extensions": {
           "com.figma.variableId": "VariableID:5169:4931",
@@ -2134,7 +2134,7 @@
       },
       "sm": {
         "type": "number",
-        "value": "{primitive.spacing.4}",
+        "value": "{primitive.spacing.xs}",
         "description": "Small spacing",
         "extensions": {
           "com.figma.variableId": "VariableID:5169:4932",
