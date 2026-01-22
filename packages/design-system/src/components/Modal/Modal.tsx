@@ -40,6 +40,7 @@ export default function Modal(props: ModalProps) {
   }, [disableEscapeKeyDown, onClose]);
 
   const handleBackdropMouseDown = useCallback((event: MouseEvent) => {
+    event.preventDefault();
     backdropClickRef.current = event.target === event.currentTarget;
   }, []);
 
