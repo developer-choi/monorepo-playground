@@ -15,7 +15,7 @@ React/Next.js best practice를 모노레포 예제 패키지 형태로 정리하
 
 프레임워크 버전 업그레이드마다 기존 코드를 삭제하고 새로 시작했습니다.
 
-- **2026.01.09 (최신)** - [Next.js 14.1.4](https://github.com/developer-choi/monorepo-playground/commit/0d3878ff)
+- **2026.01.09 (최신)** - [Monorepo](https://github.com/developer-choi/monorepo-playground/commit/0d3878ff)
 - **2024.04.03** - [Next.js 14.1.4](https://github.com/developer-choi/monorepo-playground/commit/8155f804)
 - **2022.11.03** - [Next.js 12.3.1](https://github.com/developer-choi/monorepo-playground/commit/6c63faa5)
 - **2021.04.19** - [Next.js 10.3.1](https://github.com/developer-choi/monorepo-playground/commit/773639be)
