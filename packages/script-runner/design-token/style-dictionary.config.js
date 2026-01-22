@@ -43,6 +43,9 @@ StyleDictionary.registerFormat({
 // 3. 통합 설정 (두 플랫폼을 동시에 정의)
 const sd = new StyleDictionary({
   source: ['./tokens-transformed.json'],
+  log: {
+    verbosity: 'verbose' // 상세 로그를 강제로 활성화합니다.
+  },
   platforms: {
     // 첫 번째 출력: SCSS
     scss: {
