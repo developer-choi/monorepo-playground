@@ -1,12 +1,4 @@
-import {
-  type HTMLAttributes,
-  type KeyboardEvent,
-  type MouseEvent,
-  type ReactElement,
-  type Ref,
-  useCallback,
-  useRef
-} from 'react';
+import {type HTMLAttributes, type KeyboardEvent, type MouseEvent, type ReactElement, type Ref, useCallback, useRef} from 'react';
 import classNames from 'classnames';
 import FocusTrap from './FocusTrap';
 import Portal from './Portal';
@@ -14,7 +6,7 @@ import styles from './Modal.module.scss';
 
 export interface ModalProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   children: ReactElement<{ ref?: Ref<HTMLElement> }>;
-  onClose?: (
+  onClose: (
     event: KeyboardEvent | MouseEvent,
     reason: 'escapeKeyDown' | 'backdropClick'
   ) => void;
@@ -41,7 +33,7 @@ export default function Modal(props: ModalProps) {
       return;
     }
 
-    if (!disableEscapeKeyDown && onClose) {
+    if (!disableEscapeKeyDown) {
       event.stopPropagation();
       onClose(event, 'escapeKeyDown');
     }
@@ -61,7 +53,7 @@ export default function Modal(props: ModalProps) {
       return;
     }
 
-    if (!disableBackdropClick && onClose) {
+    if (!disableBackdropClick) {
       onClose(event, 'backdropClick');
     }
   }, [disableBackdropClick, onClose]);
