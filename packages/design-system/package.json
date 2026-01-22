@@ -55,5 +55,8 @@
     "vite": "^7.2.4",
     "vite-plugin-dts": "^4.3.0",
     "vitest": "^4.0.17"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1"
   }
 }
