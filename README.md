@@ -35,5 +35,5 @@ React/Next.js best practice를 모노레포 예제 패키지 형태로 정리하
 
 ```bash
 npm install
-npm run dev
+npm run storybook
 ```
