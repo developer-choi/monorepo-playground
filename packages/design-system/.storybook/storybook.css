@@ -1,0 +1,69 @@
+button, input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  
+  &:focus {
+    outline: 2px solid #339af0;
+    border-color: #339af0;
+  }
+}
+
+.story-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.description {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #339af0;
+  border-radius: 4px;
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.primary {
+  background-color: #339af0;
+  color: white;
+  border-color: #339af0;
+  
+  &:hover {
+    background-color: #228be6;
+  }
+}
+
+.danger {
+  background-color: #ff6b6b;
+  color: white;
+  border-color: #ff6b6b;
+  
+  &:hover {
+    background-color: #fa5252;
+  }
+}
