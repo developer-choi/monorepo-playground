@@ -33,28 +33,58 @@ const meta: Meta<typeof Dialog> = {
 export default meta;
 type Story = StoryObj<typeof Dialog>;
 
+interface FormDialogContentProps {
+  title: string;
+  descriptions: string[];
+  onClose: () => void;
+}
+
+const FormDialogContent = ({title, descriptions, onClose}: FormDialogContentProps) => (
+  <div className={styles.dialogContent}>
+    <div className={styles.dialogHeader}>
+      <h2>{title}</h2>
+    </div>
+
+    {descriptions.map((description, index) => (
+      <p key={index} className={styles.dialogDescription}>{description}</p>
+    ))}
+
+    <div className={styles.dialogBody}>
+      <div className={styles.formGroup}>
+        <label htmlFor="form-name">이름</label>
+        <input id="form-name" type="text" placeholder="이름을 입력하세요" />
+      </div>
+      <div className={styles.formGroup}>
+        <label htmlFor="form-email">이메일</label>
+        <input id="form-email" type="email" placeholder="이메일을 입력하세요" />
+      </div>
+    </div>
+
+    <div className={styles.dialogFooter}>
+      <button onClick={onClose}>
+        취소
+      </button>
+      <button className="primary" onClick={onClose}>
+        저장
+      </button>
+    </div>
+  </div>
+);
+
 const BasicUsageStory = (args: DialogProps) => {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   return (
     <div className="story-layout">
-      <div className="btn-group">
-        <button onClick={handleOpen}>
-          Dialog 열기
-        </button>
-        <button onClick={handleOpen}>
-          Dialog 열기2
-        </button>
-      </div>
+      <button onClick={() => setOpen(true)}>
+        Dialog 열기
+      </button>
 
       <Dialog
         {...args}
         open={open}
         onClose={(event, reason) => {
-          handleClose();
+          setOpen(false);
           args.onClose?.(event, reason);
         }}
       >
@@ -62,16 +92,16 @@ const BasicUsageStory = (args: DialogProps) => {
           <div className={styles.dialogHeader}>
             <h2>Dialog 제목</h2>
           </div>
-          
+
           <div className={styles.dialogBody}>
-            <p>닫기 버튼이나 ESC 키를 눌러보세요. 포커스가 원래 열었던 버튼으로 돌아갑니다.</p>
+            <p>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</p>
           </div>
 
           <div className={styles.dialogFooter}>
-            <button onClick={handleClose}>
-              닫기
+            <button onClick={() => setOpen(false)}>
+              취소
             </button>
-            <button className="primary" onClick={handleClose}>
+            <button className="primary" onClick={() => setOpen(false)}>
               확인
             </button>
           </div>
@@ -89,61 +119,67 @@ export const BasicUsage: Story = {
   render: (args) => <BasicUsageStory {...args} />,
 };
 
-const FormDialogStory = (args: DialogProps) => {
-  const [open, setOpen] = useState(false);
+const FocusStory = (args: DialogProps) => {
+  const [restoreOpen, setRestoreOpen] = useState(false);
+  const [trapOpen, setTrapOpen] = useState(false);
 
   return (
     <div className="story-layout">
       <div className="btn-group">
-        <button className="primary" onClick={() => setOpen(true)}>
-          프로필 수정하기
+        <button onClick={() => setRestoreOpen(true)}>
+          포커스 복원 & 첫 요소 지정
+        </button>
+        <button onClick={() => setTrapOpen(true)}>
+          포커스 Trap 테스트
         </button>
       </div>
 
       <Dialog
         {...args}
-        open={open}
+        open={restoreOpen}
         onClose={(event, reason) => {
-          setOpen(false);
+          setRestoreOpen(false);
           args.onClose?.(event, reason);
         }}
       >
-        <div className={styles.dialogContent}>
-          <div className={styles.dialogHeader}>
-            <h2>Focus Trap 테스트</h2>
-          </div>
+        <FormDialogContent
+          title="포커스 복원 & 첫 요소 지정"
+          descriptions={[
+            "모달이 열리면 첫 번째 포커스 가능한 요소에 자동으로 포커스됩니다.",
+            "Confirm 모달이면 취소버튼, Alert 모달이면 확인버튼, Form 모달이면 첫 폼요소에 포커스가 가는게 Best 입니다.",
+            "모달을 닫으면 원래 열었던 버튼으로 포커스가 복원됩니다."
+          ]}
+          onClose={() => setRestoreOpen(false)}
+        />
+      </Dialog>
 
-          <div className={styles.dialogBody}>
-            <div className={styles.formGroup}>
-              <label htmlFor="name">Tab 키를 계속 눌러보세요.</label>
-              <input id="name" type="text" placeholder="포커스가 입력창 사이에서만 순환합니다." autoFocus />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="email">"Shift" Tab 키를 계속 눌러보세요.</label>
-              <input id="email" type="email" placeholder="포커스가 입력창 사이에서만 역방향으로 순환합니다." />
-            </div>
-          </div>
-
-          <div className={styles.dialogFooter}>
-            <button onClick={() => setOpen(false)}>
-              취소
-            </button>
-            <button className="primary" onClick={() => setOpen(false)}>
-              변경사항 저장
-            </button>
-          </div>
-        </div>
+      <Dialog
+        {...args}
+        open={trapOpen}
+        onClose={(event, reason) => {
+          setTrapOpen(false);
+          args.onClose?.(event, reason);
+        }}
+      >
+        <FormDialogContent
+          title="포커스 Trap 테스트"
+          descriptions={[
+            "Tab 키를 계속 눌러보세요. 포커스가 모달 내부에서만 순환하며, 바깥으로 빠져나가지 않습니다.",
+            "Shift+Tab으로 역방향 순환도 테스트해보세요."
+          ]}
+          onClose={() => setTrapOpen(false)}
+        />
       </Dialog>
     </div>
   );
 };
 
-export const FormDialog: Story = {
+export const Focus: Story = {
   args: {
-    disableEscapeKeyDown: true,
-    disableBackdropClick: true,
+    disableEscapeKeyDown: false,
+    disableBackdropClick: false,
   },
-  render: (args) => <FormDialogStory {...args} />,
+  render: (args) => <FocusStory {...args} />,
 };
 
 const CriticalAlertStory = (args: DialogProps) => {
