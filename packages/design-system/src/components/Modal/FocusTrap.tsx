@@ -45,11 +45,16 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
     nodeToRestoreRef.current = document.activeElement;
 
     if (!rootElement.contains(document.activeElement)) {
-      if (!rootElement.hasAttribute('tabIndex')) {
-        rootElement.setAttribute('tabIndex', '-1');
-      }
+      const tabbable = defaultGetTabbable(rootElement);
 
-      rootElement.focus();
+      if (tabbable.length > 0) {
+        tabbable[0].focus();
+      } else {
+        if (!rootElement.hasAttribute('tabIndex')) {
+          rootElement.setAttribute('tabIndex', '-1');
+        }
+        rootElement.focus();
+      }
     }
 
     return () => {
