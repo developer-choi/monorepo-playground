@@ -68,7 +68,9 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
       {results.map((result, i) => (
         <Card key={i} mb="2">
           <Box p="3">
-            <Text>{result}</Text>
+            <Text>
+              <Highlight text={result} query={query} />
+            </Text>
           </Box>
         </Card>
       ))}
@@ -84,10 +86,31 @@ async function getSearchResultsApi(query: string): Promise<string[]> {
   await new Promise(resolve => setTimeout(resolve, 200));
 
   return [
-    `${query} 관련 결과 1`,
-    `${query} 관련 결과 2`,
-    `${query} 관련 결과 3`,
-    `${query} 관련 결과 4`,
-    `${query} 관련 결과 5`,
+    `a${query}b 관련 결과`,
+    `a${query} 관련 결과`,
+    `${query}b 관련 결과`,
+    `xy${query}z 관련 결과`,
+    `${query}d 관련 결과`,
   ];
+}
+
+function Highlight({text, query}: {text: string; query: string}) {
+  if (!query) return <>{text}</>;
+
+  const regex = new RegExp(`(${query})`, 'gi');
+  const parts = text.split(regex);
+
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.toLowerCase() === query.toLowerCase() ? (
+          <Text key={i} weight="bold" style={{backgroundColor: 'var(--yellow-4)'}}>
+            {part}
+          </Text>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
 }
