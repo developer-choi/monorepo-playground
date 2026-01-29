@@ -1,4 +1,7 @@
+'use client';
+
 import {Box, Card, Container, Flex, Grid, Heading, Link, Text, TextField} from '@radix-ui/themes';
+import {memo, useDeferredValue, useState} from 'react';
 
 export default function HeavyPage() {
   return (
@@ -34,6 +37,8 @@ function Header() {
 }
 
 function LeftBadUsage() {
+  const [text, setText] = useState('');
+
   return (
     <Card>
       <Box p="4">
@@ -41,15 +46,23 @@ function LeftBadUsage() {
           Without useDeferredValue
         </Heading>
 
-        <TextField.Root placeholder="타이핑해보세요..." mb="4"/>
+        <TextField.Root
+          placeholder="타이핑해보면 렉이 아주 심하게 걸립니다."
+          value={text}
+          onChange={e => setText(e.target.value)}
+          mb="4"
+        />
 
-        <SearchResult/>
+        <SlowList text={text}/>
       </Box>
     </Card>
   );
 }
 
 function RightGoodUsage() {
+  const [text, setText] = useState('');
+  const deferredText = useDeferredValue(text);
+
   return (
     <Card>
       <Box p="4">
@@ -57,26 +70,40 @@ function RightGoodUsage() {
           With useDeferredValue
         </Heading>
 
-        <TextField.Root placeholder="타이핑해보세요..." mb="4"/>
+        <TextField.Root
+          placeholder="타이핑 해도 렉이 걸리지 않아요"
+          value={text}
+          onChange={e => setText(e.target.value)}
+          mb="4"
+        />
 
-        <SearchResult/>
+        <SlowList text={deferredText}/>
       </Box>
     </Card>
   );
 }
 
-function SearchResult() {
+const SlowList = memo(function SlowList({text}: {text: string}) {
+  const items = [];
+  for (let i = 0; i < 150; i++) {
+    items.push(<SlowItem key={i} text={text} />);
+  }
+
+  return <Box>{items}</Box>;
+});
+
+function SlowItem({text}: {text: string}) {
+  // 아이템당 1ms 지연 시뮬레이션
+  // eslint-disable-next-line react-hooks/purity
+  const startTime = performance.now();
+  // eslint-disable-next-line react-hooks/purity
+  while (performance.now() - startTime < 1) {
+    // 1ms 동안 블로킹
+  }
+
   return (
-    <Box>
-      {Array.from({length: 10}, (_, index) => (
-        <Flex
-          key={index}
-          py="2"
-          style={{borderBottom: '1px solid var(--gray-4)'}}
-        >
-          <Text color="gray">Text: </Text>
-        </Flex>
-      ))}
-    </Box>
+    <Flex py="2" style={{borderBottom: '1px solid var(--gray-4)'}}>
+      <Text>Text: {text}</Text>
+    </Flex>
   );
 }
