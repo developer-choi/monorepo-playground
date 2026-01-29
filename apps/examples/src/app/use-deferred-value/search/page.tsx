@@ -1,9 +1,10 @@
 'use client';
 
-import {Box, Card, Container, Heading, Link, Text, TextField} from '@radix-ui/themes';
-import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
 import {memo, useDeferredValue, useState} from 'react';
 import {useSuspenseQuery} from '@tanstack/react-query';
+import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
+import {Box, Button, Card, Callout, Container, Heading, Link, Text, TextField} from '@radix-ui/themes';
+import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icons';
 
 export default function SearchPage() {
   return (
@@ -51,7 +52,9 @@ function SearchForm() {
       </Box>
 
       <Box>
-        <SearchResults query={deferredQuery}/>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <SearchResults query={deferredQuery} />
+        </ErrorBoundary>
       </Box>
     </>
   );
@@ -61,6 +64,7 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
   const {data: results = []} = useSuspenseQuery({
     queryKey: ['search', query],
     queryFn: () => getSearchResultsApi(query),
+    retry: 0
   });
 
   if (query !== '' && results.length === 0) {
@@ -116,5 +120,23 @@ function Highlight({text, query}: {text: string; query: string}) {
         )
       )}
     </>
+  );
+}
+
+function ErrorFallback({resetErrorBoundary}: FallbackProps) {
+  return (
+    <Callout.Root color="red">
+      <Callout.Icon>
+        <ExclamationTriangleIcon />
+      </Callout.Icon>
+      <Callout.Text>
+        <Box style={{display: 'inline-flex', alignItems: 'center', gap: '8px'}}>
+          검색 중 오류가 발생했습니다.
+          <Button variant="ghost" size="1" onClick={resetErrorBoundary}>
+            다시 시도
+          </Button>
+        </Box>
+      </Callout.Text>
+    </Callout.Root>
   );
 }
