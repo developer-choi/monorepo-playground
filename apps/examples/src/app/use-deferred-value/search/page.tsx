@@ -63,6 +63,10 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
     queryFn: () => getSearchResultsApi(query),
   });
 
+  if (query !== '' && results.length === 0) {
+    return <Text color="gray">검색결과가 없습니다.</Text>;
+  }
+
   return (
     <Box>
       {results.map((result, i) => (
