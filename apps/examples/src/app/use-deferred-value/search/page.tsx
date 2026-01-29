@@ -21,11 +21,11 @@ function Header() {
       <Heading size="7" mb="2">검색결과 목록 Best Practice</Heading>
       <Box mt="2">
         <Link
-          href="https://react.dev/reference/react/useDeferredValue#showing-stale-content-while-fresh-content-is-loading"
+          href="https://github.com/developer-choi/monorepo-playground/pull/3"
           target="_blank"
           size="2"
         >
-          구현과정은 Roadmap.md 참고해주세요. (링크)
+          구현과정 (링크)
         </Link>
       </Box>
     </Box>
@@ -44,6 +44,7 @@ function SearchForm() {
           size="3"
           value={query}
           onChange={e => setQuery(e.target.value)}
+          autoFocus
         >
           <TextField.Slot>
             <MagnifyingGlassIcon/>

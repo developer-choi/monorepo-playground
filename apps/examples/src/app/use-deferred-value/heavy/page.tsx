@@ -51,6 +51,7 @@ function LeftBadUsage() {
           value={text}
           onChange={e => setText(e.target.value)}
           mb="4"
+          autoFocus
         />
 
         <SlowList text={text}/>
