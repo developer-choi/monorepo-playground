@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import {Noto_Sans} from 'next/font/google';
-import '@monorepo-playground/design-system/style.css';
 import {PropsWithChildren} from 'react';
+import AppProvider from '@/components/AppProvider';
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -15,7 +15,9 @@ export default function RootLayout({children}: PropsWithChildren) {
   return (
     <html lang="en">
       <body className={notoSans.className}>
+      <AppProvider>
         {children}
+      </AppProvider>
       </body>
     </html>
   );
