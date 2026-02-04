@@ -1,3 +1,7 @@
+import AppProvider from './setting/AppProvider.tsx';
+
 export default function App() {
-  return null;
+  return (
+    <AppProvider/>
+  );
 }
