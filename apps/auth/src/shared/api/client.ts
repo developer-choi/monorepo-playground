@@ -45,7 +45,11 @@ export const api = ky.create({
     beforeRetry: [
       async ({ request }) => {
         const token = await refreshAccessToken();
-        if (!token) return ky.stop;
+        if (!token) {
+          const callbackUrl = window.location.pathname + window.location.search;
+          window.location.href = `/login?callbackUrl=${encodeURIComponent(callbackUrl)}`;
+          return ky.stop;
+        }
         request.headers.set("Authorization", `Bearer ${token}`);
       },
     ],

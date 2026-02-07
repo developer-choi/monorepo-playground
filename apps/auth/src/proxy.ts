@@ -3,11 +3,24 @@ import {auth} from '../auth';
 
 const PUBLIC_PATHS = ["/login"];
 
+function buildLoginUrl(req: any) {
+  const callbackUrl = req.nextUrl.pathname + req.nextUrl.search;
+  const url = new URL("/login", req.url);
+  url.searchParams.set("callbackUrl", callbackUrl);
+  return url;
+}
+
 export default auth((req) => {
   const { pathname } = req.nextUrl;
-  const isAuthenticated = !!req.auth;
+  const hasRefreshError = req.auth?.error === "RefreshAccessTokenError";
+  const isAuthenticated = !!req.auth && !hasRefreshError;
   const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
   const response = NextResponse.next();
+
+  if (hasRefreshError && !isPublicPath) {
+    response.cookies.delete("access_token");
+    return NextResponse.redirect(buildLoginUrl(req));
+  }
 
   if (req.auth?.accessToken) {
     response.cookies.set("access_token", req.auth.accessToken as string, {
@@ -21,7 +34,7 @@ export default auth((req) => {
   }
 
   if (!isAuthenticated && !isPublicPath) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(buildLoginUrl(req));
   }
 
   if (isAuthenticated && isPublicPath) {
