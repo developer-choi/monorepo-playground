@@ -220,3 +220,14 @@ refresh는 **서버에서 서버로** 가는 요청이다. CSR에서 ky가 401 �
   1. 로그아웃 상태에서 `/home?foo=bar&page=3&search=hello+world&lang=ko` 직접 접속
   2. 로그인 페이지로 리다이렉트 (URL에 `callbackUrl` 확인)
   3. 로그인 → `/home?foo=bar&page=3&search=hello+world&lang=ko`로 복원 + Query String 섹션에 파라미터 표시 확인
+
+---
+
+## 현재 한계
+
+### CSR에서 refresh 실패 시 강제 리다이렉트
+현재 ky의 `beforeRetry` 훅에서 refresh 실패 시 `window.location.href`로 로그인 페이지를 강제 이동한다. 사용자가 페이지에 머물면서 버튼을 클릭했을 때 갑자기 로그인 페이지로 이동하는 것은 UX 관점에서 어색할 수 있다.
+
+**이상적인 동작**: 강제 리다이렉트 대신 "세션이 만료되었습니다. 다시 로그인하시겠습니까?" 같은 모달을 표시하고, 사용자가 확인 후 로그인 페이지로 이동.
+
+**개선 방향**: ky `beforeRetry`에서 `window.dispatchEvent(new CustomEvent("auth:expired"))` 같은 커스텀 이벤트를 발생시키고, 상위 컴포넌트(AppProvider 등)에서 이벤트를 수신하여 모달 UI를 표시하는 방식으로 변경 가능.
