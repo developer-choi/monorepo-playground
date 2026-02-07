@@ -1,11 +1,11 @@
-import {cookies} from 'next/headers';
+import {headers} from 'next/headers';
 
 export async function serverFetch(
   input: string,
   init?: RequestInit,
 ): Promise<Response> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("access_token")?.value;
+  const headerStore = await headers();
+  const accessToken = headerStore.get("x-access-token");
 
   return fetch(input, {
     ...init,

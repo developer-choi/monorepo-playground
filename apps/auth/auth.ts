@@ -1,6 +1,18 @@
-import NextAuth from 'next-auth';
+import NextAuth, {CredentialsSignin} from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import type {JWT} from 'next-auth/jwt';
+
+class InvalidCredentials extends CredentialsSignin {
+  code = "INVALID_CREDENTIALS";
+}
+
+class InactiveAccount extends CredentialsSignin {
+  code = "INACTIVE_ACCOUNT";
+}
+
+class ValidationError extends CredentialsSignin {
+  code = "VALIDATION_ERROR";
+}
 
 function getTokenExpiry(accessToken: string): number {
   try {
@@ -22,9 +34,45 @@ function extractRefreshToken(response: Response): string | null {
   return null;
 }
 
+let refreshPromise: Promise<JWT> | null = null;
+let refreshCache: {
+  accessToken: string;
+  refreshToken: string | null;
+  accessTokenExpires: number;
+} | null = null;
+
 async function refreshAccessToken(token: JWT): Promise<JWT> {
-  console.log("[AUTH] refresh 시도");
+  if (refreshCache && Date.now() < refreshCache.accessTokenExpires) {
+    console.log("[AUTH] refresh: using cached result");
+    return { ...token, ...refreshCache, error: undefined };
+  }
+
+  if (refreshPromise) {
+    console.log("[AUTH] refresh: deduplicating, awaiting existing request");
+    return refreshPromise;
+  }
+
+  refreshPromise = doRefreshAccessToken(token)
+    .then((result) => {
+      if (!result.error) {
+        refreshCache = {
+          accessToken: result.accessToken,
+          refreshToken: result.refreshToken,
+          accessTokenExpires: result.accessTokenExpires,
+        };
+      }
+      return result;
+    })
+    .finally(() => {
+      refreshPromise = null;
+    });
+
+  return refreshPromise;
+}
+
+async function doRefreshAccessToken(token: JWT): Promise<JWT> {
   try {
+    console.log("[AUTH] refresh: calling backend");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/refresh`,
       {
@@ -36,9 +84,12 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
     );
 
     const data = await response.json();
+    console.log(
+      `[AUTH] refresh: backend responded ${response.status}`,
+      data.success ? "success" : data,
+    );
 
     if (data.success && data.data) {
-      console.log("[AUTH] refresh 성공");
       return {
         ...token,
         accessToken: data.data.access_token,
@@ -48,10 +99,9 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
       };
     }
 
-    console.log("[AUTH] refresh 실패:", data.message);
     return { ...token, error: "RefreshAccessTokenError" };
-  } catch {
-    console.log("[AUTH] refresh 예외 발생");
+  } catch (error) {
+    console.log("[AUTH] refresh: exception", error);
     return { ...token, error: "RefreshAccessTokenError" };
   }
 }
@@ -92,8 +142,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             };
           }
 
+          if (response.status === 401) throw new InvalidCredentials();
+          if (response.status === 403) throw new InactiveAccount();
+          if (response.status === 422) throw new ValidationError();
           return null;
-        } catch {
+        } catch (error) {
+          if (error instanceof CredentialsSignin) throw error;
           return null;
         }
       },
@@ -117,11 +171,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const remaining = token.accessTokenExpires - Date.now();
       if (remaining > 0) {
-        console.log("[AUTH] 토큰 유효 (남은시간:", Math.round(remaining / 1000) + "초)");
+        console.log(
+          "[AUTH] jwt: token valid,",
+          Math.round(remaining / 1000) + "s remaining",
+        );
         return token;
       }
 
-      console.log("[AUTH] 토큰 만료 → refresh");
+      console.log(
+        "[AUTH] jwt: token expired",
+        Math.round(-remaining / 1000) + "s ago, refreshing...",
+      );
       return refreshAccessToken(token);
     },
     async session({ session, token }) {

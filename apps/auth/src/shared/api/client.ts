@@ -1,6 +1,8 @@
 import ky from 'ky';
 import {getAccessToken} from './token';
 
+const isServer = typeof document === "undefined";
+
 let refreshPromise: Promise<string | null> | null = null;
 
 async function refreshAccessToken(): Promise<string | null> {
@@ -23,6 +25,12 @@ async function refreshAccessToken(): Promise<string | null> {
   return refreshPromise;
 }
 
+async function getServerToken(): Promise<string | null> {
+  const { headers } = await import("next/headers");
+  const headerStore = await headers();
+  return headerStore.get("x-access-token");
+}
+
 export const api = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
   credentials: "include",
@@ -34,8 +42,8 @@ export const api = ky.create({
   },
   hooks: {
     beforeRequest: [
-      (request) => {
-        const token = getAccessToken();
+      async (request) => {
+        const token = isServer ? await getServerToken() : getAccessToken();
         if (token) {
           request.headers.set("Authorization", `Bearer ${token}`);
         }
@@ -43,9 +51,14 @@ export const api = ky.create({
     ],
     beforeRetry: [
       async ({ request }) => {
+        if (isServer) {
+          return ky.stop;
+        }
+
         const token = await refreshAccessToken();
         if (!token) {
-          const callbackUrl = window.location.pathname + window.location.search;
+          const callbackUrl =
+            window.location.pathname + window.location.search;
           window.location.href = `/login?callbackUrl=${encodeURIComponent(callbackUrl)}`;
           return ky.stop;
         }

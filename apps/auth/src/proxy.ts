@@ -14,16 +14,24 @@ export default auth((req) => {
   const hasRefreshError = req.auth?.error === "RefreshAccessTokenError";
   const isAuthenticated = !!req.auth && !hasRefreshError;
   const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
-  const response = NextResponse.next();
+  const requestHeaders = new Headers(req.headers);
+  if (req.auth?.accessToken) {
+    requestHeaders.set("x-access-token", req.auth.accessToken);
+  }
+  const response = NextResponse.next({
+    request: { headers: requestHeaders },
+  });
 
   if (hasRefreshError && !isPublicPath) {
     response.cookies.delete("access_token");
-    return NextResponse.redirect(buildLoginUrl(req.url, pathname, req.nextUrl.search));
+    return NextResponse.redirect(
+      buildLoginUrl(req.url, pathname, req.nextUrl.search),
+    );
   }
 
   if (req.auth?.accessToken) {
     response.cookies.set("access_token", req.auth.accessToken, {
-      httpOnly: false,
+      httponly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
@@ -33,7 +41,9 @@ export default auth((req) => {
   }
 
   if (!isAuthenticated && !isPublicPath) {
-    return NextResponse.redirect(buildLoginUrl(req.url, pathname, req.nextUrl.search));
+    return NextResponse.redirect(
+      buildLoginUrl(req.url, pathname, req.nextUrl.search),
+    );
   }
 
   if (isAuthenticated && isPublicPath) {
