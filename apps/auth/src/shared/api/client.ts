@@ -9,12 +9,11 @@ async function refreshAccessToken(): Promise<string | null> {
   refreshPromise = fetch("/api/auth/session")
     .then((res) => res.json())
     .then((session) => {
-      const token = session?.accessToken;
-      if (token) {
-        document.cookie = `access_token=${token}; path=/`;
-        return token;
+      if (session?.error || !session?.accessToken) {
+        return null;
       }
-      return null;
+      document.cookie = `access_token=${session.accessToken}; path=/`;
+      return session.accessToken;
     })
     .catch(() => null)
     .finally(() => {

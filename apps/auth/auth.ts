@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import type {JWT} from 'next-auth/jwt';
 
 function getTokenExpiry(accessToken: string): number {
   try {
@@ -21,8 +22,8 @@ function extractRefreshToken(response: Response): string | null {
   return null;
 }
 
-async function refreshAccessToken(token: any) {
-  console.log("[AUTH] refreshAccessToken 호출됨");
+async function refreshAccessToken(token: JWT): Promise<JWT> {
+  console.log("[AUTH] refresh 시도");
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/refresh`,
@@ -35,24 +36,22 @@ async function refreshAccessToken(token: any) {
     );
 
     const data = await response.json();
-    console.log("[AUTH] refresh 응답:", data.success ? "성공" : "실패", data.message ?? "");
 
     if (data.success && data.data) {
-      const newRefreshToken = extractRefreshToken(response);
-      console.log("[AUTH] 새 refreshToken:", newRefreshToken ? "받음" : "없음 (기존 유지)");
+      console.log("[AUTH] refresh 성공");
       return {
         ...token,
         accessToken: data.data.access_token,
         accessTokenExpires: getTokenExpiry(data.data.access_token),
-        refreshToken: newRefreshToken ?? token.refreshToken,
+        refreshToken: extractRefreshToken(response) ?? token.refreshToken,
         error: undefined,
       };
     }
 
-    console.log("[AUTH] refresh 실패 → RefreshAccessTokenError");
+    console.log("[AUTH] refresh 실패:", data.message);
     return { ...token, error: "RefreshAccessTokenError" };
-  } catch (e) {
-    console.error("[AUTH] refresh 예외:", e);
+  } catch {
+    console.log("[AUTH] refresh 예외 발생");
     return { ...token, error: "RefreshAccessTokenError" };
   }
 }
@@ -94,8 +93,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
 
           return null;
-        } catch (error) {
-          console.error("Login error:", error);
+        } catch {
           return null;
         }
       },
@@ -107,33 +105,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if (user) {
-        console.log("[AUTH] jwt callback: 로그인 → 토큰 초기화");
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.tenantId = user.tenantId;
-        token.accessTokenExpires = getTokenExpiry(user.accessToken as string);
+        token.accessTokenExpires = getTokenExpiry(user.accessToken);
       }
 
       if (trigger === "update" && session?.invalidateRefresh) {
-        console.log("[AUTH] jwt callback: refreshToken 강제 무효화");
         token.refreshToken = "invalid_token_for_testing";
       }
 
-      const remaining = (token.accessTokenExpires as number) - Date.now();
+      const remaining = token.accessTokenExpires - Date.now();
       if (remaining > 0) {
-        console.log("[AUTH] jwt callback: 토큰 유효 (남은시간:", Math.round(remaining / 1000) + "초)");
+        console.log("[AUTH] 토큰 유효 (남은시간:", Math.round(remaining / 1000) + "초)");
         return token;
       }
 
-      console.log("[AUTH] jwt callback: 토큰 만료 → refresh 시도");
+      console.log("[AUTH] 토큰 만료 → refresh");
       return refreshAccessToken(token);
     },
     async session({ session, token }) {
       session.user.id = token.sub!;
-      session.accessToken = token.accessToken as string;
+      session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
-      session.tenantId = token.tenantId as string;
-      session.error = token.error as string | undefined;
+      session.tenantId = token.tenantId;
+      session.error = token.error;
       return session;
     },
   },

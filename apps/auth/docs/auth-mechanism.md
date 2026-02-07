@@ -144,6 +144,9 @@ proxy.ts의 auth()는 JWT callback에서 `Date.now() < accessTokenExpires` 체�
 
 ## 심화 FAQ
 
+### Q: SSR은 왜 CSR처럼 401 → retry 로직이 없나?
+CSR에서는 ky가 `beforeRetry` 훅을 제공해서 401 → refresh → 재시도를 자동으로 처리할 수 있다. 하지만 SSR의 `serverFetch`는 단순 `fetch` 래퍼라 그런 훅이 없다. 직접 구현할 수도 있지만, 굳이 필요 없다. **proxy.ts가 페이지 렌더링 전에 이미 토큰을 갱신**하기 때문이다. SSR에서 serverFetch가 실행되는 시점에는 항상 신선한 access_token이 cookies()에 들어있으므로, 401이 발생할 일이 없다.
+
 ### Q: refresh_token이 브라우저 쿠키에 없는 이유?
 `authorize()`는 **서버에서** 백엔드 login API를 호출한다. 백엔드가 `Set-Cookie: refresh_token=...`을 응답해도 서버-to-서버 통신이라 브라우저에 전달되지 않는다. 그래서 `extractRefreshToken()`으로 값만 추출해서 NextAuth JWT(암호화된 `authjs.session-token` 쿠키) 안에 저장한다. 브라우저 JS에서 직접 접근 불가능하므로 보안 수준은 HttpOnly 쿠키와 비슷하거나 오히려 나음.
 
@@ -176,3 +179,44 @@ refresh는 **서버에서 서버로** 가는 요청이다. CSR에서 ky가 401 �
 
 ### Q: refresh_token이 없거나 만료된 케이스를 어떻게 테스트하나?
 `/test/invalidate-refresh` 페이지에서 버튼 클릭 → `useSession`의 `update({ invalidateRefresh: true })` → JWT callback에서 `trigger === "update"` 감지 → `token.refreshToken = "invalid_token_for_testing"` 으로 교체. 이후 access_token 만료 시 refresh 시도 → 백엔드가 잘못된 토큰이라 거부 → `RefreshAccessTokenError` → 로그인 리다이렉트.
+
+---
+
+## 테스트 케이스
+
+### 1. SSR — refresh 실패 시 로그인 리다이렉트
+- **구현 위치**: `src/proxy.ts:20-23`
+- **조건**: `req.auth?.error === "RefreshAccessTokenError" && !isPublicPath`
+- **동작**: `access_token` 쿠키 삭제 → `/login?callbackUrl=원래경로+쿼리스트링`으로 리다이렉트
+- **테스트 방법**:
+  1. 로그인
+  2. `/test/invalidate-refresh`에서 Refresh Token 무효화
+  3. access_token 만료 대기
+  4. `/test/ssr?type=server&id=42&debug=true` 클릭 (또는 새로고침)
+  5. proxy.ts에서 JWT callback 실행 → refresh 실패 → `/login?callbackUrl=/test/ssr?type=server&id=42&debug=true`로 리다이렉트
+  6. 로그인 → 원래 SSR 페이지 + 쿼리스트링으로 복원
+
+### 2. CSR — refresh 실패 시 로그인 리다이렉트
+- **구현 위치**: `src/shared/api/client.ts:46-50` (ky `beforeRetry` 훅)
+- **조건**: `refreshAccessToken()`이 null 반환 (세션에서 새 토큰을 받지 못함)
+- **동작**: `window.location.href = /login?callbackUrl=현재pathname+search`
+- **테스트 방법**:
+  1. 로그인
+  2. `/test/invalidate-refresh`에서 Refresh Token 무효화
+  3. access_token 만료 대기
+  4. `/test/client-click?action=fetch&retry=3&timeout=5000`에서 API 호출 버튼 클릭
+  5. ky가 401 수신 → beforeRetry에서 `/api/auth/session` 호출 → JWT callback refresh 실패 → null 반환 → `/login?callbackUrl=/test/client-click?action=fetch&retry=3&timeout=5000`로 리다이렉트
+  6. 로그인 → 원래 Client Click 페이지 + 쿼리스트링으로 복원
+
+### 3. 정상 refresh (access_token 만료, refresh_token 유효)
+- **테스트 방법**:
+  1. 로그인
+  2. access_token 만료 대기 (서버 터미널에서 `[AUTH] 토큰 유효 (남은시간: 0초)` 확인)
+  3. **SSR**: 페이지 이동/새로고침 → 서버 터미널에 `[AUTH] 토큰 만료 → refresh` + `[AUTH] refresh 성공` → 페이지 정상 표시
+  4. **CSR (Client Click)**: 버튼 클릭 → 네트워크 패널에 401 → `/api/auth/session` → 원래 요청 재시도 200 → 서버 터미널에 `[AUTH] refresh 성공`
+
+### 4. callbackUrl 쿼리스트링 보존
+- **테스트 방법**:
+  1. 로그아웃 상태에서 `/home?foo=bar&page=3&search=hello+world&lang=ko` 직접 접속
+  2. 로그인 페이지로 리다이렉트 (URL에 `callbackUrl` 확인)
+  3. 로그인 → `/home?foo=bar&page=3&search=hello+world&lang=ko`로 복원 + Query String 섹션에 파라미터 표시 확인
