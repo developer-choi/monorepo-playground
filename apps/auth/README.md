@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Auth Playground
 
-## Getting Started
+NextAuth v5 + JWT + Refresh Token 인증 메커니즘 예제.
 
-First, run the development server:
+## 백엔드
+
+dada 프로젝트의 `backend-bak`을 사용한다.
+
+```bash
+cd C:\Users\dbwls\WebstormProjects\dada\backend-bak
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+
+백엔드 API:
+- `POST /api/auth/login` — 로그인 (access_token 반환, refresh_token Set-Cookie)
+- `POST /api/auth/refresh` — 토큰 갱신 (refresh_token 쿠키 필요)
+- `GET /api/auth/me` — 현재 유저 정보 (access_token 필요)
+- `POST /api/auth/logout` — 로그아웃 (refresh_token 폐기)
+
+## 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 접속 후 테스트 페이지 링크 클릭.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 테스트 페이지
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| 경로 | 설명 | 검증 포인트 |
+|------|------|-----------|
+| `/test/ssr` | 서버 컴포넌트에서 serverFetch로 API 호출 | proxy.ts가 선제적으로 토큰 갱신 → cookies()로 읽기 |
+| `/test/csr` | useEffect + ky로 마운트 시 API 호출 | 새로고침 시 proxy.ts가 미리 갱신, 401 안 남 |
+| `/test/client-click` | 버튼 클릭으로 ky API 호출 | 6초 대기 후 클릭 → 401 → ky beforeRetry → refresh → 재시도 |
 
-## Learn More
+## 환경 변수 (.env.local)
 
-To learn more about Next.js, take a look at the following resources:
+```
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+AUTH_SECRET=your-secret-key-change-this
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 문서
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Auth Mechanism 상세](./docs/auth-mechanism.md) — 전체 메커니즘, 3가지 케이스, Double Refresh 문제, FAQ
