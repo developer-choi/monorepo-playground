@@ -105,13 +105,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         console.log("[AUTH] jwt callback: 로그인 → 토큰 초기화");
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.tenantId = user.tenantId;
         token.accessTokenExpires = getTokenExpiry(user.accessToken as string);
+      }
+
+      if (trigger === "update" && session?.invalidateRefresh) {
+        console.log("[AUTH] jwt callback: refreshToken 강제 무효화");
+        token.refreshToken = "invalid_token_for_testing";
       }
 
       const remaining = (token.accessTokenExpires as number) - Date.now();
