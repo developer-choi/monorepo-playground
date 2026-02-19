@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import {Noto_Sans} from 'next/font/google';
 import {PropsWithChildren} from 'react';
-import AppProvider from '@/components/AppProvider';
+import AppProvider from '@/shared/AppProvider';
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
