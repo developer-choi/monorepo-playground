@@ -25,7 +25,9 @@ const eslintConfig = defineConfig([
       },
     },
     rules: {
-      '@typescript-eslint/no-deprecated': 'error'
+      'react-hooks/error-boundaries': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', {argsIgnorePattern: '^_', varsIgnorePattern: '^_'}],
+      '@typescript-eslint/no-deprecated': 'error',
     }
   }
 ]);
