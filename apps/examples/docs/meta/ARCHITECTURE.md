@@ -13,9 +13,10 @@
 
 ```
 예시)
-validation/schema      ← "검증" 대분류 > "스키마" 소분류
-listing/infinite-scroll ← "리스팅" 대분류 > "무한스크롤" 소분류
-listing/virtual-list    ← "리스팅" 대분류 > "가상리스트" 소분류
+validation/integration   ← "검증" 대분류 > "통합" 소분류
+rendering/search-result  ← "렌더링" 대분류 > "검색결과" 소분류
+listing/infinite-scroll  ← "리스팅" 대분류 > "무한스크롤" 소분류
+listing/virtual-list     ← "리스팅" 대분류 > "가상리스트" 소분류
 ```
 
 특정 라이브러리 이름(zod, tanstack-virtual 등)은 분류명으로 쓰지 않는다.
@@ -27,6 +28,8 @@ listing/virtual-list    ← "리스팅" 대분류 > "가상리스트" 소분류
 src/
 ├── {대분류}/
 │   ├── {소분류}/
+│   │   ├── README.md          # 설명 문서
+│   │   ├── assets/            # 문서에 첨부할 이미지 등
 │   │   ├── schema.ts          # 스키마 정의
 │   │   ├── api.ts             # API 함수
 │   │   ├── components/        # UI 컴포넌트
@@ -36,15 +39,12 @@ src/
 │       └── ...
 ├── shared/                    # 공통 유틸, 컴포넌트
 └── app/                       # Next.js 라우트 (페이지)
-
-docs/
-├── {대분류}/
-│   └── {소분류}.md            # 해당 소분류의 설명 문서
-└── ...
+    └── {대분류}/{소분류}/     # 라우트는 src/app/ 하위에 유지
+        └── page.tsx
 ```
 
 ### 핵심 규칙
 
-- **src 코드 구조**와 **docs 문서 구조**는 대분류/소분류 기준으로 1:1 대응한다.
-- 각 소분류 폴더는 DDD 스타일로 자체적으로 `schema.ts`, `api.ts`, `components/`를 가진다.
+- 설명 문서(`.md`)와 이미지(`assets/`)는 해당 소분류 폴더 안에 함께 둔다.
+- 각 소분류 폴더는 DDD 스타일로 자체적으로 `schema.ts`, `api.ts`, `components/`를 가진다 (필요한 것만).
 - `shared/`에는 여러 소분류에서 공통으로 쓰는 코드만 둔다.
