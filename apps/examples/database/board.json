@@ -1,0 +1,19 @@
+{
+  "list": [
+    {"id": 1, "post_title": "React 18의 새로운 기능", "post_content": "React 18에서 추가된 Concurrent 기능에 대해 알아봅니다.", "board_type": "normal", "category": "info", "tag_list": []},
+    {"id": 2, "post_title": "Next.js App Router 가이드", "post_content": "Next.js 14 이후 App Router 패턴을 정리합니다.", "board_type": "normal", "category": "info", "tag_list": ["Next.js", "React"]},
+    {"id": 3, "post_title": "Zod로 폼 검증하기", "post_content": "Zod와 react-hook-form을 조합하여 타입 안전한 폼을 만듭니다.", "board_type": "gallery", "category": "info", "tag_list": ["Zod", "TypeScript"]},
+    {"id": 4, "post_title": "TanStack Query 실전 패턴", "post_content": "TanStack Query의 캐싱, 무효화, 낙관적 업데이트 패턴을 소개합니다.", "board_type": "normal", "category": "question", "tag_list": ["TanStack", "React"]},
+    {"id": 5, "post_title": "Radix UI 컴포넌트 커스터마이징", "post_content": "Radix Themes를 활용한 디자인 시스템 구축 방법입니다.", "board_type": "gallery", "category": "free", "tag_list": ["Radix", "React"]},
+    {"id": 6, "post_title": "TypeScript 5.0 타입 시스템", "post_content": "TypeScript 5.0에서 개선된 타입 추론과 새로운 기능을 살펴봅니다.", "board_type": "normal", "category": "info", "tag_list": ["TypeScript"]},
+    {"id": 7, "post_title": "서버 컴포넌트와 데이터 페칭", "post_content": "React Server Components에서의 데이터 페칭 전략을 비교합니다.", "board_type": "normal", "category": "question", "tag_list": ["React", "Next.js"]},
+    {"id": 8, "post_title": "Zod 스키마 패턴 모음", "post_content": "실무에서 자주 쓰는 Zod 스키마 패턴을 정리합니다.", "board_type": "normal", "category": "info", "tag_list": ["Zod", "TypeScript"]},
+    {"id": 9, "post_title": "갤러리 레이아웃 구현", "post_content": "CSS Grid와 Radix를 활용한 반응형 갤러리 레이아웃입니다.", "board_type": "gallery", "category": "free", "tag_list": ["Radix"]},
+    {"id": 10, "post_title": "모노레포 구조 설계", "post_content": "npm workspaces를 활용한 모노레포 프로젝트 구조를 설계합니다.", "board_type": "normal", "category": "notice", "tag_list": ["Next.js", "TypeScript"]},
+    {"id": 11, "post_title": "TanStack Query와 서버 액션", "post_content": "TanStack Query의 mutation과 Next.js 서버 액션을 함께 사용하는 패턴입니다.", "board_type": "normal", "category": "question", "tag_list": ["TanStack", "Next.js"]},
+    {"id": 12, "post_title": "타입 안전한 API 레이어", "post_content": "ky와 Zod를 조합하여 타입 안전한 API 호출 레이어를 구축합니다.", "board_type": "normal", "category": "notice", "tag_list": ["Zod", "TypeScript"]},
+    {"id": 13, "post_title": "프론트엔드 개발 환경 세팅 후기", "post_content": "ESLint, Prettier, Husky 등 개발 환경을 세팅하면서 겪은 시행착오를 공유합니다.", "board_type": "normal", "category": "free", "tag_list": ["TypeScript"]},
+    {"id": 14, "post_title": "요즘 쓰는 VS Code 확장 추천", "post_content": "프론트엔드 개발할 때 유용한 VS Code 확장 목록을 정리해봤습니다.", "board_type": "normal", "category": "free", "tag_list": ["React", "TypeScript"]},
+    {"id": 15, "post_title": "TanStack Query vs SWR 비교 후기", "post_content": "두 라이브러리를 실무에서 써보고 느낀 차이점을 자유롭게 공유합니다.", "board_type": "normal", "category": "free", "tag_list": ["TanStack", "React"]}
+  ]
+}
