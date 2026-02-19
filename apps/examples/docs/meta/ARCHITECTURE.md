@@ -13,8 +13,6 @@
 
 ```
 예시)
-validation/integration   ← "검증" 대분류 > "통합" 소분류
-rendering/search-result  ← "렌더링" 대분류 > "검색결과" 소분류
 listing/infinite-scroll  ← "리스팅" 대분류 > "무한스크롤" 소분류
 listing/virtual-list     ← "리스팅" 대분류 > "가상리스트" 소분류
 ```
@@ -47,4 +45,21 @@ src/
 
 - 설명 문서(`.md`)와 이미지(`assets/`)는 해당 소분류 폴더 안에 함께 둔다.
 - 각 소분류 폴더는 DDD 스타일로 자체적으로 `schema.ts`, `api.ts`, `components/`를 가진다 (필요한 것만).
-- `shared/`에는 여러 소분류에서 공통으로 쓰는 코드만 둔다.
+- `shared/`에는 공통으로 쓰는 코드만 둔다.
+
+## sandbox
+
+라이브러리 스펙을 간단히 돌려보는 테스트 페이지. 정식 예제와 달리 별도의 `src/` 폴더 없이 페이지 파일 내에서 완결한다.
+
+```
+src/app/sandbox/{라이브러리 이름}/{스펙 이름}/
+└── page.tsx
+```
+
+```
+예시)
+sandbox/zod/partial      ← Zod의 partial() 메소드 테스트
+sandbox/zod/safeParse    ← Zod의 safeParse() 메소드 테스트
+```
+
+2뎁스 제한 없이 `sandbox/{라이브러리}/{스펙}` 형태로 자유롭게 구성한다.
