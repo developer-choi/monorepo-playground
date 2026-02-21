@@ -3,7 +3,7 @@
 import {memo, useDeferredValue, useState} from 'react';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
-import {Box, Button, Card, Callout, Container, Heading, Link, Text, TextField} from '@radix-ui/themes';
+import {Box, Button, Card, Callout, Container, Heading, Text, TextField} from '@radix-ui/themes';
 import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icons';
 
 export default function SearchPage() {
@@ -19,15 +19,6 @@ function Header() {
   return (
     <Box mb="6">
       <Heading size="7" mb="2">검색결과 목록 Best Practice</Heading>
-      <Box mt="2">
-        <Link
-          href="https://github.com/developer-choi/monorepo-playground/pull/3"
-          target="_blank"
-          size="2"
-        >
-          구현과정 (링크)
-        </Link>
-      </Box>
     </Box>
   );
 }
