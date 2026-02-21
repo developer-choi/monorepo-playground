@@ -4,6 +4,7 @@ import {useMutation} from '@tanstack/react-query';
 import {Container, Heading, Text, Card, Flex, Button, Badge, Separator, AlertDialog} from '@radix-ui/themes';
 import {useRouter} from 'next/navigation';
 import {deleteBoardApi} from '@/validation/integration/api';
+import {useHandleClientSideError} from '@/shared/error/handler/client';
 import {revalidatePathFromClient} from '@/shared/server-actions';
 import {type BoardDetail, BOARD_TYPES, BOARD_CATEGORIES} from '@/validation/integration/schema';
 
@@ -14,6 +15,7 @@ interface BoardDetailProps {
 export default function BoardDetail({board}: BoardDetailProps) {
   const router = useRouter();
 
+  const handleClientSideError = useHandleClientSideError();
   const deleteMutation = useMutation({mutationFn: deleteBoardApi});
 
   const handleDelete = async () => {
@@ -22,8 +24,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
       await revalidatePathFromClient('/validation/integration');
       router.push('/validation/integration');
     } catch (error) {
-      // TODO: 에러 처리
-      throw error;
+      handleClientSideError(error);
     }
   };
 

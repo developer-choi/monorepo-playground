@@ -1,19 +1,16 @@
 import {ZodError} from 'zod';
+import ApiResponseValidationError from '@/shared/error/class/ApiResponseValidationError';
 
-export function validateApiResponse<T>(schema: {parse: (data: unknown) => T}, data: unknown): T {
+/**
+ * @throws {ApiResponseValidationError}
+ */
+export function validateApiResponse<T>(schema: {parse: (data: unknown) => T}, response: unknown): T {
   try {
-    return schema.parse(data);
+    return schema.parse(response);
   } catch (error) {
     if (error instanceof ZodError) {
-      throw new ValidationError(error);
+      throw new ApiResponseValidationError(response, error);
     }
     throw error;
-  }
-}
-
-export class ValidationError extends Error {
-  constructor(public readonly zodError: ZodError) {
-    super(zodError.message);
-    this.name = 'ValidationError';
   }
 }
