@@ -1,21 +1,40 @@
 import {z} from 'zod';
+import InvalidAccessError from '@/shared/error/class/InvalidAccessError';
 
 export const numericIdSchema = z.number().int().positive('유효하지 않은 ID입니다');
 
+/**
+ * @throws {InvalidAccessError}
+ */
 export function parseNumericId(value: string): number {
-  // TODO zod error 나면 좀 더 구체적인 음 뭐 InvalidPageAccessError 뭐 이러면서 호출부에서는 이 구체적인 에러로 감싸서 뭐 하는걸로 변경예정
-  return z
-    .string()
-    .regex(/^\d+$/, '숫자만 입력해주세요')
-    .transform(Number)
-    .pipe(numericIdSchema)
-    .parse(value);
+  try {
+    return z
+      .string()
+      .regex(/^\d+$/, '페이지 주소에 포함된 ID가 숫자 형식이 아닙니다')
+      .transform(Number)
+      .pipe(numericIdSchema)
+      .parse(value);
+  } catch (error) {
+    throw new InvalidAccessError({
+      redirect: {type: 'NOT_FOUND'},
+      meta: error,
+    });
+  }
 }
 
+/**
+ * @throws {InvalidAccessError}
+ */
 export function parseStringId(value: string): string {
-  // TODO zod error 나면 좀 더 구체적인 음 뭐 InvalidPageAccessError 뭐 이러면서 호출부에서는 이 구체적인 에러로 감싸서 뭐 하는걸로 변경예정
-  return z
-    .string()
-    .min(1, '유효하지 않은 ID입니다')
-    .parse(value);
+  try {
+    return z
+      .string()
+      .min(1, '유효하지 않은 ID입니다')
+      .parse(value);
+  } catch (error) {
+    throw new InvalidAccessError({
+      redirect: {type: 'NOT_FOUND'},
+      meta: error,
+    });
+  }
 }

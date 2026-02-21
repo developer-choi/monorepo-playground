@@ -5,6 +5,7 @@ import {TrashIcon} from '@radix-ui/react-icons';
 import {useRouter} from 'next/navigation';
 import {useMutation} from '@tanstack/react-query';
 import {deleteBoardApi} from '@/validation/integration/api';
+import {useHandleClientSideError} from '@/shared/error/handler/client';
 import {revalidatePathFromClient} from '@/shared/server-actions';
 import {BoardListApiResponse, BOARD_TYPES, BOARD_CATEGORIES} from '@/validation/integration/schema';
 import Pagination from '@/shared/components/Pagination';
@@ -16,6 +17,7 @@ interface BoardTableProps {
 export default function BoardTable({data}: BoardTableProps) {
   const router = useRouter();
 
+  const handleClientSideError = useHandleClientSideError();
   const deleteMutation = useMutation({mutationFn: deleteBoardApi});
 
   const handleDelete = async (id: number) => {
@@ -23,8 +25,7 @@ export default function BoardTable({data}: BoardTableProps) {
       await deleteMutation.mutateAsync(id);
       await revalidatePathFromClient('/validation/integration');
     } catch (error) {
-      // TODO: 에러 처리
-      throw error;
+      handleClientSideError(error);
     }
   };
 

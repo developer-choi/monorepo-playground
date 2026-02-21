@@ -8,6 +8,7 @@ import {Box, Button, Card, Container, Flex, Heading, Separator, Text, TextField,
 import {Cross2Icon} from '@radix-ui/react-icons';
 import {useRouter} from 'next/navigation';
 import {postBoardApi, patchBoardApi} from '@/validation/integration/api';
+import {useHandleClientSideError} from '@/shared/error/handler/client';
 import {revalidatePathFromClient} from '@/shared/server-actions';
 import {type BoardDetail, CreateBoardApiRequest, CreateBoardSchema, BOARD_TYPES, BOARD_CATEGORIES, BOARD_LIMITS} from '@/validation/integration/schema';
 
@@ -24,6 +25,7 @@ export default function BoardForm({board}: BoardFormProps) {
     defaultValues: board ?? DEFAULT_FORM_DATA,
   });
 
+  const handleClientSideError = useHandleClientSideError();
   const createMutation = useMutation({mutationFn: postBoardApi});
   const updateMutation = useMutation({mutationFn: patchBoardApi});
   const isPending = createMutation.isPending || updateMutation.isPending;
@@ -40,8 +42,7 @@ export default function BoardForm({board}: BoardFormProps) {
         router.push('/validation/integration');
       }
     } catch (error) {
-      // TODO: 에러 처리
-      throw error;
+      handleClientSideError(error);
     }
   };
 
