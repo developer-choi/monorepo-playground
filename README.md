@@ -21,6 +21,17 @@ React/Next.js best practice를 모노레포 예제 패키지 형태로 정리하
 - **2021.04.19** - [Next.js 10.3.1](https://github.com/developer-choi/monorepo-playground/commit/773639be)
 - **2020.01.15** - [React 16.12.0](https://github.com/developer-choi/monorepo-playground/commit/fe7400c2)
 
+## 시작하기
+
+```bash
+npm install
+```
+
+각 앱의 실행 방법은 해당 README를 참고해주세요.
+
+- [Best Practice 예제](./apps/examples/README.md)
+- [디자인 시스템](./packages/design-system/README.md)
+
 ## 프로젝트 구조
 
 ```
@@ -29,11 +40,4 @@ React/Next.js best practice를 모노레포 예제 패키지 형태로 정리하
 ├── packages/
 │   ├── design-system/     # 공통 UI 컴포넌트
 └── package.json
-```
-
-## 시작하기
-
-```bash
-npm install
-npm run storybook
 ```

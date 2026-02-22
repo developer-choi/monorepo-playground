@@ -5,10 +5,10 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
     "start": "turbo start",
     "lint": "turbo lint",
-    "storybook": "turbo storybook --filter=@monorepo-playground/design-system"
+    "examples": "turbo build --filter=@monorepo-playground/design-system && turbo dev --filter=examples",
+    "design-system": "turbo storybook --filter=@monorepo-playground/design-system"
   },
   "repository": {
     "type": "git",
