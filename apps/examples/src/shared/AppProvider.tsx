@@ -6,7 +6,13 @@ import {Theme} from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import '@monorepo-playground/design-system/style.css';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0
+    }
+  }
+});
 
 export default function AppProvider({children}: PropsWithChildren) {
   return (
