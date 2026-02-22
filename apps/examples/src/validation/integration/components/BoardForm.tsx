@@ -8,6 +8,7 @@ import {Box, Button, Card, Container, Flex, Heading, Separator, Text, TextField,
 import {Cross2Icon} from '@radix-ui/react-icons';
 import {useRouter} from 'next/navigation';
 import {postBoardApi, patchBoardApi} from '@/validation/integration/api';
+import {isMutationSettling} from '@/shared/query/mutation';
 import {useHandleClientSideError} from '@/shared/error/handler/client';
 import {revalidatePathFromClient} from '@/shared/server-actions';
 import {type BoardDetail, CreateBoardApiRequest, CreateBoardSchema, BOARD_TYPES, BOARD_CATEGORIES, BOARD_LIMITS} from '@/validation/integration/schema';
@@ -28,7 +29,7 @@ export default function BoardForm({board}: BoardFormProps) {
   const handleClientSideError = useHandleClientSideError();
   const createMutation = useMutation({mutationFn: postBoardApi});
   const updateMutation = useMutation({mutationFn: patchBoardApi});
-  const isPending = createMutation.isPending || updateMutation.isPending;
+  const isPending = isMutationSettling(createMutation, updateMutation);
 
   const onSubmit = async (data: CreateBoardApiRequest) => {
     try {
@@ -134,8 +135,8 @@ export default function BoardForm({board}: BoardFormProps) {
               <Button type="button" variant="soft" color="gray" size="2" onClick={() => router.back()}>
                 취소
               </Button>
-              <Button type="submit" size="2" disabled={isPending}>
-                {isPending ? '처리중...' : isEdit ? '수정' : '등록'}
+              <Button type="submit" size="2" loading={isPending}>
+                저장
               </Button>
             </Flex>
           </Flex>

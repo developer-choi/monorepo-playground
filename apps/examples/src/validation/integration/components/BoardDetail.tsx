@@ -4,6 +4,7 @@ import {useMutation} from '@tanstack/react-query';
 import {Container, Heading, Text, Card, Flex, Button, Badge, Separator, AlertDialog} from '@radix-ui/themes';
 import {useRouter} from 'next/navigation';
 import {deleteBoardApi} from '@/validation/integration/api';
+import {isMutationSettling} from '@/shared/query/mutation';
 import {useHandleClientSideError} from '@/shared/error/handler/client';
 import {revalidatePathFromClient} from '@/shared/server-actions';
 import {type BoardDetail, BOARD_TYPES, BOARD_CATEGORIES} from '@/validation/integration/schema';
@@ -55,7 +56,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
             <Button size="2" onClick={() => router.push(`/validation/integration/${board.id}/edit`)}>수정</Button>
             <AlertDialog.Root>
               <AlertDialog.Trigger>
-                <Button size="2" color="red" variant="soft" disabled={deleteMutation.isPending}>삭제</Button>
+                <Button size="2" color="red" variant="soft" loading={isMutationSettling(deleteMutation)}>삭제</Button>
               </AlertDialog.Trigger>
               <AlertDialog.Content maxWidth="450px">
                 <AlertDialog.Title>게시글 삭제</AlertDialog.Title>
