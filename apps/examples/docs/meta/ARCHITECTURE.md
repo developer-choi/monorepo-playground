@@ -54,8 +54,8 @@ src/
 
 - **컴포넌트, hooks, queries, zod 스키마**는 예제 간 공유하지 않는다. 중복이어도 각자 구현한다.
   - 이유: 코드 통합의 전제는 "사용하는 곳마다 미래에 같은 변경사항을 공유해야 하는가"인데, 예제끼리는 독립적으로 변경된다.
-- **Board 타입, API 호출함수, DTO 변환**은 `shared/board/`에 둔다.
-  - 이유: 모든 예제가 동일하게 쓰며, 예제가 늘수록 중복 비용이 커진다.
+- **도메인 타입, API 호출함수, DTO 변환**은 `shared/{도메인}/`에 둔다.
+  - 이유: 여러 예제가 동일하게 쓰며, 예제가 늘수록 중복 비용이 커진다.
 
 ## shared
 
@@ -73,18 +73,34 @@ shared/
 └── server/       # Mock DB, database.ts
 ```
 
-### 2. 도메인 데이터 레이어 (board)
+### 2. 도메인 데이터 레이어 (example-agnostic)
 
-모든 예제가 동일하게 사용하는 Board 도메인의 최소 공통분모.
+특정 비즈니스 도메인을 알지만, 특정 예제의 관심사(검증, 렌더링 최적화 등)는 모르는 코드.
+여러 예제가 같은 데이터를 써야 할 때 여기에 둔다.
 
 ```
 shared/
-└── board/
-    ├── types.ts   # Board 클라이언트 타입 (camelCase)
-    └── api.ts     # Board API 호출함수 + DTO → Board 변환
+└── {도메인}/
+    ├── types.ts   # 도메인 클라이언트 타입 (camelCase)
+    └── api.ts     # 도메인 API 호출함수 + DTO 변환. shared/api/client.ts만 의존
 ```
 
-컴포넌트, hooks, queries, zod 스키마는 shared/board에 두지 않는다.
+**예시)**
+
+```
+shared/board/      # Board 타입 + API (모든 게시판 예제 공통)
+shared/product/    # 상품 타입 + API (무한스크롤·이미지최적화·가상리스트 예제 공통)
+```
+
+컴포넌트, hooks, queries, zod 스키마는 `shared/{도메인}/`에 두지 않는다.
+
+### 판단 기준
+
+| 상황 | 위치 |
+|------|------|
+| 예제 1개에서만 사용 | 해당 예제 폴더 안 |
+| 여러 예제에서 사용, 예제 관심사 없음 | `shared/{도메인}/` |
+| 도메인 무관한 인프라 | `shared/` 직접 하위 |
 
 ## showcase
 
