@@ -1,6 +1,6 @@
 'use client';
 
-import {ComponentPropsWithoutRef, type ReactElement, useCallback, useEffect, useState} from 'react';
+import {ComponentPropsWithoutRef, type ReactElement, useEffect, useState} from 'react';
 import classNames from 'classnames';
 import ResourceLoadError from '@/shared/error/class/ResourceLoadError';
 import styles from './BaseImage.module.scss';
@@ -38,7 +38,7 @@ export default function BaseImage({
     setHasError(!src);
   }, [src]);
 
-  const handleError = useCallback(() => {
+  const handleError = () => {
     if (!fallback) {
       return;
     }
@@ -46,7 +46,7 @@ export default function BaseImage({
     setHasError(true);
 
     throw new ResourceLoadError({ url: src, type: 'image' });
-  }, [fallback, src]);
+  };
 
   /**
    * 이미지 노출되는 케이스
