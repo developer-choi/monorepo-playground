@@ -2,6 +2,7 @@
 
 import {ComponentPropsWithoutRef, type ReactElement, useCallback, useEffect, useState} from 'react';
 import classNames from 'classnames';
+import ResourceLoadError from '@/shared/error/class/ResourceLoadError';
 import styles from './BaseImage.module.scss';
 
 /**
@@ -43,7 +44,9 @@ export default function BaseImage({
     }
 
     setHasError(true);
-  }, [fallback]);
+
+    throw new ResourceLoadError({ url: src, type: 'image' });
+  }, [fallback, src]);
 
   /**
    * 이미지 노출되는 케이스
