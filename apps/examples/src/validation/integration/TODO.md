@@ -161,3 +161,74 @@ const urlField = emptyOr(z.url("유효한 URL을 입력해주세요"));
 새 도메인(teacher 등)이 추가되는 시점에 제안 A로 추출하는 것이 적절.
 `emptyOr` 유틸리티는 패턴이 3종류(email, phone, url) 이상으로 늘어날 때 검토.
 
+---
+
+## 3. `validateApiResponse` 개선 — 변환 실패도 포착
+
+### 배경: 프론트 스키마 1벌 vs 백엔드 스키마 2벌
+
+langdy-admin 프로젝트에서는 백엔드 응답 형태를 Zod 스키마로 별도 선언하고(`api/types.ts`), 프론트 도메인 타입도 따로 선언한다(`model/types.ts`). enum과 인터페이스가 사실상 이중 관리된다.
+
+골든 스탠다드에서는 서버 타입을 `interface`로 가볍게 선언하고, 변환 후 프론트 스키마 1벌로 검증한다(`validateApiResponse`). 스키마 중복이 없다.
+
+### 문제: 변환 중 실패를 `validateApiResponse`가 잡지 못함
+
+현재 호출 형태:
+
+```typescript
+validateApiResponse(BoardDetailSchema, {
+  ...toCamelCaseKeys(raw),
+  tagList: raw.tag_list ?? [],
+});
+```
+
+2번째 인자가 **표현식**이므로, 변환 중 에러가 나면 `validateApiResponse`에 도달하기 전에 일반 런타임 에러가 발생한다. 예를 들어 서버가 예상과 다른 구조(객체 대신 `null`)를 주면, `toCamelCaseKeys`는 조용히 통과하지만 `raw.tag_list`에 접근하는 부분에서 `Cannot read properties of null`이 터질 수 있다.
+
+이때 에러에 서버 원본 응답이 포함되지 않아 디버깅이 어렵다.
+
+반면 langdy-admin처럼 변환 전에 백엔드 스키마로 먼저 검증하면, 변환 함수에 보장된 데이터만 들어가므로 이 문제가 없다. 대신 스키마 2벌 유지 비용을 지불한다.
+
+### 제안: 2번째 인자를 콜백으로 변경
+
+```typescript
+function validateApiResponse<T>(
+  schema: { parse: (data: unknown) => T },
+  transform: () => unknown,
+): T {
+  try {
+    const data = transform();
+    return schema.parse(data);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      throw new ApiResponseValidationError(error);
+    }
+    throw new ApiResponseTransformError(error);
+  }
+}
+```
+
+사용:
+
+```typescript
+validateApiResponse(BoardDetailSchema, () => ({
+  ...toCamelCaseKeys(raw),
+  tagList: raw.tag_list ?? [],
+}));
+```
+
+### 장단점
+
+**장점:**
+- 변환 에러든 스키마 검증 에러든 한 곳에서 포착 — 에러 종류별로 구분된 커스텀 에러 클래스 제공 가능
+- 변환 함수마다 개별 try-catch를 강제할 필요 없음 — `validateApiResponse` 호출 구조가 자동으로 감싸줌
+- 스키마 1벌 유지 — 백엔드 응답용 Zod 스키마 불필요
+
+**단점:**
+- 변환 에러 시 Zod처럼 "어떤 필드가 어떻게 틀렸는지" 구조화된 메시지를 주지는 못함 — 일반 런타임 에러를 감싸는 수준
+- 기존 호출부 전체를 콜백 형태로 변경해야 함
+
+### 판단
+
+스키마 2벌 유지 비용 없이 변환 실패 디버깅을 개선할 수 있는 가성비 좋은 방법.
+구조화된 필드별 에러 메시지까지는 안 되지만, 에러 발생 자체를 놓치지 않는 것이 핵심이므로 충분.
+
