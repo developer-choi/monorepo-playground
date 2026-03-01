@@ -1,7 +1,7 @@
 # Zod 활용기
 
 - [배포 링크](https://monorepo-playground-examples.vercel.app/validation/integration)
-- [컨벤션 링크](https://github.com/developer-choi/ai-contexts/blob/master/instructions/conventions/coding/zod.md)
+- [컨벤션 링크](https://github.com/developer-choi/ai-contexts/blob/master/instructions/coding-standards/coding/zod.md)
 
 ---
 
