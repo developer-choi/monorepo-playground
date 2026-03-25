@@ -1,0 +1,28 @@
+@use '../_variables';
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.bone {
+  background-color: variables.$color-skeleton;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.textBone {
+  height: 14px;
+}
+
+.titleBone {
+  width: 90%;
+}
+
+.metaBone {
+  width: 40%;
+}
