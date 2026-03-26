@@ -11,7 +11,7 @@ import styles from './BoardListPage.module.scss';
 import { Button } from '@radix-ui/themes';
 
 export default function BoardListPage() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
     useSuspenseInfiniteQuery(boardQueries.list.options());
   const boards = data.pages.flatMap((page) => page.list);
 
@@ -19,6 +19,7 @@ export default function BoardListPage() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isError,
   });
 
   return (
@@ -45,6 +46,11 @@ export default function BoardListPage() {
                 ))}
             </div>
             <div ref={sentinelRef} />
+            {isError && (
+              <p className={styles.message}>
+                게시글을 더 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.
+              </p>
+            )}
           </>
         )}
       </section>
