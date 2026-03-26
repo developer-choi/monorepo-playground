@@ -1,7 +1,30 @@
+import { PropsWithChildren } from 'react';
+import styles from './layout.module.scss';
 import classNames from 'classnames';
-import styles from './Sidebar.module.scss';
 
-export default function Sidebar() {
+export default function Layout({ children }: PropsWithChildren) {
+  return (
+    <>
+      <Header />
+      <div className={styles.body}>
+        <Sidebar />
+        <main className={styles.main}>{children}</main>
+      </div>
+    </>
+  );
+}
+
+function Header() {
+  return (
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        <span className={styles.logo}>BOARD</span>
+      </div>
+    </header>
+  );
+}
+
+function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <h1 className={styles.title}>게시판</h1>

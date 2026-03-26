@@ -1,0 +1,117 @@
+@use '../../../rendering/infinite-scroll/variables';
+
+/*************************************************************************************************************
+ * Layout
+ *************************************************************************************************************/
+.body {
+  display: flex;
+  max-width: variables.$max-width;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+/*************************************************************************************************************
+ * Header
+ *************************************************************************************************************/
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: variables.$color-header-bg;
+  color: variables.$color-header-text;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  max-width: variables.$max-width;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 56px;
+}
+
+.logo {
+  font-size: variables.$font-size-lg;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.sidebar {
+  width: 160px;
+  flex-shrink: 0;
+  padding: 32px 0 40px;
+  position: sticky;
+  top: 56px;
+  align-self: flex-start;
+}
+
+.title {
+  font-size: variables.$font-size-xl;
+  font-weight: 900;
+  color: variables.$color-text-primary;
+  margin-bottom: 24px;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.categoryItem {
+  font-size: variables.$font-size-sm;
+  color: variables.$color-text-muted;
+  cursor: pointer;
+  user-select: none;
+  
+  &.active {
+    font-weight: 700;
+    color: variables.$color-text-primary;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+/*************************************************************************************************************
+ * Colors
+ *************************************************************************************************************/
+.sidebar {
+  width: 160px;
+  flex-shrink: 0;
+  padding: 32px 0 40px;
+  position: sticky;
+  top: 56px;
+  align-self: flex-start;
+}
+
+.title {
+  font-size: variables.$font-size-xl;
+  font-weight: 900;
+  color: variables.$color-text-primary;
+  margin-bottom: 24px;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.categoryItem {
+  font-size: variables.$font-size-sm;
+  color: variables.$color-text-muted;
+  cursor: pointer;
+  user-select: none;
+  
+  &.active {
+    font-weight: 700;
+    color: variables.$color-text-primary;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
