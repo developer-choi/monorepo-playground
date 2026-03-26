@@ -1,3 +1,4 @@
+import { OptimizedImage } from './Image';
 import type { Board } from '@/shared/board/types';
 import styles from './BoardCard.module.scss';
 
@@ -11,7 +12,7 @@ export default function BoardCard({ board }: BoardCardProps) {
   return (
     <article>
       <div className={styles.imageWrapper}>
-        <img src={thumbnailUrl} alt={postTitle} className={styles.image} />
+        <OptimizedImage src={thumbnailUrl} alt={postTitle} sizes={SIZES} className={styles.image} />
       </div>
 
       <div className={styles.info}>
@@ -24,3 +25,5 @@ export default function BoardCard({ board }: BoardCardProps) {
     </article>
   );
 }
+
+const SIZES = '25vw';
