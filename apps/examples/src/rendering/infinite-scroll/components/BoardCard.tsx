@@ -7,6 +7,7 @@ interface BoardCardProps {
 }
 
 export default function BoardCard({ board }: BoardCardProps) {
+  console.count('BoardCard render');
   const { postTitle, author, thumbnailUrl, createdAt } = board;
 
   return (
