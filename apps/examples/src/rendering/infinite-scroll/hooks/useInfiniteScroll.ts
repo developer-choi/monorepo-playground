@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 
 interface UseInfiniteScrollParams {
   fetchNextPage: () => void;
@@ -7,37 +7,41 @@ interface UseInfiniteScrollParams {
   offset?: number;
 }
 
+interface UseInfiniteScrollReturn {
+  sentinelRef: RefObject<HTMLDivElement | null>;
+}
+
 export function useInfiniteScroll({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
-  offset = 300,
-}: UseInfiniteScrollParams) {
+  offset = 500,
+}: UseInfiniteScrollParams): UseInfiniteScrollReturn {
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const enabled = hasNextPage && !isFetchingNextPage;
+
   useEffect(() => {
-    if (!hasNextPage || isFetchingNextPage) return;
+    const sentinelElement = sentinelRef.current;
 
-    let throttleTimer: ReturnType<typeof setTimeout> | null = null;
-
-    function handleScroll() {
-      if (throttleTimer) return;
-
-      throttleTimer = setTimeout(() => {
-        throttleTimer = null;
-      }, 200);
-
-      console.count('scroll callback');
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
-
-      if (scrollTop + clientHeight >= scrollHeight - offset) {
-        fetchNextPage();
-      }
+    if (!sentinelElement || !enabled) {
+      return;
     }
 
-    window.addEventListener('scroll', handleScroll);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNextPage();
+        }
+      },
+      { rootMargin: `0px 0px ${offset}px 0px` },
+    );
+
+    observer.observe(sentinelElement);
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (throttleTimer) clearTimeout(throttleTimer);
+      observer.disconnect();
     };
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage, offset]);
+  }, [fetchNextPage, enabled, offset]);
+
+  return { sentinelRef };
 }
