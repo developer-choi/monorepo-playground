@@ -11,6 +11,7 @@ export const boardQueries = {
         initialPageParam: 1,
         getNextPageParam: (lastPage, allPages) =>
           lastPage.hasNext ? allPages.length + 1 : undefined,
+        staleTime: 30_000,
       }),
   },
 };

@@ -1,0 +1,43 @@
+@use '@/rendering/infinite-scroll/_variables';
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.title {
+  font-size: variables.$font-size-lg;
+  font-weight: 600;
+}
+
+.code {
+  margin-top: 8px;
+  color: variables.$color-text-disabled;
+}
+
+.card {
+  margin-top: 24px;
+  padding: 24px;
+  background: variables.$color-surface;
+  border-radius: 8px;
+  border: 1px solid variables.$color-border;
+  font-size: variables.$font-size-sm;
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardTitle {
+  font-weight: 600;
+}
+
+.highlight {
+  font-weight: 700;
+}
+
+.link {
+  font-weight: 600;
+  text-decoration: underline;
+}
