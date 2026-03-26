@@ -8,7 +8,8 @@
     "start": "turbo start",
     "lint": "turbo lint",
     "examples": "turbo build --filter=@monorepo-playground/design-system && turbo dev --filter=examples",
-    "design-system": "turbo storybook --filter=@monorepo-playground/design-system"
+    "design-system": "turbo storybook --filter=@monorepo-playground/design-system",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,9 @@
   ],
   "packageManager": "npm@11.6.2",
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "husky": "^9.1.7",
     "turbo": "^2.7.3"
   }
 }
