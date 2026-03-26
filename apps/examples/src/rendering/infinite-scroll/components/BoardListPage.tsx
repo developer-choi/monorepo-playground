@@ -3,6 +3,7 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { boardQueries } from '../queries';
+import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 import BoardCard from './BoardCard';
 import BoardCardSkeleton from './BoardCardSkeleton';
 import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
@@ -10,8 +11,15 @@ import styles from './BoardListPage.module.scss';
 import { Button } from '@radix-ui/themes';
 
 export default function BoardListPage() {
-  const { data } = useSuspenseInfiniteQuery(boardQueries.list.options());
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSuspenseInfiniteQuery(boardQueries.list.options());
   const boards = data.pages.flatMap((page) => page.list);
+
+  useInfiniteScroll({
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  });
 
   return (
     <ErrorBoundary
@@ -27,6 +35,10 @@ export default function BoardListPage() {
           {boards.map((board) => (
             <BoardCard key={board.id} board={board} />
           ))}
+          {isFetchingNextPage &&
+            Array.from({ length: SKELETON_COUNT }, (_, index) => (
+              <BoardCardSkeleton key={index} />
+            ))}
         </div>
       </section>
     </ErrorBoundary>
