@@ -5,6 +5,9 @@ export interface ServerBoardDto {
   board_type: string;
   category: string;
   tag_list: string[] | null;
+  author: string;
+  thumbnail_url: string;
+  created_at: string;
 }
 
 export interface ServerBoardRowDto {
@@ -13,6 +16,9 @@ export interface ServerBoardRowDto {
   board_type: string;
   category: string;
   tag_list: string[] | null;
+  author: string;
+  thumbnail_url: string;
+  created_at: string;
 }
 
 export interface ServerPaginationMetaDto {
