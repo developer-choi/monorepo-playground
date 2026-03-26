@@ -4,6 +4,7 @@ interface UseInfiniteScrollParams {
   fetchNextPage: () => void;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
+  isError: boolean;
   offset?: number;
 }
 
@@ -15,10 +16,11 @@ export function useInfiniteScroll({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
+  isError,
   offset = 500,
 }: UseInfiniteScrollParams): UseInfiniteScrollReturn {
   const sentinelRef = useRef<HTMLDivElement>(null);
-  const enabled = hasNextPage && !isFetchingNextPage;
+  const enabled = hasNextPage && !isFetchingNextPage && !isError;
 
   useEffect(() => {
     const sentinelElement = sentinelRef.current;
