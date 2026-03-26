@@ -1,7 +1,20 @@
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 import BoardListPage from '@/rendering/infinite-scroll/components/BoardListPage';
+import { boardQueries } from '@/rendering/infinite-scroll/queries';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(boardQueries.list.options());
+
   return (
-    <BoardListPage />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <BoardListPage />
+    </HydrationBoundary>
   );
 }
