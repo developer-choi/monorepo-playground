@@ -1,13 +1,16 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions } from '@tanstack/react-query';
 import { getBoardListApi } from '@/shared/board/api';
 
 export const boardQueries = {
   list: {
     key: () => ['boards'],
     options: () =>
-      queryOptions({
+      infiniteQueryOptions({
         queryKey: [...boardQueries.list.key()],
-        queryFn: () => getBoardListApi({ page: 1 }),
+        queryFn: ({ pageParam }) => getBoardListApi({ page: pageParam }),
+        initialPageParam: 1,
+        getNextPageParam: (lastPage, allPages) =>
+          lastPage.hasNext ? allPages.length + 1 : undefined,
       }),
   },
 };
