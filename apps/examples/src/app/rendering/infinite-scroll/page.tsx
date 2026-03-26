@@ -21,7 +21,7 @@ export default function Home() {
 
 async function PrefetchedBoardList() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(boardQueries.list.options());
+  await queryClient.prefetchInfiniteQuery(boardQueries.list.options());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
