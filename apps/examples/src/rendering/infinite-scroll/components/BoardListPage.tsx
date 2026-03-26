@@ -15,7 +15,7 @@ export default function BoardListPage() {
     useSuspenseInfiniteQuery(boardQueries.list.options());
   const boards = data.pages.flatMap((page) => page.list);
 
-  useInfiniteScroll({
+  const { sentinelRef } = useInfiniteScroll({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -40,6 +40,7 @@ export default function BoardListPage() {
               <BoardCardSkeleton key={index} />
             ))}
         </div>
+        <div ref={sentinelRef} />
       </section>
     </ErrorBoundary>
   );
