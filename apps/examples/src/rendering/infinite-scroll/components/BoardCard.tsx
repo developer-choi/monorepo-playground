@@ -8,7 +8,6 @@ interface BoardCardProps {
 }
 
 export default memo(function BoardCard({ board }: BoardCardProps) {
-  console.count('BoardCard render');
   const { postTitle, author, thumbnailUrl, createdAt } = board;
 
   return (
