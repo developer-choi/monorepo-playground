@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { OptimizedImage } from './Image';
 import type { Board } from '@/shared/board/types';
 import styles from './BoardCard.module.scss';
@@ -6,7 +7,7 @@ interface BoardCardProps {
   board: Board;
 }
 
-export default function BoardCard({ board }: BoardCardProps) {
+export default memo(function BoardCard({ board }: BoardCardProps) {
   console.count('BoardCard render');
   const { postTitle, author, thumbnailUrl, createdAt } = board;
 
@@ -25,6 +26,6 @@ export default function BoardCard({ board }: BoardCardProps) {
       </div>
     </article>
   );
-}
+});
 
 const SIZES = '25vw';
