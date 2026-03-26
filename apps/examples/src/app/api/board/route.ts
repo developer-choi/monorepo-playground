@@ -2,13 +2,7 @@ import {NextRequest, NextResponse} from 'next/server';
 import database from '@/shared/server/database';
 import {ServerBoardListResponseDto} from '@/app/api/board/dto';
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export async function GET(request: NextRequest) {
-  await delay(1000);
-
   const {list} = await database.board.get();
   const sp = request.nextUrl.searchParams;
 
