@@ -31,16 +31,22 @@ export default function BoardListPage() {
       )}
     >
       <section className={styles.container}>
-        <div className={styles.grid}>
-          {boards.map((board) => (
-            <BoardCard key={board.id} board={board} />
-          ))}
-          {isFetchingNextPage &&
-            Array.from({ length: SKELETON_COUNT }, (_, index) => (
-              <BoardCardSkeleton key={index} />
-            ))}
-        </div>
-        <div ref={sentinelRef} />
+        {boards.length === 0 ? (
+          <p className={styles.message}>게시글이 없습니다.</p>
+        ) : (
+          <>
+            <div className={styles.grid}>
+              {boards.map((board) => (
+                <BoardCard key={board.id} board={board} />
+              ))}
+              {isFetchingNextPage &&
+                Array.from({ length: SKELETON_COUNT }, (_, index) => (
+                  <BoardCardSkeleton key={index} />
+                ))}
+            </div>
+            <div ref={sentinelRef} />
+          </>
+        )}
       </section>
     </ErrorBoundary>
   );
