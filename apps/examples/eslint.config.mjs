@@ -2,6 +2,7 @@ import {defineConfig, globalIgnores} from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import pluginQuery from '@tanstack/eslint-plugin-query';
+import {baseRules} from '../../eslint.config.base.mjs';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -25,8 +26,8 @@ const eslintConfig = defineConfig([
       },
     },
     rules: {
+      ...baseRules,
       'react-hooks/error-boundaries': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', {argsIgnorePattern: '^_', varsIgnorePattern: '^_'}],
       '@typescript-eslint/no-deprecated': 'error',
     }
   }
