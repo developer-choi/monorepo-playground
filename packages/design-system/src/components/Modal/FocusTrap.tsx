@@ -21,7 +21,7 @@ const candidatesSelector = [
 ].join(',');
 
 function defaultGetTabbable(root: HTMLElement): HTMLElement[] {
-  return Array.from(root.querySelectorAll(candidatesSelector)) as HTMLElement[];
+  return Array.from(root.querySelectorAll(candidatesSelector));
 }
 
 export default function FocusTrap(props: FocusTrapProps): JSX.Element {
@@ -48,7 +48,7 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
       const tabbable = defaultGetTabbable(rootElement);
 
       if (tabbable.length > 0) {
-        tabbable[0].focus();
+        tabbable[0]?.focus();
       } else {
         if (!rootElement.hasAttribute('tabIndex')) {
           rootElement.setAttribute('tabIndex', '-1');
@@ -112,10 +112,10 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
 
       if (isShiftTab) {
         const focusPrevious = tabbable[tabbable.length - 1];
-        focusPrevious.focus();
+        focusPrevious?.focus();
       } else {
         const focusNext = tabbable[0];
-        focusNext.focus();
+        focusNext?.focus();
       }
     };
 

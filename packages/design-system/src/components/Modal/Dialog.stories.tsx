@@ -85,7 +85,7 @@ const BasicUsageStory = (args: DialogProps) => {
         open={open}
         onClose={(event, reason) => {
           setOpen(false);
-          args.onClose?.(event, reason);
+          args.onClose(event, reason);
         }}
       >
         <div className={styles.dialogContent}>
@@ -139,7 +139,7 @@ const FocusStory = (args: DialogProps) => {
         open={restoreOpen}
         onClose={(event, reason) => {
           setRestoreOpen(false);
-          args.onClose?.(event, reason);
+          args.onClose(event, reason);
         }}
       >
         <FormDialogContent
@@ -158,7 +158,7 @@ const FocusStory = (args: DialogProps) => {
         open={trapOpen}
         onClose={(event, reason) => {
           setTrapOpen(false);
-          args.onClose?.(event, reason);
+          args.onClose(event, reason);
         }}
       >
         <FormDialogContent
@@ -196,7 +196,7 @@ const CriticalAlertStory = (args: DialogProps) => {
         open={open}
         onClose={(event, reason) => {
           setOpen(false);
-          args.onClose?.(event, reason);
+          args.onClose(event, reason);
         }}
       >
         <div className={styles.dialogContent}>

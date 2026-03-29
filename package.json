@@ -9,7 +9,14 @@
     "lint": "turbo lint",
     "examples": "turbo build --filter=@monorepo-playground/design-system && turbo dev --filter=examples",
     "design-system": "turbo storybook --filter=@monorepo-playground/design-system",
+    "test-staged": "lint-staged && turbo check-types",
+    "test-all": "turbo check-types && turbo lint",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "apps/examples/**/*.{ts,tsx}": "eslint --fix --config apps/examples/eslint.config.mjs",
+    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --config packages/design-system/eslint.config.js",
+    "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --config packages/recruitment/eslint.config.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +31,7 @@
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "turbo": "^2.7.3"
   }
 }
