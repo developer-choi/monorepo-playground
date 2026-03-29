@@ -1,4 +1,4 @@
-# Monorepo Playground
+# 기여 가이드
 
 React/Next.js best practice를 모노레포 예제 패키지 형태로 정리하는 프로젝트입니다.
 
