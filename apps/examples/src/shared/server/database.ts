@@ -29,8 +29,9 @@ const database = {
     get: function getBoard(): Promise<BoardTable> {
       return Promise.resolve(boardStore);
     },
-    set: async function setBoard(board: BoardTable): Promise<void> {
+    set: function setBoard(board: BoardTable): Promise<void> {
       boardStore = board;
+      return Promise.resolve();
     },
   },
 };

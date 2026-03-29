@@ -43,12 +43,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument -- TODO: API body를 zod 등으로 검증하여 disable 제거 */
   const body = await request.json();
   const {list} = await database.board.get();
   const nextId = list.length === 0 ? 1 : Math.max(...list.map(item => item.id)) + 1;
 
   const newItem = {id: nextId, ...body};
   list.push(newItem);
+  /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument -- TODO: API body를 zod 등으로 검증하여 disable 제거 */
   await database.board.set({list});
 
   return NextResponse.json(newItem, {status: 201});
