@@ -1,7 +1,7 @@
 import { useEffect, useRef, type RefObject } from 'react';
 
 interface UseInfiniteScrollParams {
-  fetchNextPage: () => void;
+  fetchNextPage: () => void | Promise<unknown>;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
   isError: boolean;
@@ -31,8 +31,8 @@ export function useInfiniteScroll({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchNextPage();
+        if (entries[0]!.isIntersecting) {
+          void fetchNextPage();
         }
       },
       { rootMargin: `0px 0px ${offset}px 0px` },

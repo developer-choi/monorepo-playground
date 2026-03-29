@@ -29,10 +29,13 @@ export default function BoardFilter() {
 
   const onSubmit = (data: BoardListFilterForm) => {
     const isAllTypes = BOARD_TYPES.values.every(t => data.boardType.includes(t));
-    router.push(buildUrlWithQuery(DEFAULT_URL, {
-      ...data,
-      boardType: isAllTypes ? undefined : data.boardType,
-      category: data.category === 'all' ? undefined : data.category,
+    router.push(buildUrlWithQuery({
+      pathname: DEFAULT_URL,
+      params: {
+        ...data,
+        boardType: isAllTypes ? undefined : data.boardType,
+        category: data.category === 'all' ? undefined : data.category,
+      },
     }));
   };
 
@@ -43,7 +46,7 @@ export default function BoardFilter() {
 
   return (
     <Card variant="surface" mb="5">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
         <Flex direction="column" gap="4">
           <Box>
             <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>검색</Text>
@@ -81,11 +84,11 @@ export default function BoardFilter() {
                       <Text as="label" size="2" key={value}>
                         <Flex gap="2" align="center">
                           <Checkbox
-                            checked={field.value.includes(value) ?? false}
+                            checked={field.value.includes(value)}
                             onCheckedChange={checked => {
                               const next = checked
-                                ? [...(field.value ?? []), value]
-                                : (field.value ?? []).filter(t => t !== value);
+                                ? [...field.value, value]
+                                : field.value.filter(t => t !== value);
                               field.onChange(next);
                             }}
                           />
@@ -129,11 +132,11 @@ export default function BoardFilter() {
                     <Text as="label" size="2" key={tag}>
                       <Flex gap="2" align="center">
                         <Checkbox
-                          checked={field.value.includes(tag) ?? false}
+                          checked={field.value.includes(tag)}
                           onCheckedChange={checked => {
                             const next = checked
-                              ? [...(field.value ?? []), tag]
-                              : (field.value ?? []).filter(t => t !== tag);
+                              ? [...field.value, tag]
+                              : field.value.filter(t => t !== tag);
                             field.onChange(next);
                           }}
                         />

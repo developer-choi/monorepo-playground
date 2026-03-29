@@ -24,7 +24,7 @@ export default abstract class BaseError extends Error {
   readonly sentryOptions: SentryOption;
 
   protected constructor(message: string, option: SentryOption & BaseErrorOption) {
-    const {cause, ...sentry} = option ?? {};
+    const {cause, ...sentry} = option;
     super(message, {cause});
     this.sentryOptions = sentry;
   }

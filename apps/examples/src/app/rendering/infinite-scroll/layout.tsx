@@ -33,9 +33,7 @@ function Sidebar() {
         {CATEGORIES.map((category, index) => (
           <li key={category}>
             <span
-              className={classNames(styles.categoryItem, {
-                [styles.active]: index === 0,
-              })}
+              className={classNames(styles.categoryItem, index === 0 && styles.active)}
             >
               {category}
             </span>
