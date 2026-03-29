@@ -137,8 +137,8 @@ function useVirtualGrid(itemCount: number, isFetchingNextPage: boolean) {
   const skeletonRowCount = isFetchingNextPage
     ? Math.ceil(SKELETON_COUNT / COLUMN_COUNT)
     : 0;
-  const skeletonHeight =
-    skeletonRowCount * estimateRowHeight(containerRef);
+  // eslint-disable-next-line react-hooks/refs -- TODO: ref 접근을 effect로 이동
+  const skeletonHeight = skeletonRowCount * estimateRowHeight(containerRef);
   const virtualizedHeight = virtualizer.getTotalSize();
 
   return {

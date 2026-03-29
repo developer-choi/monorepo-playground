@@ -13,7 +13,13 @@ export function safeParsePartial<T extends z.ZodObject<z.ZodRawShape>>(
       continue
     }
 
-    const fieldResult = z.safeParse(schema.shape[key], value);
+    const fieldSchema = schema.shape[key];
+
+    if (!fieldSchema) {
+      continue;
+    }
+
+    const fieldResult = z.safeParse(fieldSchema, value);
 
     if (fieldResult.success) {
       result[key] = fieldResult.data;

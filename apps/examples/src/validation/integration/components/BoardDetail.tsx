@@ -68,7 +68,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
                     <Button size="2" variant="soft" color="gray">취소</Button>
                   </AlertDialog.Cancel>
                   <AlertDialog.Action>
-                    <Button size="2" color="red" onClick={handleDelete}>삭제</Button>
+                    <Button size="2" color="red" onClick={() => void handleDelete()}>삭제</Button>
                   </AlertDialog.Action>
                 </Flex>
               </AlertDialog.Content>

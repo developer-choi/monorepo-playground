@@ -8,11 +8,10 @@ export interface BuildUrlOptions {
   skipEmptyString?: boolean;
 }
 
-export function buildUrlWithQuery(
-  pathname: string,
-  params: QueryParams,
-  options?: BuildUrlOptions,
-): string {
+export function buildUrlWithQuery({pathname, params, ...options}: {
+  pathname: string;
+  params: QueryParams;
+} & Partial<BuildUrlOptions>): string {
   const {skipNullish, skipEmptyString} = {...DEFAULT_OPTIONS, ...options};
 
   return queryString.stringifyUrl(

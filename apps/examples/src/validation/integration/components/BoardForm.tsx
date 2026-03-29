@@ -51,7 +51,7 @@ export default function BoardForm({board}: BoardFormProps) {
     <Container size="2" p="6">
       <Heading size="6" mb="5">{isEdit ? '글 수정' : '새 글 작성'}</Heading>
       <Card size="3">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
           <Flex direction="column" gap="5">
             <Box>
               <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>제목</Text>

@@ -26,7 +26,7 @@ export async function PATCH(request: NextRequest, {params}: RouteContext) {
 
   list[index] = {...list[index], ...body};
   await database.board.set({list});
-  const updated = list[index];
+  const updated = list[index]!;
   return NextResponse.json({...updated, tag_list: !updated.tag_list?.length ? null : updated.tag_list});
 }
 

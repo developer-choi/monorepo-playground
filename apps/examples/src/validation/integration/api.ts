@@ -15,7 +15,7 @@ import {buildUrlWithQuery} from '@/shared/utils/url';
 import {toCamelCaseKeys, toSnakeCaseKeys} from 'es-toolkit';
 
 export async function getBoardListApi(params: Partial<BoardListFilter & PaginationParams>): Promise<BoardListApiResponse> {
-  const raw = await api.get(buildUrlWithQuery('api/board', toSnakeCaseKeys(params))).json<ServerBoardListResponse>();
+  const raw = await api.get(buildUrlWithQuery({pathname: 'api/board', params: toSnakeCaseKeys(params)})).json<ServerBoardListResponse>();
   return {
     ...toCamelCaseKeys(raw),
     list: raw.list.map(row => validateApiResponse(BoardRowSchema, {...toCamelCaseKeys(row), tagList: row.tag_list ?? []})),
