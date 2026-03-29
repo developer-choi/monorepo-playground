@@ -16,6 +16,7 @@ export async function GET(_request: NextRequest, {params}: RouteContext) {
 
 export async function PATCH(request: NextRequest, {params}: RouteContext) {
   const {id} = await params;
+  /* eslint-disable @typescript-eslint/no-unsafe-assignment -- TODO: API body를 zod 등으로 검증하여 disable 제거 */
   const body = await request.json();
   const {list} = await database.board.get();
   const index = list.findIndex(item => item.id === Number(id));
@@ -25,6 +26,7 @@ export async function PATCH(request: NextRequest, {params}: RouteContext) {
   }
 
   list[index] = {...list[index], ...body};
+  /* eslint-enable @typescript-eslint/no-unsafe-assignment -- TODO: API body를 zod 등으로 검증하여 disable 제거 */
   await database.board.set({list});
   const updated = list[index]!;
   return NextResponse.json({...updated, tag_list: !updated.tag_list?.length ? null : updated.tag_list});

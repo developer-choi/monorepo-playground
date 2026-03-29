@@ -31,7 +31,7 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
             key={p}
             variant={p === page ? 'solid' : 'soft'}
             size="1"
-            onClick={() => onPageChange(p as number)}
+            onClick={() => onPageChange(p)}
           >
             {p}
           </Button>
