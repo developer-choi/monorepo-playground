@@ -4,9 +4,24 @@
   padding: variables.$space24 0 variables.$space80;
 }
 
+.virtualContainer {
+  position: relative;
+}
+
+.virtualRow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(var(--column-count), 1fr);
+  gap: 0 16px;
+  padding-bottom: 40px;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(var(--column-count), 1fr);
   /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- 데모 전용 비대칭 그리드 간격 (40px 토큰 없음) */
   gap: 40px 16px;
 }
