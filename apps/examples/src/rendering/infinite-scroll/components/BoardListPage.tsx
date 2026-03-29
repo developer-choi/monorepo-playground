@@ -11,10 +11,6 @@ import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
 import styles from './BoardListPage.module.scss';
 import { Button } from '@radix-ui/themes';
 
-const COLUMN_COUNT = 4;
-const SKELETON_COUNT = 24;
-const ESTIMATED_ROW_HEIGHT = 400;
-
 export default function BoardListPage() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
     useSuspenseInfiniteQuery(boardQueries.list.options());
@@ -30,27 +26,14 @@ export default function BoardListPage() {
 
   const virtualRows = virtualizer.getVirtualItems();
 
-  useEffect(() => {
-    const lastItem = virtualRows[virtualRows.length - 1];
-
-    if (!lastItem) return;
-
-    if (
-      lastItem.index >= rowCount - 1 &&
-      hasNextPage &&
-      !isFetchingNextPage &&
-      !isError
-    ) {
-      void fetchNextPage();
-    }
-  }, [
-    hasNextPage,
-    fetchNextPage,
+  useInfiniteScrollTrigger({
+    virtualRows,
     rowCount,
+    fetchNextPage,
+    hasNextPage,
     isFetchingNextPage,
     isError,
-    virtualRows,
-  ]);
+  });
 
   return (
     <ErrorBoundary
@@ -61,7 +44,7 @@ export default function BoardListPage() {
         />
       )}
     >
-      <section className={styles.container}>
+      <section className={styles.container} style={columnCountStyle}>
         {boards.length === 0 ? (
           <p className={styles.message}>게시글이 없습니다.</p>
         ) : (
@@ -82,12 +65,8 @@ export default function BoardListPage() {
                     key={virtualRow.key}
                     data-index={virtualRow.index}
                     ref={virtualizer.measureElement}
-                    className={styles.grid}
+                    className={styles.virtualRow}
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
                       transform: `translateY(${virtualRow.start}px)`,
                     }}
                   >
@@ -100,12 +79,8 @@ export default function BoardListPage() {
 
               {isFetchingNextPage && (
                 <div
-                  className={styles.grid}
+                  className={styles.virtualRow}
                   style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
                     transform: `translateY(${virtualizer.getTotalSize()}px)`,
                   }}
                 >
@@ -129,7 +104,7 @@ export default function BoardListPage() {
 
 export function BoardListSkeleton() {
   return (
-    <section className={styles.container}>
+    <section className={styles.container} style={columnCountStyle}>
       <div className={styles.grid}>
         {Array.from({ length: SKELETON_COUNT }, (_, index) => (
           <BoardCardSkeleton key={index} />
@@ -137,4 +112,44 @@ export function BoardListSkeleton() {
       </div>
     </section>
   );
+}
+
+const COLUMN_COUNT = 4;
+const SKELETON_COUNT = 24;
+const ESTIMATED_ROW_HEIGHT = 400;
+const columnCountStyle = {
+  '--column-count': COLUMN_COUNT,
+} as React.CSSProperties;
+
+function useInfiniteScrollTrigger({
+  virtualRows,
+  rowCount,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  isError,
+}: {
+  virtualRows: { index: number }[];
+  rowCount: number;
+  fetchNextPage: () => Promise<unknown>;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  isError: boolean;
+}) {
+  useEffect(() => {
+    const lastItem = virtualRows[virtualRows.length - 1];
+
+    if (!lastItem) {
+      return;
+    }
+
+    if (
+      lastItem.index >= rowCount - 1 &&
+      hasNextPage &&
+      !isFetchingNextPage &&
+      !isError
+    ) {
+      void fetchNextPage();
+    }
+  }, [hasNextPage, fetchNextPage, rowCount, isFetchingNextPage, isError, virtualRows]);
 }

@@ -6,14 +6,23 @@
 
 .virtualContainer {
   position: relative;
+}
+
+.virtualRow {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(var(--column-count), 1fr);
+  gap: 0 16px;
+  padding-bottom: 40px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0 16px;
-  padding-bottom: 40px;
+  grid-template-columns: repeat(var(--column-count), 1fr);
+  gap: 40px 16px;
 }
 
 .message {
