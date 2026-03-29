@@ -7,7 +7,7 @@ import {defineConfig, globalIgnores} from 'eslint/config';
 import {baseRules} from '../../eslint.config.base.mts';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', '**/*.d.ts']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
