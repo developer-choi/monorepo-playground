@@ -12,6 +12,21 @@ import styles from './BoardListPage.module.scss';
 import { Button } from '@radix-ui/themes';
 
 export default function BoardListPage() {
+  return (
+    <ErrorBoundary
+      fallbackRender={({ resetErrorBoundary }) => (
+        <ErrorPageTemplate
+          message="게시글 목록을 불러오지 못했습니다."
+          action={<Button onClick={resetErrorBoundary}>다시 시도</Button>}
+        />
+      )}
+    >
+      <BoardList />
+    </ErrorBoundary>
+  );
+}
+
+function BoardList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
     useSuspenseInfiniteQuery(boardQueries.list.options());
   const boards = data.pages.flatMap((page) => page.list);
@@ -36,15 +51,7 @@ export default function BoardListPage() {
   });
 
   return (
-    <ErrorBoundary
-      fallbackRender={({ resetErrorBoundary }) => (
-        <ErrorPageTemplate
-          message="게시글 목록을 불러오지 못했습니다."
-          action={<Button onClick={resetErrorBoundary}>다시 시도</Button>}
-        />
-      )}
-    >
-      <section className={styles.container} style={columnCountStyle}>
+    <section className={styles.container} style={columnCountStyle}>
         {boards.length === 0 ? (
           <p className={styles.message}>게시글이 없습니다.</p>
         ) : (
@@ -98,7 +105,6 @@ export default function BoardListPage() {
           </>
         )}
       </section>
-    </ErrorBoundary>
   );
 }
 
