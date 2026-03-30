@@ -9,6 +9,14 @@ import HandledErrorBoundary from '@/shared/error/handler/HandledErrorBoundary';
 import styles from './BoardListPage.module.scss';
 
 export default function BoardListPage() {
+  return (
+    <HandledErrorBoundary>
+      <BoardList />
+    </HandledErrorBoundary>
+  );
+}
+
+function BoardList() {
   const {data, fetchNextPage, hasNextPage, isFetchingNextPage, isError} = useSuspenseInfiniteQuery(
     boardQueries.list.options(),
   );
@@ -22,25 +30,23 @@ export default function BoardListPage() {
   });
 
   return (
-    <HandledErrorBoundary>
-      <section className={styles.container}>
-        {boards.length === 0 ? (
-          <p className={styles.message}>게시글이 없습니다.</p>
-        ) : (
-          <>
-            <div className={styles.grid}>
-              {boards.map((board) => (
-                <BoardCard key={board.id} board={board} />
-              ))}
-              {isFetchingNextPage &&
-                Array.from({length: SKELETON_COUNT}, (_unused, index) => <BoardCardSkeleton key={index} />)}
-            </div>
-            <div ref={sentinelRef} />
-            {isError && <p className={styles.message}>게시글을 더 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>}
-          </>
-        )}
-      </section>
-    </HandledErrorBoundary>
+    <section className={styles.container}>
+      {boards.length === 0 ? (
+        <p className={styles.message}>게시글이 없습니다.</p>
+      ) : (
+        <>
+          <div className={styles.grid}>
+            {boards.map((board) => (
+              <BoardCard key={board.id} board={board} />
+            ))}
+            {isFetchingNextPage &&
+              Array.from({length: SKELETON_COUNT}, (_unused, index) => <BoardCardSkeleton key={index} />)}
+          </div>
+          <div ref={sentinelRef} />
+          {isError && <p className={styles.message}>게시글을 더 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>}
+        </>
+      )}
+    </section>
   );
 }
 
