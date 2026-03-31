@@ -238,6 +238,24 @@ import { used } from './module';
 function onClick(_event: MouseEvent) { ... }  // _로 시작하면 허용
 ```
 
+#### 22. `no-restricted-syntax` — 빈 alt 속성 금지
+
+`<img alt="">` 처럼 빈 alt를 실수로 넣는 것을 방지합니다. 3개의 AST 셀렉터로 `alt=""`, `alt=''`, `alt={''}`, `` alt={``} ``, `alt={""}` 5가지 패턴을 모두 커버합니다.
+
+```tsx
+// ❌
+<img alt="" src="/photo.jpg" />
+<img alt={''} src="/photo.jpg" />
+<img alt={``} src="/photo.jpg" />
+
+// ✅
+<img alt="프로필 사진" src="/photo.jpg" />
+
+// 장식용 이미지라면 eslint-disable + 사유 주석
+// eslint-disable-next-line no-restricted-syntax -- 배경 장식 이미지
+<img alt="" src="/bg-pattern.png" />
+```
+
 ### ESLint — 워크스페이스별 추가 규칙
 
 `baseRules` 외에 특정 워크스페이스에서만 추가한 규칙입니다.
@@ -453,13 +471,17 @@ type(scope): subject
 | `scope-enum` | examples, design-system, recruitment, setting | 허용되는 scope 목록 |
 | `scope-empty` | never | scope 필수 |
 | `subject-case` | off | 한글 커밋 메시지 허용 |
+| `subject-korean` | always | subject에 한글 필수 (커스텀 플러그인) |
+
+`subject-korean`은 커스텀 플러그인 룰로, subject에 한글(`/[\uAC00-\uD7AF]/`)이 포함되어야 통과합니다. AI가 영어로만 커밋 메시지를 작성하는 것을 방지합니다.
 
 ```bash
 # ✅
 feat(examples): 폼 예제 추가
-chore(setting): husky 설정
+feat(examples): React 컴포넌트 추가
 
 # ❌
 feat: scope 없음
 feat(unknown): 등록되지 않은 scope
+feat(examples): add form example  # 영어만 → subject-korean 위반
 ```
