@@ -53,7 +53,7 @@ function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
           <Badge color={badgeColor}>{label}</Badge>
         </Heading>
         <Text as="p" size="1" color="gray" mb="3">{description}</Text>
-        <form onSubmit={handleSubmit(() => setSubmitted(true))}>
+        <form onSubmit={handleSubmit(() => setSubmitted(true), () => setSubmitted(false))}>
           <Flex direction="column" gap="3">
             <Input
               {...register('email', {

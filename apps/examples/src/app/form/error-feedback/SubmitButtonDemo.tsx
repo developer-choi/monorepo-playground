@@ -70,7 +70,7 @@ function GoodSubmit() {
         <Text as="p" size="2" color="gray" mb="4">
           제출 시 에러 피드백으로 안내합니다.
         </Text>
-        <form onSubmit={handleSubmit(() => setSubmitted(true))}>
+        <form onSubmit={handleSubmit(() => setSubmitted(true), () => setSubmitted(false))}>
           <Flex direction="column" gap="3">
             <Input
               {...register('name', {required: '이름을 입력해주세요.'})}
