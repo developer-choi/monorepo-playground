@@ -17,7 +17,7 @@ export default function ValidationModeDemo() {
         mode="onSubmit"
         label="onSubmit (기본값)"
         badgeColor="blue"
-        description="제출해야 에러가 나타납니다. 에러 발생 후 수정하면 즉시 사라집니다."
+        description="제출해야 에러가 나타납니다."
       />
       <ModeForm
         mode="onBlur"
