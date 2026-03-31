@@ -31,7 +31,7 @@ function BadSubmit() {
           isValid로 비활성화
         </Heading>
         <Text as="p" size="2" color="gray" mb="4">
-          버튼이 비활성화되어 뭘 고쳐야 하는지 알 수 없습니다.
+          버튼이 비활성화되어 클릭 자체가 불가능합니다.
         </Text>
         <form onSubmit={form.onSubmit}>
           <Flex direction="column" gap="3">
