@@ -1,7 +1,8 @@
 'use client';
 
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Box, Card, Flex, Text} from '@radix-ui/themes';
+import {Box, Callout, Card, Flex, Text} from '@radix-ui/themes';
 import Button from '@/shared/components/form/Button';
 import Input from '@/shared/components/form/Input';
 
@@ -21,6 +22,7 @@ export default function ErrorScrollDemo() {
       address: '서울시 강남구',
     },
   });
+  const [result, setResult] = useState('');
 
   return (
     <Card>
@@ -28,7 +30,7 @@ export default function ErrorScrollDemo() {
         <Text as="p" size="2" color="gray" mb="4">
           이메일 필드만 비어있습니다. 제출하면 비어있는 이메일 필드로 포커스가 이동합니다.
         </Text>
-        <form onSubmit={handleSubmit(() => {})}>
+        <form onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
           <Flex direction="column" gap="3">
             <Input {...register('name', {required: '이름을 입력해주세요.'})} label="이름" error={errors.name?.message} />
             <Input {...register('email', {required: '이메일을 입력해주세요.'})} label="이메일" error={errors.email?.message} />
@@ -37,6 +39,11 @@ export default function ErrorScrollDemo() {
             <Button type="submit" size="large">제출</Button>
           </Flex>
         </form>
+        {result && (
+          <Callout.Root color="blue" mt="4" size="1">
+            <Callout.Text><strong>제출된 값:</strong> {result}</Callout.Text>
+          </Callout.Root>
+        )}
       </Box>
     </Card>
   );

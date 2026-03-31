@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Box, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
+import {Badge, Box, Callout, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
 import Button from '@/shared/components/form/Button';
 import Input from '@/shared/components/form/Input';
 
@@ -44,7 +44,7 @@ interface ModeFormProps {
 
 function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
   const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({mode});
-  const [submitted, setSubmitted] = useState(false);
+  const [result, setResult] = useState('');
 
   return (
     <Card>
@@ -53,7 +53,7 @@ function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
           <Badge color={badgeColor}>{label}</Badge>
         </Heading>
         <Text as="p" size="1" color="gray" mb="3">{description}</Text>
-        <form onSubmit={handleSubmit(() => setSubmitted(true), () => setSubmitted(false))}>
+        <form onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
           <Flex direction="column" gap="3">
             <Input
               {...register('email', {
@@ -66,7 +66,11 @@ function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
             <Button type="submit">제출</Button>
           </Flex>
         </form>
-        {submitted && <Text size="1" color="green" mt="2">제출 성공</Text>}
+        {result && (
+          <Callout.Root color="blue" mt="3" size="1">
+            <Callout.Text><strong>제출된 값:</strong> {result}</Callout.Text>
+          </Callout.Root>
+        )}
       </Box>
     </Card>
   );

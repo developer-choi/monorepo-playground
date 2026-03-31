@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Box, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
+import {Badge, Box, Callout, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
 import Button from '@/shared/components/form/Button';
 import Input from '@/shared/components/form/Input';
 
@@ -58,7 +58,7 @@ function BadSubmit() {
 
 function GoodSubmit() {
   const {register, handleSubmit, formState: {errors}} = useForm<FormValues>();
-  const [submitted, setSubmitted] = useState(false);
+  const [result, setResult] = useState('');
 
   return (
     <Card>
@@ -70,7 +70,7 @@ function GoodSubmit() {
         <Text as="p" size="2" color="gray" mb="4">
           제출 시 에러 피드백으로 안내합니다.
         </Text>
-        <form onSubmit={handleSubmit(() => setSubmitted(true), () => setSubmitted(false))}>
+        <form onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
           <Flex direction="column" gap="3">
             <Input
               {...register('name', {required: '이름을 입력해주세요.'})}
@@ -88,7 +88,11 @@ function GoodSubmit() {
             <Button type="submit" size="large">제출</Button>
           </Flex>
         </form>
-        {submitted && <Text size="1" color="green" mt="2">제출 성공</Text>}
+        {result && (
+          <Callout.Root color="blue" mt="4" size="1">
+            <Callout.Text><strong>제출된 값:</strong> {result}</Callout.Text>
+          </Callout.Root>
+        )}
       </Box>
     </Card>
   );
