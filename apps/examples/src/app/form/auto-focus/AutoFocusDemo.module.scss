@@ -1,0 +1,10 @@
+$search-input-max-width: 600px;
+
+.searchInput {
+  max-width: $search-input-max-width;
+
+  :global(.rt-TextFieldRoot) {
+    height: 44px;
+    font-size: 16px;
+  }
+}
