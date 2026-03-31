@@ -66,8 +66,8 @@ export default async function ErrorFeedbackPage() {
       <Box mb="8">
         <Heading size="5" mb="2">3. 에러 필드로 포커스 이동</Heading>
         <Text as="p" color="gray" size="2" mb="4">
-          제출 시 첫 번째 에러 필드로 자동 포커스합니다.
-          긴 폼에서 에러 필드가 화면 밖에 있으면 스크롤도 함께 처리해야 합니다.
+          react-hook-form은 제출 시 첫 번째 에러 필드로 자동 포커스하고,
+          화면 밖에 있으면 스크롤까지 처리해줍니다. 별도 구현 없이 동작하므로 편리합니다.
         </Text>
         <ErrorScrollDemo />
         <Box mt="4">
@@ -97,15 +97,7 @@ const SUBMIT_CODE = `// ❌ isValid로 버튼 비활성화
 // ✅ 항상 활성화 — 제출 시 에러 피드백으로 안내
 <Button type="submit">제출</Button>`;
 
-const SCROLL_CODE = `// react-hook-form은 기본적으로 첫 번째 에러 필드에 focus
+const SCROLL_CODE = `// react-hook-form은 기본적으로 첫 번째 에러 필드에 focus + scroll
 const form = useForm({
-  shouldFocusError: true, // 기본값
-});
-
-// 화면 밖 에러 필드로 스크롤까지 필요하면
-handleSubmit(onValid, (errors) => {
-  const firstErrorField = Object.keys(errors)[0];
-  const el = document.querySelector(\`[name="\${firstErrorField}"]\`);
-  el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  el?.focus();
+  shouldFocusError: true, // 기본값 — 별도 설정 불필요
 });`;
