@@ -70,11 +70,35 @@ function useErrorScrollForm() {
     error: errors.name?.message,
   };
 
-  const emailInputProps: InputProps = {...register('email'), label: '이메일', readOnly: true};
-  const phoneInputProps: InputProps = {...register('phone'), label: '전화번호', readOnly: true};
-  const addressInputProps: InputProps = {...register('address'), label: '주소', readOnly: true};
-  const addressDetailInputProps: InputProps = {...register('addressDetail'), label: '상세주소', readOnly: true};
-  const companyInputProps: InputProps = {...register('company'), label: '회사', readOnly: true};
+  const emailInputProps: InputProps = {
+    ...register('email'),
+    label: '이메일',
+    readOnly: true,
+  };
+
+  const phoneInputProps: InputProps = {
+    ...register('phone'),
+    label: '전화번호',
+    readOnly: true,
+  };
+
+  const addressInputProps: InputProps = {
+    ...register('address'),
+    label: '주소',
+    readOnly: true,
+  };
+
+  const addressDetailInputProps: InputProps = {
+    ...register('addressDetail'),
+    label: '상세주소',
+    readOnly: true,
+  };
+
+  const companyInputProps: InputProps = {
+    ...register('company'),
+    label: '회사',
+    readOnly: true,
+  };
 
   return {
     form: {
