@@ -4,4 +4,4 @@
 
 - `/trim` — 공백 trim 유효성검증
 - `/auto-focus` — 단일 목적 페이지의 자동 포커스
-- `/error-feedback` — 에러 피드백 (에러 표시 시점, 포커스, 폼 전체 에러)
+- `/error-feedback` — 에러 피드백 (에러 표시 시점, 포커스 이동)

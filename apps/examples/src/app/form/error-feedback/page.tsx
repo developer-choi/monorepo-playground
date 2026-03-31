@@ -25,10 +25,10 @@ export default async function ErrorFeedbackPage() {
         <Text as="p" color="gray" size="2" mb="4">
           react-hook-form의 <code>useForm()</code>은 <code>mode</code> 옵션으로 에러 노출 시점을 결정합니다.
         </Text>
-        <Box mb="4">
+        <ValidationModeDemo />
+        <Box mt="4">
           <div dangerouslySetInnerHTML={{__html: modeCodeHtml}} />
         </Box>
-        <ValidationModeDemo />
         <Box mt="6">
           <Heading size="4" mb="4">왜 onSubmit인가</Heading>
           <Text as="p" size="2" mb="3">
