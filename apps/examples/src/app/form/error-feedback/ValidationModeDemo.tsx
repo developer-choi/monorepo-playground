@@ -10,6 +10,13 @@ interface FormValues {
   email: string;
 }
 
+interface ModeFormProps {
+  mode: 'onSubmit' | 'onBlur' | 'onChange';
+  label: string;
+  badgeColor: 'blue' | 'orange' | 'violet';
+  description: string;
+}
+
 export default function ValidationModeDemo() {
   return (
     <Grid columns="3" gap="4">
@@ -33,13 +40,6 @@ export default function ValidationModeDemo() {
       />
     </Grid>
   );
-}
-
-interface ModeFormProps {
-  mode: 'onSubmit' | 'onBlur' | 'onChange';
-  label: string;
-  badgeColor: 'blue' | 'orange' | 'violet';
-  description: string;
 }
 
 function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {

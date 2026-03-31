@@ -25,7 +25,7 @@ export default function ErrorScrollDemo() {
         <Text as="p" size="2" color="gray" mb="4">
           스크롤을 내려 하단의 제출 버튼을 클릭해보세요.
         </Text>
-        <Box style={{maxHeight: 240, overflowY: 'auto'}}>
+        <Box style={{maxHeight: SCROLL_CONTAINER_MAX_HEIGHT, overflowY: 'auto'}}>
           <form className={styles.form} onSubmit={form.onSubmit}>
             <Flex direction="column" gap="3" p="1">
               <Input {...inputProps.name} />
@@ -48,6 +48,7 @@ export default function ErrorScrollDemo() {
   );
 }
 
+const SCROLL_CONTAINER_MAX_HEIGHT = 240;
 const GUIDE = '↓ 스크롤을 내려 제출 버튼을 눌러보세요';
 
 function useErrorScrollForm() {

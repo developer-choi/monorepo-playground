@@ -20,6 +20,11 @@ export default function SubmitButtonDemo() {
   );
 }
 
+const EMAIL_RULES = {
+  required: '이메일을 입력해주세요.',
+  pattern: {value: /^\S+@\S+\.\S+$/, message: '올바른 이메일 형식이 아닙니다.'},
+} as const;
+
 function BadSubmit() {
   const {form, inputProps, isValid} = useBadSubmitForm();
 
@@ -74,11 +79,6 @@ function GoodSubmit() {
     </Card>
   );
 }
-
-const EMAIL_RULES = {
-  required: '이메일을 입력해주세요.',
-  pattern: {value: /^\S+@\S+\.\S+$/, message: '올바른 이메일 형식이 아닙니다.'},
-} as const;
 
 function useBadSubmitForm() {
   const {register, formState: {errors, isValid}} = useForm<FormValues>({mode: 'onChange'});
