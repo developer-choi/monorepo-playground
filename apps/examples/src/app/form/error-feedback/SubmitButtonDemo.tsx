@@ -97,7 +97,7 @@ function useBadSubmitForm() {
 
   return {
     form: {
-      onSubmit: (e: FormEvent) => e.preventDefault(),
+      onSubmit: (event: FormEvent) => event.preventDefault(),
     },
     inputProps: {
       name: nameInputProps,
