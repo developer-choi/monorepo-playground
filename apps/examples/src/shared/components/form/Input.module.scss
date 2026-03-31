@@ -1,7 +1,7 @@
 .error {
-  box-shadow: inset 0 0 0 1px var(--red-a7);
+  box-shadow: inset 0 0 0 1px var(--red-a7) !important;
 
   &:focus-within {
-    box-shadow: inset 0 0 0 1px var(--red-a7), 0 0 0 1px var(--red-a7);
+    box-shadow: inset 0 0 0 1px var(--red-a7), 0 0 0 1px var(--red-a7) !important;
   }
 }

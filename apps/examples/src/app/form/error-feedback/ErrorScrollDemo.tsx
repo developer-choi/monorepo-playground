@@ -17,7 +17,17 @@ interface FormValues {
 }
 
 export default function ErrorScrollDemo() {
-  const {register, handleSubmit, formState: {errors}} = useForm<FormValues>();
+  const GUIDE = '↓ 스크롤을 내려 제출 버튼을 눌러보세요';
+  const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({
+    defaultValues: {
+      name: '',
+      email: GUIDE,
+      phone: GUIDE,
+      address: GUIDE,
+      addressDetail: GUIDE,
+      company: GUIDE,
+    },
+  });
   const [result, setResult] = useState('');
 
   return (
@@ -29,12 +39,12 @@ export default function ErrorScrollDemo() {
         <Box style={{maxHeight: 240, overflowY: 'auto'}}>
           <form className={styles.form} onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
             <Flex direction="column" gap="3" p="1">
-              <Input {...register('name', {required: '이름을 입력해주세요.'})} label="이름" placeholder="↓ 스크롤을 내려 제출 버튼을 눌러보세요" readOnly error={errors.name?.message} />
-              <Input {...register('email')} label="이메일" placeholder="↓ 스크롤을 내려 제출 버튼을 눌러보세요" readOnly />
-              <Input {...register('phone')} label="전화번호" placeholder="↓ 스크롤을 내려 제출 버튼을 눌러보세요" readOnly />
-              <Input {...register('address')} label="주소" placeholder="↓ 스크롤을 내려 제출 버튼을 눌러보세요" readOnly />
-              <Input {...register('addressDetail')} label="상세주소" placeholder="↓ 스크롤을 내려 제출 버튼을 눌러보세요" readOnly />
-              <Input {...register('company')} label="회사" placeholder="↓ 스크롤을 내려 제출 버튼을 눌러보세요" readOnly />
+              <Input {...register('name', {required: '이름을 입력해주세요.'})} label="이름" readOnly error={errors.name?.message} />
+              <Input {...register('email')} label="이메일" readOnly />
+              <Input {...register('phone')} label="전화번호" readOnly />
+              <Input {...register('address')} label="주소" readOnly />
+              <Input {...register('addressDetail')} label="상세주소" readOnly />
+              <Input {...register('company')} label="회사" readOnly />
               <Button type="submit" size="large">제출</Button>
             </Flex>
           </form>
