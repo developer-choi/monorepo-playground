@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import {Caption, Label} from './elements';
 import styles from './Input.module.scss';
 
-interface InputProps extends ComponentProps<typeof TextField.Root> {
+export interface InputProps extends ComponentProps<typeof TextField.Root> {
   label?: ReactNode;
   caption?: ReactNode;
   error?: ReactNode;

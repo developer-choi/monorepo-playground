@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Badge, Box, Callout, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
 import Button from '@/shared/components/form/Button';
-import Input from '@/shared/components/form/Input';
+import Input, {InputProps} from '@/shared/components/form/Input';
 
 interface FormValues {
   email: string;
@@ -43,8 +43,7 @@ interface ModeFormProps {
 }
 
 function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
-  const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({mode});
-  const [result, setResult] = useState('');
+  const {form, inputProps, result} = useModeForm(mode);
 
   return (
     <Card>
@@ -53,16 +52,9 @@ function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
           <Badge color={badgeColor}>{label}</Badge>
         </Heading>
         <Text as="p" size="1" color="gray" mb="3">{description}</Text>
-        <form onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
+        <form onSubmit={form.onSubmit}>
           <Flex direction="column" gap="3">
-            <Input
-              {...register('email', {
-                required: '이메일을 입력해주세요.',
-                pattern: {value: /^\S+@\S+\.\S+$/, message: '올바른 이메일 형식이 아닙니다.'},
-              })}
-              placeholder="test@example.com"
-              error={errors.email?.message}
-            />
+            <Input {...inputProps.email} />
             <Button type="submit">제출</Button>
           </Flex>
         </form>
@@ -74,4 +66,28 @@ function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
       </Box>
     </Card>
   );
+}
+
+function useModeForm(mode: 'onSubmit' | 'onBlur' | 'onChange') {
+  const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({mode});
+  const [result, setResult] = useState('');
+
+  const emailInputProps: InputProps = {
+    ...register('email', {
+      required: '이메일을 입력해주세요.',
+      pattern: {value: /^\S+@\S+\.\S+$/, message: '올바른 이메일 형식이 아닙니다.'},
+    }),
+    placeholder: 'test@example.com',
+    error: errors.email?.message,
+  };
+
+  return {
+    form: {
+      onSubmit: handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult('')),
+    },
+    inputProps: {
+      email: emailInputProps,
+    },
+    result,
+  };
 }
