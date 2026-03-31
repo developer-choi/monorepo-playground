@@ -23,7 +23,7 @@ export default async function ErrorFeedbackPage() {
       <Box mb="8">
         <Heading size="5" mb="2">1. 유효성검증은 언제 해야 하는가?</Heading>
         <Text as="p" color="gray" size="2" mb="4">
-          에러를 보여주는 시점은 크게 세 가지입니다: <strong>입력 시점</strong>, <strong>포커스가 빠진 시점</strong>, <strong>제출 시점</strong>.
+          에러를 보여주는 시점은 크게 세 가지입니다.
         </Text>
         <Box mb="6">
           <Text as="p" size="2" mb="3">
