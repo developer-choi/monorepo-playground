@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {FormEvent, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Badge, Box, Callout, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
 import Button from '@/shared/components/form/Button';
@@ -10,11 +10,6 @@ interface FormValues {
   name: string;
   email: string;
 }
-
-const EMAIL_RULES = {
-  required: '이메일을 입력해주세요.',
-  pattern: {value: /^\S+@\S+\.\S+$/, message: '올바른 이메일 형식이 아닙니다.'},
-} as const;
 
 export default function SubmitButtonDemo() {
   return (
@@ -80,6 +75,11 @@ function GoodSubmit() {
   );
 }
 
+const EMAIL_RULES = {
+  required: '이메일을 입력해주세요.',
+  pattern: {value: /^\S+@\S+\.\S+$/, message: '올바른 이메일 형식이 아닙니다.'},
+} as const;
+
 function useBadSubmitForm() {
   const {register, formState: {errors, isValid}} = useForm<FormValues>({mode: 'onChange'});
 
@@ -97,7 +97,7 @@ function useBadSubmitForm() {
 
   return {
     form: {
-      onSubmit: (e: React.FormEvent) => e.preventDefault(),
+      onSubmit: (e: FormEvent) => e.preventDefault(),
     },
     inputProps: {
       name: nameInputProps,

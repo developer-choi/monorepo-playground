@@ -16,8 +16,6 @@ interface FormValues {
   company: string;
 }
 
-const GUIDE = '↓ 스크롤을 내려 제출 버튼을 눌러보세요';
-
 export default function ErrorScrollDemo() {
   const {form, inputProps, result} = useErrorScrollForm();
 
@@ -49,6 +47,8 @@ export default function ErrorScrollDemo() {
     </Card>
   );
 }
+
+const GUIDE = '↓ 스크롤을 내려 제출 버튼을 눌러보세요';
 
 function useErrorScrollForm() {
   const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({
