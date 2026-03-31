@@ -50,6 +50,8 @@ export default async function ErrorFeedbackPage() {
           <strong>onSubmit의 한계</strong> — 폼이 길면 제출 버튼(하단)과 에러 필드(상단)의 거리가 멀어집니다.
           에러 필드로 자동 포커스하는 것으로 완화할 수 있지만,
           onBlur/onChange는 필드를 하나하나 채워 넘어가므로 이 문제가 원천적으로 없습니다.
+          정답은 없지만, 라이브러리가 기본값을 onSubmit으로 설정한 데는 동의합니다.
+          대부분의 폼에서 가장 자연스러운 선택입니다.
         </Text>
       </Box>
 
