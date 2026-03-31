@@ -1,10 +1,10 @@
-import {ReactNode} from 'react';
+import {PropsWithChildren} from 'react';
 import ExampleHeader from '@/shared/components/ExampleHeader';
 
-export default function Layout({children}: {children: ReactNode}) {
+export default function Layout({children}: PropsWithChildren) {
   return (
     <>
-      <ExampleHeader sourcePath="rendering/search-result" />
+      <ExampleHeader sourcePath="src/rendering/search-result" readmePath="src/rendering/search-result/README.md" />
       {children}
     </>
   );
