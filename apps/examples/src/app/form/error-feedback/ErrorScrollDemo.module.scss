@@ -1,0 +1,12 @@
+$scroll-container-max-height: 240px;
+
+.scrollContainer {
+  max-height: $scroll-container-max-height;
+  overflow-y: auto;
+}
+
+.form {
+  :global(.rt-TextFieldRoot):has(input:read-only) {
+    background-image: none;
+  }
+}
