@@ -21,33 +21,35 @@ export default async function ErrorFeedbackPage() {
       </Box>
 
       <Box mb="8">
-        <Heading size="5" mb="2">1. Validation Mode</Heading>
+        <Heading size="5" mb="2">1. 유효성검증은 언제 해야 하는가?</Heading>
         <Text as="p" color="gray" size="2" mb="4">
-          react-hook-form의 <code>useForm()</code>은 <code>mode</code> 옵션으로 에러 노출 시점을 결정합니다.
+          에러를 보여주는 시점은 크게 세 가지입니다: <strong>입력 시점</strong>, <strong>포커스가 빠진 시점</strong>, <strong>제출 시점</strong>.
+        </Text>
+        <Box mb="6">
+          <Text as="p" size="2" mb="3">
+            <strong>입력 시점</strong> — 입력 도중에 에러가 바로 나타납니다.
+            사용자도 이메일을 덜 쓴 걸 알고 있는데, 이 시점에 에러를 보여주는 건 불필요한 압박입니다.
+          </Text>
+          <Text as="p" size="2" mb="3">
+            <strong>포커스가 빠진 시점</strong> — 포커스는 의도와 무관하게 빠질 때가 많습니다.
+            마우스를 잘못 클릭하거나 다른 곳을 터치해도 에러가 뜹니다.
+          </Text>
+          <Text as="p" size="2" mb="3">
+            <strong>제출 시점</strong> — 제출 버튼을 누르는 건 사용자 스스로
+            &quot;다 채웠다&quot;고 판단한 시점입니다. 이때 에러를 보여주는 게 가장 자연스럽습니다.
+          </Text>
+          <Text as="p" size="2" color="gray">
+            <strong>제출 시점의 한계</strong> — 폼이 길면 제출 버튼(하단)과 에러 필드(상단)의 거리가 멀어집니다.
+            에러 필드로 자동 포커스하는 것으로 완화할 수 있지만,
+            나머지 두 방식은 필드를 하나하나 채워 넘어가므로 이 문제가 원천적으로 없습니다.
+          </Text>
+        </Box>
+        <Text as="p" color="gray" size="2" mb="4">
+          react-hook-form의 <code>useForm()</code>은 <code>mode</code> 옵션으로 이 시점을 간편하게 설정할 수 있습니다.
         </Text>
         <ValidationModeDemo />
         <Box mt="4">
           <div dangerouslySetInnerHTML={{__html: modeCodeHtml}} />
-        </Box>
-        <Box mt="6">
-          <Heading size="4" mb="4">왜 onSubmit인가</Heading>
-          <Text as="p" size="2" mb="3">
-            <strong>onChange</strong> — 입력 도중에 에러가 바로 나타납니다.
-            사용자도 이메일을 덜 쓴 걸 알고 있는데, 이 시점에 에러를 보여주는 건 불필요한 압박입니다.
-          </Text>
-          <Text as="p" size="2" mb="3">
-            <strong>onBlur</strong> — 포커스는 의도와 무관하게 빠질 때가 많습니다.
-            마우스를 잘못 클릭하거나 다른 곳을 터치해도 에러가 뜹니다.
-          </Text>
-          <Text as="p" size="2" mb="3">
-            <strong>onSubmit</strong> — 제출 버튼을 누르는 건 사용자 스스로
-            &quot;다 채웠다&quot;고 판단한 시점입니다. 이때 에러를 보여주는 게 가장 자연스럽습니다.
-          </Text>
-          <Text as="p" size="2" color="gray">
-            <strong>onSubmit의 한계</strong> — 폼이 길면 제출 버튼(하단)과 에러 필드(상단)의 거리가 멀어집니다.
-            에러 필드로 자동 포커스하는 것으로 완화할 수 있지만,
-            onBlur/onChange는 필드를 하나하나 채워 넘어가므로 이 문제가 원천적으로 없습니다.
-          </Text>
         </Box>
       </Box>
 
