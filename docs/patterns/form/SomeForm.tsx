@@ -2,7 +2,23 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-export default function useSomeForm() {
+export default function SomeForm() {
+  const { form, inputProps, introductionLength } = useSomeForm();
+
+  return (
+    <form onSubmit={form.onSubmit}>
+      <Input {...inputProps.email} />
+      <Input {...inputProps.password} />
+      <TextArea {...inputProps.introduction} />
+      <p>{introductionLength}/200</p>
+      <Button loading={form.loading} type="submit">제출</Button>
+    </form>
+  );
+}
+
+/* [ai-only] 이 훅을 사용하는 컴포넌트가 1개면 컴포넌트 파일 밑에 작성한다.
+ * 파일의 주인공은 컴포넌트이고, 훅은 그 아래에 위치한다. */
+function useSomeForm() {
   const { replace } = useRouter();
   const handleClientSideError = useClientSideError();
   const { handleSubmit, setError, register, control } = useForm<SomeFormData>();
