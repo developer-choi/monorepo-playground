@@ -17,4 +17,18 @@ export const baseRules = {
   'no-console': ['error', { allow: ['warn', 'error'] }],
   '@typescript-eslint/restrict-template-expressions': ['error', { allowNullish: false }],
   'max-params': ['error', 2],
+  'no-restricted-syntax': ['error',
+    {
+      selector: "JSXAttribute[name.name='alt'][value.value='']",
+      message: '빈 alt 금지. 장식용 이미지라면 eslint-disable + 사유 주석을 남기세요.',
+    },
+    {
+      selector: "JSXAttribute[name.name='alt'] > JSXExpressionContainer > Literal[value='']",
+      message: '빈 alt 금지. 장식용 이미지라면 eslint-disable + 사유 주석을 남기세요.',
+    },
+    {
+      selector: "JSXAttribute[name.name='alt'] > JSXExpressionContainer > TemplateLiteral[quasis.length=1][quasis.0.value.raw='']",
+      message: '빈 alt 금지. 장식용 이미지라면 eslint-disable + 사유 주석을 남기세요.',
+    },
+  ],
 };
