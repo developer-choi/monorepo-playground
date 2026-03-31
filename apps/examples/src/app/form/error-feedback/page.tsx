@@ -36,7 +36,7 @@ export default async function ErrorFeedbackPage() {
           </Text>
           <Text as="p" size="2" mb="3">
             <strong>제출 시점</strong> — 제출 버튼을 누르는 건 사용자 스스로
-            &quot;다 채웠다&quot;고 판단한 시점입니다. 이때 에러를 보여주는 게 가장 자연스럽습니다.
+            &quot;다 채웠다&quot;고 판단한 시점입니다.
           </Text>
           <Text as="p" size="2" color="gray">
             <strong>제출 시점의 한계</strong> — 폼이 길면 제출 버튼(하단)과 에러 필드(상단)의 거리가 멀어집니다.
