@@ -51,15 +51,17 @@ export default async function ErrorFeedbackPage() {
           에러 필드로 자동 포커스하는 것으로 완화할 수 있지만,
           onBlur/onChange는 필드를 하나하나 채워 넘어가므로 이 문제가 원천적으로 없습니다.
           정답은 없지만, 라이브러리가 기본값을 onSubmit으로 설정한 데는 동의합니다.
-          대부분의 폼에서 가장 자연스러운 선택입니다.
         </Text>
       </Box>
 
       <Box mb="8">
         <Heading size="5" mb="2">2. 제출 버튼은 항상 활성화</Heading>
         <Text as="p" color="gray" size="2" mb="4">
-          isValid로 버튼을 비활성화하면 사용자가 뭘 고쳐야 하는지 알 수 없습니다.
-          항상 활성화하고, 제출 시 에러 피드백으로 안내하세요.
+          제출 버튼을 조건이 안 맞다고 비활성화시켜 버리면 사용자는 뭘 고쳐야 하는지 알 수 없습니다.
+        </Text>
+        <Text as="p" size="2" mb="4">
+          실제로 부모님 세대에서 &quot;제출 버튼이 왜 안 눌리냐&quot;고 문의를 주시는 경우가 있습니다.
+          버튼은 항상 활성화하고, 제출 시 에러 피드백으로 안내하는 게 좋다고 생각합니다.
         </Text>
         <SubmitButtonDemo />
         <Box mt="4">
@@ -70,7 +72,7 @@ export default async function ErrorFeedbackPage() {
       <Box mb="8">
         <Heading size="5" mb="2">3. 에러 필드로 포커스 이동</Heading>
         <Text as="p" color="gray" size="2" mb="4">
-          react-hook-form은 제출 시 첫 번째 에러 필드로 자동 포커스하고,
+          react-hook-form은 제출 시 에러 필드로 자동 포커스하고,
           화면 밖에 있으면 스크롤까지 처리해줍니다. 별도 구현 없이 동작하므로 편리합니다.
         </Text>
         <ErrorScrollDemo />
