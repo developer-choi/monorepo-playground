@@ -13,18 +13,18 @@ export default async function AutoFocusPage() {
         <Text as="p" color="gray" size="3">
           단일 목적 페이지에서는 주요 입력 필드에 자동 포커스를 설정합니다.
         </Text>
+        <Text as="p" color="gray" size="2" mt="2">
+          1. 페이지 진입 시<br />
+          2. 다른 탭이나 다른 앱을 갔다가 돌아왔을 때
+        </Text>
+        <Text as="p" color="gray" size="3" mt="2">
+          이를 통해 입력 필드를 클릭하거나 터치하는 한 단계를 생략할 수 있습니다.
+          <br />
+          이런 작은 불편함을 줄여주는 것이 좋은 UX 중 하나라고 생각합니다.
+        </Text>
       </Box>
 
       <AutoFocusDemo />
-
-      <Box mb="6">
-        <Heading size="5" mb="4">목적</Heading>
-        <Text as="p" color="gray" size="3">
-          사용자가 입력 필드를 마우스로 클릭하거나 모바일에서 터치하는 한 단계를 줄여줍니다.
-          <br />
-          페이지에 진입하자마자 바로 타이핑할 수 있는 것이 좋은 UX라고 생각합니다.
-        </Text>
-      </Box>
 
       <Box mb="6">
         <Heading size="5" mb="4">1. HTML autoFocus 속성</Heading>
