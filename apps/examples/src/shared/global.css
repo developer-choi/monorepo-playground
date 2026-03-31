@@ -1,0 +1,15 @@
+.shiki {
+  margin: var(--space-3) 0;
+  border-radius: var(--radius-2);
+  overflow-x: auto;
+}
+
+.shiki pre {
+  --code-font-size: 13px;
+  --code-line-height: 1.6;
+
+  margin: 0;
+  padding: var(--space-3);
+  font-size: var(--code-font-size);
+  line-height: var(--code-line-height);
+}
