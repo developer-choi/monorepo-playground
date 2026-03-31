@@ -5,6 +5,7 @@ import {useForm} from 'react-hook-form';
 import {Box, Callout, Card, Flex, Text} from '@radix-ui/themes';
 import Button from '@/shared/components/form/Button';
 import Input from '@/shared/components/form/Input';
+import styles from './ErrorScrollDemo.module.scss';
 
 interface FormValues {
   name: string;
@@ -35,9 +36,9 @@ export default function ErrorScrollDemo() {
           스크롤을 내려 하단의 제출 버튼을 클릭해보세요.
         </Text>
         <Box style={{maxHeight: 240, overflowY: 'auto'}}>
-          <form onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
+          <form className={styles.form} onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
             <Flex direction="column" gap="3" p="1">
-              <Input {...register('name', {required: '이름을 입력해주세요.'})} label="이름" placeholder="이름을 입력해주세요" error={errors.name?.message} />
+              <Input {...register('name', {required: '이름을 입력해주세요.'})} label="이름" placeholder="이름을 입력해주세요" readOnly error={errors.name?.message} />
               <Input {...register('email')} label="이메일" readOnly />
               <Input {...register('phone')} label="전화번호" readOnly />
               <Input {...register('address')} label="주소" readOnly />

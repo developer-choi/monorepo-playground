@@ -1,0 +1,5 @@
+.form {
+  :global(.rt-TextFieldRoot):has(input:read-only) {
+    background-image: none;
+  }
+}

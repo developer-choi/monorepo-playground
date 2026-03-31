@@ -1,4 +1,4 @@
-import {Box, Callout, Container, Heading, Text} from '@radix-ui/themes';
+import {Box, Container, Heading, Text} from '@radix-ui/themes';
 import {codeToHtml} from 'shiki';
 import ValidationModeDemo from './ValidationModeDemo';
 import SubmitButtonDemo from './SubmitButtonDemo';
@@ -75,13 +75,6 @@ export default async function ErrorFeedbackPage() {
         </Box>
       </Box>
 
-      <Callout.Root color="blue">
-        <Callout.Text>
-          <strong>추천 조합:</strong> mode: &apos;onSubmit&apos; + reValidateMode: &apos;onChange&apos; (둘 다 기본값).
-          제출 전까지 에러를 보여주지 않아 편안한 입력 경험을 제공하되,
-          에러 발생 후에는 수정할 때마다 즉시 피드백합니다.
-        </Callout.Text>
-      </Callout.Root>
     </Container>
   );
 }
