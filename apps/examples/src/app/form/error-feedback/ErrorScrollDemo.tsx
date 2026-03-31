@@ -11,15 +11,19 @@ interface FormValues {
   email: string;
   phone: string;
   address: string;
+  addressDetail: string;
+  company: string;
 }
 
 export default function ErrorScrollDemo() {
   const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({
     defaultValues: {
-      name: '홍길동',
-      email: '',
+      name: '',
+      email: 'test@example.com',
       phone: '010-1234-5678',
-      address: '서울시 강남구',
+      address: '서울시 강남구 테헤란로 123',
+      addressDetail: '4층 401호',
+      company: '프론트엔드 주식회사',
     },
   });
   const [result, setResult] = useState('');
@@ -28,17 +32,21 @@ export default function ErrorScrollDemo() {
     <Card>
       <Box p="4">
         <Text as="p" size="2" color="gray" mb="4">
-          이메일 필드만 비어있습니다. 제출하면 비어있는 이메일 필드로 포커스가 이동합니다.
+          스크롤을 내려 하단의 제출 버튼을 클릭해보세요.
         </Text>
-        <form onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
-          <Flex direction="column" gap="3">
-            <Input {...register('name', {required: '이름을 입력해주세요.'})} label="이름" error={errors.name?.message} />
-            <Input {...register('email', {required: '이메일을 입력해주세요.'})} label="이메일" error={errors.email?.message} />
-            <Input {...register('phone', {required: '전화번호를 입력해주세요.'})} label="전화번호" error={errors.phone?.message} />
-            <Input {...register('address', {required: '주소를 입력해주세요.'})} label="주소" error={errors.address?.message} />
-            <Button type="submit" size="large">제출</Button>
-          </Flex>
-        </form>
+        <Box style={{maxHeight: 240, overflowY: 'auto'}}>
+          <form onSubmit={handleSubmit((data) => setResult(JSON.stringify(data)), () => setResult(''))}>
+            <Flex direction="column" gap="3" p="1">
+              <Input {...register('name', {required: '이름을 입력해주세요.'})} label="이름" placeholder="이름을 입력해주세요" error={errors.name?.message} />
+              <Input {...register('email')} label="이메일" readOnly />
+              <Input {...register('phone')} label="전화번호" readOnly />
+              <Input {...register('address')} label="주소" readOnly />
+              <Input {...register('addressDetail')} label="상세주소" readOnly />
+              <Input {...register('company')} label="회사" readOnly />
+              <Button type="submit" size="large">제출</Button>
+            </Flex>
+          </form>
+        </Box>
         {result && (
           <Callout.Root color="blue" mt="4" size="1">
             <Callout.Text><strong>제출된 값:</strong> {result}</Callout.Text>
