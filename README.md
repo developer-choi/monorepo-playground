@@ -1,7 +1,26 @@
 # Monorepo Playground
 
-React/Next.js 실무 패턴을 모노레포로 구현한 프로젝트입니다.
-제가 실무에서 반복적으로 마주치는 문제들을 어떻게 해결하는지 보여드립니다.
+AI 시대 개발자의 가치는 두 가지라고 생각합니다. **일을 만들어서 AI에게 시키는 것**, 그리고 **AI가 만든 결과물을 잘 리뷰하는 것**.
+
+이 저장소는 두 가지 모두를 위한 것입니다.
+
+- **잘 시키기**: 한 번 정립한 **best practice**는 AI로 빠르게 복제할 수 있습니다. **속도와 완성도를 동시에** 가져갈 수 있는 가장 좋은 방법이라고 생각합니다.
+- **잘 리뷰하기**: 사람이 수백 줄을 모두 눈으로 검증할 수는 없습니다. 린트와 테스트가 기계적 리뷰를 대신하면, 사람은 설계와 로직에만 집중할 수 있습니다.
+
+---
+
+### 잘 시키기 위한 best practice
+
+- [최고의 무한스크롤이란 무엇인가](https://github.com/developer-choi/developer-choi/blob/main/docs/infinite-scroll/step1.md) — 렌더링 전략, 이미지 최적화, 무한스크롤, 에러 방어까지 4단계로 정리
+- [검색 결과 UX 최적화](https://github.com/developer-choi/monorepo-playground/pull/3) — useDeferredValue로 이전 결과를 유지하면서 자연스럽게 전환
+- [디자인 시스템](https://github.com/developer-choi/monorepo-playground/pull/2) — 디자이너와 Material Design 기반으로 미래 변경까지 고려한 스펙을 잡고, MUI 원본 코드를 AI로 분석하여 설계
+
+### 잘 리뷰하기 위한 best practice
+
+- [정적 분석](https://github.com/developer-choi/monorepo-playground/pull/11) — 19개 이상의 커스텀 린트 룰로 커밋 시점에 실수를 차단
+- Git Hooks — lint-staged + 타입 검사를 커밋/push 시 자동 실행
+
+---
 
 ## 라이브 데모
 
@@ -10,31 +29,7 @@ React/Next.js 실무 패턴을 모노레포로 구현한 프로젝트입니다.
 - **Examples 앱** — [monorepo-playground-examples.vercel.app](https://monorepo-playground-examples.vercel.app/)
 - **디자인 시스템 Storybook** — [design-system-eta-six.vercel.app](https://design-system-eta-six.vercel.app/)
 
-## 정적 분석으로 코드 품질 자동화 — [PR #11](https://github.com/developer-choi/monorepo-playground/pull/11)
-
-AI가 생성한 코드든 사람이 작성한 코드든, 리뷰어가 모든 실수를 눈으로 잡을 수는 없습니다.
-제가 이 프로젝트에서 선택한 방법은 **커밋 시점에 자동으로 차단하는 것**입니다.
-
-19개 이상의 커스텀 린트 룰을 적용했습니다.
-예를 들어, 아래와 같은 코드는 커밋 자체가 불가능합니다:
-
-```typescript
-// ❌ await 없이 Promise 호출 — 에러가 조용히 삼켜집니다
-fetchData();
-
-// ❌ || 대신 ?? 를 강제 — 0이나 빈 문자열이 의도치 않게 무시됩니다
-const value = input || 'default';
-
-// ❌ switch에서 케이스 누락 — 유니온 타입에 새 값이 추가되면 컴파일 타임에 잡습니다
-switch (status) {
-  case 'active': return handleActive();
-  // 'inactive' 케이스 누락 → 에러
-}
-```
-
-검증은 2단계로 나뉩니다.
-커밋할 때는 변경된 파일만 빠르게 검사하고, push할 때 전체 코드를 대상으로 검사합니다.
-**커밋 속도와 코드 안전성을 모두 확보하는 구조입니다.**
+---
 
 ## 검색 결과 UX 최적화 — [PR #3](https://github.com/developer-choi/monorepo-playground/pull/3)
 
@@ -113,3 +108,29 @@ MUI 원본 코드를 분석하여 확장 가능한 계층 구조를 설계했습
 추상화 범위는 디자이너와 논의하여 실제로 필요한 것만 진행했습니다.
 
 구축 과정은 [디자인 시스템 구축기](https://developer-choi.vercel.app/engineering/design-system)에서 확인할 수 있습니다.
+
+## 정적 분석으로 코드 품질 자동화 — [PR #11](https://github.com/developer-choi/monorepo-playground/pull/11)
+
+AI가 생성한 코드든 사람이 작성한 코드든, 리뷰어가 모든 실수를 눈으로 잡을 수는 없습니다.
+제가 이 프로젝트에서 선택한 방법은 **커밋 시점에 자동으로 차단하는 것**입니다.
+
+19개 이상의 커스텀 린트 룰을 적용했습니다.
+예를 들어, 아래와 같은 코드는 커밋 자체가 불가능합니다:
+
+```typescript
+// ❌ await 없이 Promise 호출 — 에러가 조용히 삼켜집니다
+fetchData();
+
+// ❌ || 대신 ?? 를 강제 — 0이나 빈 문자열이 의도치 않게 무시됩니다
+const value = input || 'default';
+
+// ❌ switch에서 케이스 누락 — 유니온 타입에 새 값이 추가되면 컴파일 타임에 잡습니다
+switch (status) {
+  case 'active': return handleActive();
+  // 'inactive' 케이스 누락 → 에러
+}
+```
+
+검증은 2단계로 나뉩니다.
+커밋할 때는 변경된 파일만 빠르게 검사하고, push할 때 전체 코드를 대상으로 검사합니다.
+**커밋 속도와 코드 안전성을 모두 확보하는 구조입니다.**
