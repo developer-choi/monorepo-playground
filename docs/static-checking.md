@@ -11,7 +11,6 @@
 이 안전망은 AI 개발 생산성과도 직결됩니다. AI가 작성한 코드의 양이 늘수록 사람이 리뷰해야 할 양도 늘어나는데, 정적 분석이 자동으로 걸러주면 리뷰어는 로직과 설계에 집중할 수 있습니다. AI가 아래와 같은 코드를 작성하더라도 커밋 시점에 자동으로 차단됩니다:
 
 ```typescript
-fetchData();                        // await 없이 Promise 호출 → 에러가 조용히 삼켜짐
 const data = JSON.parse(response);  // any가 조용히 퍼져나감
 const count = input || 10;          // input이 0이면 10이 됨
 const msg = `user: ${user.name}`;   // undefined면 "user: undefined"
@@ -50,7 +49,8 @@ const msg = `user: ${user.name}`;   // undefined면 "user: undefined"
 ```js
 // eslint.config.base.mts
 export const baseRules = {
-  '@typescript-eslint/no-floating-promises': 'error',
+  '@typescript-eslint/no-floating-promises': 'off',
+  '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: { attributes: false } }],
   '@typescript-eslint/switch-exhaustiveness-check': 'error',
   // ...
 };
@@ -106,18 +106,13 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 
 ### ESLint — 수동 추가 (`eslint.config.base.mts`)
 
-#### 1. `@typescript-eslint/no-floating-promises`
+#### 1. `@typescript-eslint/no-floating-promises` (off)
 
-await 없이 Promise를 호출하면 에러가 조용히 삼켜집니다.
+await 없이 Promise를 호출하면 에러가 조용히 삼켜질 수 있습니다. 이 규칙을 켜면 `void` 키워드를 강제하는 상황이 생기므로 **비활성화**했습니다. await 누락은 코드리뷰로 잡습니다.
 
 ```typescript
-// ❌
-fetchData();  // 에러 발생해도 아무도 모름
-
-// ✅
-await fetchData();
-// 또는
-void fetchData();  // 의도적으로 무시할 때
+// 아래 코드가 린트에 걸리지 않음 — 리뷰어가 주의
+fetchData();  // await 빠뜨린 건 아닌지 확인 필요
 ```
 
 #### 2. `@typescript-eslint/switch-exhaustiveness-check`
@@ -136,16 +131,22 @@ function getMessage(status: Status): string {
 }
 ```
 
-#### 3. `@typescript-eslint/no-misused-promises`
+#### 3. `@typescript-eslint/no-misused-promises` (checksVoidReturn.attributes: false)
 
-void를 기대하는 자리에 async 함수를 전달하는 것을 방지합니다.
+두 가지를 검사합니다:
+
+- **checksConditionals** (유지): Promise 객체를 조건문에 넣는 실수를 방지합니다.
+- **checksVoidReturn.attributes** (off): JSX 이벤트 핸들러에 async 함수를 전달하는 패턴을 허용합니다. 켜두면 `void` 래핑이 강제되므로 비활성화했습니다.
 
 ```typescript
-// ❌
-<button onClick={async () => { await submitForm(); }} />
+// ❌ checksConditionals — Promise 객체는 항상 truthy
+if (fetchData()) { ... }
 
 // ✅
-<button onClick={() => { void submitForm(); }} />
+if (await fetchData()) { ... }
+
+// ✅ checksVoidReturn.attributes off — void 래핑 없이 사용 가능
+<form onSubmit={handleSubmit(onSubmit)} />
 ```
 
 #### 4. `@typescript-eslint/prefer-nullish-coalescing`
@@ -236,6 +237,28 @@ function helper() { ... }  // 호출되지 않음
 import { used } from './module';
 function onClick(_event: MouseEvent) { ... }  // _로 시작하면 허용
 ```
+
+### ESLint — 워크스페이스별 추가 규칙
+
+`baseRules` 외에 특정 워크스페이스에서만 추가한 규칙입니다.
+
+#### `@typescript-eslint/no-deprecated` (error) — examples
+
+deprecated로 표시된 API 사용을 에러로 잡습니다. TypeScript가 취소선으로 보여주긴 하지만 시각적 힌트일 뿐이므로, 린트가 강제합니다.
+
+```typescript
+// ❌
+/** @deprecated use fetchV2 instead */
+function fetchData() { ... }
+fetchData();  // deprecated API 사용
+
+// ✅
+fetchV2();
+```
+
+#### `react-hooks/error-boundaries` (off) — examples
+
+React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
 
 ### ESLint — `recommendedTypeChecked` 프리셋
 
@@ -359,6 +382,22 @@ console.error(`result: ${JSON.stringify(obj)}`);
 
 ### tsconfig
 
+`tsconfig.base.json`의 전체 옵션:
+
+| 옵션 | 값 | 설명 |
+|------|-----|------|
+| `strict` | true | 엄격 모드 (strictNullChecks, noImplicitAny 등 포함) |
+| `skipLibCheck` | true | node_modules 내 .d.ts 타입 체크 생략 (빌드 속도) |
+| `noEmit` | true | JS 출력 안 함 (번들러가 담당) |
+| `jsx` | react-jsx | React 17+ JSX 변환 |
+| `moduleResolution` | bundler | 번들러 기반 모듈 해석 |
+| `resolveJsonModule` | true | JSON import 허용 |
+| `isolatedModules` | true | 파일 단위 트랜스파일 호환 (SWC, esbuild) |
+| `noFallthroughCasesInSwitch` | true | 아래 참고 |
+| `noUncheckedIndexedAccess` | true | 아래 참고 |
+
+아래는 버그 방지 목적으로 추가한 옵션입니다.
+
 #### 20. `noUncheckedIndexedAccess`
 
 배열이나 객체의 인덱스 접근 시 반환 타입에 `| undefined`를 자동으로 추가합니다.
@@ -399,4 +438,28 @@ switch (status) {
     doB();
     break;
 }
+```
+
+### commitlint
+
+`@commitlint/config-conventional`을 확장하며, 커밋 메시지 형식을 강제합니다.
+
+```
+type(scope): subject
+```
+
+| 규칙 | 설정 | 설명 |
+|------|------|------|
+| `scope-enum` | examples, design-system, recruitment, setting | 허용되는 scope 목록 |
+| `scope-empty` | never | scope 필수 |
+| `subject-case` | off | 한글 커밋 메시지 허용 |
+
+```bash
+# ✅
+feat(examples): 폼 예제 추가
+chore(setting): husky 설정
+
+# ❌
+feat: scope 없음
+feat(unknown): 등록되지 않은 scope
 ```
