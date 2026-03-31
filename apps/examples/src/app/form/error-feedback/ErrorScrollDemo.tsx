@@ -63,7 +63,6 @@ function useErrorScrollForm() {
   });
   const [result, setResult] = useState('');
 
-  // readOnly + required: 의도적으로 비워둔 필드. 제출 시 에러 → 자동 스크롤 데모용.
   const nameInputProps: InputProps = {
     ...register('name', {required: '이름을 입력해주세요.'}),
     label: '이름',
