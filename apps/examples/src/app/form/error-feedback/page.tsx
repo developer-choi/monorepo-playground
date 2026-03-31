@@ -38,11 +38,6 @@ export default async function ErrorFeedbackPage() {
             <strong>제출 시점</strong> — 제출 버튼을 누르는 건 사용자 스스로
             &quot;다 채웠다&quot;고 판단한 시점입니다.
           </Text>
-          <Text as="p" size="2" color="gray">
-            <strong>제출 시점의 한계</strong> — 폼이 길면 제출 버튼(하단)과 에러 필드(상단)의 거리가 멀어집니다.
-            에러 필드로 자동 포커스하는 것으로 완화할 수 있지만,
-            나머지 두 방식은 필드를 하나하나 채워 넘어가므로 이 문제가 원천적으로 없습니다.
-          </Text>
         </Box>
         <Text as="p" color="gray" size="2" mb="4">
           react-hook-form의 <code>useForm()</code>은 <code>mode</code> 옵션으로 이 시점을 간편하게 설정할 수 있습니다.
@@ -51,6 +46,11 @@ export default async function ErrorFeedbackPage() {
         <Box mt="4">
           <div dangerouslySetInnerHTML={{__html: modeCodeHtml}} />
         </Box>
+        <Text as="p" size="2" color="gray" mt="4">
+          <strong>onSubmit의 한계</strong> — 폼이 길면 제출 버튼(하단)과 에러 필드(상단)의 거리가 멀어집니다.
+          에러 필드로 자동 포커스하는 것으로 완화할 수 있지만,
+          onBlur/onChange는 필드를 하나하나 채워 넘어가므로 이 문제가 원천적으로 없습니다.
+        </Text>
       </Box>
 
       <Box mb="8">
