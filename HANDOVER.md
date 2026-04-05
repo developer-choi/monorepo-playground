@@ -2,55 +2,64 @@
 
 ## 배경
 
-무한 스크롤로 게시글을 계속 로드하면 DOM 노드가 비례 증가하여 스크롤 성능이 저하된다. 이를 해결하기 위해 `@tanstack/react-virtual`로 뷰포트 근처의 행만 DOM에 유지하는 virtual list를 적용한다.
+무한 스크롤로 게시글을 계속 로드하면 DOM 노드가 비례 증가하여 스크롤 성능이 저하된다. `@tanstack/react-virtual`로 뷰포트 근처의 행만 DOM에 유지하는 virtual list를 적용했다.
 
-이전에 PR #10으로 구현했으나 `react-hooks/refs` 린트 에러가 있었다 (렌더 중 ref.current 접근). master에서 해당 커밋 2개를 revert한 뒤 이 브랜치에서 재구현 중이다.
+관련 기술 문서: https://github.com/developer-choi/developer-choi/blob/main/docs/infinite-scroll/step1.md
 
 ## 현재 브랜치 커밋 (master 대비)
 
-| 커밋 | 내용 | 상태 |
-|------|------|------|
-| `4de22ec5` | `@tanstack/react-virtual` 설치 + `useWindowVirtualizer` 기반 virtual list 구현 | 커밋 완료 |
-| (미커밋) | 코드리뷰 반영 수정 | **커밋 필요** |
+| 커밋 | 내용 |
+|------|------|
+| `0a600469` | ErrorBoundary를 부모 컴포넌트로 분리 |
+| `56321110` | `@tanstack/react-virtual`로 virtual list 재구현 (코드리뷰 반영 + 인수인계 문서 포함) |
 
 ## 완료된 작업
 
-### 구현
-
-- `useInfiniteScroll` 훅 (IntersectionObserver 기반) 삭제
-- `useWindowVirtualizer` + `useEffect` 마지막 아이템 감지 패턴으로 교체 (공식 예제 패턴)
+- `useInfiniteScroll` 훅 (IntersectionObserver 기반) 삭제 → `useWindowVirtualizer` + `useEffect` 마지막 아이템 감지 패턴으로 교체
 - `estimateSize`에 고정값 사용 → 렌더 중 ref 접근 제거 → 린트 에러 해결
 - `measureElement`로 실제 DOM 높이 측정
-
-### 코드리뷰 수정 (미커밋 변경분)
-
-| # | 이슈 | 조치 |
-|---|------|------|
-| 2 | 정적 인라인 스타일 반복 | `.virtualRow` SCSS 클래스 분리, 동적 `transform`만 인라인 유지 |
-| 3 | COLUMN_COUNT 이중관리 (SCSS ↔ TSX) | CSS 변수 `--column-count`를 TSX에서 주입, 단일 소스 |
-| 4 | `.virtualContainer`의 불필요한 `width: 100%` | 제거 (block 요소이므로 불필요) |
-| 6 | 가상화 트리거 로직 컴포넌트에 직접 노출 | `useInfiniteScrollTrigger` 커스텀 훅 추출 |
-| 8 | `if (!lastItem) return;` 중괄호 누락 | 중괄호 추가 |
-| - | `fetchNextPage` 타입 `() => void` → lint 에러 | `() => Promise<unknown>`으로 수정 |
+- 코드리뷰 반영: 인라인 스타일 SCSS 분리, `COLUMN_COUNT` CSS 변수 단일 소스화, `useInfiniteScrollTrigger` 훅 추출
+- ErrorBoundary를 부모 컴포넌트로 분리 (초기 fetch 에러를 잡지 못하는 구조 문제 해결)
 
 ## 남은 작업
 
-### 1. ErrorBoundary 위치 (Critical)
+### 1. 코드 이해 (PR 공개 전 필수)
 
-`useSuspenseInfiniteQuery`를 호출하는 컴포넌트 **내부**에 `<ErrorBoundary>`가 있어서, 초기 fetch 에러 시 자기 자신의 에러를 잡지 못한다. 부모로 올리거나 컴포넌트를 분리해야 한다.
+코드는 동작하지만, virtual list의 렌더링 메커니즘을 완전히 이해하지 못한 상태. 채용 담당자에게 PR을 공개하기 전에 아래 항목을 이해해야 한다.
 
-- 이번 PR 범위에 포함할지, 별도 PR로 할지 결정 필요
-- 이 이슈는 이전 코드에서 이미 존재하던 구조적 문제
+**이미 학습한 API** (KA `react-virtual.md`):
+- `useVirtualizer` vs `useWindowVirtualizer`, `count`, `estimateSize`, `overscan`, `useFlushSync`
 
-### 2. TODO: `no-floating-promises` 린트 규칙 검토
+**추가 학습 필요한 API** (공식 문서: https://tanstack.com/virtual/latest/docs/api/virtualizer):
+- `getVirtualItems()` — 현재 화면에 보여야 할 VirtualItem 배열 반환
+- `getTotalSize()` — 전체 가상 영역의 높이(px). 컨테이너에 이 높이를 줘서 스크롤바가 정상 동작하게 함
+- `measureElement` — ref callback. 실제 DOM에 붙여서 아이템의 실측 높이를 virtualizer에 알려줌
+
+**개념 이해 필요** (API 지식이 아닌 패턴 이해):
+- 렌더링 패턴: `position: relative` 컨테이너 + `position: absolute` 아이템 + `translateY`로 배치하는 원리
+- row 단위 가상화: 그리드 레이아웃에서 왜 개별 카드가 아니라 행(row)을 가상화 단위로 쓰는지
+
+### 2. 훅 추출 여부 — 미결정
+
+`useWindowVirtualizer` 관련 코드를 커스텀 훅으로 추출할지 검토 중. 아래 논점이 있었으나 결론은 내리지 않았다.
+
+**추출 찬성:**
+- 기존 `useInfiniteScroll`처럼 훅 하나 호출로 끝나는 구조가 깔끔
+- 가상화는 수단이고 목적은 무한 스크롤이니까 구현 상세를 숨기는 게 자연스러움
+
+**추출 반대:**
+- virtual list는 렌더링 구조 자체를 바꾸므로 (absolute + translateY) 훅으로 완전히 숨기기 어려움
+- 현재 `BoardList` 컴포넌트의 응집도가 이미 높음 — 추출해도 응집도가 올라가는 게 아니라 위치만 옮기는 것
+- 재사용 가능성이 낮은 1회성 조합 (4열 그리드 + 무한 스크롤 + window virtualizer)
+- 코드를 먼저 이해한 뒤에 추출 여부를 판단하는 게 순서
+
+### 3. `no-floating-promises` 린트 규칙 검토
 
 - `void fetchNextPage()` 같이 `void` 키워드를 강제하는 것이 불편
 - `@typescript-eslint/no-floating-promises` 규칙 비활성화 또는 조정 검토
-- `checksConditionals`는 유지하되 전체 비활성화 시 `if (promise)` 실수를 못 잡는 트레이드오프 있음
 
 ## 참고 자료
 
-- 이전 PR: https://github.com/developer-choi/monorepo-playground/pull/10
+- PR: https://github.com/developer-choi/monorepo-playground/pull/10
 - 공식 API 문서: https://tanstack.com/virtual/latest/docs/api/virtualizer
 - 공식 infinite scroll 예제: https://tanstack.com/virtual/latest/docs/framework/react/examples/infinite-scroll
-- 예제 소스코드: https://github.com/TanStack/virtual/blob/main/examples/react/infinite-scroll/src/main.tsx
