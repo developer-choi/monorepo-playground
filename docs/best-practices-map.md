@@ -49,3 +49,10 @@
 - 기술스택: React useState + TanStack Query v5
 - 상황: 좋아요 토글처럼 단일 boolean 상태. useState로 즉시 반영, 실패 시 롤백
 - 코드: docs/patterns/optimistic-update/OptimisticUpdate.md
+
+## 쿼리
+
+### queryOptions / infiniteQueryOptions 팩토리
+- 기술스택: TanStack Query v5
+- 상황: queryKey + queryFn을 팩토리 객체로 중앙화. useSuspenseQuery, prefetchQuery, invalidateQueries에서 동일 옵션 재사용
+- 코드: docs/patterns/query/QueryOptionsFactory.md
