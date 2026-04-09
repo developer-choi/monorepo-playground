@@ -18,3 +18,8 @@
 - 기술스택: Next.js App Router + TanStack Query v5
 - 상황: Server Component에서 prefetch → HydrationBoundary → Client Component에서 useSuspenseQuery. loading.tsx 대신 Suspense 직접 사용
 - 코드: docs/patterns/rendering/SsrPrefetchStreaming.md
+
+### CSR + useSuspenseQuery + ErrorBoundary + Suspense
+- 기술스택: React (Vite 등) + TanStack Query v5 + react-error-boundary
+- 상황: CSR 앱에서 선언적 데이터 로딩. loading/error 분기 없이 Suspense + ErrorBoundary가 처리
+- 코드: docs/patterns/rendering/CsrSuspenseErrorBoundary.md
