@@ -22,6 +22,7 @@ module.exports = {
         'recruitment',
         // project-level
         'setting',
+        'best-practice-map',
       ],
     ],
     'scope-empty': [2, 'never'],
