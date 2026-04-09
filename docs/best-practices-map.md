@@ -23,3 +23,8 @@
 - 기술스택: React (Vite 등) + TanStack Query v5 + react-error-boundary
 - 상황: CSR 앱에서 선언적 데이터 로딩. loading/error 분기 없이 Suspense + ErrorBoundary가 처리
 - 코드: docs/patterns/rendering/CsrSuspenseErrorBoundary.md
+
+### 에러 처리 이원화 — SSR/CSR
+- 기술스택: Next.js App Router + overlay-kit
+- 상황: SSR은 handleServerSideError (4xx → 에러 페이지, 5xx → error.tsx), CSR은 useHandleClientSideError (overlay/toast)
+- 코드: docs/patterns/rendering/ErrorHandling.md
