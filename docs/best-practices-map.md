@@ -11,3 +11,10 @@
 - 기술스택: zod + react-hook-form + @hookform/resolvers
 - 상황: 스키마 파생(.pick/.extend), 상수 공유, createLabelMap, 필터 "전체" 처리, zodResolver 연동
 - 코드: apps/examples/src/validation/integration/README.md
+
+## 렌더링
+
+### SSR Prefetch + Streaming
+- 기술스택: Next.js App Router + TanStack Query v5
+- 상황: Server Component에서 prefetch → HydrationBoundary → Client Component에서 useSuspenseQuery. loading.tsx 대신 Suspense 직접 사용
+- 코드: docs/patterns/rendering/SsrPrefetchStreaming.md
