@@ -42,3 +42,10 @@
 - 기술스택: TanStack Query v5 + IntersectionObserver
 - 상황: 무한 스크롤 목록. staleTime: Infinity로 n페이지 동시 refetch 방지, gcTime으로 캐시 수명 제어
 - 코드: docs/patterns/infinite-scroll/UseInfiniteScroll.md
+
+## 낙관적 업데이트
+
+### 로컬 state 낙관적 업데이트
+- 기술스택: React useState + TanStack Query v5
+- 상황: 좋아요 토글처럼 단일 boolean 상태. useState로 즉시 반영, 실패 시 롤백
+- 코드: docs/patterns/optimistic-update/OptimisticUpdate.md
