@@ -10,7 +10,7 @@
 
 ### Provider Composition
 
-- 기술스택: @tanstack/react-query + @radix-ui/themes + overlay-kit + react-toastify
+- 기술스택: @tanstack/react-query + @radix-ui/themes + overlay-kit + sonner
 - 상황: React 앱에서 여러 라이브러리 Provider 조합 시 순서와 구성. QueryClient 기본 옵션 포함
 - 코드: docs/patterns/setup/ProviderComposition.md
 
