@@ -214,6 +214,20 @@ if (disabled) {
 <img alt="" src="/bg-pattern.png" />
 ```
 
+#### 24. `@typescript-eslint/ban-ts-comment`
+
+`@ts-ignore`, `@ts-nocheck` 등의 타입 체크 우회 주석을 금지합니다. 타입 에러를 숨기면 런타임 버그로 이어집니다. 불가피한 경우 `@ts-expect-error`를 사용하면 해당 줄의 에러가 해결되었을 때 린트가 알려줍니다.
+
+```typescript
+// ❌
+// @ts-ignore
+const value = unsafeFunction();
+
+// ✅ 불가피한 경우
+// @ts-expect-error — 서드파티 타입 정의 미비
+const value = unsafeFunction();
+```
+
 ### 워크스페이스별 추가 규칙
 
 `baseRules` 외에 특정 워크스페이스에서만 추가한 규칙입니다.
