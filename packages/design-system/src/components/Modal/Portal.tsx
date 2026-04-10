@@ -10,4 +10,4 @@ export default function Portal({children}: PropsWithChildren) {
   }, []);
 
   return mountNode ? createPortal(children, mountNode) : null;
-};
+}

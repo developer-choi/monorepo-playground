@@ -9,7 +9,6 @@ export function handleServerSideError(error: unknown): ReactNode {
   if (error instanceof InvalidAccessError) {
     if (error.redirect.type === 'NOT_FOUND') {
       notFound();
-
     } else {
       redirect(error.redirect.url);
     }

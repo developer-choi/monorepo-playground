@@ -13,7 +13,7 @@ export interface BaseErrorOption {
  * 모든 커스텀 에러에 공통적으로 적용되야하는 설계를 반영
  */
 export default abstract class BaseError extends Error {
-  readonly abstract name: string;
+  abstract readonly name: string;
 
   /**
    * 외부에서 sentryOptions를 재할당 하지 못하게 하기 위해 readonly를 설정했습니다.

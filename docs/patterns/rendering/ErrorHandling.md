@@ -17,14 +17,21 @@
 구체적 에러가 공통 에러보다 우선순위 높다. ApiResponseError 인스턴스 → status 코드로 분기 → 기본 메시지.
 
 ```tsx
-function getErrorInfo(error: unknown): { title: string; content: string } {
+function getErrorInfo(error: unknown): {title: string; content: string} {
   if (error instanceof ApiResponseError) {
     // 401: 로그인 페이지 리다이렉트 등 인증 아키텍처에 맞게 처리
-    if (error.status === 403) return { title: '권한 없음', content: '접근 권한이 없습니다. 관리자에게 권한을 요청해 주세요.' };
-    if (error.status === 404) return { title: '페이지 없음', content: '요청한 페이지를 찾을 수 없습니다.' };
-    return { title: '서버 오류', content: error.message || '잠시 후 다시 시도해 주세요. 문제가 지속되면 고객센터에 문의해 주세요.' };
+    if (error.status === 403)
+      return {title: '권한 없음', content: '접근 권한이 없습니다. 관리자에게 권한을 요청해 주세요.'};
+    if (error.status === 404) return {title: '페이지 없음', content: '요청한 페이지를 찾을 수 없습니다.'};
+    return {
+      title: '서버 오류',
+      content: error.message || '잠시 후 다시 시도해 주세요. 문제가 지속되면 고객센터에 문의해 주세요.',
+    };
   }
-  return { title: '오류 발생', content: '예상치 못한 오류가 발생했습니다. 새로고침 후에도 반복되면 고객센터에 문의해 주세요.' };
+  return {
+    title: '오류 발생',
+    content: '예상치 못한 오류가 발생했습니다. 새로고침 후에도 반복되면 고객센터에 문의해 주세요.',
+  };
 }
 ```
 
@@ -38,7 +45,7 @@ Server Component의 try-catch에서 호출한다.
 ```tsx
 function handleServerSideError(error: unknown) {
   if (error instanceof ApiResponseError && error.status < 500) {
-    const { title, content } = getErrorInfo(error);
+    const {title, content} = getErrorInfo(error);
     return <ErrorPageTemplate title={title} content={content} />;
   }
   throw error; // 5xx → error.tsx
@@ -48,7 +55,7 @@ function handleServerSideError(error: unknown) {
 사용 예시:
 
 ```tsx
-async function ClassDetailPage({ params }: PageProps) {
+async function ClassDetailPage({params}: PageProps) {
   const queryClient = new QueryClient();
   try {
     await queryClient.fetchQuery(classQueries.detail.options(params.classId));
@@ -70,10 +77,8 @@ useMutation의 catch 블록에서 호출한다. [overlay-kit](https://overlay-ki
 ```tsx
 function useHandleClientSideError() {
   return useCallback((error: unknown) => {
-    const { title, content } = getErrorInfo(error);
-    overlay.open(({ unmount }) => (
-      <Alert title={title} content={content} onClose={unmount} />
-    ));
+    const {title, content} = getErrorInfo(error);
+    overlay.open(({unmount}) => <Alert title={title} content={content} onClose={unmount} />);
   }, []);
 }
 ```
@@ -83,14 +88,14 @@ function useHandleClientSideError() {
 ```tsx
 function LoginForm() {
   const handleClientSideError = useHandleClientSideError();
-  const { mutateAsync } = useMutation({ mutationFn: loginAction });
+  const {mutateAsync} = useMutation({mutationFn: loginAction});
 
   const handleLogin = async (data: LoginRequest) => {
     try {
       await mutateAsync(data);
     } catch (error) {
       if (error instanceof ApiResponseError && error.field) {
-        setError(error.field, { message: error.message }, { shouldFocus: true });
+        setError(error.field, {message: error.message}, {shouldFocus: true});
         return;
       }
       handleClientSideError(error);
@@ -104,11 +109,11 @@ function LoginForm() {
 CSR 렌더링 에러는 ErrorBoundary로만 잡을 수 있다. HandledErrorBoundary로 감싸면 에러 발생 영역만 격리되고, 나머지 UI는 정상 동작한다. ErrorBoundary 배치 범위는 디자인 기획에 따라 결정한다. 데이터 fetch 에러처럼 재시도로 복구 가능한 경우 `resetErrorBoundary`를 사용하고([CSR 패턴](./CsrSuspenseErrorBoundary.md) 참고), 원인 불명의 렌더링 에러는 `location.reload()`로 전체 상태를 초기화한다.
 
 ```tsx
-function HandledErrorBoundary({ children }: PropsWithChildren) {
+function HandledErrorBoundary({children}: PropsWithChildren) {
   return (
     <ErrorBoundary
-      fallbackRender={({ error }) => {
-        const { title, content } = getErrorInfo(error);
+      fallbackRender={({error}) => {
+        const {title, content} = getErrorInfo(error);
         return <ErrorPageTemplate title={title} content={content} onAction={() => location.reload()} />;
       }}
     >
@@ -137,8 +142,8 @@ CSR 렌더링 중 throw된 에러를 잡는 최후의 안전망. handleServerSid
 ```tsx
 'use client';
 
-function ErrorPage({ error, reset }: { error: Error; reset: () => void }) {
-  const { title, content } = getErrorInfo(error);
+function ErrorPage({error, reset}: {error: Error; reset: () => void}) {
+  const {title, content} = getErrorInfo(error);
   return <ErrorPageTemplate title={title} content={content} onAction={reset} />;
 }
 ```

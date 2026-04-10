@@ -4,20 +4,18 @@ import {PropsWithChildren} from 'react';
 import AppProvider from '@/shared/AppProvider';
 
 const notoSans = Noto_Sans({
-  subsets: ["latin"],
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Monorepo Playground",
+  title: 'Monorepo Playground',
 };
 
 export default function RootLayout({children}: PropsWithChildren) {
   return (
     <html lang="en">
       <body className={notoSans.className}>
-      <AppProvider>
-        {children}
-      </AppProvider>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

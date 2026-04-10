@@ -28,7 +28,7 @@ interface LessonRow {
 // 타입, 유효성 검증, 에러메시지를 하나의 스키마에 통합
 const LessonSchema = z.object({
   lessonType: z.enum(['online', 'offline'], {
-    errorMap: () => ({ message: '수업 유형을 선택해주세요' }),
+    errorMap: () => ({message: '수업 유형을 선택해주세요'}),
   }),
 });
 
@@ -59,18 +59,18 @@ export default function LessonListPage({ searchParams }: { searchParams: Record<
 ```typescript
 const LessonSchema = z.object({
   lessonType: z.enum(['online', 'offline'], {
-    errorMap: () => ({ message: '수업 유형을 선택해주세요' }),
+    errorMap: () => ({message: '수업 유형을 선택해주세요'}),
   }),
 });
 
 // 폼 — 같은 스키마로 검증
-const { register } = useForm<z.infer<typeof LessonSchema>>({
+const {register} = useForm<z.infer<typeof LessonSchema>>({
   resolver: zodResolver(LessonSchema),
 });
 
 // URL 쿼리스트링 — 같은 스키마로 검증
-export default function LessonListPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-  const { success, data: filter } = LessonSchema.safeParse(searchParams);
+export default function LessonListPage({searchParams}: {searchParams: Record<string, string | string[] | undefined>}) {
+  const {success, data: filter} = LessonSchema.safeParse(searchParams);
 }
 ```
 
@@ -111,7 +111,10 @@ const LessonOriginalSchema = z.object({
 
 // 목록 — description 제외
 export const LessonRowSchema = LessonOriginalSchema.pick({
-  pk: true, title: true, lessonType: true, capacity: true,
+  pk: true,
+  title: true,
+  lessonType: true,
+  capacity: true,
 });
 
 // 상세 — 전체 필드
@@ -119,7 +122,9 @@ export const LessonDetailSchema = LessonOriginalSchema;
 
 // 생성 — pk, description 제외
 export const CreateLessonSchema = LessonOriginalSchema.pick({
-  title: true, lessonType: true, capacity: true,
+  title: true,
+  lessonType: true,
+  capacity: true,
 });
 ```
 
@@ -201,9 +206,9 @@ Checkbox는 선택된 값을 **배열**로 저장합니다. 전부 체크되어 
 
 ```typescript
 // 제출 시 — 전부 선택됐으면 쿼리스트링에서 생략
-const isAllTypes = LESSON_TYPES.values.every(t => data.lessonType.includes(t));
+const isAllTypes = LESSON_TYPES.values.every((t) => data.lessonType.includes(t));
 if (!isAllTypes) {
-  data.lessonType.forEach(type => searchParams.append('lessonType', type));
+  data.lessonType.forEach((type) => searchParams.append('lessonType', type));
 }
 ```
 

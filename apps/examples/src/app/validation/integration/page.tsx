@@ -23,7 +23,9 @@ export default async function Page({searchParams}: PageProps) {
       <Flex justify="between" align="center" mb="5">
         <Heading size="7">게시판</Heading>
         <Button size="2" asChild>
-          <Link href="/validation/integration/create"><PlusIcon /> 새 글 작성</Link>
+          <Link href="/validation/integration/create">
+            <PlusIcon /> 새 글 작성
+          </Link>
         </Button>
       </Flex>
       <BoardFilter />

@@ -7,19 +7,20 @@ import '@radix-ui/themes/styles.css';
 import '@monorepo-playground/design-system/style.css';
 
 export default function AppProvider({children}: PropsWithChildren) {
-  const [queryClient] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 0
-      }
-    }
-  }));
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: 0,
+          },
+        },
+      }),
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme>
-        {children}
-      </Theme>
+      <Theme>{children}</Theme>
     </QueryClientProvider>
   );
 }

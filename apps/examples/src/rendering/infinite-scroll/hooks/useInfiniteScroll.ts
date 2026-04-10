@@ -1,4 +1,4 @@
-import { useEffect, useRef, type RefObject } from 'react';
+import {useEffect, useRef, type RefObject} from 'react';
 
 interface UseInfiniteScrollParams {
   fetchNextPage: () => void | Promise<unknown>;
@@ -35,7 +35,7 @@ export function useInfiniteScroll({
           void fetchNextPage();
         }
       },
-      { rootMargin: `0px 0px ${offset}px 0px` },
+      {rootMargin: `0px 0px ${offset}px 0px`},
     );
 
     observer.observe(sentinelElement);
@@ -45,5 +45,5 @@ export function useInfiniteScroll({
     };
   }, [fetchNextPage, enabled, offset]);
 
-  return { sentinelRef };
+  return {sentinelRef};
 }

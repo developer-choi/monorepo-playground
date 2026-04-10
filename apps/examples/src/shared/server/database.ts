@@ -22,7 +22,7 @@ interface BoardTable {
   list: ServerBoardDto[];
 }
 
-let boardStore: BoardTable = { list: generateBoards() };
+let boardStore: BoardTable = {list: generateBoards()};
 
 const database = {
   board: {

@@ -10,7 +10,7 @@ export function safeParsePartial<T extends z.ZodObject<z.ZodRawShape>>(
     const value = data[key];
 
     if (value === undefined) {
-      continue
+      continue;
     }
 
     const fieldSchema = schema.shape[key];

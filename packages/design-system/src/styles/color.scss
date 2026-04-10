@@ -1,18 +1,20 @@
-@use "sass:list";
+@use 'sass:list';
 
 // [Design System Stylesheet] https://docs.google.com/document/d/1P05K5UDxKyNkFkSTeH3QiDy2AbXo7hfcHnTERO8yDsU/edit
 
 // 텍스트색, 테두리색, 배경색 등 다양한 회색에서 계층을 구분할 때 사용
 $grayColors: (
-  #333333, // nth($grayColors, 1);
+  #333333,
+  // nth($grayColors, 1);
   #444444,
   #646464,
   #898989,
-  #bdbdbd, // nth($grayColors, 5);
+  #bdbdbd,
+  // nth($grayColors, 5);
   #dbdbdb,
   #ebebeb,
   #f0f0f0,
-  #f5f5f5, // nth($grayColors, 9);
+  #f5f5f5 // nth($grayColors, 9);
 );
 
 // 그 중 특히 텍스트에서 위계를 나눌 때 사용하는 gray 컬러
@@ -23,15 +25,15 @@ $textColors: (
 );
 
 $stateColors: (
-  success: #3FB034,
+  success: #3fb034,
   error: #ff0000,
   disabled: list.nth($grayColors, 6),
-  info: #1234aa
+  info: #1234aa,
 );
 
 $brandColors: (
-  primary: #7752FE,
-  secondary: #A97DF5,
+  primary: #7752fe,
+  secondary: #a97df5,
   edit: orange,
-  delete: red
-)
+  delete: red,
+);

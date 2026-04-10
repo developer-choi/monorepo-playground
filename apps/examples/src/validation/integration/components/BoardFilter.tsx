@@ -28,15 +28,17 @@ export default function BoardFilter() {
   });
 
   const onSubmit = (data: BoardListFilterForm) => {
-    const isAllTypes = BOARD_TYPES.values.every(t => data.boardType.includes(t));
-    router.push(buildUrlWithQuery({
-      pathname: DEFAULT_URL,
-      params: {
-        ...data,
-        boardType: isAllTypes ? undefined : data.boardType,
-        category: data.category === 'all' ? undefined : data.category,
-      },
-    }));
+    const isAllTypes = BOARD_TYPES.values.every((t) => data.boardType.includes(t));
+    router.push(
+      buildUrlWithQuery({
+        pathname: DEFAULT_URL,
+        params: {
+          ...data,
+          boardType: isAllTypes ? undefined : data.boardType,
+          category: data.category === 'all' ? undefined : data.category,
+        },
+      }),
+    );
   };
 
   const handleReset = () => {
@@ -49,7 +51,9 @@ export default function BoardFilter() {
       <form onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
         <Flex direction="column" gap="4">
           <Box>
-            <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>검색</Text>
+            <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              검색
+            </Text>
             <Controller
               control={control}
               name="postTitle"
@@ -65,7 +69,9 @@ export default function BoardFilter() {
 
           <Flex gap="6" wrap="wrap">
             <Box style={{flex: 1, minWidth: 200}}>
-              <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>타입</Text>
+              <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+                타입
+              </Text>
               <Controller
                 control={control}
                 name="boardType"
@@ -74,8 +80,8 @@ export default function BoardFilter() {
                     <Text as="label" size="2">
                       <Flex gap="2" align="center">
                         <Checkbox
-                          checked={BOARD_TYPES.values.every(t => field.value.includes(t))}
-                          onCheckedChange={checked => field.onChange(checked ? BOARD_TYPES.values : [])}
+                          checked={BOARD_TYPES.values.every((t) => field.value.includes(t))}
+                          onCheckedChange={(checked) => field.onChange(checked ? BOARD_TYPES.values : [])}
                         />
                         전체
                       </Flex>
@@ -85,10 +91,8 @@ export default function BoardFilter() {
                         <Flex gap="2" align="center">
                           <Checkbox
                             checked={field.value.includes(value)}
-                            onCheckedChange={checked => {
-                              const next = checked
-                                ? [...field.value, value]
-                                : field.value.filter(t => t !== value);
+                            onCheckedChange={(checked) => {
+                              const next = checked ? [...field.value, value] : field.value.filter((t) => t !== value);
                               field.onChange(next);
                             }}
                           />
@@ -102,7 +106,9 @@ export default function BoardFilter() {
             </Box>
 
             <Box style={{flex: 1, minWidth: 200}}>
-              <Text as="div" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>카테고리</Text>
+              <Text as="div" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+                카테고리
+              </Text>
               <Controller
                 control={control}
                 name="category"
@@ -112,7 +118,9 @@ export default function BoardFilter() {
                     <Select.Content>
                       <Select.Item value="all">전체</Select.Item>
                       {BOARD_CATEGORIES.items.map(({value, label}) => (
-                        <Select.Item key={value} value={value}>{label}</Select.Item>
+                        <Select.Item key={value} value={value}>
+                          {label}
+                        </Select.Item>
                       ))}
                     </Select.Content>
                   </Select.Root>
@@ -122,21 +130,21 @@ export default function BoardFilter() {
           </Flex>
 
           <Box>
-            <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>태그</Text>
+            <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              태그
+            </Text>
             <Controller
               control={control}
               name="tagList"
               render={({field}) => (
                 <Flex gap="3" wrap="wrap">
-                  {AVAILABLE_TAGS.map(tag => (
+                  {AVAILABLE_TAGS.map((tag) => (
                     <Text as="label" size="2" key={tag}>
                       <Flex gap="2" align="center">
                         <Checkbox
                           checked={field.value.includes(tag)}
-                          onCheckedChange={checked => {
-                            const next = checked
-                              ? [...field.value, tag]
-                              : field.value.filter(t => t !== tag);
+                          onCheckedChange={(checked) => {
+                            const next = checked ? [...field.value, tag] : field.value.filter((t) => t !== tag);
                             field.onChange(next);
                           }}
                         />
@@ -150,8 +158,12 @@ export default function BoardFilter() {
           </Box>
 
           <Flex gap="2" justify="end">
-            <Button type="button" variant="soft" color="gray" size="2" onClick={handleReset}>초기화</Button>
-            <Button type="submit" size="2">검색</Button>
+            <Button type="button" variant="soft" color="gray" size="2" onClick={handleReset}>
+              초기화
+            </Button>
+            <Button type="submit" size="2">
+              검색
+            </Button>
           </Flex>
         </Flex>
       </form>

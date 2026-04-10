@@ -17,7 +17,7 @@ export default defineConfig({
       entryRoot: 'src',
       include: ['src/vite-env.d.ts', 'src/index.ts', 'src/components/**/*.ts', 'src/components/**/*.tsx'],
       exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx'],
-    })
+    }),
   ],
   resolve: {
     alias: {
@@ -29,7 +29,7 @@ export default defineConfig({
       entry: path.resolve(dirname, 'src/index.ts'),
       name: 'DesignSystem',
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     cssCodeSplit: false,
     rollupOptions: {
@@ -38,32 +38,36 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          'react/jsx-runtime': 'jsxRuntime'
+          'react/jsx-runtime': 'jsxRuntime',
         },
-        assetFileNames: '[name][extname]'
-      }
-    }
+        assetFileNames: '[name][extname]',
+      },
+    },
   },
   test: {
-    projects: [{
-      extends: true,
-      plugins: [
-        storybookTest({
-          configDir: path.join(dirname, '.storybook')
-        })
-      ],
-      test: {
-        name: 'storybook',
-        browser: {
-          enabled: true,
-          headless: true,
-          provider: playwright({}),
-          instances: [{
-            browser: 'chromium'
-          }]
+    projects: [
+      {
+        extends: true,
+        plugins: [
+          storybookTest({
+            configDir: path.join(dirname, '.storybook'),
+          }),
+        ],
+        test: {
+          name: 'storybook',
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({}),
+            instances: [
+              {
+                browser: 'chromium',
+              },
+            ],
+          },
+          setupFiles: ['.storybook/vitest.setup.ts'],
         },
-        setupFiles: ['.storybook/vitest.setup.ts']
-      }
-    }]
-  }
+      },
+    ],
+  },
 });

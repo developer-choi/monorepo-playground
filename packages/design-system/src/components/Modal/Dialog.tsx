@@ -24,9 +24,7 @@ export default function Dialog(props: DialogProps) {
       {...other}
     >
       <div tabIndex={-1} className={styles.container}>
-        <div className={styles.paper}>
-          {children}
-        </div>
+        <div className={styles.paper}>{children}</div>
       </div>
     </Modal>
   );

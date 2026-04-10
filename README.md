@@ -72,10 +72,10 @@ const LessonSchema = z.object({
 });
 
 // 폼 — 같은 스키마로 검증
-useForm<z.infer<typeof LessonSchema>>({ resolver: zodResolver(LessonSchema) });
+useForm<z.infer<typeof LessonSchema>>({resolver: zodResolver(LessonSchema)});
 
 // URL 쿼리스트링 — 같은 스키마로 검증
-const { success, data: filter } = LessonSchema.safeParse(searchParams);
+const {success, data: filter} = LessonSchema.safeParse(searchParams);
 ```
 
 enum 값과 한글 라벨도 하나의 배열로 관리합니다.
@@ -83,13 +83,13 @@ enum 값과 한글 라벨도 하나의 배열로 관리합니다.
 
 ```typescript
 const LESSON_TYPES = createLabelMap([
-  { value: 'online', label: '온라인' },
-  { value: 'offline', label: '오프라인' },
+  {value: 'online', label: '온라인'},
+  {value: 'offline', label: '오프라인'},
 ]);
 
-LESSON_TYPES.items;   // 순회 — 드롭다운, 라디오 버튼
-LESSON_TYPES.record;  // 조회 — 테이블 라벨 표시
-LESSON_TYPES.values;  // 스키마 — 유효성 검증
+LESSON_TYPES.items; // 순회 — 드롭다운, 라디오 버튼
+LESSON_TYPES.record; // 조회 — 테이블 라벨 표시
+LESSON_TYPES.values; // 스키마 — 유효성 검증
 ```
 
 **상수, 제약 조건, 라벨을 한 곳에서 바꾸면 타입, 검증, 에러 메시지, UI까지 자동으로 반영됩니다.**
@@ -126,7 +126,8 @@ const value = input || 'default';
 
 // ❌ switch에서 케이스 누락 — 유니온 타입에 새 값이 추가되면 컴파일 타임에 잡습니다
 switch (status) {
-  case 'active': return handleActive();
+  case 'active':
+    return handleActive();
   // 'inactive' 케이스 누락 → 에러
 }
 ```

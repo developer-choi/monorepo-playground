@@ -6,7 +6,7 @@
 // eslint.config.base.mts
 export const baseRules = {
   '@typescript-eslint/no-floating-promises': 'off',
-  '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: { attributes: false } }],
+  '@typescript-eslint/no-misused-promises': ['error', {checksVoidReturn: {attributes: false}}],
   '@typescript-eslint/switch-exhaustiveness-check': 'error',
   // ...
 };
@@ -14,7 +14,7 @@ export const baseRules = {
 
 ```js
 // apps/examples/eslint.config.mjs
-import { baseRules } from '../../eslint.config.base.mts';
+import {baseRules} from '../../eslint.config.base.mts';
 
 export default defineConfig([
   ...tseslint.configs.recommendedTypeChecked,
@@ -39,7 +39,7 @@ await 없이 Promise를 호출하면 에러가 조용히 삼켜질 수 있습니
 
 ```typescript
 // 아래 코드가 린트에 걸리지 않음 — 리뷰어가 주의
-fetchData();  // await 빠뜨린 건 아닌지 확인 필요
+fetchData(); // await 빠뜨린 건 아닌지 확인 필요
 ```
 
 #### 2. `@typescript-eslint/switch-exhaustiveness-check`
@@ -48,11 +48,13 @@ union 타입의 switch 문에서 케이스 누락을 방지합니다.
 
 ```typescript
 // ❌
-type Status = "success" | "error" | "loading";
+type Status = 'success' | 'error' | 'loading';
 function getMessage(status: Status): string {
   switch (status) {
-    case "success": return "완료";
-    case "error": return "실패";
+    case 'success':
+      return '완료';
+    case 'error':
+      return '실패';
     // "loading" 케이스 누락 → undefined 반환
   }
 }
@@ -82,10 +84,10 @@ if (await fetchData()) { ... }
 
 ```typescript
 // ❌
-const count = input || 10;  // input이 0이면 10이 됨
+const count = input || 10; // input이 0이면 10이 됨
 
 // ✅
-const count = input ?? 10;  // input이 null/undefined일 때만 10
+const count = input ?? 10; // input이 null/undefined일 때만 10
 ```
 
 #### 5. `@typescript-eslint/no-unnecessary-condition`
@@ -116,10 +118,10 @@ if (value === null || value === undefined) { ... }
 
 ```typescript
 // ❌
-console.log("debug:", data);
+console.log('debug:', data);
 
 // ✅
-console.error("예상치 못한 상태:", state);
+console.error('예상치 못한 상태:', state);
 ```
 
 #### 8. `@typescript-eslint/restrict-template-expressions` (allowNullish: false)
@@ -128,10 +130,10 @@ console.error("예상치 못한 상태:", state);
 
 ```typescript
 // ❌
-const msg = `user: ${user.name}`;  // user.name이 undefined면 "user: undefined"
+const msg = `user: ${user.name}`; // user.name이 undefined면 "user: undefined"
 
 // ✅
-const msg = `user: ${user.name ?? "(알 수 없음)"}`;
+const msg = `user: ${user.name ?? '(알 수 없음)'}`;
 ```
 
 #### 9. `max-params` (2)
@@ -167,7 +169,7 @@ function onClick(_event: MouseEvent) { ... }  // _로 시작하면 허용
 
 #### 22. `no-restricted-syntax` — 빈 alt 속성 금지
 
-`<img alt="">` 처럼 빈 alt를 실수로 넣는 것을 방지합니다. 3개의 AST 셀렉터로 `alt=""`, `alt=''`, `alt={''}`, `` alt={``} ``, `alt={""}` 5가지 패턴을 모두 커버합니다.
+`<img alt="">` 처럼 빈 alt를 실수로 넣는 것을 방지합니다. 3개의 AST 셀렉터로 `alt=""`, `alt=''`, `alt={''}`, ` alt={`} ``, `alt={""}` 5가지 패턴을 모두 커버합니다.
 
 ```tsx
 // ❌
@@ -215,11 +217,11 @@ React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
 
 ```typescript
 // ❌
-const data = JSON.parse(response);  // data는 any
+const data = JSON.parse(response); // data는 any
 
 // ✅
 const raw: unknown = JSON.parse(response);
-const data = schema.parse(raw);  // 검증 후 사용
+const data = schema.parse(raw); // 검증 후 사용
 ```
 
 #### 13. `@typescript-eslint/no-unsafe-call`
@@ -229,10 +231,10 @@ const data = schema.parse(raw);  // 검증 후 사용
 ```typescript
 // ❌
 const fn = JSON.parse(str);
-fn();  // any를 함수로 호출
+fn(); // any를 함수로 호출
 
 // ✅
-const fn: (() => void) = validateAndParse(str);
+const fn: () => void = validateAndParse(str);
 fn();
 ```
 
@@ -243,7 +245,7 @@ fn();
 ```typescript
 // ❌
 const data = JSON.parse(str);
-const name = data.user.name;  // any 체이닝
+const name = data.user.name; // any 체이닝
 
 // ✅
 const data: UserResponse = schema.parse(JSON.parse(str));
@@ -257,7 +259,7 @@ const name = data.user.name;
 ```typescript
 // ❌
 function getConfig(): AppConfig {
-  return JSON.parse(str);  // any를 AppConfig로 반환
+  return JSON.parse(str); // any를 AppConfig로 반환
 }
 
 // ✅
@@ -288,7 +290,7 @@ Promise가 아닌 값에 `await`를 사용하는 것을 방지합니다.
 ```typescript
 // ❌
 const value = 42;
-const result = await value;  // 의미 없는 await
+const result = await value; // 의미 없는 await
 
 // ✅
 const result = value;
@@ -301,7 +303,7 @@ const result = value;
 ```typescript
 // ❌
 async function getData() {
-  return cachedData;  // await 없음 → async 불필요
+  return cachedData; // await 없음 → async 불필요
 }
 
 // ✅
@@ -316,8 +318,8 @@ function getData() {
 
 ```typescript
 // ❌
-const obj = { name: "test" };
-console.error(`result: ${obj}`);  // "result: [object Object]"
+const obj = {name: 'test'};
+console.error(`result: ${obj}`); // "result: [object Object]"
 
 // ✅
 console.error(`result: ${JSON.stringify(obj)}`);

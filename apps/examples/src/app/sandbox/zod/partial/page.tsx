@@ -18,7 +18,7 @@ const testCases = [
 
 function formatResult(result: ReturnType<typeof z.safeParse>) {
   if (result.success) return {ok: true, value: JSON.stringify(result.data)};
-  const msgs = result.error.issues.map(i => `${i.path.join('.')}: ${i.message}`);
+  const msgs = result.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`);
   return {ok: false, value: msgs.join(', ')};
 }
 
@@ -33,7 +33,9 @@ export default function Page() {
 
   return (
     <Container size="4" p="6">
-      <Heading size="6" mb="4">Zod partial() 비교 테스트</Heading>
+      <Heading size="6" mb="4">
+        Zod partial() 비교 테스트
+      </Heading>
 
       <Table.Root variant="surface" size="1">
         <Table.Header>
@@ -46,10 +48,14 @@ export default function Page() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {rows.map(row => (
+          {rows.map((row) => (
             <Table.Row key={row.label}>
-              <Table.Cell><strong>{row.label}</strong></Table.Cell>
-              <Table.Cell><Code size="1">{JSON.stringify(row.data)}</Code></Table.Cell>
+              <Table.Cell>
+                <strong>{row.label}</strong>
+              </Table.Cell>
+              <Table.Cell>
+                <Code size="1">{JSON.stringify(row.data)}</Code>
+              </Table.Cell>
               <Table.Cell>
                 <Badge color={row.withoutPartial.ok ? 'green' : 'red'} size="1" mr="1">
                   {row.withoutPartial.ok ? 'OK' : 'FAIL'}
@@ -63,7 +69,9 @@ export default function Page() {
                 <Code size="1">{row.withPartial.value}</Code>
               </Table.Cell>
               <Table.Cell>
-                <Badge color="blue" size="1" mr="1">ALWAYS</Badge>
+                <Badge color="blue" size="1" mr="1">
+                  ALWAYS
+                </Badge>
                 <Code size="1">{row.withSafeParsePartial}</Code>
               </Table.Cell>
             </Table.Row>

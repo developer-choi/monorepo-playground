@@ -16,9 +16,10 @@ export default class InvalidAccessError extends BaseError {
   readonly meta?: unknown;
 
   constructor(options: InvalidAccessErrorOptions) {
-    const message = options.redirect.type === 'NOT_FOUND'
-      ? `${options.redirect.type}`
-      : `${options.redirect.type} ${options.redirect.url}`;
+    const message =
+      options.redirect.type === 'NOT_FOUND'
+        ? `${options.redirect.type}`
+        : `${options.redirect.type} ${options.redirect.url}`;
     super(message, {level: 'info'});
     this.redirect = options.redirect;
     this.meta = options.meta;

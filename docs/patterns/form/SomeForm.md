@@ -6,7 +6,7 @@
 
 ```tsx
 export default function SomeForm() {
-  const { form, inputProps, introductionLength } = useSomeForm();
+  const {form, inputProps, introductionLength} = useSomeForm();
 
   return (
     <form onSubmit={form.onSubmit}>
@@ -14,7 +14,9 @@ export default function SomeForm() {
       <Input {...inputProps.password} />
       <TextArea {...inputProps.introduction} />
       <p>{introductionLength}/200</p>
-      <Button loading={form.loading} type="submit">제출</Button>
+      <Button loading={form.loading} type="submit">
+        제출
+      </Button>
     </form>
   );
 }
@@ -24,12 +26,12 @@ export default function SomeForm() {
 
 ```tsx
 function useSomeForm() {
-  const { replace } = useRouter();
+  const {replace} = useRouter();
   const handleClientSideError = useClientSideError();
-  const { handleSubmit, setError, register, control } = useForm<SomeFormData>();
+  const {handleSubmit, setError, register, control} = useForm<SomeFormData>();
 
   const emailInputProps: InputProps = {
-    ...register('email', { required: '이메일을 입력해주세요' }),
+    ...register('email', {required: '이메일을 입력해주세요'}),
     label: '이메일',
     placeholder: 'example@email.com',
   };
@@ -44,16 +46,16 @@ function useSomeForm() {
   };
 
   const introductionTextAreaProps: TextAreaProps = {
-    ...register('introduction', { maxLength: { value: 200, message: '200자 이내로 입력해주세요' } }),
+    ...register('introduction', {maxLength: {value: 200, message: '200자 이내로 입력해주세요'}}),
     label: '자기소개',
     placeholder: '간단한 자기소개를 입력해주세요',
   };
 
   // watch() 대신 useFormWatch()를 사용한다
-  const introductionLength = useFormWatch({ control, name: 'introduction' })?.length ?? 0;
+  const introductionLength = useFormWatch({control, name: 'introduction'})?.length ?? 0;
 
   // mutate(콜백) 대신 mutateAsync + try-catch
-  const { mutateAsync, isPending, isSuccess } = useMutation({
+  const {mutateAsync, isPending, isSuccess} = useMutation({
     mutationFn: postSomeApi,
   });
 
@@ -67,7 +69,7 @@ function useSomeForm() {
     } catch (error) {
       // 개별 에러를 먼저 분기, 나머지는 공통 함수에 위임
       if (error instanceof ApiResponseError && error.detail) {
-        setError('email', { type: 'api', message: '...' }, { shouldFocus: true });
+        setError('email', {type: 'api', message: '...'}, {shouldFocus: true});
         return;
       }
       handleClientSideError(error);

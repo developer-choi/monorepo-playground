@@ -10,21 +10,19 @@ export async function GET(request: NextRequest) {
   let filtered = list;
   const postTitle = sp.get('post_title');
   if (postTitle) {
-    filtered = filtered.filter(item => item.post_title.includes(postTitle));
+    filtered = filtered.filter((item) => item.post_title.includes(postTitle));
   }
   const boardTypes = sp.getAll('board_type');
   if (boardTypes.length > 0) {
-    filtered = filtered.filter(item => boardTypes.includes(item.board_type));
+    filtered = filtered.filter((item) => boardTypes.includes(item.board_type));
   }
   const category = sp.get('category');
   if (category) {
-    filtered = filtered.filter(item => item.category === category);
+    filtered = filtered.filter((item) => item.category === category);
   }
   const tagList = sp.getAll('tag_list');
   if (tagList.length > 0) {
-    filtered = filtered.filter(item =>
-      tagList.some(tag => item.tag_list?.includes(tag)),
-    );
+    filtered = filtered.filter((item) => tagList.some((tag) => item.tag_list?.includes(tag)));
   }
 
   // 페이지네이션
@@ -46,7 +44,7 @@ export async function POST(request: NextRequest) {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument -- TODO: API body를 zod 등으로 검증하여 disable 제거 */
   const body = await request.json();
   const {list} = await database.board.get();
-  const nextId = list.length === 0 ? 1 : Math.max(...list.map(item => item.id)) + 1;
+  const nextId = list.length === 0 ? 1 : Math.max(...list.map((item) => item.id)) + 1;
 
   const newItem = {id: nextId, ...body};
   list.push(newItem);

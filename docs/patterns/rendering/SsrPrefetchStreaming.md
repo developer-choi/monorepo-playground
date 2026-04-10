@@ -56,8 +56,9 @@ useSuspenseQuery/useSuspenseInfiniteQuery는 로딩·에러 분기가 필요 없
 'use client';
 
 function ProductListPage() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useSuspenseInfiniteQuery(productQueries.list.options());
+  const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useSuspenseInfiniteQuery(
+    productQueries.list.options(),
+  );
 
   const products = data.pages.flatMap((page) => page.items);
 

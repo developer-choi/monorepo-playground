@@ -18,13 +18,19 @@ export default function ExampleHeader({sourcePath, readmePath}: ExampleHeaderPro
       style={{zIndex: 10, backgroundColor: 'var(--color-background)', borderBottom: '1px solid var(--gray-a5)'}}
     >
       <Link href={`${PROJECT_BASE}/${readmePath}`} target="_blank" size="2">
-        <Flex align="center" gap="1"><FileTextIcon /> README</Flex>
+        <Flex align="center" gap="1">
+          <FileTextIcon /> README
+        </Flex>
       </Link>
       <Link href={`${PROJECT_BASE}/${sourcePath}`} target="_blank" size="2">
-        <Flex align="center" gap="1"><CodeIcon /> 소스코드</Flex>
+        <Flex align="center" gap="1">
+          <CodeIcon /> 소스코드
+        </Flex>
       </Link>
       <Link href="https://github.com/developer-choi" target="_blank" size="2">
-        <Flex align="center" gap="1"><GitHubLogoIcon /> GitHub</Flex>
+        <Flex align="center" gap="1">
+          <GitHubLogoIcon /> GitHub
+        </Flex>
       </Link>
     </Flex>
   );

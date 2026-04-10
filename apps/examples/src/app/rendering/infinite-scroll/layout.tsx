@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react';
+import {PropsWithChildren} from 'react';
 import styles from './layout.module.scss';
 import classNames from 'classnames';
 
-export default function Layout({ children }: PropsWithChildren) {
+export default function Layout({children}: PropsWithChildren) {
   return (
     <>
       <Header />
@@ -32,11 +32,7 @@ function Sidebar() {
       <ul className={styles.categoryList}>
         {CATEGORIES.map((category, index) => (
           <li key={category}>
-            <span
-              className={classNames(styles.categoryItem, index === 0 && styles.active)}
-            >
-              {category}
-            </span>
+            <span className={classNames(styles.categoryItem, index === 0 && styles.active)}>{category}</span>
           </li>
         ))}
       </ul>

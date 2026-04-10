@@ -14,11 +14,17 @@ import {PaginationParams} from '@/shared/schema/pagination';
 import {buildUrlWithQuery} from '@/shared/utils/url';
 import {toCamelCaseKeys, toSnakeCaseKeys} from 'es-toolkit';
 
-export async function getBoardListApi(params: Partial<BoardListFilter & PaginationParams>): Promise<BoardListApiResponse> {
-  const raw = await api.get(buildUrlWithQuery({pathname: 'api/board', params: toSnakeCaseKeys(params)})).json<ServerBoardListResponse>();
+export async function getBoardListApi(
+  params: Partial<BoardListFilter & PaginationParams>,
+): Promise<BoardListApiResponse> {
+  const raw = await api
+    .get(buildUrlWithQuery({pathname: 'api/board', params: toSnakeCaseKeys(params)}))
+    .json<ServerBoardListResponse>();
   return {
     ...toCamelCaseKeys(raw),
-    list: raw.list.map(row => validateApiResponse(BoardRowSchema, {...toCamelCaseKeys(row), tagList: row.tag_list ?? []})),
+    list: raw.list.map((row) =>
+      validateApiResponse(BoardRowSchema, {...toCamelCaseKeys(row), tagList: row.tag_list ?? []}),
+    ),
   };
 }
 
@@ -41,8 +47,8 @@ export function deleteBoardApi(id: number) {
   return api.delete(`api/board/${id}`).json<void>();
 }
 
-type BoardType = typeof BOARD_TYPES.values[number];
-type BoardCategory = typeof BOARD_CATEGORIES.values[number];
+type BoardType = (typeof BOARD_TYPES.values)[number];
+type BoardCategory = (typeof BOARD_CATEGORIES.values)[number];
 
 interface ServerBoardDetail {
   id: number;

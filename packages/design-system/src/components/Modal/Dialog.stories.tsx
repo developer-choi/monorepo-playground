@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
-import Dialog, { type DialogProps } from './Dialog';
+import Dialog, {type DialogProps} from './Dialog';
 import Drawer from './Drawer';
 import styles from './DialogStories.module.scss';
 
@@ -46,7 +46,9 @@ const FormDialogContent = ({title, descriptions, onClose}: FormDialogContentProp
     </div>
 
     {descriptions.map((description, index) => (
-      <p key={index} className={styles.dialogDescription}>{description}</p>
+      <p key={index} className={styles.dialogDescription}>
+        {description}
+      </p>
     ))}
 
     <div className={styles.dialogBody}>
@@ -61,9 +63,7 @@ const FormDialogContent = ({title, descriptions, onClose}: FormDialogContentProp
     </div>
 
     <div className={styles.dialogFooter}>
-      <button onClick={onClose}>
-        취소
-      </button>
+      <button onClick={onClose}>취소</button>
       <button className="primary" onClick={onClose}>
         저장
       </button>
@@ -76,9 +76,7 @@ const BasicUsageStory = (args: DialogProps) => {
 
   return (
     <div className="story-layout">
-      <button onClick={() => setOpen(true)}>
-        Dialog 열기
-      </button>
+      <button onClick={() => setOpen(true)}>Dialog 열기</button>
 
       <Dialog
         {...args}
@@ -98,9 +96,7 @@ const BasicUsageStory = (args: DialogProps) => {
           </div>
 
           <div className={styles.dialogFooter}>
-            <button onClick={() => setOpen(false)}>
-              취소
-            </button>
+            <button onClick={() => setOpen(false)}>취소</button>
             <button className="primary" onClick={() => setOpen(false)}>
               확인
             </button>
@@ -126,12 +122,8 @@ const FocusStory = (args: DialogProps) => {
   return (
     <div className="story-layout">
       <div className="btn-group">
-        <button onClick={() => setRestoreOpen(true)}>
-          포커스 복원 & 첫 요소 지정
-        </button>
-        <button onClick={() => setTrapOpen(true)}>
-          포커스 Trap 테스트
-        </button>
+        <button onClick={() => setRestoreOpen(true)}>포커스 복원 & 첫 요소 지정</button>
+        <button onClick={() => setTrapOpen(true)}>포커스 Trap 테스트</button>
       </div>
 
       <Dialog
@@ -145,9 +137,9 @@ const FocusStory = (args: DialogProps) => {
         <FormDialogContent
           title="포커스 복원 & 첫 요소 지정"
           descriptions={[
-            "모달이 열리면 첫 번째 포커스 가능한 요소에 자동으로 포커스됩니다.",
-            "Confirm 모달이면 취소버튼, Alert 모달이면 확인버튼, Form 모달이면 첫 폼요소에 포커스가 가는게 Best 입니다.",
-            "모달을 닫으면 원래 열었던 버튼으로 포커스가 복원됩니다."
+            '모달이 열리면 첫 번째 포커스 가능한 요소에 자동으로 포커스됩니다.',
+            'Confirm 모달이면 취소버튼, Alert 모달이면 확인버튼, Form 모달이면 첫 폼요소에 포커스가 가는게 Best 입니다.',
+            '모달을 닫으면 원래 열었던 버튼으로 포커스가 복원됩니다.',
           ]}
           onClose={() => setRestoreOpen(false)}
         />
@@ -164,8 +156,8 @@ const FocusStory = (args: DialogProps) => {
         <FormDialogContent
           title="포커스 Trap 테스트"
           descriptions={[
-            "Tab 키를 계속 눌러보세요. 포커스가 모달 내부에서만 순환하며, 바깥으로 빠져나가지 않습니다.",
-            "Shift+Tab으로 역방향 순환도 테스트해보세요."
+            'Tab 키를 계속 눌러보세요. 포커스가 모달 내부에서만 순환하며, 바깥으로 빠져나가지 않습니다.',
+            'Shift+Tab으로 역방향 순환도 테스트해보세요.',
           ]}
           onClose={() => setTrapOpen(false)}
         />
@@ -201,20 +193,18 @@ const CriticalAlertStory = (args: DialogProps) => {
       >
         <div className={styles.dialogContent}>
           <div className={styles.dialogHeader}>
-            <h2 style={{ color: '#d32f2f' }}>정말 삭제하시겠습니까?</h2>
+            <h2 style={{color: '#d32f2f'}}>정말 삭제하시겠습니까?</h2>
           </div>
-          
+
           <div className={styles.dialogBody}>
             <p>
-              중요한 작업이므로 실수로 닫는 것을 방지하기 위해 
+              중요한 작업이므로 실수로 닫는 것을 방지하기 위해
               <strong> ESC 키와 배경 클릭 닫기가 비활성화</strong> 되었습니다.
             </p>
           </div>
 
           <div className={styles.dialogFooter}>
-            <button onClick={() => setOpen(false)}>
-              취소
-            </button>
+            <button onClick={() => setOpen(false)}>취소</button>
             <button className="danger" onClick={() => setOpen(false)}>
               삭제 확인
             </button>
@@ -238,19 +228,10 @@ const DrawerExampleStory = (args: DialogProps) => {
 
   return (
     <div className="story-layout">
-      <button onClick={() => setOpen(true)}>
-        전체 메뉴 열기1
-      </button>
-      <button onClick={() => setOpen(true)}>
-        전체 메뉴 열기2
-      </button>
+      <button onClick={() => setOpen(true)}>전체 메뉴 열기1</button>
+      <button onClick={() => setOpen(true)}>전체 메뉴 열기2</button>
 
-      <Drawer
-        {...args}
-        open={open}
-        anchor="left"
-        onClose={() => setOpen(false)}
-      >
+      <Drawer {...args} open={open} anchor="left" onClose={() => setOpen(false)}>
         <div className={styles.drawerContent}>
           <div className={styles.drawerHeader}>
             <h2>Dialog에 있던 기능 모두 테스트</h2>

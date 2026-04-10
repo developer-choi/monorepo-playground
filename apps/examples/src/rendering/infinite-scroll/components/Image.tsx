@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import {ComponentPropsWithoutRef} from 'react';
 import classNames from 'classnames';
 import styles from './Image.module.scss';
 
@@ -7,45 +7,26 @@ interface BaseImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 'src'> {
   alt: string;
 }
 
-export function BaseImage({ src, className, alt, ...rest }: BaseImageProps) {
+export function BaseImage({src, className, alt, ...rest}: BaseImageProps) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img
-      {...rest}
-      loading="lazy"
-      src={src}
-      alt={alt}
-      className={classNames(styles.image, className)}
-    />
+    <img {...rest} loading="lazy" src={src} alt={alt} className={classNames(styles.image, className)} />
   );
 }
 
-interface OptimizedImageProps extends Omit<
-  ComponentPropsWithoutRef<'img'>,
-  'src' | 'sizes'
-> {
+interface OptimizedImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 'src' | 'sizes'> {
   src: string;
   alt: string;
   sizes: string;
 }
 
-export function OptimizedImage({
-  src,
-  srcSet,
-  sizes,
-  ...rest
-}: OptimizedImageProps) {
+export function OptimizedImage({src, srcSet, sizes, ...rest}: OptimizedImageProps) {
   if (!src.startsWith(CLOUDINARY_ORIGIN)) {
     return <BaseImage src={src} {...rest} />;
   }
 
   return (
-    <BaseImage
-      {...rest}
-      src={toResizedUrl(src, DEFAULT_SIZE)}
-      srcSet={srcSet ?? buildSrcSet(src)}
-      sizes={sizes}
-    />
+    <BaseImage {...rest} src={toResizedUrl(src, DEFAULT_SIZE)} srcSet={srcSet ?? buildSrcSet(src)} sizes={sizes} />
   );
 }
 
@@ -59,7 +40,5 @@ function toResizedUrl(originalUrl: string, size: number): string {
 }
 
 function buildSrcSet(originalUrl: string): string {
-  return IMAGE_STEPS.map((size) => `${toResizedUrl(originalUrl, size)} ${size}w`).join(
-    ', ',
-  );
+  return IMAGE_STEPS.map((size) => `${toResizedUrl(originalUrl, size)} ${size}w`).join(', ');
 }

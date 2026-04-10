@@ -32,13 +32,19 @@ export default function BoardDetail({board}: BoardDetailProps) {
   return (
     <Container size="2" p="6">
       <Card size="3">
-        <Heading size="6" mb="3">{board.postTitle}</Heading>
+        <Heading size="6" mb="3">
+          {board.postTitle}
+        </Heading>
 
         <Flex gap="2" mb="4" wrap="wrap">
           <Badge size="2">{BOARD_TYPES.record[board.boardType]}</Badge>
-          <Badge size="2" variant="surface">{BOARD_CATEGORIES.record[board.category]}</Badge>
-          {board.tagList.map(tag => (
-            <Badge key={tag} size="2" variant="soft">{tag}</Badge>
+          <Badge size="2" variant="surface">
+            {BOARD_CATEGORIES.record[board.category]}
+          </Badge>
+          {board.tagList.map((tag) => (
+            <Badge key={tag} size="2" variant="soft">
+              {tag}
+            </Badge>
           ))}
         </Flex>
 
@@ -51,12 +57,18 @@ export default function BoardDetail({board}: BoardDetailProps) {
         <Separator size="4" mb="4" />
 
         <Flex justify="between" align="center">
-          <Button variant="soft" color="gray" size="2" onClick={() => router.push('/validation/integration')}>목록으로</Button>
+          <Button variant="soft" color="gray" size="2" onClick={() => router.push('/validation/integration')}>
+            목록으로
+          </Button>
           <Flex gap="2">
-            <Button size="2" onClick={() => router.push(`/validation/integration/${board.id}/edit`)}>수정</Button>
+            <Button size="2" onClick={() => router.push(`/validation/integration/${board.id}/edit`)}>
+              수정
+            </Button>
             <AlertDialog.Root>
               <AlertDialog.Trigger>
-                <Button size="2" color="red" variant="soft" loading={isMutationSettling(deleteMutation)}>삭제</Button>
+                <Button size="2" color="red" variant="soft" loading={isMutationSettling(deleteMutation)}>
+                  삭제
+                </Button>
               </AlertDialog.Trigger>
               <AlertDialog.Content maxWidth="450px">
                 <AlertDialog.Title>게시글 삭제</AlertDialog.Title>
@@ -65,10 +77,14 @@ export default function BoardDetail({board}: BoardDetailProps) {
                 </AlertDialog.Description>
                 <Flex gap="3" justify="end" mt="4">
                   <AlertDialog.Cancel>
-                    <Button size="2" variant="soft" color="gray">취소</Button>
+                    <Button size="2" variant="soft" color="gray">
+                      취소
+                    </Button>
                   </AlertDialog.Cancel>
                   <AlertDialog.Action>
-                    <Button size="2" color="red" onClick={() => void handleDelete()}>삭제</Button>
+                    <Button size="2" color="red" onClick={() => void handleDelete()}>
+                      삭제
+                    </Button>
                   </AlertDialog.Action>
                 </Flex>
               </AlertDialog.Content>

@@ -36,20 +36,24 @@ const boardTypeEnum = z.enum(BOARD_TYPES.values, {
 const boardCategoryEnum = z.enum(BOARD_CATEGORIES.values, {
   error: '카테고리를 선택해주세요',
 });
-const tagSchema = z.string()
+const tagSchema = z
+  .string()
   .max(BOARD_LIMITS.tagList.maxLength, `태그는 ${BOARD_LIMITS.tagList.maxLength}자 이내로 입력하세요`);
 
 const BoardOriginalSchema = z.object({
   id: numericIdSchema,
-  postTitle: z.string()
+  postTitle: z
+    .string()
     .min(BOARD_LIMITS.postTitle.min, '제목을 입력하세요')
     .max(BOARD_LIMITS.postTitle.max, `제목은 ${BOARD_LIMITS.postTitle.max}자 이내로 입력하세요`),
-  postContent: z.string()
+  postContent: z
+    .string()
     .min(BOARD_LIMITS.postContent.min, '내용을 입력하세요')
     .max(BOARD_LIMITS.postContent.max, `내용은 ${BOARD_LIMITS.postContent.max}자 이내로 입력하세요`),
   boardType: boardTypeEnum,
   category: boardCategoryEnum,
-  tagList: z.array(tagSchema)
+  tagList: z
+    .array(tagSchema)
     .max(BOARD_LIMITS.tagList.maxCount, `태그는 최대 ${BOARD_LIMITS.tagList.maxCount}개까지 가능합니다`),
 });
 
@@ -59,11 +63,19 @@ const BoardOriginalSchema = z.object({
 export const BoardDetailSchema = BoardOriginalSchema;
 
 export const BoardRowSchema = BoardOriginalSchema.pick({
-  id: true, postTitle: true, boardType: true, category: true, tagList: true,
+  id: true,
+  postTitle: true,
+  boardType: true,
+  category: true,
+  tagList: true,
 });
 
 export const CreateBoardSchema = BoardOriginalSchema.pick({
-  postTitle: true, postContent: true, boardType: true, category: true, tagList: true,
+  postTitle: true,
+  postContent: true,
+  boardType: true,
+  category: true,
+  tagList: true,
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,14 +84,12 @@ const UpdateBoardSchema = BoardOriginalSchema.pick({id: true}).extend({
   boardType: boardTypeEnum.nullable(), // 백엔드에서 의도적으로 빈값이 아닌 null을 보내달라고 요구하는 경우 nullable로 대응
 });
 
-const stringOrStringArray = z.union([z.string().transform(s => [s]), z.array(z.string())]);
+const stringOrStringArray = z.union([z.string().transform((s) => [s]), z.array(z.string())]);
 
-export const BoardListFilterSchema = BoardOriginalSchema
-  .pick({postTitle: true, category: true})
-  .extend({
-    boardType: z.union([boardTypeEnum.transform(s => [s]), z.array(boardTypeEnum)]),
-    tagList: stringOrStringArray,
-  });
+export const BoardListFilterSchema = BoardOriginalSchema.pick({postTitle: true, category: true}).extend({
+  boardType: z.union([boardTypeEnum.transform((s) => [s]), z.array(boardTypeEnum)]),
+  tagList: stringOrStringArray,
+});
 
 /*************************************************************************************************************
  * Types

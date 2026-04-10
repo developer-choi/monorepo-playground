@@ -1,13 +1,7 @@
-import { Suspense } from 'react';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import BoardListPage, {
-  BoardListSkeleton,
-} from '@/rendering/infinite-scroll/components/BoardListPage';
-import { boardQueries } from '@/rendering/infinite-scroll/queries';
+import {Suspense} from 'react';
+import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
+import BoardListPage, {BoardListSkeleton} from '@/rendering/infinite-scroll/components/BoardListPage';
+import {boardQueries} from '@/rendering/infinite-scroll/queries';
 
 export const dynamic = 'force-dynamic';
 

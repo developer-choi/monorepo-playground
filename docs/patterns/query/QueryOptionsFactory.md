@@ -18,7 +18,7 @@ TanStack Query v5의 `queryOptions()`를 사용하여 쿼리 옵션을 중앙화
 ## 팩토리 정의
 
 ```tsx
-import { queryOptions } from '@tanstack/react-query';
+import {queryOptions} from '@tanstack/react-query';
 
 export const classQueries = {
   // list: key()를 분리하면 invalidateQueries에서 필터와 무관하게 무효화 가능.
@@ -26,10 +26,10 @@ export const classQueries = {
   list: {
     key: (organizationId: string) => ['classes', organizationId] as const,
     options: (organizationId: string, filters?: ClassFilters) => {
-      const resolved = { page: 1, search: '', ...filters };
+      const resolved = {page: 1, search: '', ...filters};
       return queryOptions({
         queryKey: [...classQueries.list.key(organizationId), resolved] as const,
-        queryFn: () => classApi.getClasses({ organizationId, ...resolved }),
+        queryFn: () => classApi.getClasses({organizationId, ...resolved}),
       });
     },
   },
@@ -50,5 +50,5 @@ export const classQueries = {
 ```tsx
 useSuspenseQuery(classQueries.detail.options(classId));
 queryClient.prefetchQuery(classQueries.list.options(orgId));
-queryClient.invalidateQueries({ queryKey: classQueries.list.key(orgId) });
+queryClient.invalidateQueries({queryKey: classQueries.list.key(orgId)});
 ```

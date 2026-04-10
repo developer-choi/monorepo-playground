@@ -11,8 +11,8 @@ Next.js App Router + next/font/google
 ## 코드
 
 ```tsx
-import { Noto_Sans_KR } from 'next/font/google';
-import { PropsWithChildren } from 'react';
+import {Noto_Sans_KR} from 'next/font/google';
+import {PropsWithChildren} from 'react';
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
@@ -20,7 +20,7 @@ const notoSansKr = Noto_Sans_KR({
   display: 'swap',
 });
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({children}: PropsWithChildren) {
   return (
     <html>
       <body className={notoSansKr.className}>{children}</body>

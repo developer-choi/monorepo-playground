@@ -6,7 +6,7 @@ type RouteContext = {params: Promise<{id: string}>};
 export async function GET(_request: NextRequest, {params}: RouteContext) {
   const {id} = await params;
   const {list} = await database.board.get();
-  const board = list.find(item => item.id === Number(id));
+  const board = list.find((item) => item.id === Number(id));
 
   if (!board) {
     return NextResponse.json({message: 'Not Found'}, {status: 404});
@@ -19,7 +19,7 @@ export async function PATCH(request: NextRequest, {params}: RouteContext) {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment -- TODO: API body를 zod 등으로 검증하여 disable 제거 */
   const body = await request.json();
   const {list} = await database.board.get();
-  const index = list.findIndex(item => item.id === Number(id));
+  const index = list.findIndex((item) => item.id === Number(id));
 
   if (index === -1) {
     return NextResponse.json({message: 'Not Found'}, {status: 404});
@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest, {params}: RouteContext) {
 export async function DELETE(_request: NextRequest, {params}: RouteContext) {
   const {id} = await params;
   const {list} = await database.board.get();
-  const filtered = list.filter(item => item.id !== Number(id));
+  const filtered = list.filter((item) => item.id !== Number(id));
 
   if (filtered.length === list.length) {
     return NextResponse.json({message: 'Not Found'}, {status: 404});

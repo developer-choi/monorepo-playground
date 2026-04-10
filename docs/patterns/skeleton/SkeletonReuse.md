@@ -26,8 +26,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 ```
 
@@ -70,14 +75,20 @@ bone이 제공하는 것:
 이미지, 배지, 아이콘 등 타이포그래피 클래스가 없는 요소는 인라인 스타일로 크기를 직접 지정한다.
 
 ```tsx
-{/* 배지 (pill 형태) */}
-<div className={styles.bone} style={{ width: 60, height: 18, borderRadius: 80 }} />
+{
+  /* 배지 (pill 형태) */
+}
+<div className={styles.bone} style={{width: 60, height: 18, borderRadius: 80}} />;
 
-{/* 아바타 (원형) */}
-<div className={styles.bone} style={{ width: 50, height: 50, borderRadius: '50%' }} />
+{
+  /* 아바타 (원형) */
+}
+<div className={styles.bone} style={{width: 50, height: 50, borderRadius: '50%'}} />;
 
-{/* 버튼 */}
-<div className={styles.bone} style={{ width: 200, height: 50 }} />
+{
+  /* 버튼 */
+}
+<div className={styles.bone} style={{width: 200, height: 50}} />;
 ```
 
 ## 컨테이너 클래스 재사용
@@ -87,7 +98,7 @@ bone이 제공하는 것:
 실제 컴포넌트와 스켈레톤이 같은 파일에 있으면, 같은 `styles` import를 공유한다.
 
 ```tsx
-import styles from './ContestApplyForm.module.scss'
+import styles from './ContestApplyForm.module.scss';
 
 function ContestApplyFormContent() {
   return (
@@ -102,23 +113,25 @@ function ContestApplyFormContent() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
 function ApplyFormSkeleton() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <div className={classnames(styles.heading, styles.bone)} style={{ width: '70%' }}>&nbsp;</div>
+        <div className={classnames(styles.heading, styles.bone)} style={{width: '70%'}}>
+          &nbsp;
+        </div>
         <div className={styles.form}>
-          <div className={styles.bone} style={{ width: '100%', height: 44 }} />
+          <div className={styles.bone} style={{width: '100%', height: 44}} />
           <div className={styles.submitWrapper}>
-            <div className={styles.bone} style={{ width: 200, height: 50 }} />
+            <div className={styles.bone} style={{width: 200, height: 50}} />
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 ```
 
@@ -127,27 +140,35 @@ function ApplyFormSkeleton() {
 스켈레톤이 다른 파일에 있으면, 실제 컴포넌트의 `.module.scss`를 cross-import한다.
 
 ```tsx
-import classnames from 'classnames'
-import cardStyles from '@/components/main/ContestCard.module.scss'
-import listStyles from '@/components/main/ContestList.module.scss'
-import styles from './MainPage.module.scss' // .bone은 여기에
+import classnames from 'classnames';
+import cardStyles from '@/components/main/ContestCard.module.scss';
+import listStyles from '@/components/main/ContestList.module.scss';
+import styles from './MainPage.module.scss'; // .bone은 여기에
 
 function ContestListSkeleton() {
   return (
     <div className={listStyles.list}>
-      {Array.from({ length: 4 }, (_, i) => (
+      {Array.from({length: 4}, (_, i) => (
         <div key={i} className={cardStyles.card}>
           <div className={cardStyles.meta}>
-            <div className={styles.bone} style={{ width: 60, height: 18, borderRadius: 80 }} />
-            <div className={classnames(cardStyles.categoryIndustry, styles.bone)} style={{ width: 100 }}>&nbsp;</div>
+            <div className={styles.bone} style={{width: 60, height: 18, borderRadius: 80}} />
+            <div className={classnames(cardStyles.categoryIndustry, styles.bone)} style={{width: 100}}>
+              &nbsp;
+            </div>
           </div>
-          <div className={classnames(cardStyles.title, styles.bone)} style={{ width: '70%' }}>&nbsp;</div>
-          <div className={classnames(cardStyles.description, styles.bone)} style={{ width: '90%' }}>&nbsp;</div>
-          <div className={classnames(cardStyles.prize, styles.bone)} style={{ width: 80 }}>&nbsp;</div>
+          <div className={classnames(cardStyles.title, styles.bone)} style={{width: '70%'}}>
+            &nbsp;
+          </div>
+          <div className={classnames(cardStyles.description, styles.bone)} style={{width: '90%'}}>
+            &nbsp;
+          </div>
+          <div className={classnames(cardStyles.prize, styles.bone)} style={{width: 80}}>
+            &nbsp;
+          </div>
         </div>
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -158,8 +179,8 @@ function ContestListSkeleton() {
 Section, List, Row 같은 구조 컴포넌트가 **이미 다른 이유로 export되어 있으면** 스켈레톤에서 import하여 레이아웃을 공유한다. 스켈레톤을 위해 구조 컴포넌트를 새로 만들지 않는다.
 
 ```tsx
-import Skeleton from 'react-loading-skeleton'
-import { Section, SearchWrapper, List, Row, Info } from '@/class/components/EnrollmentsPanel'
+import Skeleton from 'react-loading-skeleton';
+import {Section, SearchWrapper, List, Row, Info} from '@/class/components/EnrollmentsPanel';
 
 export function StudentListSectionSkeleton() {
   return (
@@ -168,7 +189,7 @@ export function StudentListSectionSkeleton() {
         <Skeleton height={36} />
       </SearchWrapper>
       <List>
-        {Array.from({ length: 3 }, (_, i) => (
+        {Array.from({length: 3}, (_, i) => (
           <Row key={i}>
             <Info>
               <Skeleton width={60} />
@@ -179,7 +200,7 @@ export function StudentListSectionSkeleton() {
         ))}
       </List>
     </Section>
-  )
+  );
 }
 ```
 

@@ -19,10 +19,9 @@ const productQueries = {
     options: () =>
       infiniteQueryOptions({
         queryKey: [...productQueries.list.key()],
-        queryFn: ({ pageParam }) => productApi.getProducts(pageParam),
+        queryFn: ({pageParam}) => productApi.getProducts(pageParam),
         initialPageParam: 1,
-        getNextPageParam: (lastPage, allPages) =>
-          lastPage.hasNext ? allPages.length + 1 : undefined,
+        getNextPageParam: (lastPage, allPages) => (lastPage.hasNext ? allPages.length + 1 : undefined),
         staleTime: Infinity,
         gcTime: 1000 * 60 * 10,
       }),
@@ -34,10 +33,11 @@ const productQueries = {
 
 ```tsx
 function ProductListPage() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
-    useSuspenseInfiniteQuery(productQueries.list.options());
+  const {data, fetchNextPage, hasNextPage, isFetchingNextPage, isError} = useSuspenseInfiniteQuery(
+    productQueries.list.options(),
+  );
 
-  const { sentinelRef } = useInfiniteScroll({
+  const {sentinelRef} = useInfiniteScroll({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -51,7 +51,7 @@ function ProductListPage() {
       <ProductGrid products={products} />
       {isFetchingNextPage && <ProductListSkeleton />}
       {/* sentinel div: 0x0 크기, 리스트 끝에 배치.
-        * IntersectionObserver가 이 요소의 뷰포트 진입을 감지한다. */}
+       * IntersectionObserver가 이 요소의 뷰포트 진입을 감지한다. */}
       <div ref={sentinelRef} />
     </div>
   );

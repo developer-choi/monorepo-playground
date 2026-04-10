@@ -11,6 +11,8 @@
     "design-system": "turbo storybook --filter=@monorepo-playground/design-system",
     "test-staged": "lint-staged && turbo check-types",
     "test-all": "turbo check-types && turbo lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepare": "husky"
   },
   "lint-staged": {

@@ -6,11 +6,11 @@ import {memo, useDeferredValue, useState} from 'react';
 export default function HeavyPage() {
   return (
     <Container size="4" p="6">
-      <Header/>
+      <Header />
 
       <Grid columns="2" gap="4">
-        <LeftBadUsage/>
-        <RightGoodUsage/>
+        <LeftBadUsage />
+        <RightGoodUsage />
       </Grid>
     </Container>
   );
@@ -19,16 +19,12 @@ export default function HeavyPage() {
 function Header() {
   return (
     <Box mb="6">
-      <Heading size="7" mb="2">useDeferredValue 렌더링 비교</Heading>
-      <Text color="gray">
-        150개 아이템 × 1ms = 약 150ms 렌더링 시간
-      </Text>
+      <Heading size="7" mb="2">
+        useDeferredValue 렌더링 비교
+      </Heading>
+      <Text color="gray">150개 아이템 × 1ms = 약 150ms 렌더링 시간</Text>
       <Box mt="2">
-        <Link
-          href="https://react.dev/reference/react/useDeferredValue#examples"
-          target="_blank"
-          size="2"
-        >
+        <Link href="https://react.dev/reference/react/useDeferredValue#examples" target="_blank" size="2">
           React 공식문서 원본 예제
         </Link>
       </Box>
@@ -49,12 +45,12 @@ function LeftBadUsage() {
         <TextField.Root
           placeholder="타이핑해보면 렉이 아주 심하게 걸립니다."
           value={text}
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           mb="4"
           autoFocus
         />
 
-        <SlowList text={text}/>
+        <SlowList text={text} />
       </Box>
     </Card>
   );
@@ -74,11 +70,11 @@ function RightGoodUsage() {
         <TextField.Root
           placeholder="타이핑 해도 렉이 걸리지 않아요"
           value={text}
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           mb="4"
         />
 
-        <SlowList text={deferredText}/>
+        <SlowList text={deferredText} />
       </Box>
     </Card>
   );

@@ -27,10 +27,7 @@ export function parseNumericId(value: string): number {
  */
 export function parseStringId(value: string): string {
   try {
-    return z
-      .string()
-      .min(1, '유효하지 않은 ID입니다')
-      .parse(value);
+    return z.string().min(1, '유효하지 않은 ID입니다').parse(value);
   } catch (error) {
     throw new InvalidAccessError({
       redirect: {type: 'NOT_FOUND'},

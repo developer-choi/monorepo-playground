@@ -4,5 +4,6 @@ dist
 build
 coverage
 package-lock.json
+.yarn
 turbo
 .turbo

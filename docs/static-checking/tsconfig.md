@@ -10,7 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     // ...
-  }
+  },
 }
 ```
 
@@ -26,17 +26,17 @@
 
 `tsconfig.base.json`의 전체 옵션:
 
-| 옵션 | 값 | 설명 |
-|------|-----|------|
-| `strict` | true | 엄격 모드 (strictNullChecks, noImplicitAny 등 포함) |
-| `skipLibCheck` | true | node_modules 내 .d.ts 타입 체크 생략 (빌드 속도) |
-| `noEmit` | true | JS 출력 안 함 (번들러가 담당) |
-| `jsx` | react-jsx | React 17+ JSX 변환 |
-| `moduleResolution` | bundler | 번들러 기반 모듈 해석 |
-| `resolveJsonModule` | true | JSON import 허용 |
-| `isolatedModules` | true | 파일 단위 트랜스파일 호환 (SWC, esbuild) |
-| `noFallthroughCasesInSwitch` | true | 아래 참고 |
-| `noUncheckedIndexedAccess` | true | 아래 참고 |
+| 옵션                         | 값        | 설명                                                |
+| ---------------------------- | --------- | --------------------------------------------------- |
+| `strict`                     | true      | 엄격 모드 (strictNullChecks, noImplicitAny 등 포함) |
+| `skipLibCheck`               | true      | node_modules 내 .d.ts 타입 체크 생략 (빌드 속도)    |
+| `noEmit`                     | true      | JS 출력 안 함 (번들러가 담당)                       |
+| `jsx`                        | react-jsx | React 17+ JSX 변환                                  |
+| `moduleResolution`           | bundler   | 번들러 기반 모듈 해석                               |
+| `resolveJsonModule`          | true      | JSON import 허용                                    |
+| `isolatedModules`            | true      | 파일 단위 트랜스파일 호환 (SWC, esbuild)            |
+| `noFallthroughCasesInSwitch` | true      | 아래 참고                                           |
+| `noUncheckedIndexedAccess`   | true      | 아래 참고                                           |
 
 아래는 버그 방지 목적으로 추가한 옵션입니다.
 
@@ -46,11 +46,11 @@
 
 ```typescript
 // ❌ (옵션 OFF 시)
-const users = ["Alice", "Bob"];
-const first: string = users[5];  // undefined인데 string으로 통과
+const users = ['Alice', 'Bob'];
+const first: string = users[5]; // undefined인데 string으로 통과
 
 // ✅ (옵션 ON 시)
-const first = users[5];  // string | undefined
+const first = users[5]; // string | undefined
 if (first) {
   console.error(first.toUpperCase());
 }
@@ -63,20 +63,20 @@ switch 문에서 break/return 없이 다음 케이스로 떨어지는 것을 방
 ```typescript
 // ❌
 switch (status) {
-  case "a":
+  case 'a':
     doA();
   // break 없이 case "b"로 떨어짐
-  case "b":
+  case 'b':
     doB();
     break;
 }
 
 // ✅
 switch (status) {
-  case "a":
+  case 'a':
     doA();
     break;
-  case "b":
+  case 'b':
     doB();
     break;
 }

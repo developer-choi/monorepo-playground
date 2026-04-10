@@ -9,8 +9,8 @@ import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icon
 export default function SearchPage() {
   return (
     <Container size="2" p="6">
-      <Header/>
-      <SearchForm/>
+      <Header />
+      <SearchForm />
     </Container>
   );
 }
@@ -18,7 +18,9 @@ export default function SearchPage() {
 function Header() {
   return (
     <Box mb="6">
-      <Heading size="7" mb="2">검색결과 목록 Best Practice</Heading>
+      <Heading size="7" mb="2">
+        검색결과 목록 Best Practice
+      </Heading>
     </Box>
   );
 }
@@ -34,11 +36,11 @@ function SearchForm() {
           placeholder="검색어를 입력하세요."
           size="3"
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           autoFocus
         >
           <TextField.Slot>
-            <MagnifyingGlassIcon/>
+            <MagnifyingGlassIcon />
           </TextField.Slot>
         </TextField.Root>
       </Box>
@@ -56,7 +58,7 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
   const {data: results = []} = useSuspenseQuery({
     queryKey: ['search', query],
     queryFn: () => getSearchResultsApi(query),
-    retry: 0
+    retry: 0,
   });
 
   if (query !== '' && results.length === 0) {
@@ -83,7 +85,7 @@ async function getSearchResultsApi(query: string): Promise<string[]> {
     return [];
   }
 
-  await new Promise(resolve => setTimeout(resolve, 200));
+  await new Promise((resolve) => setTimeout(resolve, 200));
 
   return [
     `a${query}b 관련 결과`,
@@ -109,7 +111,7 @@ function Highlight({text, query}: {text: string; query: string}) {
           </Text>
         ) : (
           <span key={i}>{part}</span>
-        )
+        ),
       )}
     </>
   );

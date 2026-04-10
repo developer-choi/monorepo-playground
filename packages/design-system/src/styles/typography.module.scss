@@ -1,7 +1,7 @@
 @mixin fontStyle($size, $lineHeight) {
   font-size: $size;
   line-height: $lineHeight;
-  
+
   &.bold {
     font-weight: bold;
   }

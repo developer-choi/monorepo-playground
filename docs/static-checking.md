@@ -11,9 +11,9 @@
 이 안전망은 AI 개발 생산성과도 직결됩니다. AI가 작성한 코드의 양이 늘수록 사람이 리뷰해야 할 양도 늘어나는데, 정적 분석이 자동으로 걸러주면 리뷰어는 로직과 설계에 집중할 수 있습니다. AI가 아래와 같은 코드를 작성하더라도 커밋 시점에 자동으로 차단됩니다:
 
 ```typescript
-const data = JSON.parse(response);  // any가 조용히 퍼져나감
-const count = input || 10;          // input이 0이면 10이 됨
-const msg = `user: ${user.name}`;   // undefined면 "user: undefined"
+const data = JSON.parse(response); // any가 조용히 퍼져나감
+const count = input || 10; // input이 0이면 10이 됨
+const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 ```
 
 ## 설정 중앙화
@@ -30,10 +30,10 @@ const msg = `user: ${user.name}`;   // undefined면 "user: undefined"
 
 커밋할 때마다 전체 린트 + 타입 체크를 돌리면 느립니다. 커밋 시점에는 변경된 파일 위주로 빠르게 검사하고, 푸시 전에 전체를 돌려 보완합니다.
 
-| 시점 | 스크립트 | 내용 |
-|------|---------|------|
+| 시점       | 스크립트      | 내용                               |
+| ---------- | ------------- | ---------------------------------- |
 | pre-commit | `test-staged` | `lint-staged && turbo check-types` |
-| pre-push | `test-all` | `turbo check-types && turbo lint` |
+| pre-push   | `test-all`    | `turbo check-types && turbo lint`  |
 
 ### lint-staged — staged 파일만 린트
 
@@ -55,8 +55,8 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 
 ## 설정-문서 매핑
 
-| 설정 파일 | 문서 |
-|-----------|------|
-| eslint.config.base.mts, 워크스페이스별 eslint config | docs/static-checking/eslint.md |
-| tsconfig.base.json | docs/static-checking/tsconfig.md |
-| commitlint.config.ts | docs/static-checking/commitlint.md |
+| 설정 파일                                            | 문서                               |
+| ---------------------------------------------------- | ---------------------------------- |
+| eslint.config.base.mts, 워크스페이스별 eslint config | docs/static-checking/eslint.md     |
+| tsconfig.base.json                                   | docs/static-checking/tsconfig.md   |
+| commitlint.config.ts                                 | docs/static-checking/commitlint.md |

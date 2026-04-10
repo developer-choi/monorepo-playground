@@ -1,4 +1,4 @@
-@use "@/styles/util";
+@use '@/styles/util';
 
 @mixin commonForm {
   display: flex;
@@ -14,10 +14,10 @@
 @mixin commonSubForm {
   @include commonForm;
   gap: 8px;
-  
+
   &:global(.row) {
     flex-direction: row;
-    
+
     // 가로로 [인풋] - [버튼]이 배치되는 경우 버튼 크기는 더 줄어들면 안됨.
     > button {
       flex-shrink: 0;
@@ -34,7 +34,7 @@ $zIndexes: (
   mobileBottomNav: 10,
   pcStickyHeader: 10,
   modal: 30,
-  errorPageTemplate: 90
+  errorPageTemplate: 90,
 );
 
 // 뷰포트 스크롤만들기용
@@ -48,7 +48,7 @@ $zIndexes: (
   &:nth-child(odd) {
     background: lightblue;
   }
-  
+
   color: white;
   font-size: 24px;
   font-weight: bold;

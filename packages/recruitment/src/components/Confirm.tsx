@@ -11,9 +11,7 @@ export default function Confirm({title, content, onConfirm, onCancel}: ConfirmPr
     <AlertDialog.Root open>
       <AlertDialog.Content maxWidth="450px">
         <AlertDialog.Title>{title || '확인'}</AlertDialog.Title>
-        <AlertDialog.Description size="2">
-          {content}
-        </AlertDialog.Description>
+        <AlertDialog.Description size="2">{content}</AlertDialog.Description>
 
         <Flex gap="3" mt="4" justify="end">
           <AlertDialog.Cancel>

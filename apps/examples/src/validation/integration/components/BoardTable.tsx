@@ -34,11 +34,13 @@ export default function BoardTable({data}: BoardTableProps) {
           {data.list.length === 0 && (
             <Table.Row>
               <Table.Cell colSpan={5}>
-                <Text color="gray" align="center">게시글이 없습니다.</Text>
+                <Text color="gray" align="center">
+                  게시글이 없습니다.
+                </Text>
               </Table.Cell>
             </Table.Row>
           )}
-          {data.list.map(row => (
+          {data.list.map((row) => (
             <Table.Row
               key={row.id}
               style={{cursor: 'pointer'}}
@@ -47,19 +49,17 @@ export default function BoardTable({data}: BoardTableProps) {
               <Table.Cell>{row.id}</Table.Cell>
               <Table.Cell>{row.postTitle}</Table.Cell>
               <Table.Cell>
-                <Badge variant="soft">
-                  {BOARD_TYPES.record[row.boardType]}
-                </Badge>
+                <Badge variant="soft">{BOARD_TYPES.record[row.boardType]}</Badge>
               </Table.Cell>
               <Table.Cell>
-                <Badge variant="surface">
-                  {BOARD_CATEGORIES.record[row.category]}
-                </Badge>
+                <Badge variant="surface">{BOARD_CATEGORIES.record[row.category]}</Badge>
               </Table.Cell>
               <Table.Cell>
                 <Flex gap="1" wrap="wrap">
-                  {row.tagList.map(tag => (
-                    <Badge key={tag} variant="outline" size="1">{tag}</Badge>
+                  {row.tagList.map((tag) => (
+                    <Badge key={tag} variant="outline" size="1">
+                      {tag}
+                    </Badge>
                   ))}
                 </Flex>
               </Table.Cell>

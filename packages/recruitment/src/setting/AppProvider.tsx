@@ -7,9 +7,7 @@ import type {PropsWithChildren} from 'react';
 export default function AppProvider({children}: PropsWithChildren) {
   return (
     <Theme>
-      <OverlayProvider>
-        {children}
-      </OverlayProvider>
+      <OverlayProvider>{children}</OverlayProvider>
     </Theme>
   );
 }

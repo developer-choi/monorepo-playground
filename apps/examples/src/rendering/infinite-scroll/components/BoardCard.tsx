@@ -1,15 +1,15 @@
-import { memo } from 'react';
+import {memo} from 'react';
 import Link from 'next/link';
-import { OptimizedImage } from './Image';
-import type { Board } from '@/shared/board/types';
+import {OptimizedImage} from './Image';
+import type {Board} from '@/shared/board/types';
 import styles from './BoardCard.module.scss';
 
 interface BoardCardProps {
   board: Board;
 }
 
-export default memo(function BoardCard({ board }: BoardCardProps) {
-  const { postTitle, author, thumbnailUrl, createdAt } = board;
+export default memo(function BoardCard({board}: BoardCardProps) {
+  const {postTitle, author, thumbnailUrl, createdAt} = board;
 
   return (
     <Link href={`/rendering/infinite-scroll/${board.id}`} className={styles.link}>

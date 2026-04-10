@@ -11,10 +11,10 @@ npm run examples
 
 ## 예제 목록
 
-| 경로 | 주제 | 키워드 |
-|---|---|---|
-| [`/validation/integration`](./src/validation/integration/README.md) | Zod 활용기 | 스키마 파생, 상수 공유, API 응답 검증, 에러 처리, 폼 연동 |
-| [`/rendering/search-result`](./src/rendering/search-result/README.md) | 검색결과 목록 UX | useDeferredValue, 디바운싱, 캐싱, Race Condition |
+| 경로                                                                  | 주제             | 키워드                                                    |
+| --------------------------------------------------------------------- | ---------------- | --------------------------------------------------------- |
+| [`/validation/integration`](./src/validation/integration/README.md)   | Zod 활용기       | 스키마 파생, 상수 공유, API 응답 검증, 에러 처리, 폼 연동 |
+| [`/rendering/search-result`](./src/rendering/search-result/README.md) | 검색결과 목록 UX | useDeferredValue, 디바운싱, 캐싱, Race Condition          |
 
 각 예제의 상세 설명은 해당 폴더의 README.md를 참고해주세요.
 

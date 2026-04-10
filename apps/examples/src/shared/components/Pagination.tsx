@@ -14,36 +14,23 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
 
   return (
     <Flex align="center" gap="1">
-      <Button
-        variant="soft"
-        size="1"
-        disabled={page <= 1}
-        onClick={() => onPageChange(page - 1)}
-      >
+      <Button variant="soft" size="1" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
         <ChevronLeftIcon />
       </Button>
 
       {getPageNumbers(page, totalPages).map((p, i) =>
         p === '...' ? (
-          <Text key={`ellipsis-${i}`} size="2" color="gray" mx="1">...</Text>
+          <Text key={`ellipsis-${i}`} size="2" color="gray" mx="1">
+            ...
+          </Text>
         ) : (
-          <Button
-            key={p}
-            variant={p === page ? 'solid' : 'soft'}
-            size="1"
-            onClick={() => onPageChange(p)}
-          >
+          <Button key={p} variant={p === page ? 'solid' : 'soft'} size="1" onClick={() => onPageChange(p)}>
             {p}
           </Button>
-        )
+        ),
       )}
 
-      <Button
-        variant="soft"
-        size="1"
-        disabled={page >= totalPages}
-        onClick={() => onPageChange(page + 1)}
-      >
+      <Button variant="soft" size="1" disabled={page >= totalPages} onClick={() => onPageChange(page + 1)}>
         <ChevronRightIcon />
       </Button>
     </Flex>

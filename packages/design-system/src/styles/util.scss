@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 
 // [Design System Stylesheet] https://docs.google.com/document/d/1P05K5UDxKyNkFkSTeH3QiDy2AbXo7hfcHnTERO8yDsU/edit
 // [Checkbox, Radio Markup] https://docs.google.com/document/d/1rqmOi11-M61mjOkk5i63SigHNN8BJYLpka8c73tSLb0/edit?usp=drivesdk
@@ -26,7 +26,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   -webkit-line-clamp: $lineCount;
-  
+
   //이거 안하면 ... 표기가 안나오거나 공백없는 긴 문자열이 올 경우 의도하지않은 대로 작동함. 화면을 뚫고나간다던가.
   //근데 위 textOverflowEllipsis mixin에서는 이거 안써도 문제가 안생김.
   word-break: break-word;
@@ -57,6 +57,6 @@
   @if not map.has-key($map, $property) {
     @error 'property "#{$property}" not found';
   }
-  
+
   @return map.get($map, $property);
 }

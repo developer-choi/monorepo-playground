@@ -12,9 +12,7 @@ export default function Alert({title, content, onConfirm}: AlertProps) {
     <AlertDialog.Root open>
       <AlertDialog.Content maxWidth="450px">
         <AlertDialog.Title>{title}</AlertDialog.Title>
-        <AlertDialog.Description size="2">
-          {content}
-        </AlertDialog.Description>
+        <AlertDialog.Description size="2">{content}</AlertDialog.Description>
 
         <Flex gap="3" mt="4" justify="end">
           <AlertDialog.Action>

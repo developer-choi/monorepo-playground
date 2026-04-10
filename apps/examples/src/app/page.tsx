@@ -13,10 +13,14 @@ export default function Home() {
         </Text>
         <Flex gap="4" mt="1">
           <Link href={GITHUB_URL} target="_blank" size="2">
-            <Flex align="center" gap="1"><GitHubLogoIcon /> GitHub</Flex>
+            <Flex align="center" gap="1">
+              <GitHubLogoIcon /> GitHub
+            </Flex>
           </Link>
           <Link href={DESIGN_SYSTEM_URL} target="_blank" size="2">
-            <Flex align="center" gap="1"><ExternalLinkIcon /> Design System</Flex>
+            <Flex align="center" gap="1">
+              <ExternalLinkIcon /> Design System
+            </Flex>
           </Link>
         </Flex>
       </Flex>
@@ -28,10 +32,14 @@ export default function Home() {
             <Card size="3" className={styles.card}>
               <Flex direction="column" gap="3">
                 <Heading size="4">{item.title}</Heading>
-                <Text as="p" size="2" color="gray">{item.description}</Text>
+                <Text as="p" size="2" color="gray">
+                  {item.description}
+                </Text>
                 <Flex gap="2" wrap="wrap">
                   {item.keywords.map((keyword) => (
-                    <Badge key={keyword} variant="soft">{keyword}</Badge>
+                    <Badge key={keyword} variant="soft">
+                      {keyword}
+                    </Badge>
                   ))}
                 </Flex>
               </Flex>
