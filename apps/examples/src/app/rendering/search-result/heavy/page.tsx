@@ -98,11 +98,13 @@ function SlowItem({text}: {text: string}) {
     // 1ms 동안 블로킹
   }
 
+  /* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */
   return (
     <Flex py="2" style={{borderBottom: '1px solid var(--gray-4)'}}>
       <Text>Text: {text}</Text>
     </Flex>
   );
+  /* eslint-enable no-restricted-syntax */
 }
 
 const SLOW_LIST_ITEM_COUNT = 150;

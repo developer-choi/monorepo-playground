@@ -50,6 +50,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
 
         <Separator size="4" mb="4" />
 
+        {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
         <Text as="p" size="3" style={{whiteSpace: 'pre-wrap', lineHeight: 1.8}} mb="6">
           {board.postContent}
         </Text>

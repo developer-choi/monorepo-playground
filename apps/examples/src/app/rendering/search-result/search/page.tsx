@@ -106,6 +106,7 @@ function Highlight({text, query}: {text: string; query: string}) {
 
   return (
     <>
+      {/* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */}
       {parts.map((part, i) =>
         part.toLowerCase() === query.toLowerCase() ? (
           <Text key={i} weight="bold" style={{backgroundColor: 'var(--yellow-4)'}}>
@@ -115,6 +116,7 @@ function Highlight({text, query}: {text: string; query: string}) {
           <span key={i}>{part}</span>
         ),
       )}
+      {/* eslint-enable no-restricted-syntax */}
     </>
   );
 }
@@ -126,6 +128,7 @@ function ErrorFallback({resetErrorBoundary}: FallbackProps) {
         <ExclamationTriangleIcon />
       </Callout.Icon>
       <Callout.Text>
+        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Radix Box에 inline-flex 레이아웃을 줄 Radix prop이 없어 임시 사용. CSS Module 대체 검토 필요 */}
         <Box style={{display: 'inline-flex', alignItems: 'center', gap: '8px'}}>
           검색 중 오류가 발생했습니다.
           <Button variant="ghost" size="1" onClick={resetErrorBoundary}>

@@ -63,7 +63,9 @@ const FormDialogContent = ({title, descriptions, onClose}: FormDialogContentProp
     </div>
 
     <div className={styles.dialogFooter}>
+      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={onClose}>취소</button>
+      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button className="primary" onClick={onClose}>
         저장
       </button>
@@ -76,6 +78,7 @@ const BasicUsageStory = (args: DialogProps) => {
 
   return (
     <div className="story-layout">
+      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>Dialog 열기</button>
 
       <Dialog
@@ -96,7 +99,9 @@ const BasicUsageStory = (args: DialogProps) => {
           </div>
 
           <div className={styles.dialogFooter}>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button onClick={() => setOpen(false)}>취소</button>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button className="primary" onClick={() => setOpen(false)}>
               확인
             </button>
@@ -122,7 +127,9 @@ const FocusStory = (args: DialogProps) => {
   return (
     <div className="story-layout">
       <div className="btn-group">
+        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
         <button onClick={() => setRestoreOpen(true)}>포커스 복원 & 첫 요소 지정</button>
+        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
         <button onClick={() => setTrapOpen(true)}>포커스 Trap 테스트</button>
       </div>
 
@@ -179,6 +186,7 @@ const CriticalAlertStory = (args: DialogProps) => {
 
   return (
     <div className="story-layout">
+      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button className="danger" onClick={() => setOpen(true)}>
         계정 영구 삭제
       </button>
@@ -193,6 +201,7 @@ const CriticalAlertStory = (args: DialogProps) => {
       >
         <div className={styles.dialogContent}>
           <div className={styles.dialogHeader}>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 임시 스타일. DialogStories.module.scss에 클래스 추가 검토 필요 */}
             <h2 style={{color: '#d32f2f'}}>정말 삭제하시겠습니까?</h2>
           </div>
 
@@ -204,7 +213,9 @@ const CriticalAlertStory = (args: DialogProps) => {
           </div>
 
           <div className={styles.dialogFooter}>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button onClick={() => setOpen(false)}>취소</button>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button className="danger" onClick={() => setOpen(false)}>
               삭제 확인
             </button>
@@ -228,7 +239,9 @@ const DrawerExampleStory = (args: DialogProps) => {
 
   return (
     <div className="story-layout">
+      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>전체 메뉴 열기1</button>
+      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>전체 메뉴 열기2</button>
 
       <Drawer {...args} open={open} anchor="left" onClose={() => setOpen(false)}>
@@ -237,9 +250,13 @@ const DrawerExampleStory = (args: DialogProps) => {
             <h2>Dialog에 있던 기능 모두 테스트</h2>
           </div>
           <div className={styles.drawerMenu}>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button className={styles.menuItem}>닫으면 포커스 돌아가기</button>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button className={styles.menuItem}>배경 / ESC로 닫기</button>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button className={styles.menuItem}>Tab 계속 누르기</button>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button className={styles.menuItem}>Shift Tab 계속 누르기</button>
           </div>
         </div>

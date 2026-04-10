@@ -211,15 +211,17 @@ if (items.length > MAX_VISIBLE_ITEMS) { ... }
 const TIMEOUT_MS = 3000;
 ```
 
-#### 22. `no-restricted-syntax` — 빈 alt 속성 금지
+#### 22. `no-restricted-syntax` — 금지 패턴 모음
 
-`<img alt="">` 처럼 빈 alt를 실수로 넣는 것을 방지합니다. 3개의 AST 셀렉터로 `alt=""`, `alt=''`, `alt={''}`, ` alt={`} ``, `alt={""}` 5가지 패턴을 모두 커버합니다.
+AST 셀렉터로 프로젝트에서 허용하지 않는 패턴을 일괄 금지합니다. 위반 시 `eslint-disable` + 사유 주석으로 예외를 처리합니다.
+
+**빈 alt 속성 금지** (`JSXAttribute[name.name='alt'][value.value='']` 등 3개 셀렉터)
+
+`<img alt="">` 처럼 빈 alt를 실수로 넣는 것을 방지합니다. `alt=""`, `alt=''`, `alt={''}`, ` alt={`} ``, `alt={""}` 5가지 패턴을 커버합니다.
 
 ```tsx
 // ❌
 <img alt="" src="/photo.jpg" />
-<img alt={''} src="/photo.jpg" />
-<img alt={``} src="/photo.jpg" />
 
 // ✅
 <img alt="프로필 사진" src="/photo.jpg" />
@@ -227,6 +229,63 @@ const TIMEOUT_MS = 3000;
 // 장식용 이미지라면 eslint-disable + 사유 주석
 // eslint-disable-next-line no-restricted-syntax -- 배경 장식 이미지
 <img alt="" src="/bg-pattern.png" />
+```
+
+**enum 금지** (`TSEnumDeclaration`)
+
+TypeScript enum은 트리쉐이킹이 안 되고 역방향 매핑 등 예상치 못한 런타임 동작이 있습니다. `as const` 객체를 사용하세요.
+
+```typescript
+// ❌
+enum Status {
+  ACTIVE,
+  INACTIVE,
+}
+
+// ✅
+const STATUS = {ACTIVE: 'active', INACTIVE: 'inactive'} as const;
+type Status = (typeof STATUS)[keyof typeof STATUS];
+```
+
+**`<button>` 직접 사용 금지** (`JSXOpeningElement[name.name='button']`)
+
+`<button>`을 직접 사용하면 스타일/접근성 처리가 파편화됩니다. 공통 Button 컴포넌트를 사용하세요. Button 컴포넌트 내부 구현처럼 불가피한 경우 `eslint-disable` + 사유 주석을 남깁니다.
+
+```tsx
+// ❌
+<button onClick={handleClick}>저장</button>;
+
+// ✅
+import {Button} from '@monorepo-playground/design-system';
+<Button onClick={handleClick}>저장</Button>;
+```
+
+**인라인 스타일 금지** (`JSXAttribute[name.name='style']`)
+
+인라인 스타일 금지. CSS Modules를 사용하세요. 예외: 동적 값·CSS 변수 주입·스켈레톤. 이 외의 경우 사용자에게 허락을 구하세요. — eslint-disable + 사유 주석으로 처리.
+
+```tsx
+// ❌
+<div style={{color: 'red', marginTop: 8}}>텍스트</div>;
+
+// ✅
+import styles from './Component.module.scss';
+<div className={styles.title}>텍스트</div>;
+```
+
+**SVG 직접 작성 금지** (`JSXElement > JSXOpeningElement[name.name='svg']`)
+
+SVG를 JSX에 직접 작성하면 번들 크기가 커지고 재사용이 어렵습니다. 아이콘 컴포넌트나 SVG 파일로 분리하세요.
+
+```tsx
+// ❌
+<svg width="24" height="24">
+  <path d="..." />
+</svg>;
+
+// ✅
+import {CheckIcon} from '@radix-ui/react-icons';
+<CheckIcon width={24} height={24} />;
 ```
 
 #### 24. `@typescript-eslint/ban-ts-comment`

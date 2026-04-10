@@ -58,5 +58,22 @@ export const baseRules = {
         "JSXAttribute[name.name='alt'] > JSXExpressionContainer > TemplateLiteral[quasis.length=1][quasis.0.value.raw='']",
       message: '빈 alt 금지. 장식용 이미지라면 eslint-disable + 사유 주석을 남기세요.',
     },
+    {
+      selector: 'TSEnumDeclaration',
+      message: 'enum 대신 as const 객체를 사용하세요.',
+    },
+    {
+      selector: "JSXOpeningElement[name.name='button']",
+      message: '<button> 직접 사용 금지. 공통 Button 컴포넌트를 사용하세요.',
+    },
+    {
+      selector: "JSXAttribute[name.name='style']",
+      message:
+        '인라인 스타일 금지. CSS Modules를 사용하세요. 예외: 동적 값·CSS 변수 주입·스켈레톤. 이 외의 경우 사용자에게 허락을 구하세요. — eslint-disable + 사유 주석으로 처리.',
+    },
+    {
+      selector: "JSXElement > JSXOpeningElement[name.name='svg']",
+      message: 'SVG 직접 작성 금지. 아이콘 컴포넌트나 SVG 파일로 분리하세요.',
+    },
   ],
 };

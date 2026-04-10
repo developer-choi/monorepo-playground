@@ -51,6 +51,7 @@ export default function BoardFilter() {
       <form onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
         <Flex direction="column" gap="4">
           <Box>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
               검색
             </Text>
@@ -68,7 +69,9 @@ export default function BoardFilter() {
           </Box>
 
           <Flex gap="6" wrap="wrap">
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box style={{flex: 1, minWidth: 200}}>
+              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
               <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
                 타입
               </Text>
@@ -105,7 +108,9 @@ export default function BoardFilter() {
               />
             </Box>
 
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box style={{flex: 1, minWidth: 200}}>
+              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
               <Text as="div" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
                 카테고리
               </Text>
@@ -130,6 +135,7 @@ export default function BoardFilter() {
           </Flex>
 
           <Box>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
               태그
             </Text>

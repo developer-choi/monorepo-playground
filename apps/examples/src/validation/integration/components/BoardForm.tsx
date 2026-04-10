@@ -85,6 +85,7 @@ export default function BoardForm({board}: BoardFormProps) {
         <form onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
           <Flex direction="column" gap="5">
             <Box>
+              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
               <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
                 제목
               </Text>
@@ -102,6 +103,7 @@ export default function BoardForm({board}: BoardFormProps) {
             </Box>
 
             <Box>
+              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
               <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
                 내용
               </Text>
@@ -114,6 +116,7 @@ export default function BoardForm({board}: BoardFormProps) {
             </Box>
 
             <Box>
+              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
               <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
                 타입
               </Text>
@@ -143,6 +146,7 @@ export default function BoardForm({board}: BoardFormProps) {
             </Box>
 
             <Box>
+              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
               <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
                 카테고리
               </Text>
@@ -170,6 +174,7 @@ export default function BoardForm({board}: BoardFormProps) {
             </Box>
 
             <Box>
+              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
               <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
                 태그
               </Text>
@@ -245,6 +250,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
         {value.map((tag) => (
           <Badge key={tag} variant="soft" size="2">
             {tag}
+            {/* eslint-disable no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box
               asChild
               style={{cursor: 'pointer', marginLeft: 4}}
@@ -252,6 +258,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
             >
               <Cross2Icon width={12} height={12} />
             </Box>
+            {/* eslint-enable no-restricted-syntax */}
           </Badge>
         ))}
       </Flex>

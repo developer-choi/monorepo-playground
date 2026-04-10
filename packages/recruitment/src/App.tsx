@@ -26,6 +26,7 @@ export default function App() {
         <Flex direction="column" gap="6" p="4">
           <Section>
             <Heading mb="4">Loading Page</Heading>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. CSS Module 파일 생성 검토 필요 */}
             <Box height="100px" position="relative" style={{border: '1px solid var(--gray-5)'}}>
               <LoadingPage />
             </Box>
@@ -33,6 +34,7 @@ export default function App() {
 
           <Section>
             <Heading mb="4">Empty Content</Heading>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. CSS Module 파일 생성 검토 필요 */}
             <Box height="100px" style={{border: '1px solid var(--gray-5)'}}>
               <EmptyContent
                 icon={<InfoCircledIcon width="24" height="24" color="gray" />}
@@ -43,6 +45,7 @@ export default function App() {
 
           <Section>
             <Heading mb="4">Error Page Template</Heading>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. CSS Module 파일 생성 검토 필요 */}
             <Box height="300px" style={{border: '1px solid var(--gray-5)'}}>
               <ErrorPageTemplate
                 content="오류가 발생했습니다."
@@ -53,6 +56,7 @@ export default function App() {
 
           <Section>
             <Heading mb="4">Handled Error Boundary</Heading>
+            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. CSS Module 파일 생성 검토 필요 */}
             <Box height="300px" style={{border: '1px solid var(--gray-5)'}}>
               <HandledErrorBoundary>
                 <BuggyComponent />

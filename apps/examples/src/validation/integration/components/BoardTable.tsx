@@ -40,6 +40,7 @@ export default function BoardTable({data}: BoardTableProps) {
               </Table.Cell>
             </Table.Row>
           )}
+          {/* eslint-disable no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
           {data.list.map((row) => (
             <Table.Row
               key={row.id}
@@ -65,6 +66,7 @@ export default function BoardTable({data}: BoardTableProps) {
               </Table.Cell>
             </Table.Row>
           ))}
+          {/* eslint-enable no-restricted-syntax */}
         </Table.Body>
       </Table.Root>
       <Flex justify="center" mt="4">

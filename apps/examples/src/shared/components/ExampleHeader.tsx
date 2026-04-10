@@ -15,6 +15,7 @@ export default function ExampleHeader({sourcePath, readmePath}: ExampleHeaderPro
       align="center"
       position="sticky"
       top="0"
+      // eslint-disable-next-line no-restricted-syntax -- TODO: CSS 변수 참조와 zIndex 조합이라 정적 CSS Module로 분리 어려움. 전용 CSS Module 파일 생성 검토 필요
       style={{zIndex: 10, backgroundColor: 'var(--color-background)', borderBottom: '1px solid var(--gray-a5)'}}
     >
       <Link href={`${PROJECT_BASE}/${readmePath}`} target="_blank" size="2">
