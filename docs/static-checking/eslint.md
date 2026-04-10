@@ -182,7 +182,37 @@ import { used } from './module';
 function onClick(_event: MouseEvent) { ... }  // _로 시작하면 허용
 ```
 
-#### 23. `curly` (all)
+#### 12. `@typescript-eslint/ban-ts-comment`
+
+`@ts-ignore`, `@ts-nocheck` 등의 타입 체크 우회 주석을 금지합니다. 타입 에러를 숨기면 런타임 버그로 이어집니다. 불가피한 경우 `@ts-expect-error`를 사용하면 해당 줄의 에러가 해결되었을 때 린트가 알려줍니다.
+
+```typescript
+// ❌
+// @ts-ignore
+const value = unsafeFunction();
+
+// ✅ 불가피한 경우
+// @ts-expect-error — 서드파티 타입 정의 미비
+const value = unsafeFunction();
+```
+
+#### 13. `@typescript-eslint/naming-convention`
+
+식별자 네이밍 컨벤션을 강제합니다. 변수/함수는 camelCase, 타입/클래스는 PascalCase, 상수는 UPPER_CASE를 사용합니다.
+
+```typescript
+// ❌
+const MyVariable = 1;
+type user_type = {name: string};
+
+// ✅
+const myVariable = 1;
+type UserType = {name: string};
+```
+
+React 컴포넌트(PascalCase 함수/변수), Next.js 라우트 핸들러(`GET`, `POST` 등), Zod 스키마(PascalCase 변수), 구조 분해 변수(외부 API 키 이름 그대로 사용)는 예외를 허용합니다. 객체 property는 camelCase/UPPER_CASE만 허용하며, 서버 DTO 등 snake_case가 필요한 파일은 파일 단위 eslint-disable로 처리합니다.
+
+#### 14. `curly` (all)
 
 if/else/for/while 등 제어문에 중괄호를 반드시 사용합니다. 한 줄이라도 중괄호 없이 쓰면 나중에 줄을 추가할 때 실수할 수 있습니다.
 
@@ -196,7 +226,7 @@ if (disabled) {
 }
 ```
 
-#### 27. `no-magic-numbers`
+#### 15. `no-magic-numbers`
 
 의미 없는 숫자 리터럴 사용을 금지합니다. 숫자에 이름을 붙여 의도를 명확히 합니다. -1, 0, 1, 2는 허용합니다.
 
@@ -211,7 +241,7 @@ if (items.length > MAX_VISIBLE_ITEMS) { ... }
 const TIMEOUT_MS = 3000;
 ```
 
-#### 29. `react/jsx-sort-props`
+#### 16. `react/jsx-sort-props`
 
 JSX 속성을 알파벳 순으로 정렬합니다. 콜백(on\*)은 마지막, shorthand는 먼저, key/ref는 최우선으로 배치합니다. auto-fix 지원.
 
@@ -223,7 +253,7 @@ JSX 속성을 알파벳 순으로 정렬합니다. 콜백(on\*)은 마지막, sh
 <Input disabled className={styles.input} type="text" onChange={handleChange} />
 ```
 
-#### 22. `no-restricted-syntax` — 금지 패턴 모음
+#### 17. `no-restricted-syntax` — 금지 패턴 모음
 
 AST 셀렉터로 프로젝트에서 허용하지 않는 패턴을 일괄 금지합니다. 위반 시 `eslint-disable` + 사유 주석으로 예외를 처리합니다.
 
@@ -274,7 +304,7 @@ import {Button} from '@monorepo-playground/design-system';
 
 **인라인 스타일 금지** (`JSXAttribute[name.name='style']`)
 
-인라인 스타일 금지. CSS Modules를 사용하세요. 예외: 동적 값·CSS 변수 주입·스켈레톤. 이 외의 경우 사용자에게 허락을 구하세요. — eslint-disable + 사유 주석으로 처리.
+인라인 스타일은 CSS Modules로 분리합니다. 동적 값, CSS 변수 주입, 스켈레톤은 예외로 허용하며, 이 외의 경우 `eslint-disable` + 사유 주석으로 처리합니다.
 
 ```tsx
 // ❌
@@ -297,38 +327,8 @@ SVG를 JSX에 직접 작성하면 번들 크기가 커지고 재사용이 어렵
 
 // ✅
 import {CheckIcon} from '@radix-ui/react-icons';
-<CheckIcon width={24} height={24} />;
+<CheckIcon height={24} width={24} />;
 ```
-
-#### 24. `@typescript-eslint/ban-ts-comment`
-
-`@ts-ignore`, `@ts-nocheck` 등의 타입 체크 우회 주석을 금지합니다. 타입 에러를 숨기면 런타임 버그로 이어집니다. 불가피한 경우 `@ts-expect-error`를 사용하면 해당 줄의 에러가 해결되었을 때 린트가 알려줍니다.
-
-```typescript
-// ❌
-// @ts-ignore
-const value = unsafeFunction();
-
-// ✅ 불가피한 경우
-// @ts-expect-error — 서드파티 타입 정의 미비
-const value = unsafeFunction();
-```
-
-#### 25. `@typescript-eslint/naming-convention`
-
-식별자 네이밍 컨벤션을 강제합니다. 변수/함수는 camelCase, 타입/클래스는 PascalCase, 상수는 UPPER_CASE를 사용합니다.
-
-```typescript
-// ❌
-const MyVariable = 1;
-type user_type = {name: string};
-
-// ✅
-const myVariable = 1;
-type UserType = {name: string};
-```
-
-React 컴포넌트(PascalCase 함수/변수), Next.js 라우트 핸들러(`GET`, `POST` 등), Zod 스키마(PascalCase 변수), 구조 분해 변수(외부 API 키 이름 그대로 사용)는 예외를 허용합니다. 객체 property는 camelCase/UPPER_CASE만 허용하며, 서버 DTO 등 snake_case가 필요한 파일은 파일 단위 eslint-disable로 처리합니다.
 
 ### 워크스페이스별 추가 규칙
 
@@ -356,7 +356,7 @@ React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
 
 `recommendedTypeChecked` 프리셋에 포함된 규칙들입니다. `recommended`에서 업그레이드하면 활성화되며, TypeScript 컴파일러의 타입 정보를 활용합니다.
 
-#### 12. `@typescript-eslint/no-unsafe-assignment`
+#### 18. `@typescript-eslint/no-unsafe-assignment`
 
 `any` 타입 값이 변수에 할당되는 것을 방지합니다. `any`가 한 번 변수에 들어가면 타입 체크가 무력화됩니다.
 
@@ -369,7 +369,7 @@ const raw: unknown = JSON.parse(response);
 const data = schema.parse(raw); // 검증 후 사용
 ```
 
-#### 13. `@typescript-eslint/no-unsafe-call`
+#### 19. `@typescript-eslint/no-unsafe-call`
 
 `any` 타입 값을 함수처럼 호출하는 것을 방지합니다.
 
@@ -383,7 +383,7 @@ const fn: () => void = validateAndParse(str);
 fn();
 ```
 
-#### 14. `@typescript-eslint/no-unsafe-member-access`
+#### 20. `@typescript-eslint/no-unsafe-member-access`
 
 `any` 타입 값에서 프로퍼티에 접근하는 것을 방지합니다.
 
@@ -397,7 +397,7 @@ const data: UserResponse = schema.parse(JSON.parse(str));
 const name = data.user.name;
 ```
 
-#### 15. `@typescript-eslint/no-unsafe-return`
+#### 21. `@typescript-eslint/no-unsafe-return`
 
 타입이 있는 함수에서 `any` 값을 반환하는 것을 방지합니다.
 
@@ -413,7 +413,7 @@ function getConfig(): AppConfig {
 }
 ```
 
-#### 16. `@typescript-eslint/no-unsafe-argument`
+#### 22. `@typescript-eslint/no-unsafe-argument`
 
 타입이 있는 파라미터에 `any` 값을 전달하는 것을 방지합니다.
 
@@ -428,7 +428,7 @@ const data: { name: string } = schema.parse(JSON.parse(str));
 greet(data.name);
 ```
 
-#### 17. `@typescript-eslint/await-thenable`
+#### 23. `@typescript-eslint/await-thenable`
 
 Promise가 아닌 값에 `await`를 사용하는 것을 방지합니다.
 
@@ -441,7 +441,7 @@ const result = await value; // 의미 없는 await
 const result = value;
 ```
 
-#### 18. `@typescript-eslint/require-await`
+#### 24. `@typescript-eslint/require-await`
 
 `async` 함수 내에 `await`가 없으면 에러로 잡습니다.
 
@@ -457,7 +457,7 @@ function getData() {
 }
 ```
 
-#### 19. `@typescript-eslint/no-base-to-string`
+#### 25. `@typescript-eslint/no-base-to-string`
 
 `toString()`이 정의되지 않은 객체를 문자열로 변환하면 `[object Object]`가 됩니다. 이를 방지합니다.
 
