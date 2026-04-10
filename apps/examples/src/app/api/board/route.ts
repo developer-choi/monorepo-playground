@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {NextRequest, NextResponse} from 'next/server';
 import database from '@/shared/server/database';
 import {ServerBoardListResponseDto} from '@/app/api/board/dto';
@@ -29,13 +30,13 @@ export async function GET(request: NextRequest) {
   const page = Math.max(1, Number(sp.get('page')) || 1);
   const limit = Math.min(100, Math.max(1, Number(sp.get('limit')) || 10));
   const total = filtered.length;
-  const total_pages = Math.ceil(total / limit);
+  const totalPages = Math.ceil(total / limit);
   const start = (page - 1) * limit;
   const paged = filtered.slice(start, start + limit);
 
   const response: ServerBoardListResponseDto = {
     list: paged.map((item) => ({...item, tag_list: !item.tag_list?.length ? null : item.tag_list})),
-    pagination_meta: {total, page, limit, total_pages},
+    pagination_meta: {total, page, limit, total_pages: totalPages},
   };
   return NextResponse.json(response);
 }

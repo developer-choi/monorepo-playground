@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {api} from '@/shared/api/client';
 import {validateApiResponse} from '@/shared/api/parse';
 import {

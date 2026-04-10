@@ -22,6 +22,18 @@ export const baseRules = {
   'no-console': ['error', {allow: ['warn', 'error']}],
   '@typescript-eslint/restrict-template-expressions': ['error', {allowNullish: false}],
   'max-params': ['error', 2],
+  '@typescript-eslint/naming-convention': [
+    'error',
+    {selector: 'default', format: ['camelCase']},
+    {selector: 'variable', format: ['camelCase', 'UPPER_CASE', 'PascalCase']},
+    {selector: 'parameter', format: ['camelCase'], leadingUnderscore: 'allow'},
+    {selector: 'function', format: ['camelCase', 'PascalCase']},
+    {selector: 'typeLike', format: ['PascalCase']},
+    {selector: 'property', format: ['camelCase', 'UPPER_CASE']},
+    {selector: 'method', format: ['camelCase']},
+    {selector: 'import', format: null},
+    {selector: 'variable', modifiers: ['destructured'], format: null},
+  ],
   'no-restricted-syntax': [
     'error',
     {

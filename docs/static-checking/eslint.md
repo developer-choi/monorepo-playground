@@ -228,6 +228,22 @@ const value = unsafeFunction();
 const value = unsafeFunction();
 ```
 
+#### 25. `@typescript-eslint/naming-convention`
+
+식별자 네이밍 컨벤션을 강제합니다. 변수/함수는 camelCase, 타입/클래스는 PascalCase, 상수는 UPPER_CASE를 사용합니다.
+
+```typescript
+// ❌
+const MyVariable = 1;
+type user_type = {name: string};
+
+// ✅
+const myVariable = 1;
+type UserType = {name: string};
+```
+
+React 컴포넌트(PascalCase 함수/변수), Next.js 라우트 핸들러(`GET`, `POST` 등), Zod 스키마(PascalCase 변수), 구조 분해 변수(외부 API 키 이름 그대로 사용)는 예외를 허용합니다. 객체 property는 camelCase/UPPER_CASE만 허용하며, 서버 DTO 등 snake_case가 필요한 파일은 파일 단위 eslint-disable로 처리합니다.
+
 ### 워크스페이스별 추가 규칙
 
 `baseRules` 외에 특정 워크스페이스에서만 추가한 규칙입니다.

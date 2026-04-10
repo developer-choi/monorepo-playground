@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {NextRequest, NextResponse} from 'next/server';
 import database from '@/shared/server/database';
 

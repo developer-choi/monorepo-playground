@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {ServerBoardDto} from '@/app/api/board/dto';
 import rawData from '@/shared/server/database/board.json';
 

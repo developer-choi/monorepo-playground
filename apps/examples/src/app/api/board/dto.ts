@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export interface ServerBoardDto {
   id: number;
   post_title: string;
