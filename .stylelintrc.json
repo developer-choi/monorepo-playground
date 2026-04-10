@@ -1,0 +1,12 @@
+{
+  "customSyntax": "postcss-scss",
+  "plugins": ["stylelint-scss"],
+  "rules": {
+    "at-rule-disallowed-list": ["import"],
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "no-duplicate-selectors": true,
+    "property-no-unknown": true,
+    "scss/no-global-function-names": true
+  }
+}

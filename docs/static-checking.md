@@ -1,6 +1,6 @@
 ## 배경
 
-정적 분석(ESLint + tsconfig)으로 코드 품질 안전망을 구축합니다.
+정적 분석(ESLint + Stylelint + tsconfig)으로 코드 품질 안전망을 구축합니다.
 
 버그를 줄이려면 에러를 잘 처리하는 것도 중요하지만, 애초에 에러가 발생하지 않도록 예방하는 것이 더 중요합니다. 예방 수단을 도입 비용이 저렴한 순서로 정리하면:
 
@@ -22,6 +22,7 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 
 - **tsconfig**: `tsconfig.base.json`을 루트에 생성하고, 각 워크스페이스의 tsconfig이 `extends`로 상속합니다.
 - **ESLint**: `eslint.config.base.mts`에 공통 규칙을 export하고, 각 워크스페이스가 import해서 `rules`에 spread합니다.
+- **Stylelint**: `.stylelintrc.json`에 SCSS 검증 규칙을 정의합니다. ESLint가 TypeScript를 검사하듯, Stylelint가 SCSS를 검사합니다.
 - **commitlint**: `commitlint.config.ts`에서 `@commitlint/config-conventional`을 확장합니다.
 
 ## 2단계 검증 구조
@@ -43,6 +44,7 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 {
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
+    "**/*.scss": "stylelint --fix",
     "apps/examples/**/*.{ts,tsx}": "eslint --fix --config apps/examples/eslint.config.mjs",
     "packages/design-system/**/*.{ts,tsx}": "eslint --fix --config packages/design-system/eslint.config.js",
     "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --config packages/recruitment/eslint.config.js"
@@ -50,7 +52,7 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 }
 ```
 
-Prettier가 먼저 실행되어 포맷팅을 정리한 뒤, ESLint가 로직 규칙을 검사합니다. Prettier 설정에 대한 자세한 내용은 [docs/formatter.md](formatter.md)를 참고하세요.
+Prettier가 먼저 실행되어 포맷팅을 정리한 뒤, Stylelint가 SCSS를, ESLint가 TypeScript 로직 규칙을 검사합니다. Prettier 설정에 대한 자세한 내용은 [docs/formatter.md](formatter.md)를 참고하세요.
 
 ### turbo check-types — 전체 타입 체크
 
@@ -62,4 +64,5 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 | ---------------------------------------------------- | ---------------------------------- |
 | eslint.config.base.mts, 워크스페이스별 eslint config | docs/static-checking/eslint.md     |
 | tsconfig.base.json                                   | docs/static-checking/tsconfig.md   |
+| .stylelintrc.json                                    | docs/static-checking/stylelint.md  |
 | commitlint.config.ts                                 | docs/static-checking/commitlint.md |
