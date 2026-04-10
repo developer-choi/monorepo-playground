@@ -7,6 +7,11 @@
 - 상황: React 앱에서 여러 라이브러리 Provider 조합 시 순서와 구성. QueryClient 기본 옵션 포함
 - 코드: docs/patterns/setup/ProviderComposition.md
 
+### Next.js Root Layout — Google Fonts
+- 기술스택: Next.js App Router + next/font/google
+- 상황: 디자인 시안에 별도 폰트 지정이 없을 때, Noto Sans KR을 기본 폰트로 적용
+- 코드: docs/patterns/setup/NextRootLayout.md
+
 ## 폼 핸들링
 
 ### use[...]Form 커스텀 훅
