@@ -42,12 +42,15 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 ```json
 {
   "lint-staged": {
+    "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
     "apps/examples/**/*.{ts,tsx}": "eslint --fix --config apps/examples/eslint.config.mjs",
     "packages/design-system/**/*.{ts,tsx}": "eslint --fix --config packages/design-system/eslint.config.js",
     "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --config packages/recruitment/eslint.config.js"
   }
 }
 ```
+
+Prettier가 먼저 실행되어 포맷팅을 정리한 뒤, ESLint가 로직 규칙을 검사합니다. Prettier 설정에 대한 자세한 내용은 [docs/formatter.md](formatter.md)를 참고하세요.
 
 ### turbo check-types — 전체 타입 체크
 
