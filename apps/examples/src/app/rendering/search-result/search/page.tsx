@@ -97,7 +97,9 @@ async function getSearchResultsApi(query: string): Promise<string[]> {
 }
 
 function Highlight({text, query}: {text: string; query: string}) {
-  if (!query) return <>{text}</>;
+  if (!query) {
+    return <>{text}</>;
+  }
 
   const regex = new RegExp(`(${query})`, 'gi');
   const parts = text.split(regex);

@@ -15,6 +15,7 @@ export const baseRules = {
   '@typescript-eslint/switch-exhaustiveness-check': 'error',
   '@typescript-eslint/no-misused-promises': ['error', {checksVoidReturn: {attributes: false}}],
   '@typescript-eslint/prefer-nullish-coalescing': 'error',
+  curly: ['error', 'all'],
   eqeqeq: ['error', 'always'],
   '@typescript-eslint/no-unnecessary-condition': 'error',
   'no-console': ['error', {allow: ['warn', 'error']}],

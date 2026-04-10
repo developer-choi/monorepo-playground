@@ -17,7 +17,9 @@ const testCases = [
 ];
 
 function formatResult(result: ReturnType<typeof z.safeParse>) {
-  if (result.success) return {ok: true, value: JSON.stringify(result.data)};
+  if (result.success) {
+    return {ok: true, value: JSON.stringify(result.data)};
+  }
   const msgs = result.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`);
   return {ok: false, value: msgs.join(', ')};
 }

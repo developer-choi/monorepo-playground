@@ -215,7 +215,9 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
 
   const addTag = () => {
     const tag = input.trim();
-    if (!tag || value.includes(tag)) return;
+    if (!tag || value.includes(tag)) {
+      return;
+    }
     onChange([...value, tag]);
     setInput('');
   };

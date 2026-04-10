@@ -57,12 +57,18 @@ function createSrcFolderWhitelistRule() {
         Program(node) {
           const filePath = context.filename.replace(/\\/g, '/');
           const srcIndex = filePath.indexOf('/src/');
-          if (srcIndex === -1) return;
+          if (srcIndex === -1) {
+            return;
+          }
 
           const segments = filePath.slice(srcIndex + 5).split('/');
 
-          if (segments[0] === 'app' || segments[0] === 'shared') return;
-          if (segments.length < 4) return;
+          if (segments[0] === 'app' || segments[0] === 'shared') {
+            return;
+          }
+          if (segments.length < 4) {
+            return;
+          }
 
           const folder = segments[2];
           if (!ALLOWED_FOLDERS.includes(folder)) {

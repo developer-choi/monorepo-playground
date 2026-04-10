@@ -167,6 +167,20 @@ import { used } from './module';
 function onClick(_event: MouseEvent) { ... }  // _로 시작하면 허용
 ```
 
+#### 23. `curly` (all)
+
+if/else/for/while 등 제어문에 중괄호를 반드시 사용합니다. 한 줄이라도 중괄호 없이 쓰면 나중에 줄을 추가할 때 실수할 수 있습니다.
+
+```typescript
+// ❌ curly 위반
+if (disabled) return null;
+
+// ✅ 올바른 사용
+if (disabled) {
+  return null;
+}
+```
+
 #### 22. `no-restricted-syntax` — 빈 alt 속성 금지
 
 `<img alt="">` 처럼 빈 alt를 실수로 넣는 것을 방지합니다. 3개의 AST 셀렉터로 `alt=""`, `alt=''`, `alt={''}`, ` alt={`} ``, `alt={""}` 5가지 패턴을 모두 커버합니다.
