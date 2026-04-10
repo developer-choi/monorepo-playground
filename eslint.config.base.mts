@@ -3,7 +3,7 @@
  * 각 워크스페이스의 eslint config에서 import해서 사용.
  */
 export const baseRules = {
-  '@typescript-eslint/no-explicit-any': 'off',
+  '@typescript-eslint/no-explicit-any': 'error',
   '@typescript-eslint/no-unused-vars': [
     'error',
     {

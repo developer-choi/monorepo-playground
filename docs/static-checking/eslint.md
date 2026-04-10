@@ -148,9 +148,24 @@ function createUser(name: string, email: string, age: number) { ... }
 function createUser(params: { name: string; email: string; age: number }) { ... }
 ```
 
-#### 10. `@typescript-eslint/no-explicit-any` (off)
+#### 10. `@typescript-eslint/no-explicit-any` (error)
 
-any 사용을 허용합니다. 다만 아래 `no-unsafe-*` 규칙들이 any의 전파를 차단하므로, any를 선언하더라도 그것이 다른 변수/함수/반환값으로 퍼지는 것은 막힙니다.
+`any`를 사용하면 타입 안전성이 무너집니다. `unknown`을 사용하고 타입 가드로 좁히세요.
+
+```typescript
+// ❌
+function parse(data: any) { ... }
+
+// ✅ catch 절
+try { ... } catch (e: unknown) {
+  if (e instanceof Error) console.error(e.message);
+}
+
+// ✅ 불명확한 외부 데이터
+function parse(data: unknown) {
+  if (typeof data === 'object' && data !== null && 'name' in data) { ... }
+}
+```
 
 #### 11. `@typescript-eslint/no-unused-vars` (error)
 
