@@ -16,6 +16,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
+    "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
     "apps/examples/**/*.{ts,tsx}": "eslint --fix --config apps/examples/eslint.config.mjs",
     "packages/design-system/**/*.{ts,tsx}": "eslint --fix --config packages/design-system/eslint.config.js",
     "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --config packages/recruitment/eslint.config.js"
