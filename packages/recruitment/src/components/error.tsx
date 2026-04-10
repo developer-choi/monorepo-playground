@@ -18,11 +18,11 @@ export interface ErrorPageTemplateProps {
 
 export function ErrorPageTemplate({content, action}: ErrorPageTemplateProps) {
   return (
-    <Flex direction="column" align="center" justify="center" gap="4" width="100%" height="100%">
+    <Flex align="center" direction="column" gap="4" height="100%" justify="center" width="100%">
       <Box mb="2">
-        <img src={logo} alt="Logo" />
+        <img alt="Logo" src={logo} />
       </Box>
-      <Text size="5" weight="bold" align="center">
+      <Text align="center" size="5" weight="bold">
         {content}
       </Text>
       {'href' in action ? (
@@ -41,10 +41,10 @@ export function ErrorPageTemplate({content, action}: ErrorPageTemplateProps) {
 export function HandledErrorBoundary({children}: PropsWithChildren) {
   const ErrorFallback = ({error, resetErrorBoundary}: FallbackProps) => {
     if (error instanceof ExampleError) {
-      return <ErrorPageTemplate content="이런 에러에요" action={{text: '새로고침', onClick: resetErrorBoundary}} />;
+      return <ErrorPageTemplate action={{text: '새로고침', onClick: resetErrorBoundary}} content="이런 에러에요" />;
     }
 
-    return <ErrorPageTemplate content="적당한 500에러 메시지" action={{text: '홈으로 돌아가기', href: '/'}} />;
+    return <ErrorPageTemplate action={{text: '홈으로 돌아가기', href: '/'}} content="적당한 500에러 메시지" />;
   };
 
   return <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>;

@@ -54,11 +54,11 @@ const FormDialogContent = ({title, descriptions, onClose}: FormDialogContentProp
     <div className={styles.dialogBody}>
       <div className={styles.formGroup}>
         <label htmlFor="form-name">이름</label>
-        <input id="form-name" type="text" placeholder="이름을 입력하세요" />
+        <input id="form-name" placeholder="이름을 입력하세요" type="text" />
       </div>
       <div className={styles.formGroup}>
         <label htmlFor="form-email">이메일</label>
-        <input id="form-email" type="email" placeholder="이메일을 입력하세요" />
+        <input id="form-email" placeholder="이메일을 입력하세요" type="email" />
       </div>
     </div>
 
@@ -142,12 +142,12 @@ const FocusStory = (args: DialogProps) => {
         }}
       >
         <FormDialogContent
-          title="포커스 복원 & 첫 요소 지정"
           descriptions={[
             '모달이 열리면 첫 번째 포커스 가능한 요소에 자동으로 포커스됩니다.',
             'Confirm 모달이면 취소버튼, Alert 모달이면 확인버튼, Form 모달이면 첫 폼요소에 포커스가 가는게 Best 입니다.',
             '모달을 닫으면 원래 열었던 버튼으로 포커스가 복원됩니다.',
           ]}
+          title="포커스 복원 & 첫 요소 지정"
           onClose={() => setRestoreOpen(false)}
         />
       </Dialog>
@@ -161,11 +161,11 @@ const FocusStory = (args: DialogProps) => {
         }}
       >
         <FormDialogContent
-          title="포커스 Trap 테스트"
           descriptions={[
             'Tab 키를 계속 눌러보세요. 포커스가 모달 내부에서만 순환하며, 바깥으로 빠져나가지 않습니다.',
             'Shift+Tab으로 역방향 순환도 테스트해보세요.',
           ]}
+          title="포커스 Trap 테스트"
           onClose={() => setTrapOpen(false)}
         />
       </Dialog>
@@ -244,7 +244,7 @@ const DrawerExampleStory = (args: DialogProps) => {
       {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>전체 메뉴 열기2</button>
 
-      <Drawer {...args} open={open} anchor="left" onClose={() => setOpen(false)}>
+      <Drawer {...args} anchor="left" open={open} onClose={() => setOpen(false)}>
         <div className={styles.drawerContent}>
           <div className={styles.drawerHeader}>
             <h2>Dialog에 있던 기능 모두 테스트</h2>

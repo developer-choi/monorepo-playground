@@ -30,9 +30,9 @@ export default function BoardDetail({board}: BoardDetailProps) {
   };
 
   return (
-    <Container size="2" p="6">
+    <Container p="6" size="2">
       <Card size="3">
-        <Heading size="6" mb="3">
+        <Heading mb="3" size="6">
           {board.postTitle}
         </Heading>
 
@@ -48,17 +48,17 @@ export default function BoardDetail({board}: BoardDetailProps) {
           ))}
         </Flex>
 
-        <Separator size="4" mb="4" />
+        <Separator mb="4" size="4" />
 
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-        <Text as="p" size="3" style={{whiteSpace: 'pre-wrap', lineHeight: 1.8}} mb="6">
+        <Text as="p" mb="6" size="3" style={{whiteSpace: 'pre-wrap', lineHeight: 1.8}}>
           {board.postContent}
         </Text>
 
-        <Separator size="4" mb="4" />
+        <Separator mb="4" size="4" />
 
-        <Flex justify="between" align="center">
-          <Button variant="soft" color="gray" size="2" onClick={() => router.push('/validation/integration')}>
+        <Flex align="center" justify="between">
+          <Button color="gray" size="2" variant="soft" onClick={() => router.push('/validation/integration')}>
             목록으로
           </Button>
           <Flex gap="2">
@@ -67,7 +67,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
             </Button>
             <AlertDialog.Root>
               <AlertDialog.Trigger>
-                <Button size="2" color="red" variant="soft" loading={isMutationSettling(deleteMutation)}>
+                <Button color="red" loading={isMutationSettling(deleteMutation)} size="2" variant="soft">
                   삭제
                 </Button>
               </AlertDialog.Trigger>
@@ -78,12 +78,12 @@ export default function BoardDetail({board}: BoardDetailProps) {
                 </AlertDialog.Description>
                 <Flex gap="3" justify="end" mt="4">
                   <AlertDialog.Cancel>
-                    <Button size="2" variant="soft" color="gray">
+                    <Button color="gray" size="2" variant="soft">
                       취소
                     </Button>
                   </AlertDialog.Cancel>
                   <AlertDialog.Action>
-                    <Button size="2" color="red" onClick={() => void handleDelete()}>
+                    <Button color="red" size="2" onClick={() => void handleDelete()}>
                       삭제
                     </Button>
                   </AlertDialog.Action>

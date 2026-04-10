@@ -4,7 +4,7 @@ import ExampleHeader from '@/shared/components/ExampleHeader';
 export default function Layout({children}: PropsWithChildren) {
   return (
     <>
-      <ExampleHeader sourcePath="src/validation/integration" readmePath="src/validation/integration/README.md" />
+      <ExampleHeader readmePath="src/validation/integration/README.md" sourcePath="src/validation/integration" />
       {children}
     </>
   );

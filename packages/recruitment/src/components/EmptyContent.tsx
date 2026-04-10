@@ -8,7 +8,7 @@ export interface EmptyContentProps {
 
 export default function EmptyContent({icon, content}: EmptyContentProps) {
   return (
-    <Flex direction="column" align="center" justify="center" gap="2">
+    <Flex align="center" direction="column" gap="2" justify="center">
       {icon}
       <Text color="gray">{content}</Text>
     </Flex>

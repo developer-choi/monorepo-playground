@@ -19,10 +19,10 @@ export default async function Page({searchParams}: PageProps) {
   const data = await getBoardListApi({...filters, ...pagination});
 
   return (
-    <Container size="3" p="6">
-      <Flex justify="between" align="center" mb="5">
+    <Container p="6" size="3">
+      <Flex align="center" justify="between" mb="5">
         <Heading size="7">게시판</Heading>
-        <Button size="2" asChild>
+        <Button asChild size="2">
           <Link href="/validation/integration/create">
             <PlusIcon /> 새 글 작성
           </Link>

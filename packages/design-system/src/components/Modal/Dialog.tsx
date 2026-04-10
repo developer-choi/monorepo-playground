@@ -17,13 +17,13 @@ export default function Dialog(props: DialogProps) {
   return (
     <Modal
       className={className}
-      disableEscapeKeyDown={disableEscapeKeyDown}
       disableBackdropClick={disableBackdropClick}
-      onClose={onClose}
+      disableEscapeKeyDown={disableEscapeKeyDown}
       open={open}
+      onClose={onClose}
       {...other}
     >
-      <div tabIndex={-1} className={styles.container}>
+      <div className={styles.container} tabIndex={-1}>
         <div className={styles.paper}>{children}</div>
       </div>
     </Modal>

@@ -10,7 +10,7 @@ interface BaseImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 'src'> {
 export function BaseImage({src, className, alt, ...rest}: BaseImageProps) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img {...rest} loading="lazy" src={src} alt={alt} className={classNames(styles.image, className)} />
+    <img {...rest} alt={alt} className={classNames(styles.image, className)} loading="lazy" src={src} />
   );
 }
 
@@ -26,7 +26,7 @@ export function OptimizedImage({src, srcSet, sizes, ...rest}: OptimizedImageProp
   }
 
   return (
-    <BaseImage {...rest} src={toResizedUrl(src, DEFAULT_SIZE)} srcSet={srcSet ?? buildSrcSet(src)} sizes={sizes} />
+    <BaseImage {...rest} sizes={sizes} src={toResizedUrl(src, DEFAULT_SIZE)} srcSet={srcSet ?? buildSrcSet(src)} />
   );
 }
 

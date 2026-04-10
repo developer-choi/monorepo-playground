@@ -14,7 +14,7 @@ export default function Alert({title, content, onConfirm}: AlertProps) {
         <AlertDialog.Title>{title}</AlertDialog.Title>
         <AlertDialog.Description size="2">{content}</AlertDialog.Description>
 
-        <Flex gap="3" mt="4" justify="end">
+        <Flex gap="3" justify="end" mt="4">
           <AlertDialog.Action>
             <Button autoFocus variant="solid" onClick={onConfirm}>
               확인

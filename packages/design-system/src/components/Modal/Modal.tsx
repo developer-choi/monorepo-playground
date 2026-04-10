@@ -77,7 +77,7 @@ export default function Modal(props: ModalProps) {
   return (
     <Portal>
       <div className={classNames(styles.modalRoot, className)} onKeyDown={handleKeyDown} {...other}>
-        <div className={styles.backdrop} onMouseDown={handleBackdropMouseDown} onClick={handleBackdropClick} />
+        <div className={styles.backdrop} onClick={handleBackdropClick} onMouseDown={handleBackdropMouseDown} />
         <FocusTrap open={open}>{children}</FocusTrap>
       </div>
     </Portal>

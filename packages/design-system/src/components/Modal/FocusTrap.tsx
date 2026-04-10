@@ -130,9 +130,9 @@ export default function FocusTrap(props: FocusTrapProps): JSX.Element {
 
   return (
     <>
-      <div tabIndex={open ? 0 : -1} ref={sentinelStartRef} className={styles.sentinel} />
+      <div ref={sentinelStartRef} className={styles.sentinel} tabIndex={open ? 0 : -1} />
       {cloneElement(children, {ref: rootRef})}
-      <div tabIndex={open ? 0 : -1} ref={sentinelEndRef} className={styles.sentinel} />
+      <div ref={sentinelEndRef} className={styles.sentinel} tabIndex={open ? 0 : -1} />
     </>
   );
 }

@@ -25,7 +25,7 @@ export default async function BoardDetailPage({params}: BoardDetailPageProps) {
         <p className={styles.cardTitle}>2. 리페칭 테스트</p>
         <p>
           목록에서 <span className={styles.highlight}>5페이지</span> 이상 데이터를 쌓고, Network 탭을 연 뒤{' '}
-          <Link href="/rendering/infinite-scroll" className={styles.link}>
+          <Link className={styles.link} href="/rendering/infinite-scroll">
             목록으로 돌아가기
           </Link>
           를 클릭해 보세요. 리페칭 없이 1페이지부터 새로 로드됩니다.

@@ -12,10 +12,10 @@ export default memo(function BoardCard({board}: BoardCardProps) {
   const {postTitle, author, thumbnailUrl, createdAt} = board;
 
   return (
-    <Link href={`/rendering/infinite-scroll/${board.id}`} className={styles.link}>
+    <Link className={styles.link} href={`/rendering/infinite-scroll/${board.id}`}>
       <article>
         <div className={styles.imageWrapper}>
-          <OptimizedImage src={thumbnailUrl} alt={postTitle} sizes={SIZES} className={styles.image} />
+          <OptimizedImage alt={postTitle} className={styles.image} sizes={SIZES} src={thumbnailUrl} />
         </div>
 
         <div className={styles.info}>

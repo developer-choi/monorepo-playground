@@ -8,7 +8,7 @@ import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icon
 
 export default function SearchPage() {
   return (
-    <Container size="2" p="6">
+    <Container p="6" size="2">
       <Header />
       <SearchForm />
     </Container>
@@ -18,7 +18,7 @@ export default function SearchPage() {
 function Header() {
   return (
     <Box mb="6">
-      <Heading size="7" mb="2">
+      <Heading mb="2" size="7">
         검색결과 목록 Best Practice
       </Heading>
     </Box>
@@ -33,11 +33,11 @@ function SearchForm() {
     <>
       <Box mb="4">
         <TextField.Root
+          autoFocus
           placeholder="검색어를 입력하세요."
           size="3"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          autoFocus
         >
           <TextField.Slot>
             <MagnifyingGlassIcon />
@@ -71,7 +71,7 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
         <Card key={i} mb="2">
           <Box p="3">
             <Text>
-              <Highlight text={result} query={query} />
+              <Highlight query={query} text={result} />
             </Text>
           </Box>
         </Card>
@@ -109,7 +109,7 @@ function Highlight({text, query}: {text: string; query: string}) {
       {/* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */}
       {parts.map((part, i) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <Text key={i} weight="bold" style={{backgroundColor: 'var(--yellow-4)'}}>
+          <Text key={i} style={{backgroundColor: 'var(--yellow-4)'}} weight="bold">
             {part}
           </Text>
         ) : (
@@ -131,7 +131,7 @@ function ErrorFallback({resetErrorBoundary}: FallbackProps) {
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: Radix Box에 inline-flex 레이아웃을 줄 Radix prop이 없어 임시 사용. CSS Module 대체 검토 필요 */}
         <Box style={{display: 'inline-flex', alignItems: 'center', gap: '8px'}}>
           검색 중 오류가 발생했습니다.
-          <Button variant="ghost" size="1" onClick={resetErrorBoundary}>
+          <Button size="1" variant="ghost" onClick={resetErrorBoundary}>
             다시 시도
           </Button>
         </Box>

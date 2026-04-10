@@ -47,19 +47,19 @@ export default function BoardFilter() {
   };
 
   return (
-    <Card variant="surface" mb="5">
+    <Card mb="5" variant="surface">
       <form onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
         <Flex direction="column" gap="4">
           <Box>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-            <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+            <Text size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
               검색
             </Text>
             <Controller
               control={control}
               name="postTitle"
               render={({field}) => (
-                <TextField.Root {...field} value={field.value} placeholder="제목 검색" size="2">
+                <TextField.Root {...field} placeholder="제목 검색" size="2" value={field.value}>
                   <TextField.Slot>
                     <MagnifyingGlassIcon />
                   </TextField.Slot>
@@ -72,7 +72,7 @@ export default function BoardFilter() {
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box style={{flex: 1, minWidth: 200}}>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              <Text size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
                 타입
               </Text>
               <Controller
@@ -81,7 +81,7 @@ export default function BoardFilter() {
                 render={({field}) => (
                   <Flex gap="3" wrap="wrap">
                     <Text as="label" size="2">
-                      <Flex gap="2" align="center">
+                      <Flex align="center" gap="2">
                         <Checkbox
                           checked={BOARD_TYPES.values.every((t) => field.value.includes(t))}
                           onCheckedChange={(checked) => field.onChange(checked ? BOARD_TYPES.values : [])}
@@ -90,8 +90,8 @@ export default function BoardFilter() {
                       </Flex>
                     </Text>
                     {BOARD_TYPES.items.map(({value, label}) => (
-                      <Text as="label" size="2" key={value}>
-                        <Flex gap="2" align="center">
+                      <Text key={value} as="label" size="2">
+                        <Flex align="center" gap="2">
                           <Checkbox
                             checked={field.value.includes(value)}
                             onCheckedChange={(checked) => {
@@ -111,7 +111,7 @@ export default function BoardFilter() {
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box style={{flex: 1, minWidth: 200}}>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text as="div" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              <Text as="div" size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
                 카테고리
               </Text>
               <Controller
@@ -136,7 +136,7 @@ export default function BoardFilter() {
 
           <Box>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-            <Text size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+            <Text size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
               태그
             </Text>
             <Controller
@@ -145,8 +145,8 @@ export default function BoardFilter() {
               render={({field}) => (
                 <Flex gap="3" wrap="wrap">
                   {AVAILABLE_TAGS.map((tag) => (
-                    <Text as="label" size="2" key={tag}>
-                      <Flex gap="2" align="center">
+                    <Text key={tag} as="label" size="2">
+                      <Flex align="center" gap="2">
                         <Checkbox
                           checked={field.value.includes(tag)}
                           onCheckedChange={(checked) => {
@@ -164,10 +164,10 @@ export default function BoardFilter() {
           </Box>
 
           <Flex gap="2" justify="end">
-            <Button type="button" variant="soft" color="gray" size="2" onClick={handleReset}>
+            <Button color="gray" size="2" type="button" variant="soft" onClick={handleReset}>
               초기화
             </Button>
-            <Button type="submit" size="2">
+            <Button size="2" type="submit">
               검색
             </Button>
           </Flex>

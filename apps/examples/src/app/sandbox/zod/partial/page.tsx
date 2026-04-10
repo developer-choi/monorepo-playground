@@ -34,12 +34,12 @@ export default function Page() {
   });
 
   return (
-    <Container size="4" p="6">
-      <Heading size="6" mb="4">
+    <Container p="6" size="4">
+      <Heading mb="4" size="6">
         Zod partial() 비교 테스트
       </Heading>
 
-      <Table.Root variant="surface" size="1">
+      <Table.Root size="1" variant="surface">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>케이스</Table.ColumnHeaderCell>
@@ -59,19 +59,19 @@ export default function Page() {
                 <Code size="1">{JSON.stringify(row.data)}</Code>
               </Table.Cell>
               <Table.Cell>
-                <Badge color={row.withoutPartial.ok ? 'green' : 'red'} size="1" mr="1">
+                <Badge color={row.withoutPartial.ok ? 'green' : 'red'} mr="1" size="1">
                   {row.withoutPartial.ok ? 'OK' : 'FAIL'}
                 </Badge>
                 <Code size="1">{row.withoutPartial.value}</Code>
               </Table.Cell>
               <Table.Cell>
-                <Badge color={row.withPartial.ok ? 'green' : 'red'} size="1" mr="1">
+                <Badge color={row.withPartial.ok ? 'green' : 'red'} mr="1" size="1">
                   {row.withPartial.ok ? 'OK' : 'FAIL'}
                 </Badge>
                 <Code size="1">{row.withPartial.value}</Code>
               </Table.Cell>
               <Table.Cell>
-                <Badge color="blue" size="1" mr="1">
+                <Badge color="blue" mr="1" size="1">
                   ALWAYS
                 </Badge>
                 <Code size="1">{row.withSafeParsePartial}</Code>

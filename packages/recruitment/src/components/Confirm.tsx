@@ -13,9 +13,9 @@ export default function Confirm({title, content, onConfirm, onCancel}: ConfirmPr
         <AlertDialog.Title>{title || '확인'}</AlertDialog.Title>
         <AlertDialog.Description size="2">{content}</AlertDialog.Description>
 
-        <Flex gap="3" mt="4" justify="end">
+        <Flex gap="3" justify="end" mt="4">
           <AlertDialog.Cancel>
-            <Button variant="soft" color="gray" autoFocus onClick={onCancel}>
+            <Button autoFocus color="gray" variant="soft" onClick={onCancel}>
               취소
             </Button>
           </AlertDialog.Cancel>

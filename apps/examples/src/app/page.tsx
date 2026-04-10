@@ -5,19 +5,19 @@ import styles from './page.module.scss';
 
 export default function Home() {
   return (
-    <Container size="3" py="9" px="4">
+    <Container px="4" py="9" size="3">
       <Flex direction="column" gap="3" mb="8">
         <Heading size="8">Examples</Heading>
-        <Text size="4" color="gray">
+        <Text color="gray" size="4">
           실무에서 반복적으로 사용되는 프론트엔드 패턴들을 Next.js 예제로 정리한 프로젝트입니다.
         </Text>
         <Flex gap="4" mt="1">
-          <Link href={GITHUB_URL} target="_blank" size="2">
+          <Link href={GITHUB_URL} size="2" target="_blank">
             <Flex align="center" gap="1">
               <GitHubLogoIcon /> GitHub
             </Flex>
           </Link>
-          <Link href={DESIGN_SYSTEM_URL} target="_blank" size="2">
+          <Link href={DESIGN_SYSTEM_URL} size="2" target="_blank">
             <Flex align="center" gap="1">
               <ExternalLinkIcon /> Design System
             </Flex>
@@ -29,10 +29,10 @@ export default function Home() {
         {ITEMS.map((item) => {
           const isExternal = item.href.startsWith('http');
           const card = (
-            <Card size="3" className={styles.card}>
+            <Card className={styles.card} size="3">
               <Flex direction="column" gap="3">
                 <Heading size="4">{item.title}</Heading>
-                <Text as="p" size="2" color="gray">
+                <Text as="p" color="gray" size="2">
                   {item.description}
                 </Text>
                 <Flex gap="2" wrap="wrap">
@@ -47,11 +47,11 @@ export default function Home() {
           );
 
           return isExternal ? (
-            <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
+            <a key={item.href} className={styles.cardLink} href={item.href} rel="noopener noreferrer" target="_blank">
               {card}
             </a>
           ) : (
-            <NextLink key={item.href} href={item.href} className={styles.cardLink}>
+            <NextLink key={item.href} className={styles.cardLink} href={item.href}>
               {card}
             </NextLink>
           );

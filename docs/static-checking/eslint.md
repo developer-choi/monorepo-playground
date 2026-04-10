@@ -211,6 +211,18 @@ if (items.length > MAX_VISIBLE_ITEMS) { ... }
 const TIMEOUT_MS = 3000;
 ```
 
+#### 29. `react/jsx-sort-props`
+
+JSX 속성을 알파벳 순으로 정렬합니다. 콜백(on\*)은 마지막, shorthand는 먼저, key/ref는 최우선으로 배치합니다. auto-fix 지원.
+
+```tsx
+// ❌
+<Input onChange={handleChange} disabled type="text" className={styles.input} />
+
+// ✅
+<Input disabled className={styles.input} type="text" onChange={handleChange} />
+```
+
 #### 22. `no-restricted-syntax` — 금지 패턴 모음
 
 AST 셀렉터로 프로젝트에서 허용하지 않는 패턴을 일괄 금지합니다. 위반 시 `eslint-disable` + 사유 주석으로 예외를 처리합니다.

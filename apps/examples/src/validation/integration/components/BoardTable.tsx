@@ -34,7 +34,7 @@ export default function BoardTable({data}: BoardTableProps) {
           {data.list.length === 0 && (
             <Table.Row>
               <Table.Cell colSpan={5}>
-                <Text color="gray" align="center">
+                <Text align="center" color="gray">
                   게시글이 없습니다.
                 </Text>
               </Table.Cell>
@@ -58,7 +58,7 @@ export default function BoardTable({data}: BoardTableProps) {
               <Table.Cell>
                 <Flex gap="1" wrap="wrap">
                   {row.tagList.map((tag) => (
-                    <Badge key={tag} variant="outline" size="1">
+                    <Badge key={tag} size="1" variant="outline">
                       {tag}
                     </Badge>
                   ))}

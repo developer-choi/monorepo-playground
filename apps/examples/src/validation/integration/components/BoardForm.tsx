@@ -77,8 +77,8 @@ export default function BoardForm({board}: BoardFormProps) {
   };
 
   return (
-    <Container size="2" p="6">
-      <Heading size="6" mb="5">
+    <Container p="6" size="2">
+      <Heading mb="5" size="6">
         {isEdit ? '글 수정' : '새 글 작성'}
       </Heading>
       <Card size="3">
@@ -86,17 +86,17 @@ export default function BoardForm({board}: BoardFormProps) {
           <Flex direction="column" gap="5">
             <Box>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              <Text as="label" size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
                 제목
               </Text>
               <TextField.Root
                 {...register('postTitle')}
+                maxLength={BOARD_LIMITS.postTitle.max}
                 placeholder="제목을 입력하세요"
                 size="2"
-                maxLength={BOARD_LIMITS.postTitle.max}
               />
               {errors.postTitle && (
-                <Text color="red" size="1" mt="1">
+                <Text color="red" mt="1" size="1">
                   {errors.postTitle.message}
                 </Text>
               )}
@@ -104,12 +104,12 @@ export default function BoardForm({board}: BoardFormProps) {
 
             <Box>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              <Text as="label" size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
                 내용
               </Text>
-              <TextArea {...register('postContent')} placeholder="내용을 입력하세요" size="2" rows={10} />
+              <TextArea {...register('postContent')} placeholder="내용을 입력하세요" rows={10} size="2" />
               {errors.postContent && (
-                <Text color="red" size="1" mt="1">
+                <Text color="red" mt="1" size="1">
                   {errors.postContent.message}
                 </Text>
               )}
@@ -117,18 +117,18 @@ export default function BoardForm({board}: BoardFormProps) {
 
             <Box>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              <Text as="label" size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
                 타입
               </Text>
               <Controller
-                name="boardType"
                 control={control}
+                name="boardType"
                 render={({field}) => (
                   <RadioGroup.Root value={field.value} onValueChange={field.onChange}>
                     <Flex gap="4">
                       {BOARD_TYPES.items.map(({value, label}) => (
-                        <Text as="label" size="2" key={value}>
-                          <Flex gap="2" align="center">
+                        <Text key={value} as="label" size="2">
+                          <Flex align="center" gap="2">
                             <RadioGroup.Item value={value} />
                             {label}
                           </Flex>
@@ -139,7 +139,7 @@ export default function BoardForm({board}: BoardFormProps) {
                 )}
               />
               {errors.boardType && (
-                <Text color="red" size="1" mt="1">
+                <Text color="red" mt="1" size="1">
                   {errors.boardType.message}
                 </Text>
               )}
@@ -147,12 +147,12 @@ export default function BoardForm({board}: BoardFormProps) {
 
             <Box>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              <Text as="label" size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
                 카테고리
               </Text>
               <Controller
-                name="category"
                 control={control}
+                name="category"
                 render={({field}) => (
                   <Select.Root value={field.value} onValueChange={field.onChange}>
                     <Select.Trigger />
@@ -167,7 +167,7 @@ export default function BoardForm({board}: BoardFormProps) {
                 )}
               />
               {errors.category && (
-                <Text color="red" size="1" mt="1">
+                <Text color="red" mt="1" size="1">
                   {errors.category.message}
                 </Text>
               )}
@@ -175,16 +175,16 @@ export default function BoardForm({board}: BoardFormProps) {
 
             <Box>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text as="label" size="2" weight="medium" style={{display: 'block', marginBottom: 6}}>
+              <Text as="label" size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
                 태그
               </Text>
               <Controller
-                name="tagList"
                 control={control}
+                name="tagList"
                 render={({field}) => <TagInput value={field.value} onChange={field.onChange} />}
               />
               {errors.tagList && (
-                <Text color="red" size="1" mt="1">
+                <Text color="red" mt="1" size="1">
                   {errors.tagList.message}
                 </Text>
               )}
@@ -192,11 +192,11 @@ export default function BoardForm({board}: BoardFormProps) {
 
             <Separator size="4" />
 
-            <Flex justify="end" gap="2">
-              <Button type="button" variant="soft" color="gray" size="2" onClick={() => router.back()}>
+            <Flex gap="2" justify="end">
+              <Button color="gray" size="2" type="button" variant="soft" onClick={() => router.back()}>
                 취소
               </Button>
-              <Button type="submit" size="2" loading={isPending}>
+              <Button loading={isPending} size="2" type="submit">
                 저장
               </Button>
             </Flex>
@@ -231,6 +231,8 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
     <Box>
       <Flex gap="2" mb="2">
         <TextField.Root
+          maxLength={BOARD_LIMITS.tagList.maxLength}
+          placeholder="태그 입력 후 Enter"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
@@ -239,8 +241,6 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
               addTag();
             }
           }}
-          placeholder="태그 입력 후 Enter"
-          maxLength={BOARD_LIMITS.tagList.maxLength}
         />
         <Button type="button" variant="soft" onClick={addTag}>
           추가
@@ -248,7 +248,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
       </Flex>
       <Flex gap="1" wrap="wrap">
         {value.map((tag) => (
-          <Badge key={tag} variant="soft" size="2">
+          <Badge key={tag} size="2" variant="soft">
             {tag}
             {/* eslint-disable no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box
@@ -256,7 +256,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
               style={{cursor: 'pointer', marginLeft: 4}}
               onClick={() => onChange(value.filter((t) => t !== tag))}
             >
-              <Cross2Icon width={12} height={12} />
+              <Cross2Icon height={12} width={12} />
             </Box>
             {/* eslint-enable no-restricted-syntax */}
           </Badge>

@@ -27,8 +27,8 @@ export default function BoardListPage() {
     <ErrorBoundary
       fallbackRender={({resetErrorBoundary}) => (
         <ErrorPageTemplate
-          message="게시글 목록을 불러오지 못했습니다."
           action={<Button onClick={resetErrorBoundary}>다시 시도</Button>}
+          message="게시글 목록을 불러오지 못했습니다."
         />
       )}
     >

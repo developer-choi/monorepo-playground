@@ -43,6 +43,14 @@ export const baseRules = {
       enforceConst: true,
     },
   ],
+  'react/jsx-sort-props': [
+    'error',
+    {
+      callbacksLast: true,
+      shorthandFirst: true,
+      reservedFirst: true,
+    },
+  ],
   'no-restricted-syntax': [
     'error',
     {

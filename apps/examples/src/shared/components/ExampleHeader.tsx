@@ -9,26 +9,26 @@ interface ExampleHeaderProps {
 export default function ExampleHeader({sourcePath, readmePath}: ExampleHeaderProps) {
   return (
     <Flex
-      gap="4"
-      py="2"
-      px="4"
       align="center"
+      gap="4"
       position="sticky"
-      top="0"
+      px="4"
+      py="2"
       // eslint-disable-next-line no-restricted-syntax -- TODO: CSS 변수 참조와 zIndex 조합이라 정적 CSS Module로 분리 어려움. 전용 CSS Module 파일 생성 검토 필요
       style={{zIndex: 10, backgroundColor: 'var(--color-background)', borderBottom: '1px solid var(--gray-a5)'}}
+      top="0"
     >
-      <Link href={`${PROJECT_BASE}/${readmePath}`} target="_blank" size="2">
+      <Link href={`${PROJECT_BASE}/${readmePath}`} size="2" target="_blank">
         <Flex align="center" gap="1">
           <FileTextIcon /> README
         </Flex>
       </Link>
-      <Link href={`${PROJECT_BASE}/${sourcePath}`} target="_blank" size="2">
+      <Link href={`${PROJECT_BASE}/${sourcePath}`} size="2" target="_blank">
         <Flex align="center" gap="1">
           <CodeIcon /> 소스코드
         </Flex>
       </Link>
-      <Link href="https://github.com/developer-choi" target="_blank" size="2">
+      <Link href="https://github.com/developer-choi" size="2" target="_blank">
         <Flex align="center" gap="1">
           <GitHubLogoIcon /> GitHub
         </Flex>
