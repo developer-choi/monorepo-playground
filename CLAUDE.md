@@ -1,3 +1,3 @@
 ## 정적 분석 설정 변경 시 문서 동기화
 
-`eslint.config.base.mts`, `tsconfig.base.json`, 또는 워크스페이스별 eslint config를 수정하면 `docs/static-checking.md`를 함께 최신화한다.
+정적 분석 설정 변경 시 `docs/static-checking.md`의 설정-문서 매핑 테이블을 보고 해당 문서를 최신화한다.
