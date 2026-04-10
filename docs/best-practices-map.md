@@ -2,6 +2,12 @@
 
 ## 셋업
 
+### PR1 프로젝트 초기 세팅
+
+- 기술스택: typescript-eslint + @tanstack/eslint-plugin-query + prettier + husky + lint-staged + @commitlint/config-conventional
+- 상황: 채용과제·사이드 프로젝트 초기 세팅. ESLint flat config(9+), tsconfig strict, husky + lint-staged, commitlint 구성
+- 코드: docs/patterns/setup/ProjectSetup.md
+
 ### Provider Composition
 
 - 기술스택: @tanstack/react-query + @radix-ui/themes + overlay-kit + react-toastify
