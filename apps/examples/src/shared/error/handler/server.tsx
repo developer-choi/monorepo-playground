@@ -14,9 +14,11 @@ export function handleServerSideError(error: unknown): ReactNode {
     }
   }
 
-  if (error instanceof HTTPError && error.response.status === 404) {
+  if (error instanceof HTTPError && error.response.status === HTTP_STATUS_NOT_FOUND) {
     notFound();
   }
 
   return <ErrorPageTemplate message={getErrorMessage(error)} />;
 }
+
+const HTTP_STATUS_NOT_FOUND = 404;

@@ -1,7 +1,7 @@
 import {HTTPError} from 'ky';
 
 export function getErrorMessage(error: unknown): string {
-  if (error instanceof HTTPError && error.response.status === 404) {
+  if (error instanceof HTTPError && error.response.status === HTTP_STATUS_NOT_FOUND) {
     return '삭제되었거나 존재하지 않습니다.';
   }
 
@@ -9,3 +9,5 @@ export function getErrorMessage(error: unknown): string {
 
   return '서버에 문제가 발생했습니다. 문제가 지속되면 고객센터에 문의해 주세요.';
 }
+
+const HTTP_STATUS_NOT_FOUND = 404;

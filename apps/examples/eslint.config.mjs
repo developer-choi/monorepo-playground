@@ -43,6 +43,8 @@ const eslintConfig = defineConfig([
 export default eslintConfig;
 
 const ALLOWED_FOLDERS = ['components', 'hooks', 'assets'];
+const SRC_PREFIX_LENGTH = 5; // '/src/'.length
+const MIN_SEGMENTS_FOR_DEPTH_CHECK = 4;
 
 /** @returns {import('eslint').Rule.RuleModule} */
 function createSrcFolderWhitelistRule() {
@@ -62,12 +64,12 @@ function createSrcFolderWhitelistRule() {
             return;
           }
 
-          const segments = filePath.slice(srcIndex + 5).split('/');
+          const segments = filePath.slice(srcIndex + SRC_PREFIX_LENGTH).split('/');
 
           if (segments[0] === 'app' || segments[0] === 'shared') {
             return;
           }
-          if (segments.length < 4) {
+          if (segments.length < MIN_SEGMENTS_FOR_DEPTH_CHECK) {
             return;
           }
 

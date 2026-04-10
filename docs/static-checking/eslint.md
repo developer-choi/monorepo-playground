@@ -196,6 +196,21 @@ if (disabled) {
 }
 ```
 
+#### 27. `no-magic-numbers`
+
+의미 없는 숫자 리터럴 사용을 금지합니다. 숫자에 이름을 붙여 의도를 명확히 합니다. -1, 0, 1, 2는 허용합니다.
+
+```typescript
+// ❌
+if (items.length > 10) { ... }
+const timeout = 3000;
+
+// ✅
+const MAX_VISIBLE_ITEMS = 10;
+if (items.length > MAX_VISIBLE_ITEMS) { ... }
+const TIMEOUT_MS = 3000;
+```
+
 #### 22. `no-restricted-syntax` — 빈 alt 속성 금지
 
 `<img alt="">` 처럼 빈 alt를 실수로 넣는 것을 방지합니다. 3개의 AST 셀렉터로 `alt=""`, `alt=''`, `alt={''}`, ` alt={`} ``, `alt={""}` 5가지 패턴을 모두 커버합니다.

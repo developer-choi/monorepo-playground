@@ -85,7 +85,7 @@ async function getSearchResultsApi(query: string): Promise<string[]> {
     return [];
   }
 
-  await new Promise((resolve) => setTimeout(resolve, 200));
+  await new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY_MS));
 
   return [
     `a${query}b 관련 결과`,
@@ -136,3 +136,5 @@ function ErrorFallback({resetErrorBoundary}: FallbackProps) {
     </Callout.Root>
   );
 }
+
+const SIMULATED_DELAY_MS = 200;

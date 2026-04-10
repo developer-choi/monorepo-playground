@@ -34,6 +34,15 @@ export const baseRules = {
     {selector: 'import', format: null},
     {selector: 'variable', modifiers: ['destructured'], format: null},
   ],
+  'no-magic-numbers': [
+    'error',
+    {
+      ignore: [-1, 0, 1, 2],
+      ignoreArrayIndexes: true,
+      ignoreDefaultValues: true,
+      enforceConst: true,
+    },
+  ],
   'no-restricted-syntax': [
     'error',
     {

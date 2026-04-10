@@ -40,15 +40,23 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
 }
 
 function getPageNumbers(current: number, total: number): (number | '...')[] {
-  if (total <= 7) {
-    return Array.from({length: total}, (_, i) => i + 1);
+  if (total <= MAX_PAGES_NO_ELLIPSIS) {
+    const pages: number[] = [];
+    for (let i = 1; i <= total; i++) {
+      pages.push(i);
+    }
+    return pages;
   }
 
-  if (current <= 3) {
-    return [1, 2, 3, 4, '...', total];
+  if (current <= PAGES_NEAR_EDGE) {
+    return [1, 2, PAGES_NEAR_EDGE, PAGES_NEAR_EDGE_OFFSET, '...', total];
   }
   if (current >= total - 2) {
-    return [1, '...', total - 3, total - 2, total - 1, total];
+    return [1, '...', total - PAGES_NEAR_EDGE, total - 2, total - 1, total];
   }
   return [1, '...', current - 1, current, current + 1, '...', total];
 }
+
+const MAX_PAGES_NO_ELLIPSIS = 7;
+const PAGES_NEAR_EDGE = 3;
+const PAGES_NEAR_EDGE_OFFSET = 4;

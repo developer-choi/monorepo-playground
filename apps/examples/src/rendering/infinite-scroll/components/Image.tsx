@@ -31,8 +31,23 @@ export function OptimizedImage({src, srcSet, sizes, ...rest}: OptimizedImageProp
 }
 
 const CLOUDINARY_ORIGIN = 'https://res.cloudinary.com/demo/image/upload';
-const IMAGE_STEPS = [300, 400, 500, 600, 700, 800, 900];
-const DEFAULT_SIZE = 900;
+const IMAGE_WIDTH_SM = 300;
+const IMAGE_WIDTH_MD = 400;
+const IMAGE_WIDTH_LG = 500;
+const IMAGE_WIDTH_XL = 600;
+const IMAGE_WIDTH_2XL = 700;
+const IMAGE_WIDTH_3XL = 800;
+const IMAGE_WIDTH_4XL = 900;
+const IMAGE_STEPS = [
+  IMAGE_WIDTH_SM,
+  IMAGE_WIDTH_MD,
+  IMAGE_WIDTH_LG,
+  IMAGE_WIDTH_XL,
+  IMAGE_WIDTH_2XL,
+  IMAGE_WIDTH_3XL,
+  IMAGE_WIDTH_4XL,
+];
+const DEFAULT_SIZE = IMAGE_WIDTH_4XL;
 
 function toResizedUrl(originalUrl: string, size: number): string {
   const path = originalUrl.replace(CLOUDINARY_ORIGIN, '');

@@ -82,7 +82,7 @@ function RightGoodUsage() {
 
 const SlowList = memo(function SlowList({text}: {text: string}) {
   const items = [];
-  for (let i = 0; i < 150; i++) {
+  for (let i = 0; i < SLOW_LIST_ITEM_COUNT; i++) {
     items.push(<SlowItem key={i} text={text} />);
   }
 
@@ -104,3 +104,5 @@ function SlowItem({text}: {text: string}) {
     </Flex>
   );
 }
+
+const SLOW_LIST_ITEM_COUNT = 150;

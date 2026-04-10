@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 
   // 페이지네이션
   const page = Math.max(1, Number(sp.get('page')) || 1);
-  const limit = Math.min(100, Math.max(1, Number(sp.get('limit')) || 10));
+  const limit = Math.min(MAX_PAGE_LIMIT, Math.max(1, Number(sp.get('limit')) || DEFAULT_PAGE_LIMIT));
   const total = filtered.length;
   const totalPages = Math.ceil(total / limit);
   const start = (page - 1) * limit;
@@ -54,3 +54,6 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(newItem, {status: 201});
 }
+
+const MAX_PAGE_LIMIT = 100;
+const DEFAULT_PAGE_LIMIT = 10;
