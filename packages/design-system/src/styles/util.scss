@@ -13,6 +13,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
   // line-height: normal; 이 mixin을 사용하는 곳에서는 폰트사이즈보다 큰 line-height를 지정해야 g같은 밑으로가는 글자가 밑에서 안짤림.
 }
 
@@ -27,9 +28,9 @@
   overflow: hidden;
   -webkit-line-clamp: $lineCount;
 
-  //이거 안하면 ... 표기가 안나오거나 공백없는 긴 문자열이 올 경우 의도하지않은 대로 작동함. 화면을 뚫고나간다던가.
-  //근데 위 textOverflowEllipsis mixin에서는 이거 안써도 문제가 안생김.
-  word-break: break-word;
+  // 이거 안하면 ... 표기가 안나오거나 공백없는 긴 문자열이 올 경우 의도하지않은 대로 작동함. 화면을 뚫고나간다던가.
+  // 근데 위 textOverflowEllipsis mixin에서는 이거 안써도 문제가 안생김.
+  overflow-wrap: break-word;
 }
 
 @mixin flexCenter {
@@ -40,10 +41,7 @@
 
 @mixin absoluteFull {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  inset: 0;
 }
 
 @mixin absoluteCenter {

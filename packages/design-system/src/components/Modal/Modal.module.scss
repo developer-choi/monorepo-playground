@@ -1,18 +1,12 @@
 .modalRoot {
   position: fixed;
   z-index: 1300;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
+  inset: 0;
 }
 
 .backdrop {
   position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background-color: rgb(0 0 0 / 50%);
   -webkit-tap-highlight-color: transparent;
 }

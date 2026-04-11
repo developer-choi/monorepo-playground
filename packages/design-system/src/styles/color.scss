@@ -4,9 +4,9 @@
 
 // 텍스트색, 테두리색, 배경색 등 다양한 회색에서 계층을 구분할 때 사용
 $grayColors: (
-  #333333,
+  #333,
   // nth($grayColors, 1);
-  #444444,
+  #444,
   #646464,
   #898989,
   #bdbdbd,
@@ -23,14 +23,12 @@ $textColors: (
   sub: list.nth($grayColors, 4),
   sub2: list.nth($grayColors, 6)
 );
-
 $stateColors: (
   success: #3fb034,
-  error: #ff0000,
+  error: #f00,
   disabled: list.nth($grayColors, 6),
   info: #1234aa,
 );
-
 $brandColors: (
   primary: #7752fe,
   secondary: #a97df5,
