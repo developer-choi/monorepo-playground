@@ -66,3 +66,7 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 | tsconfig.base.json                                   | docs/static-checking/tsconfig.md   |
 | .stylelintrc.json                                    | docs/static-checking/stylelint.md  |
 | commitlint.config.ts                                 | docs/static-checking/commitlint.md |
+
+## 점진적 마이그레이션
+
+기존 코드베이스에 새 린트 규칙을 도입할 때의 전략은 [gradual-migration.md](static-checking/gradual-migration.md)를 참고.
