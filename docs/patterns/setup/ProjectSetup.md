@@ -6,12 +6,21 @@
 
 ## 참조 문서
 
-| 순서 | 항목                    | 문서                                 |
-| :--: | ----------------------- | ------------------------------------ |
-|  1   | commitlint + husky      | `docs/static-checking/commitlint.md` |
-|  2   | Prettier + EditorConfig | `docs/formatter.md`                  |
-|  3   | tsconfig                | `docs/static-checking/tsconfig.md`   |
-|  4   | ESLint                  | `docs/static-checking/eslint.md`     |
+| 순서 | 항목                    | 문서                                                   |
+| :--: | ----------------------- | ------------------------------------------------------ |
+|  1   | .gitignore              | 아래 [.gitignore 필수 항목](#gitignore-필수-항목) 참조 |
+|  2   | commitlint + husky      | `docs/static-checking/commitlint.md`                   |
+|  3   | Prettier + EditorConfig | `docs/formatter.md`                                    |
+|  4   | tsconfig                | `docs/static-checking/tsconfig.md`                     |
+|  5   | ESLint                  | `docs/static-checking/eslint.md`                       |
+
+## .gitignore 필수 항목
+
+```gitignore
+plan/
+```
+
+AI 에이전트의 작업 계획 파일(`plan/`)이 레포에 커밋되지 않도록 프로젝트 생성 직후 `.gitignore`에 추가한다.
 
 ## 채용과제 적용 시 주의
 
