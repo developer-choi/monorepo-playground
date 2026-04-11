@@ -55,7 +55,7 @@ per-line disable이 점진적으로 제거됨
 
 ### 핵심 파일
 
-- `tools/check-file-level-disable.sh` — pre-commit hook 스크립트. staged된 SCSS 파일의 상단 5줄에서 `stylelint-disable`을 감지하면 차단
+- `scripts/check-file-level-disable.sh` — pre-commit hook 스크립트. staged된 SCSS 파일의 상단 5줄에서 `stylelint-disable`을 감지하면 차단
 - `.husky/pre-commit` — `check-file-level-disable.sh`를 lint-staged 전에 실행
 
 ### per-line disable 예시
