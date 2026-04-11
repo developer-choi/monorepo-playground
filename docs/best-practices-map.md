@@ -128,6 +128,20 @@
 - 상황: 좋아요 토글처럼 단일 boolean 상태. useState로 즉시 반영, 실패 시 롤백
 - 코드: docs/patterns/optimistic-update/OptimisticUpdate.md
 
+## API 통신
+
+### ApiClient + ApiResponseError — 수동 매핑
+
+- 기술스택: ApiClient (자체 추상화) + ApiResponseError + query-string
+- 상황: HTTP 라이브러리(fetch, ky, axios)에 의존하지 않는 API 호출 계층. ApiClient로 라이브러리 교체를 호출부와 분리하고, 4xx/5xx·네트워크 에러를 ApiResponseError/ApiRequestError로 정규화. API 함수/타입 네이밍 컨벤션과 query-string 기반 쿼리스트링 처리 포함
+- 코드: docs/patterns/api/FetchApiClientUsage.md
+
+### ApiClient + ApiResponseError — es-toolkit + zod 검증
+
+- 기술스택: ApiClient (자체 추상화) + ApiResponseError + es-toolkit + zod
+- 상황: 위 패턴에 snake_case/camelCase 자동 변환(es-toolkit)과 zod 런타임 응답 검증을 추가. 수동 매핑 함수 대신 스키마 기반으로 변환·검증
+- 코드: docs/patterns/api/FetchApiClientZodValidation.md
+
 ## 쿼리
 
 ### queryOptions / infiniteQueryOptions 팩토리
