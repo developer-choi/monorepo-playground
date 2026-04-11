@@ -20,7 +20,7 @@ ESLint가 TypeScript 코드를 검사하듯, Stylelint는 SCSS 파일의 문법 
 
 ## declaration-strict-value
 
-하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다.
+하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·간격뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`)도 대상에 포함하여, `max-width: 480px` 같은 매직넘버를 차단합니다.
 
 ### 주요 설정 포인트
 
@@ -30,6 +30,8 @@ ESLint가 TypeScript 코드를 검사하듯, Stylelint는 SCSS 파일의 문법 
 | `ignoreValues`에 `/^var\(/`           | regex   | `ignoreFunctions: false`가 `var()`도 차단하므로 regex로 별도 허용   |
 | `expandShorthand` + `recurseLonghand` | `true`  | `border: 1px solid #111`에서 색상(`#111`)만 잡고 width/style은 무시 |
 | 속성 목록에 border 계열 미포함        | —       | `/color$/`가 분해된 `border-color`를 잡으므로 중복 검사 방지        |
+| `ignoreValues`에 `100%`               | 문자열  | 구조적 레이아웃 값(`width: 100%`)은 디자인 토큰이 아니므로 허용     |
+| `ignoreValues`에 `/^calc\(/`          | regex   | `calc()` 표현식은 의도적 계산이므로 허용                            |
 
 ### 도입 히스토리
 

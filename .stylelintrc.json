@@ -27,7 +27,13 @@
         "margin-top",
         "margin-right",
         "margin-bottom",
-        "margin-left"
+        "margin-left",
+        "width",
+        "height",
+        "min-width",
+        "min-height",
+        "max-width",
+        "max-height"
       ],
       {
         "ignoreValues": [
@@ -40,7 +46,9 @@
           "none",
           "transparent",
           "currentColor",
-          "/^var\\(/"
+          "/^var\\(/",
+          "100%",
+          "/^calc\\(/"
         ],
         "ignoreFunctions": false,
         "expandShorthand": true,
