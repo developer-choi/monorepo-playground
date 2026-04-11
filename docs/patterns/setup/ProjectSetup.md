@@ -6,12 +6,12 @@
 
 ## 참조 문서
 
-| 순서 | 항목       | 문서                                 |
-| :--: | ---------- | ------------------------------------ |
-|  1   | Prettier   | `docs/formatter.md`                  |
-|  2   | commitlint | `docs/static-checking/commitlint.md` |
-|  3   | tsconfig   | `docs/static-checking/tsconfig.md`   |
-|  4   | ESLint     | `docs/static-checking/eslint.md`     |
+| 순서 | 항목                    | 문서                                 |
+| :--: | ----------------------- | ------------------------------------ |
+|  1   | commitlint + husky      | `docs/static-checking/commitlint.md` |
+|  2   | Prettier + EditorConfig | `docs/formatter.md`                  |
+|  3   | tsconfig                | `docs/static-checking/tsconfig.md`   |
+|  4   | ESLint                  | `docs/static-checking/eslint.md`     |
 
 ## 채용과제 적용 시 주의
 

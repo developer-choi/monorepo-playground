@@ -2,10 +2,10 @@
 
 ## 셋업
 
-### PR1 프로젝트 초기 세팅
+### 프로젝트 초기 세팅
 
-- 기술스택: typescript-eslint + @tanstack/eslint-plugin-query + prettier + husky + lint-staged + @commitlint/config-conventional
-- 상황: 채용과제·사이드 프로젝트 초기 세팅. ESLint flat config(9+), tsconfig strict, husky + lint-staged, commitlint 구성
+- 기술스택: commitlint + prettier + typescript-eslint + stylelint + husky + lint-staged
+- 상황: 채용과제·사이드 프로젝트 초기 세팅
 - 코드: docs/patterns/setup/ProjectSetup.md
 
 ### Provider Composition

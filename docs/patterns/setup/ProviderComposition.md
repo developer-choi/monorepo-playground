@@ -52,3 +52,4 @@ export default function AppProvider({children}: PropsWithChildren) {
 
 - 선택하지 않은 패키지의 Provider는 제외한다 (overlay-kit 안 쓰면 OverlayProvider 빼기)
 - `retry: 0` — 채용과제에서는 재시도보다 에러 상태를 명확히 보여주는 것이 유리
+- TanStack Query를 도입하면 `@tanstack/eslint-plugin-query`도 함께 설치한다. ESLint 설정은 `docs/static-checking/eslint.md` 참고
