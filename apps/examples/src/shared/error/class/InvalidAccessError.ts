@@ -20,7 +20,7 @@ export default class InvalidAccessError extends BaseError {
       options.redirect.type === 'NOT_FOUND'
         ? `${options.redirect.type}`
         : `${options.redirect.type} ${options.redirect.url}`;
-    super(message, {level: 'info'});
+    super(message, {level: 'low'});
     this.redirect = options.redirect;
     this.meta = options.meta;
   }
