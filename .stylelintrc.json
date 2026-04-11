@@ -1,5 +1,6 @@
 {
   "extends": ["stylelint-config-standard-scss"],
+  "plugins": ["stylelint-declaration-strict-value"],
   "rules": {
     "at-rule-disallowed-list": ["import"],
     "selector-class-pattern": null,
@@ -7,6 +8,44 @@
     "scss/at-mixin-pattern": null,
     "scss/dollar-variable-pattern": null,
     "scss/at-function-pattern": null,
-    "value-keyword-case": null
+    "value-keyword-case": null,
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "/color$/",
+        "background",
+        "outline",
+        "box-shadow",
+        "text-shadow",
+        "font-size",
+        "line-height",
+        "padding",
+        "padding-top",
+        "padding-right",
+        "padding-bottom",
+        "padding-left",
+        "margin",
+        "margin-top",
+        "margin-right",
+        "margin-bottom",
+        "margin-left"
+      ],
+      {
+        "ignoreValues": [
+          "0",
+          "auto",
+          "inherit",
+          "initial",
+          "unset",
+          "normal",
+          "none",
+          "transparent",
+          "currentColor",
+          "/^var\\(/"
+        ],
+        "ignoreFunctions": false,
+        "expandShorthand": true,
+        "recurseLonghand": true
+      }
+    ]
   }
 }
