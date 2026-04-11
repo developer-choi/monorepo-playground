@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   const {list} = await database.board.get();
   const nextId = list.length === 0 ? 1 : Math.max(...list.map((item) => item.id)) + 1;
 
-  const newItem = {id: nextId, ...body};
+  const newItem = {id: nextId, created_at: new Date().toISOString().slice(0, DATE_ONLY_LENGTH), ...body};
   list.push(newItem);
   /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument -- TODO: API body를 zod 등으로 검증하여 disable 제거 */
   await database.board.set({list});
@@ -62,3 +62,4 @@ export async function POST(request: NextRequest) {
 
 const MAX_PAGE_LIMIT = 100;
 const DEFAULT_PAGE_LIMIT = 10;
+const DATE_ONLY_LENGTH = 10;

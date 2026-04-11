@@ -18,9 +18,9 @@ import {toCamelCaseKeys, toSnakeCaseKeys} from 'es-toolkit';
 export async function getBoardListApi(
   params: Partial<BoardListFilter & PaginationParams>,
 ): Promise<BoardListApiResponse> {
-  const raw = await api
-    .get(buildUrlWithQuery({pathname: 'api/board', params: toSnakeCaseKeys(params)}))
-    .json<ServerBoardListResponse>();
+  const raw = await api.get<ServerBoardListResponse>(
+    buildUrlWithQuery({pathname: 'api/board', params: toSnakeCaseKeys(params)}),
+  );
   return {
     ...toCamelCaseKeys(raw),
     list: raw.list.map((row) =>
@@ -30,22 +30,22 @@ export async function getBoardListApi(
 }
 
 export async function getBoardApi(id: number) {
-  const raw = await api.get(`api/board/${id}`).json<ServerBoardDetail>();
+  const raw = await api.get<ServerBoardDetail>(`api/board/${id}`);
   return validateApiResponse(BoardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
 export async function postBoardApi(body: CreateBoardApiRequest) {
-  const raw = await api.post('api/board', {json: toSnakeCaseKeys(body)}).json<ServerBoardDetail>();
+  const raw = await api.post<ServerBoardDetail>('api/board', {body: toSnakeCaseKeys(body)});
   return validateApiResponse(BoardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
 export async function patchBoardApi({id, ...body}: UpdateBoardApiRequest) {
-  const raw = await api.patch(`api/board/${id}`, {json: toSnakeCaseKeys(body)}).json<ServerBoardDetail>();
+  const raw = await api.patch<ServerBoardDetail>(`api/board/${id}`, {body: toSnakeCaseKeys(body)});
   return validateApiResponse(BoardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
 export function deleteBoardApi(id: number) {
-  return api.delete(`api/board/${id}`).json<void>();
+  return api.delete(`api/board/${id}`);
 }
 
 type BoardType = (typeof BOARD_TYPES.values)[number];

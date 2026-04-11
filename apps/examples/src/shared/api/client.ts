@@ -1,5 +1,3 @@
-import ky from 'ky';
+import FetchApiClient from './FetchApiClient';
 
-export const api = ky.create({
-  prefixUrl: process.env.NEXT_PUBLIC_API_URL,
-});
+export const api = new FetchApiClient(process.env.NEXT_PUBLIC_API_URL ?? '');
