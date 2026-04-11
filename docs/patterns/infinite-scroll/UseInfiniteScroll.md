@@ -6,7 +6,7 @@ TanStack Query v5의 infinite query는 refetch 시 로드된 모든 페이지를
 
 `staleTime: Infinity`로 자동 refetch를 차단하고, `gcTime`으로 캐시 수명만 제어한다.
 
-useInfiniteScroll 훅 구현은 `apps/examples/src/rendering/infinite-scroll/hooks/useInfiniteScroll.ts` 참고.
+[CRITICAL] useInfiniteScroll 훅 구현은 `apps/examples/src/rendering/infinite-scroll/hooks/useInfiniteScroll.ts`를 반드시 Read한다.
 
 ## 쿼리 옵션
 
