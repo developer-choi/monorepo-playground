@@ -31,6 +31,10 @@
   // 이거 안하면 ... 표기가 안나오거나 공백없는 긴 문자열이 올 경우 의도하지않은 대로 작동함. 화면을 뚫고나간다던가.
   // 근데 위 textOverflowEllipsis mixin에서는 이거 안써도 문제가 안생김.
   overflow-wrap: break-word;
+
+  // padding이 있으면 -webkit-line-clamp 높이 계산이 깨져서 지정 줄 수보다 많이 보임.
+  // 이 mixin을 쓰는 요소에 직접 padding을 주지 말고, 감싸는 wrapper에 줄 것.
+  padding: 0 !important;
 }
 
 @mixin flexCenter {
