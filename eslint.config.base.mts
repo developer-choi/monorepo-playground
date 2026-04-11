@@ -13,6 +13,7 @@ export const baseRules = {
     },
   ],
   '@typescript-eslint/no-floating-promises': 'off',
+  '@typescript-eslint/return-await': ['error', 'in-try-catch'],
   '@typescript-eslint/switch-exhaustiveness-check': 'error',
   '@typescript-eslint/no-misused-promises': ['error', {checksVoidReturn: {attributes: false}}],
   '@typescript-eslint/prefer-nullish-coalescing': 'error',
