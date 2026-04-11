@@ -21,16 +21,20 @@ function getErrorInfo(error: unknown): {title: string; content: string} {
   if (error instanceof ApiResponseError) {
     // 401: 로그인 페이지 리다이렉트 등 인증 아키텍처에 맞게 처리
     if (error.status === 403)
-      return {title: '권한 없음', content: '접근 권한이 없습니다. 관리자에게 권한을 요청해 주세요.'};
-    if (error.status === 404) return {title: '페이지 없음', content: '요청한 페이지를 찾을 수 없습니다.'};
+      return {title: '접근할 수 없어요', content: '권한이 필요해요. 관리자에게 권한을 요청해 주세요.'};
+    if (error.status === 404)
+      return {title: '정보를 찾을 수 없어요', content: '삭제되었거나 주소가 변경되었을 수 있어요.'};
     return {
-      title: '서버 오류',
-      content: error.message || '잠시 후 다시 시도해 주세요. 문제가 지속되면 고객센터에 문의해 주세요.',
+      title: '일시적인 오류가 발생했어요',
+      content: error.message || '잠시 후 다시 시도해 주세요. 문제가 계속되면 고객센터로 문의해 주세요.',
     };
   }
+  if (error instanceof ApiRequestError) {
+    return {title: '연결이 불안정해요', content: '네트워크 상태를 확인한 뒤 다시 시도해 주세요.'};
+  }
   return {
-    title: '오류 발생',
-    content: '예상치 못한 오류가 발생했습니다. 새로고침 후에도 반복되면 고객센터에 문의해 주세요.',
+    title: '일시적인 오류가 발생했어요',
+    content: '잠시 후 다시 시도해 주세요. 문제가 계속되면 고객센터로 문의해 주세요.',
   };
 }
 ```
