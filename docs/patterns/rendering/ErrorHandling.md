@@ -110,15 +110,15 @@ function LoginForm() {
 
 ## CSR: 렌더링 에러 경계
 
-CSR 렌더링 에러는 ErrorBoundary로만 잡을 수 있다. HandledErrorBoundary로 감싸면 에러 발생 영역만 격리되고, 나머지 UI는 정상 동작한다. ErrorBoundary 배치 범위는 디자인 기획에 따라 결정한다. 데이터 fetch 에러처럼 재시도로 복구 가능한 경우 `resetErrorBoundary`를 사용하고([CSR 패턴](./CsrSuspenseErrorBoundary.md) 참고), 원인 불명의 렌더링 에러는 `location.reload()`로 전체 상태를 초기화한다.
+CSR 렌더링 에러는 ErrorBoundary로만 잡을 수 있다. HandledErrorBoundary로 감싸면 에러 발생 영역만 격리되고, 나머지 UI는 정상 동작한다. ErrorBoundary 배치 범위는 디자인 기획에 따라 결정한다.
 
 ```tsx
 function HandledErrorBoundary({children}: PropsWithChildren) {
   return (
     <ErrorBoundary
-      fallbackRender={({error}) => {
+      fallbackRender={({error, resetErrorBoundary}) => {
         const {title, content} = getErrorInfo(error);
-        return <ErrorPageTemplate title={title} content={content} onAction={() => location.reload()} />;
+        return <ErrorPageTemplate title={title} content={content} onAction={resetErrorBoundary} />;
       }}
     >
       {children}
@@ -141,7 +141,7 @@ function HandledErrorBoundary({children}: PropsWithChildren) {
 
 CSR 렌더링 중 throw된 에러를 잡는 최후의 안전망. handleServerSideError에서 throw한 5xx도 여기서 처리.
 
-**주의:** error.tsx의 error는 직렬화된 Error이므로 ApiResponseError 분기에 도달하지 않는다. 항상 기본 메시지("예상치 못한 오류")가 표시된다.
+**주의:** SSR에서 throw된 에러는 서버→클라이언트 직렬화 경계를 넘으므로 ApiResponseError 분기에 도달하지 않는다. CSR에서 throw된 에러는 원본 인스턴스가 그대로 전달되므로 `instanceof` 분기가 정상 동작한다.
 
 ```tsx
 'use client';
