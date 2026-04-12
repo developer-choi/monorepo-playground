@@ -1,9 +1,9 @@
 'use client';
 
-import {useEffect} from 'react';
+import type {CSSProperties} from 'react';
 import {useSuspenseInfiniteQuery} from '@tanstack/react-query';
-import {useWindowVirtualizer} from '@tanstack/react-virtual';
 import {boardQueries} from '../queries';
+import {useInfiniteScroll} from '../hooks/useInfiniteScroll';
 import BoardCard from './BoardCard';
 import BoardCardSkeleton from './BoardCardSkeleton';
 import HandledErrorBoundary from '@/shared/error/handler/HandledErrorBoundary';
@@ -23,19 +23,10 @@ function BoardList() {
   );
   const boards = data.pages.flatMap((page) => page.list);
 
-  const rowCount = Math.ceil(boards.length / COLUMN_COUNT);
-
-  const virtualizer = useWindowVirtualizer({
-    count: rowCount,
-    estimateSize: () => ESTIMATED_ROW_HEIGHT,
-    overscan: 5,
-  });
-
-  const virtualRows = virtualizer.getVirtualItems();
-
-  useInfiniteScrollTrigger({
-    virtualRows,
-    rowCount,
+  const {virtualizer, virtualRows} = useInfiniteScroll({
+    itemCount: boards.length,
+    columnCount: COLUMN_COUNT,
+    estimatedRowHeight: ESTIMATED_ROW_HEIGHT,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -48,6 +39,7 @@ function BoardList() {
         <p className={styles.message}>게시글이 없습니다.</p>
       ) : (
         <>
+          {/* eslint-disable no-restricted-syntax -- virtualizer 동적 값 */}
           <div className={styles.virtualContainer} style={{height: virtualizer.getTotalSize()}}>
             {virtualRows.map((virtualRow) => {
               const startIndex = virtualRow.index * COLUMN_COUNT;
@@ -56,9 +48,9 @@ function BoardList() {
               return (
                 <div
                   key={virtualRow.key}
-                  data-index={virtualRow.index}
                   ref={virtualizer.measureElement}
                   className={styles.virtualRow}
+                  data-index={virtualRow.index}
                   style={{
                     transform: `translateY(${virtualRow.start}px)`,
                   }}
@@ -83,9 +75,8 @@ function BoardList() {
               </div>
             )}
           </div>
-          {isError && (
-            <p className={styles.message}>게시글을 더 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>
-          )}
+          {/* eslint-enable no-restricted-syntax */}
+          {isError && <p className={styles.message}>게시글을 더 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>}
         </>
       )}
     </section>
@@ -107,34 +98,7 @@ export function BoardListSkeleton() {
 const COLUMN_COUNT = 4;
 const SKELETON_COUNT = 24;
 const ESTIMATED_ROW_HEIGHT = 400;
-const columnCountStyle = {
+const columnCountStyle: CSSProperties = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention -- CSS custom property
   '--column-count': COLUMN_COUNT,
-} as React.CSSProperties;
-
-function useInfiniteScrollTrigger({
-  virtualRows,
-  rowCount,
-  fetchNextPage,
-  hasNextPage,
-  isFetchingNextPage,
-  isError,
-}: {
-  virtualRows: {index: number}[];
-  rowCount: number;
-  fetchNextPage: () => Promise<unknown>;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
-  isError: boolean;
-}) {
-  useEffect(() => {
-    const lastItem = virtualRows[virtualRows.length - 1];
-
-    if (!lastItem) {
-      return;
-    }
-
-    if (lastItem.index >= rowCount - 1 && hasNextPage && !isFetchingNextPage && !isError) {
-      void fetchNextPage();
-    }
-  }, [hasNextPage, fetchNextPage, rowCount, isFetchingNextPage, isError, virtualRows]);
-}
+} as CSSProperties;
