@@ -6,6 +6,9 @@
 코드를 직접 포함하면 중복이 생기므로 링크로 분리하는 경우가 있는데, 이때 [CRITICAL]로 표기된 링크는 패턴의 실체이므로 반드시 Read한다.
 그 외 링크(설계 히스토리 등)는 선택 참조.
 
+각 패턴은 해당 주제만큼의 코드를 담고 있으며, 단독으로 완성된 구현이 아니다.
+실제 구현 시에는 관련 패턴을 조합해야 한다. 예: URL [id] 검증은 에러 처리 이원화와 함께 사용해야 검증 실패 시 에러 페이지 흐름이 완성된다.
+
 ## 폴더 구조
 
 ### DDD 기반 폴더 구조
@@ -33,6 +36,20 @@
 - 상황: 디자인 시안에 별도 폰트 지정이 없을 때, Noto Sans KR을 기본 폰트로 적용
 - 코드: docs/patterns/setup/NextRootLayout.md
 
+## 스키마 설계
+
+### 원본 스키마 → CRUD·필터·목록 타입 파생
+
+- 기술스택: zod
+- 상황: 하나의 도메인에서 생성·수정·목록·상세·필터 타입이 파생될 때, 제약(min/max)을 중복 선언하지 않고 .pick/.extend로 동기화
+- 코드: apps/examples/src/validation/integration/README.md
+
+### enum 값·라벨 단일 원천 관리
+
+- 기술스택: zod
+- 상황: enum 값을 Select/Radio 순회, 테이블 라벨 조회, z.enum() 전달에 공유할 때. createLabelMap으로 {value, label}[] 하나에서 세 형태를 파생
+- 코드: apps/examples/src/validation/integration/README.md
+
 ## 폼 핸들링
 
 ### use[...]Form 커스텀 훅
@@ -41,11 +58,31 @@
 - 상황: 폼이 있는 페이지에서 폼 로직을 컴포넌트에서 분리할 때
 - 코드: docs/patterns/form/SomeForm.md
 
-### zod 활용 패턴
+### 폼 제출 검증
 
 - 기술스택: zod + react-hook-form + @hookform/resolvers
-- 상황: 스키마 파생(.pick/.extend), 상수 공유, createLabelMap, 필터 "전체" 처리, zodResolver 연동
+- 상황: zodResolver로 폼 제출 시 스키마 검증. 상수(LIMITS)를 스키마 검증·에러메시지·UI(maxLength)에 공유
 - 코드: apps/examples/src/validation/integration/README.md
+
+### 필터 "전체" 처리
+
+- 기술스택: zod + react-hook-form
+- 상황: 목록 필터에서 "전체" 옵션 처리. Checkbox는 배열로 판단(별도 값 불필요), Select는 'all' 프론트 전용 값 필요 → 필터 폼 타입을 스키마 타입과 분리
+- 코드: apps/examples/src/validation/integration/README.md
+
+## 입력 검증
+
+### URL 동적 세그먼트 ID 검증
+
+- 기술스택: zod + Next.js App Router
+- 상황: [id] params를 string → number 변환 + 검증. 실패 시 NOT_FOUND 페이지로 리다이렉트
+- 코드: apps/examples/src/shared/schema/params.ts
+
+### 쿼리스트링 필드별 개별 검증
+
+- 기술스택: zod + Next.js App Router
+- 상황: searchParams를 스키마로 검증하되, 필드 하나가 실패해도 나머지는 유지(safeParsePartial). string|string[] 정규화 포함
+- 코드: apps/examples/src/shared/utils/zod.ts
 
 ## 렌더링
 
