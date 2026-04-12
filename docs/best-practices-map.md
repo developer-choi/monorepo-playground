@@ -192,6 +192,14 @@
 - 상황: 위 패턴에 snake_case/camelCase 자동 변환(es-toolkit)과 zod 런타임 응답 검증을 추가. 수동 매핑 함수 대신 스키마 기반으로 변환·검증
 - 코드: docs/patterns/api/FetchApiClientZodValidation.md
 
+## 테스팅
+
+### 테스트 코드 작성 패턴
+
+- 기술스택: Vitest + React Testing Library
+- 상황: 테스트 구조(describe/it 네이밍, describe.each), 쿼리(getByRole 우선, 접두사 용도), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문)
+- 코드: docs/patterns/testing/TestWriting.md
+
 ## 쿼리
 
 ### queryOptions / infiniteQueryOptions 팩토리

@@ -1,0 +1,144 @@
+# 테스트 코드 작성 패턴
+
+## 테스트 구조
+
+### 함수 테스트
+
+```typescript
+describe('findKthElement()', () => {
+  describe('General cases', () => {
+    it('k번째로 큰 값을 찾아야 한다', () => {
+      expect(findKthElement([1, 2, 3], 3, 'largest')).toBe(1);
+    });
+  });
+
+  describe('Boundary cases', () => {
+    it('배열 길이가 1이면 항상 그 요소를 반환해야 한다', () => {
+      expect(findKthElement([1], 1, 'largest')).toBe(1);
+    });
+  });
+
+  describe('Edge cases', () => {
+    it('k가 배열 길이보다 크면 에러를 던져야 한다', () => {
+      expect(() => findKthElement([100], 2, 'largest')).toThrow(TypeError);
+    });
+  });
+});
+```
+
+### 컴포넌트 테스트
+
+```typescript
+describe('RecentSearches', () => {
+  describe('General cases', () => {
+    it('저장된 검색어를 클릭하면 해당 검색어로 검색된다', async () => {
+      const keyword = '니트';
+      render(<RecentSearches initialKeywords={[keyword]} />);
+
+      await user.click(screen.getByRole('button', {name: keyword}));
+
+      expect(mockReplace).toHaveBeenCalledWith(`/search?searchText=${encodeURIComponent(keyword)}`);
+    });
+
+    it('검색어가 없으면 빈 상태 메시지가 표시된다', () => {
+      render(<RecentSearches initialKeywords={[]} />);
+
+      expect(screen.getByRole('status')).toBeInTheDocument();
+    });
+  });
+
+  describe('Edge cases', () => {
+    it('삭제 버튼을 누르면 해당 검색어가 목록에서 사라진다', async () => {
+      render(<RecentSearches initialKeywords={['니트']} />);
+
+      await user.click(screen.getByRole('button', {name: /삭제/i}));
+
+      expect(screen.queryByRole('button', {name: '니트'})).not.toBeInTheDocument();
+    });
+  });
+});
+```
+
+### describe.each — 여러 구현체 동시 테스트
+
+```typescript
+const algorithms = [
+  {name: 'Bubble Sort', fn: bubbleSort},
+  {name: 'Selection Sort', fn: selectionSort},
+  {name: 'Quick Sort', fn: quickSort},
+];
+
+describe.each(algorithms)('정렬 알고리즘 > $name', ({fn}) => {
+  it('배열을 오름차순으로 정렬해야 한다', () => {
+    const {output} = fn({value: [3, 1, 2], order: 'asc'});
+    expect(output).toEqual([1, 2, 3]);
+  });
+});
+```
+
+## 쿼리
+
+### getByRole 우선 사용
+
+`getByRole` 외 쿼리 사용 시 사용자에게 보고한다. 워딩은 언제든 바뀔 수 있으므로 문자열에 의존하는 쿼리를 지양한다.
+
+```tsx
+// before (컴포넌트)
+export const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
+<p>{EMPTY_KEYWORDS_MESSAGE}</p>
+
+// before (테스트)
+import {EMPTY_KEYWORDS_MESSAGE} from './RecentSearches';
+expect(screen.getByText(EMPTY_KEYWORDS_MESSAGE)).toBeInTheDocument();
+
+// after (컴포넌트)
+const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
+<p role="status">{EMPTY_KEYWORDS_MESSAGE}</p>
+
+// after (테스트)
+expect(screen.getByRole('status')).toBeInTheDocument();
+```
+
+### 쿼리 접두사 용도
+
+```typescript
+// getBy — 요소가 있어야 한다 (없으면 즉시 실패)
+expect(screen.getByRole('button')).toBeInTheDocument();
+
+// queryBy — 요소가 없음을 검증할 때
+expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+
+// findBy — 비동기로 나타나는 요소를 기다릴 때
+expect(await screen.findByRole('alert')).toBeInTheDocument();
+```
+
+## 데이터 처리
+
+### 매직 스트링 → 케이스 내 로컬 변수
+
+같은 값이 반복되거나 값의 변환이 포함될 때 로컬 변수로 추출한다.
+
+```typescript
+// before
+await user.type(screen.getByRole('searchbox'), '블라우스{enter}');
+expect(mockReplace).toHaveBeenCalledWith('/search?searchText=%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4');
+
+// after
+const keyword = '블라우스';
+await user.type(screen.getByRole('searchbox'), `${keyword}{enter}`);
+expect(mockReplace).toHaveBeenCalledWith(`/search?searchText=${encodeURIComponent(keyword)}`);
+```
+
+### 반복 assertion → 데이터 기반 반복문
+
+```typescript
+// before
+expect(screen.getByRole('button', {name: '니트'})).toBeInTheDocument();
+expect(screen.getByRole('button', {name: '원피스'})).toBeInTheDocument();
+
+// after
+const names = ['니트', '원피스'];
+names.forEach((name) => {
+  expect(screen.getByRole('button', {name})).toBeInTheDocument();
+});
+```
