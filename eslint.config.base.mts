@@ -22,6 +22,7 @@ export const baseRules = {
   '@typescript-eslint/no-unnecessary-condition': 'error',
   'no-console': ['error', {allow: ['warn', 'error']}],
   '@typescript-eslint/restrict-template-expressions': ['error', {allowNullish: false}],
+  '@typescript-eslint/parameter-properties': 'error',
   'max-params': ['error', 2],
   '@typescript-eslint/naming-convention': [
     'error',

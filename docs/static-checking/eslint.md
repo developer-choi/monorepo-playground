@@ -278,7 +278,27 @@ JSX 속성을 알파벳 순으로 정렬합니다. 콜백(on\*)은 마지막, sh
 <Input disabled className={styles.input} type="text" onChange={handleChange} />
 ```
 
-#### 18. `no-restricted-syntax` — 금지 패턴 모음
+#### 18. `@typescript-eslint/parameter-properties` (error)
+
+constructor 파라미터에 접근 제한자를 붙여 필드를 암묵적으로 선언하는 패턴을 금지합니다. 클래스 필드를 명시적으로 선언해야 어떤 프로퍼티가 있는지 한눈에 파악할 수 있습니다.
+
+```typescript
+// ❌
+class ApiClient {
+  constructor(protected readonly baseUrl: string) {}
+}
+
+// ✅
+class ApiClient {
+  protected readonly baseUrl: string;
+
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
+}
+```
+
+#### 19. `no-restricted-syntax` — 금지 패턴 모음
 
 AST 셀렉터로 프로젝트에서 허용하지 않는 패턴을 일괄 금지합니다. 위반 시 `eslint-disable` + 사유 주석으로 예외를 처리합니다.
 
