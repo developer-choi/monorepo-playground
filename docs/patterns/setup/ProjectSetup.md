@@ -44,3 +44,19 @@ AI 에이전트의 작업 계획 파일(`plan/`)과 로컬 설정(`.claude/`)이
 - `@commitlint/config-conventional` 기반
 - `scope-enum`은 채용과제 도메인에 맞게 조정
 - `subject-case: [0]` — 한글 커밋 허용
+
+### 패키지매니저 강제
+
+프로젝트가 사용하는 패키지매니저 외의 도구(npm/yarn/pnpm)로 install을 시도하면 차단되도록 설정한다.
+
+```jsonc
+// package.json
+{
+  "scripts": {
+    "preinstall": "npx only-allow pnpm", // pnpm 프로젝트 예시
+  },
+}
+```
+
+- preinstall 스크립트는 어떤 패키지매니저로 install을 시도하든 먼저 실행되므로, corepack 활성화 여부와 무관하게 차단된다.
+- `packageManager` 필드가 있으면 pnpm/yarn은 자체적으로도 차단하지만, `only-allow`는 `packageManager` 필드가 없는 환경에서도 동작하는 추가 안전장치다.
