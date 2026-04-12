@@ -30,6 +30,12 @@
 - 상황: React 앱에서 여러 라이브러리 Provider 조합 시 순서와 구성. QueryClient 기본 옵션 포함
 - 코드: docs/patterns/setup/ProviderComposition.md
 
+### 컴포넌트 단위테스트 환경
+
+- 기술스택: Vitest + React Testing Library + jsdom + vite-tsconfig-paths
+- 상황: 컴포넌트 단위테스트 환경 구축. 패키지 선택, 설정 파일, 컨벤션(명시적 import, 파일 위치)
+- 코드: docs/patterns/setup/TestSetup.md
+
 ### Next.js Root Layout — Google Fonts
 
 - 기술스택: Next.js App Router + next/font/google
