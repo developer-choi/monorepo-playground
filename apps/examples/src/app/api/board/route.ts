@@ -26,6 +26,11 @@ export async function GET(request: NextRequest) {
     filtered = filtered.filter((item) => tagList.some((tag) => item.tag_list?.includes(tag)));
   }
 
+  // 정렬 (최신순)
+  filtered = filtered.toSorted(
+    (left, right) => new Date(right.created_at).getTime() - new Date(left.created_at).getTime(),
+  );
+
   // 페이지네이션
   const page = Math.max(1, Number(sp.get('page')) || 1);
   const limit = Math.min(MAX_PAGE_LIMIT, Math.max(1, Number(sp.get('limit')) || DEFAULT_PAGE_LIMIT));

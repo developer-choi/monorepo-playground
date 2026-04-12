@@ -37,7 +37,7 @@ function SearchForm() {
           placeholder="검색어를 입력하세요."
           size="3"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(event) => setQuery(event.target.value)}
         >
           <TextField.Slot>
             <MagnifyingGlassIcon />
@@ -67,8 +67,8 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
 
   return (
     <Box>
-      {results.map((result, i) => (
-        <Card key={i} mb="2">
+      {results.map((result, index) => (
+        <Card key={index} mb="2">
           <Box p="3">
             <Text>
               <Highlight query={query} text={result} />
@@ -107,13 +107,13 @@ function Highlight({text, query}: {text: string; query: string}) {
   return (
     <>
       {/* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */}
-      {parts.map((part, i) =>
+      {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <Text key={i} style={{backgroundColor: 'var(--yellow-4)'}} weight="bold">
+          <Text key={index} style={{backgroundColor: 'var(--yellow-4)'}} weight="bold">
             {part}
           </Text>
         ) : (
-          <span key={i}>{part}</span>
+          <span key={index}>{part}</span>
         ),
       )}
       {/* eslint-enable no-restricted-syntax */}

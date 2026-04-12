@@ -20,14 +20,19 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
         <ChevronLeftIcon />
       </Button>
 
-      {getPageNumbers(page, totalPages).map((p, i) =>
-        p === '...' ? (
-          <Text key={`ellipsis-${i}`} color="gray" mx="1" size="2">
+      {getPageNumbers(page, totalPages).map((pageNum, index) =>
+        pageNum === '...' ? (
+          <Text key={`ellipsis-${index}`} color="gray" mx="1" size="2">
             ...
           </Text>
         ) : (
-          <Button key={p} size="1" variant={p === page ? 'solid' : 'soft'} onClick={() => onPageChange(p)}>
-            {p}
+          <Button
+            key={pageNum}
+            size="1"
+            variant={pageNum === page ? 'solid' : 'soft'}
+            onClick={() => onPageChange(pageNum)}
+          >
+            {pageNum}
           </Button>
         ),
       )}
@@ -42,8 +47,8 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
 function getPageNumbers(current: number, total: number): (number | '...')[] {
   if (total <= MAX_PAGES_NO_ELLIPSIS) {
     const pages: number[] = [];
-    for (let i = 1; i <= total; i++) {
-      pages.push(i);
+    for (let num = 1; num <= total; num++) {
+      pages.push(num);
     }
     return pages;
   }

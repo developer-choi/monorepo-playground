@@ -23,6 +23,7 @@ export const baseRules = {
   'no-console': ['error', {allow: ['warn', 'error']}],
   '@typescript-eslint/restrict-template-expressions': ['error', {allowNullish: false}],
   '@typescript-eslint/parameter-properties': 'error',
+  'id-length': ['error', {min: 2}],
   'max-params': ['error', 2],
   '@typescript-eslint/naming-convention': [
     'error',
@@ -84,6 +85,10 @@ export const baseRules = {
     {
       selector: "JSXElement > JSXOpeningElement[name.name='svg']",
       message: 'SVG 직접 작성 금지. 아이콘 컴포넌트나 SVG 파일로 분리하세요.',
+    },
+    {
+      selector: 'TSTypeReference > TSQualifiedName[left.name="React"]',
+      message: 'React.X 대신 import { X } from "react"를 사용하세요.',
     },
   ],
 };

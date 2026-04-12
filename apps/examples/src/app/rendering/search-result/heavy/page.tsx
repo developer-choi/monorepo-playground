@@ -47,7 +47,7 @@ function LeftBadUsage() {
           mb="4"
           placeholder="타이핑해보면 렉이 아주 심하게 걸립니다."
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(event) => setText(event.target.value)}
         />
 
         <SlowList text={text} />
@@ -71,7 +71,7 @@ function RightGoodUsage() {
           mb="4"
           placeholder="타이핑 해도 렉이 걸리지 않아요"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(event) => setText(event.target.value)}
         />
 
         <SlowList text={deferredText} />
@@ -82,8 +82,8 @@ function RightGoodUsage() {
 
 const SlowList = memo(function SlowList({text}: {text: string}) {
   const items = [];
-  for (let i = 0; i < SLOW_LIST_ITEM_COUNT; i++) {
-    items.push(<SlowItem key={i} text={text} />);
+  for (let index = 0; index < SLOW_LIST_ITEM_COUNT; index++) {
+    items.push(<SlowItem key={index} text={text} />);
   }
 
   return <Box>{items}</Box>;

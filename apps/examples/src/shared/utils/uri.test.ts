@@ -5,33 +5,35 @@ import {buildUrlWithQuery} from './url';
 describe('buildUrlWithQuery()', () => {
   describe('undefined', () => {
     it('should not include keys with undefined values in the result', () => {
-      expect(buildUrlWithQuery({pathname: PATHNAME, params: {a: undefined}})).toBe(PATHNAME);
+      expect(buildUrlWithQuery({pathname: PATHNAME, params: {key: undefined}})).toBe(PATHNAME);
     });
   });
 
   describe('skipNullish', () => {
     it('should not include keys with null values in the result by default', () => {
-      expect(buildUrlWithQuery({pathname: PATHNAME, params: {a: null}})).toBe(PATHNAME);
+      expect(buildUrlWithQuery({pathname: PATHNAME, params: {key: null}})).toBe(PATHNAME);
     });
 
     it('should include keys with null values in the result when skipNullish: false', () => {
-      expect(buildUrlWithQuery({pathname: PATHNAME, params: {a: null}, skipNullish: false})).toBe('/path?a');
+      expect(buildUrlWithQuery({pathname: PATHNAME, params: {key: null}, skipNullish: false})).toBe('/path?key');
     });
   });
 
   describe('skipEmptyString', () => {
     it('should not include keys with empty string values in the result by default', () => {
-      expect(buildUrlWithQuery({pathname: PATHNAME, params: {a: ''}})).toBe(PATHNAME);
+      expect(buildUrlWithQuery({pathname: PATHNAME, params: {key: ''}})).toBe(PATHNAME);
     });
 
     it('should include keys with empty string values in the result when skipEmptyString: false', () => {
-      expect(buildUrlWithQuery({pathname: PATHNAME, params: {a: ''}, skipEmptyString: false})).toBe(`${PATHNAME}?a=`);
+      expect(buildUrlWithQuery({pathname: PATHNAME, params: {key: ''}, skipEmptyString: false})).toBe(
+        `${PATHNAME}?key=`,
+      );
     });
   });
 
   describe('no query', () => {
     it('should return only the pathname without trailing ? when all values are filtered out', () => {
-      expect(buildUrlWithQuery({pathname: PATHNAME, params: {a: null, b: undefined, c: ''}})).toBe(PATHNAME);
+      expect(buildUrlWithQuery({pathname: PATHNAME, params: {key: null, other: undefined, extra: ''}})).toBe(PATHNAME);
     });
   });
 });

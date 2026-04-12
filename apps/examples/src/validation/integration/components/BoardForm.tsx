@@ -82,7 +82,7 @@ export default function BoardForm({board}: BoardFormProps) {
         {isEdit ? '글 수정' : '새 글 작성'}
       </Heading>
       <Card size="3">
-        <form onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
+        <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
           <Flex direction="column" gap="5">
             <Box>
               {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
@@ -234,10 +234,10 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
           maxLength={BOARD_LIMITS.tagList.maxLength}
           placeholder="태그 입력 후 Enter"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
+          onChange={(event) => setInput(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
               addTag();
             }
           }}
@@ -254,7 +254,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
             <Box
               asChild
               style={{cursor: 'pointer', marginLeft: 4}}
-              onClick={() => onChange(value.filter((t) => t !== tag))}
+              onClick={() => onChange(value.filter((item) => item !== tag))}
             >
               <Cross2Icon height={12} width={12} />
             </Box>

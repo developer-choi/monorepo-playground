@@ -20,7 +20,7 @@ function formatResult(result: ReturnType<typeof z.safeParse>) {
   if (result.success) {
     return {ok: true, value: JSON.stringify(result.data)};
   }
-  const msgs = result.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`);
+  const msgs = result.error.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`);
   return {ok: false, value: msgs.join(', ')};
 }
 

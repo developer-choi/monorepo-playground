@@ -298,7 +298,25 @@ class ApiClient {
 }
 ```
 
-#### 19. `no-restricted-syntax` — 금지 패턴 모음
+#### 19. `id-length` (min: 2)
+
+1글자 식별자를 금지합니다. 예외 없이 모든 변수, 파라미터, 프로퍼티에 2글자 이상을 요구합니다.
+
+```typescript
+// ❌
+const e = event.target;
+array.forEach((v) => console.log(v));
+array.sort((a, b) => a - b);
+for (let i = 0; i < 10; i++) { ... }
+
+// ✅
+const target = event.target;
+array.forEach((value) => console.log(value));
+array.sort((left, right) => left - right);
+for (let index = 0; index < 10; index++) { ... }
+```
+
+#### 20. `no-restricted-syntax` — 금지 패턴 모음
 
 AST 셀렉터로 프로젝트에서 허용하지 않는 패턴을 일괄 금지합니다. 위반 시 `eslint-disable` + 사유 주석으로 예외를 처리합니다.
 
@@ -373,6 +391,19 @@ SVG를 JSX에 직접 작성하면 번들 크기가 커지고 재사용이 어렵
 // ✅
 import {CheckIcon} from '@radix-ui/react-icons';
 <CheckIcon height={24} width={24} />;
+```
+
+**`React.X` 네임스페이스 접근 금지** (`TSTypeReference > TSQualifiedName[left.name="React"]`)
+
+`React.FormEvent` 같은 네임스페이스 접근 대신 `import { FormEvent } from 'react'`로 named import를 사용합니다.
+
+```typescript
+// ❌
+function handleSubmit(event: React.FormEvent<HTMLFormElement>) { ... }
+
+// ✅
+import {type FormEvent} from 'react';
+function handleSubmit(event: FormEvent<HTMLFormElement>) { ... }
 ```
 
 ### 워크스페이스별 추가 규칙

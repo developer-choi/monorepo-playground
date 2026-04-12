@@ -84,10 +84,10 @@ const UpdateBoardSchema = BoardOriginalSchema.pick({id: true}).extend({
   boardType: boardTypeEnum.nullable(), // 백엔드에서 의도적으로 빈값이 아닌 null을 보내달라고 요구하는 경우 nullable로 대응
 });
 
-const stringOrStringArray = z.union([z.string().transform((s) => [s]), z.array(z.string())]);
+const stringOrStringArray = z.union([z.string().transform((val) => [val]), z.array(z.string())]);
 
 export const BoardListFilterSchema = BoardOriginalSchema.pick({postTitle: true, category: true}).extend({
-  boardType: z.union([boardTypeEnum.transform((s) => [s]), z.array(boardTypeEnum)]),
+  boardType: z.union([boardTypeEnum.transform((val) => [val]), z.array(boardTypeEnum)]),
   tagList: stringOrStringArray,
 });
 

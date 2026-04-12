@@ -8,5 +8,5 @@ interface MutationState {
  * isSuccess 시점에 로딩을 풀면 사용자가 재클릭할 수 있고, 이동 전 UI가 순간 복구되어 어색합니다.
  */
 export function isMutationSettling(...mutations: MutationState[]) {
-  return mutations.some((m) => m.isPending || m.isSuccess);
+  return mutations.some((mutation) => mutation.isPending || mutation.isSuccess);
 }
