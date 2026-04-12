@@ -33,17 +33,22 @@ function BoardList() {
     isError,
   });
 
+  const virtualContainerStyle: CSSProperties = {height: virtualizer.getTotalSize()};
+  const skeletonRowStyle: CSSProperties = {transform: `translateY(${virtualizer.getTotalSize()}px)`};
+
   return (
     <section className={styles.container} style={columnCountStyle}>
       {boards.length === 0 ? (
         <p className={styles.message}>게시글이 없습니다.</p>
       ) : (
         <>
-          {/* eslint-disable no-restricted-syntax -- virtualizer 동적 값 */}
-          <div className={styles.virtualContainer} style={{height: virtualizer.getTotalSize()}}>
+          <div className={styles.virtualContainer} style={virtualContainerStyle}>
             {virtualRows.map((virtualRow) => {
               const startIndex = virtualRow.index * COLUMN_COUNT;
               const rowBoards = boards.slice(startIndex, startIndex + COLUMN_COUNT);
+              const rowStyle: CSSProperties = {
+                transform: `translateY(${virtualRow.start}px)`,
+              };
 
               return (
                 <div
@@ -51,9 +56,7 @@ function BoardList() {
                   ref={virtualizer.measureElement}
                   className={styles.virtualRow}
                   data-index={virtualRow.index}
-                  style={{
-                    transform: `translateY(${virtualRow.start}px)`,
-                  }}
+                  style={rowStyle}
                 >
                   {rowBoards.map((board) => (
                     <BoardCard key={board.id} board={board} />
@@ -63,19 +66,13 @@ function BoardList() {
             })}
 
             {isFetchingNextPage && (
-              <div
-                className={styles.virtualRow}
-                style={{
-                  transform: `translateY(${virtualizer.getTotalSize()}px)`,
-                }}
-              >
+              <div className={styles.virtualRow} style={skeletonRowStyle}>
                 {Array.from({length: SKELETON_COUNT}, (_unused, index) => (
                   <BoardCardSkeleton key={index} />
                 ))}
               </div>
             )}
           </div>
-          {/* eslint-enable no-restricted-syntax */}
           {isError && <p className={styles.message}>게시글을 더 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>}
         </>
       )}
