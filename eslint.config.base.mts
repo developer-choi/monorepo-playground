@@ -78,9 +78,9 @@ export const baseRules = {
       message: '<button> 직접 사용 금지. 공통 Button 컴포넌트를 사용하세요.',
     },
     {
-      selector: "JSXAttribute[name.name='style']",
+      selector: "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
       message:
-        '인라인 스타일 금지. CSS Modules를 사용하세요. 예외: 동적 값·CSS 변수 주입·스켈레톤. 이 외의 경우 사용자에게 허락을 구하세요. — eslint-disable + 사유 주석으로 처리.',
+        '인라인 스타일 객체 리터럴 금지. CSS Modules를 사용하세요. 변수 참조는 허용. 예외: 동적 값·CSS 변수 주입·스켈레톤. — eslint-disable + 사유 주석으로 처리.',
     },
     {
       selector: "JSXElement > JSXOpeningElement[name.name='svg']",

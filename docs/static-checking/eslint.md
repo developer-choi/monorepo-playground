@@ -365,17 +365,21 @@ import {Button} from '@monorepo-playground/design-system';
 <Button onClick={handleClick}>저장</Button>;
 ```
 
-**인라인 스타일 금지** (`JSXAttribute[name.name='style']`)
+**인라인 스타일 객체 리터럴 금지** (`JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression`)
 
-인라인 스타일은 CSS Modules로 분리합니다. 동적 값, CSS 변수 주입, 스켈레톤은 예외로 허용하며, 이 외의 경우 `eslint-disable` + 사유 주석으로 처리합니다.
+인라인 스타일 객체 리터럴(`style={{...}}`)은 CSS Modules로 분리합니다. 변수 참조(`style={someVar}`)는 허용합니다. 동적 값, CSS 변수 주입, 스켈레톤은 예외로 허용하며, 이 외의 경우 `eslint-disable` + 사유 주석으로 처리합니다.
 
 ```tsx
-// ❌
+// ❌ 객체 리터럴
 <div style={{color: 'red', marginTop: 8}}>텍스트</div>;
 
-// ✅
+// ✅ CSS Modules
 import styles from './Component.module.scss';
 <div className={styles.title}>텍스트</div>;
+
+// ✅ 변수 참조 — 린트에 걸리지 않음
+const columnCountStyle: CSSProperties = {'--column-count': 4} as CSSProperties;
+<section style={columnCountStyle}>...</section>;
 ```
 
 **SVG 직접 작성 금지** (`JSXElement > JSXOpeningElement[name.name='svg']`)
