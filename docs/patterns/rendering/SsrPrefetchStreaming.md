@@ -46,6 +46,10 @@ async function PrefetchedProductList() {
 }
 ```
 
+## 주의: prefetch와 클라이언트의 queryKey 일치
+
+prefetchQuery에 전달하는 options와 클라이언트 useSuspenseQuery의 options가 동일해야 한다. queryKey가 다르면 서버 캐시를 클라이언트가 못 쓰고 다시 요청한다. queryOptions 팩토리를 공유하면 자연스럽게 일치한다 ([QueryOptionsFactory](../query/QueryOptionsFactory.md) 참고).
+
 ## Client Component
 
 'use client' 컴포넌트지만 서버에서 prefetch된 데이터를 HydrationBoundary로 주입받아 SSR 이점 유지.
