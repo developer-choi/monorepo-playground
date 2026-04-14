@@ -24,10 +24,15 @@
 - 상황: 채용과제·사이드 프로젝트 초기 세팅
 - 코드: docs/patterns/setup/ProjectSetup.md
 
+### reset.css
+
+- 상황: 채용과제 프로젝트에 reset.css 추가. 브라우저 기본 스타일 제거 + 폼 요소·input 타입별 초기화·box-sizing 등 커스텀 리셋 포함
+- 코드: docs/patterns/setup/ResetCss.md
+
 ### Provider Composition
 
 - 기술스택: @tanstack/react-query + @radix-ui/themes + overlay-kit + sonner
-- 상황: React 앱에서 여러 라이브러리 Provider 조합 시 순서와 구성. QueryClient 기본 옵션 포함
+- 상황: React 앱에서 여러 라이브러리 Provider 조합 시 순서와 구성. QueryClient 기본 옵션 포함. reset.css import 포함
 - 코드: docs/patterns/setup/ProviderComposition.md
 
 ### 컴포넌트 단위테스트 환경
