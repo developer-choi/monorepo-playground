@@ -40,7 +40,7 @@
 
 아래는 버그 방지 목적으로 추가한 옵션입니다.
 
-### 20. `noUncheckedIndexedAccess`
+### `noUncheckedIndexedAccess`
 
 배열이나 객체의 인덱스 접근 시 반환 타입에 `| undefined`를 자동으로 추가합니다.
 
@@ -56,7 +56,7 @@ if (first) {
 }
 ```
 
-### 21. `noFallthroughCasesInSwitch`
+### `noFallthroughCasesInSwitch`
 
 switch 문에서 break/return 없이 다음 케이스로 떨어지는 것을 방지합니다.
 

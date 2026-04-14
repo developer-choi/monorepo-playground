@@ -37,8 +37,8 @@ ESLint가 TypeScript 코드를 검사하듯, Stylelint는 SCSS 파일의 문법 
 
 처음에는 `stylelint-declaration-strict-value`의 두 가지 한계 때문에 커스텀 Stylelint 플러그인(JS)을 직접 작성했습니다.
 
-1. **`ignoreFunctions` all-or-nothing** — `false`로 설정하면 `rgb()`뿐 아니라 `calc()`, `clamp()`, `min()`, `max()`까지 모두 차단됩니다. 색상 함수만 선별 차단할 수 없습니다
-2. **longhand 없는 shorthand 미분해** — `box-shadow`, `text-shadow`는 대응하는 longhand가 없어서 `expandShorthand`가 작동하지 않습니다. 첫 토큰만 검사하고 나머지(rgba, named color 등)는 통과합니다
+- **`ignoreFunctions` all-or-nothing** — `false`로 설정하면 `rgb()`뿐 아니라 `calc()`, `clamp()`, `min()`, `max()`까지 모두 차단됩니다. 색상 함수만 선별 차단할 수 없습니다
+- **longhand 없는 shorthand 미분해** — `box-shadow`, `text-shadow`는 대응하는 longhand가 없어서 `expandShorthand`가 작동하지 않습니다. 첫 토큰만 검사하고 나머지(rgba, named color 등)는 통과합니다
 
 커스텀 플러그인은 `postcss-value-parser`로 모든 토큰을 개별 순회하여 이 문제를 해결했으나, JS 파일 직접 관리 부담이 발생했습니다. npm 정식 플러그인으로 전환하고 shadow 속성의 한계는 수용하기로 결정했습니다.
 

@@ -9,7 +9,7 @@
 
 ## 소스
 
-### 1. Kent C. Dodds - "Avoid the Test User"
+### Kent C. Dodds - "Avoid the Test User"
 
 - https://kentcdodds.com/blog/avoid-the-test-user
 
@@ -17,7 +17,7 @@
 
 > "Writing tests that include implementation details is all downside and no upside."
 
-### 2. Kent C. Dodds - "Testing Implementation Details"
+### Kent C. Dodds - "Testing Implementation Details"
 
 - https://kentcdodds.com/blog/testing-implementation-details
 
@@ -30,7 +30,7 @@
 
 > Implementation details are "things which users of your code will not typically use, see, or even know about."
 
-### 3. Kent C. Dodds - "Write tests. Not too many. Mostly integration."
+### Kent C. Dodds - "Write tests. Not too many. Mostly integration."
 
 - https://kentcdodds.com/blog/write-tests
 
@@ -40,7 +40,7 @@
 
 > "As you move up the pyramid, the confidence quotient of each form of testing increases."
 
-### 4. Kent C. Dodds - "How to Know What to Test"
+### Kent C. Dodds - "How to Know What to Test"
 
 - https://kentcdodds.com/blog/how-to-know-what-to-test
 
@@ -48,7 +48,7 @@
 
 > "What part of this app would make me most upset if it were broken?"
 
-### 5. Google Testing Blog - "Change-Detector Tests Considered Harmful"
+### Google Testing Blog - "Change-Detector Tests Considered Harmful"
 
 - https://testing.googleblog.com/2015/01/testing-on-toilet-change-detector-tests.html
 
@@ -56,7 +56,7 @@
 
 > "A correct or incorrect program is equally likely to pass."
 
-### 6. Google Testing Blog - "Test Behavior, Not Implementation"
+### Google Testing Blog - "Test Behavior, Not Implementation"
 
 - https://testing.googleblog.com/2013/08/testing-on-toilet-test-behavior-not.html
 
@@ -64,7 +64,7 @@
 
 > "There are many cases where you do want to test implementation details (e.g. you want to ensure that your implementation reads from a cache instead of from a datastore), but this should be less common."
 
-### 7. Justin Searls (via Martin Fowler)
+### Justin Searls (via Martin Fowler)
 
 - https://martinfowler.com/articles/2021-test-shapes.html
 
