@@ -159,6 +159,12 @@
 - 상황: SSR은 handleServerSideError (4xx → 에러 페이지, 5xx → error.tsx), CSR은 useHandleClientSideError (overlay/toast)
 - 코드: docs/patterns/rendering/ErrorHandling.md
 
+### React Compiler — 수동 메모이제이션 금지
+
+- 기술스택: React Compiler (Next.js `reactCompiler: true` / Vite·Babel `babel-plugin-react-compiler`)
+- 상황: 컴파일러 활성 프로젝트에서 `useCallback`·`useMemo`·`React.memo`를 수동으로 쓰지 않는다. 예외는 컴파일러 미적용 서드파티 컴포넌트 래핑, 커스텀 비교 함수 필요 시
+- 코드: docs/patterns/rendering/ReactCompilerManualMemoization.md
+
 ## 스켈레톤
 
 ### 실제 클래스 재사용
