@@ -212,3 +212,11 @@
 - 기술스택: TanStack Query v5
 - 상황: queryKey + queryFn을 팩토리 객체로 중앙화. useSuspenseQuery, prefetchQuery, invalidateQueries에서 동일 옵션 재사용
 - 코드: docs/patterns/query/QueryOptionsFactory.md
+
+## 접근성 / 시맨틱
+
+### 시맨틱 마크업 — a/Link, form 요소 선택
+
+- 기술스택: Next.js(Link) + 기본 HTML
+- 상황: 페이지 이동 UI에 `<a>`/`<Link>` + `href`를 사용(버튼·div + onClick 금지). 입력 영역은 `<form>`/`<fieldset>`/`<legend>`/`<input>`/`<label>`로 구성하여 키보드·스크린 리더·브라우저 기본 동작과 호환되게 한다
+- 코드: docs/patterns/accessibility/SemanticElements.md
