@@ -188,7 +188,7 @@
 ### ApiClient + ApiResponseError — 수동 매핑
 
 - 기술스택: ApiClient (자체 추상화) + ApiResponseError + query-string
-- 상황: HTTP 라이브러리(fetch, ky, axios)에 의존하지 않는 API 호출 계층. ApiClient로 라이브러리 교체를 호출부와 분리하고, 4xx/5xx·네트워크 에러를 ApiResponseError/ApiRequestError로 정규화. API 함수/타입 네이밍 컨벤션과 query-string 기반 쿼리스트링 처리 포함
+- 상황: HTTP 라이브러리(fetch, ky, axios)에 의존하지 않는 API 호출 계층. ApiClient로 라이브러리 교체를 호출부와 분리하고, 4xx/5xx·네트워크 에러를 ApiResponseError/ApiRequestError로 정규화. API 함수/타입 네이밍 컨벤션, Response.data 반환 원칙, query-string 기반 쿼리스트링 처리 포함
 - 코드: docs/patterns/api/FetchApiClientUsage.md
 
 ### ApiClient + ApiResponseError — es-toolkit + zod 검증

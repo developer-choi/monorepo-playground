@@ -39,6 +39,32 @@ interface GetBoardListApiRequest {}
 interface GetBoardListApiResponse {}
 ```
 
+## Response.data 반환 원칙
+
+API 호출 함수는 Response 객체를 그대로 반환하지 않고, 반드시 **데이터(JSON 등)를 추출하여 반환**합니다. 원시 fetch를 쓰든 ApiClient를 쓰든 동일합니다.
+
+- React Query 사용 시, `status`나 `headers` 같은 불필요한 메타 데이터가 상태(`data`)에 저장되는 실수를 방지합니다.
+- ApiClient 구현체는 내부에서 `response.json()`을 수행하여 `data`만 돌려주므로, 호출부는 항상 데이터를 받습니다.
+
+```typescript
+// ❌ Bad — fetch Response 객체가 그대로 반환됨
+export function getUserApi() {
+  return fetch('/api/users/me');
+}
+
+// ✅ Good — JSON 추출 후 반환
+export async function getUserApi() {
+  const response = await fetch('/api/users/me');
+  const data: GetUserApiResponse = await response.json();
+  return data;
+}
+
+// ✅ Good — ApiClient 사용 시에도 동일 원칙 (ApiClient가 내부에서 추출)
+export function getUserApi() {
+  return apiClient.get<GetUserApiResponse>('/api/users/me');
+}
+```
+
 ## 쿼리스트링은 query-string 라이브러리로 통일합니다
 
 API 호출과 페이지 이동 모두 객체를 쿼리스트링으로 변환해야 합니다.
