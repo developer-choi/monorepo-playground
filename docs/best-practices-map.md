@@ -226,3 +226,11 @@
 - 기술스택: Next.js(Link) + 기본 HTML
 - 상황: 페이지 이동 UI에 `<a>`/`<Link>` + `href`를 사용(버튼·div + onClick 금지). 입력 영역은 `<form>`/`<fieldset>`/`<legend>`/`<input>`/`<label>`로 구성하여 키보드·스크린 리더·브라우저 기본 동작과 호환되게 한다
 - 코드: docs/patterns/accessibility/SemanticElements.md
+
+## 오버레이
+
+### overlay-kit 기반 모달 / 다이얼로그
+
+- 기술스택: overlay-kit
+- 상황: 모달·다이얼로그·Alert를 `useState` boolean 대신 `overlay.open`/`overlay.openAsync`로 명령형 호출. 결과값이 필요하면 `openAsync`로 Promise를 await. OverlayProvider는 ProviderComposition에서 세팅
+- 코드: docs/patterns/overlay/OverlayKitModal.md
