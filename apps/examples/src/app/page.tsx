@@ -1,7 +1,6 @@
-import {Badge, Card, Container, Flex, Heading, Link, Text} from '@radix-ui/themes';
+import {Container, Flex, Heading, Link, Text} from '@radix-ui/themes';
 import {ExternalLinkIcon, GitHubLogoIcon} from '@radix-ui/react-icons';
-import NextLink from 'next/link';
-import styles from './page.module.scss';
+import LinkCardGrid, {type LinkCardItem} from '@/shared/components/LinkCardGrid';
 
 export default function Home() {
   return (
@@ -25,38 +24,7 @@ export default function Home() {
         </Flex>
       </Flex>
 
-      <div className={styles.grid}>
-        {ITEMS.map((item) => {
-          const isExternal = item.href.startsWith('http');
-          const card = (
-            <Card className={styles.card} size="3">
-              <Flex direction="column" gap="3">
-                <Heading size="4">{item.title}</Heading>
-                <Text as="p" color="gray" size="2">
-                  {item.description}
-                </Text>
-                <Flex gap="2" wrap="wrap">
-                  {item.keywords.map((keyword) => (
-                    <Badge key={keyword} variant="soft">
-                      {keyword}
-                    </Badge>
-                  ))}
-                </Flex>
-              </Flex>
-            </Card>
-          );
-
-          return isExternal ? (
-            <a key={item.href} className={styles.cardLink} href={item.href} rel="noopener noreferrer" target="_blank">
-              {card}
-            </a>
-          ) : (
-            <NextLink key={item.href} className={styles.cardLink} href={item.href}>
-              {card}
-            </NextLink>
-          );
-        })}
-      </div>
+      <LinkCardGrid items={ITEMS} />
     </Container>
   );
 }
@@ -64,7 +32,7 @@ export default function Home() {
 const GITHUB_URL = 'https://github.com/developer-choi/monorepo-playground';
 const DESIGN_SYSTEM_URL = 'https://design-system-eta-six.vercel.app/';
 
-const ITEMS = [
+const ITEMS: LinkCardItem[] = [
   {
     title: '무한스크롤 게시판',
     href: '/rendering/infinite-scroll',
@@ -92,5 +60,11 @@ const ITEMS = [
     description:
       '타입 선언과 유효성 검증을 하나의 스키마로 통합하고, 원본 스키마에서 용도별 타입을 파생하는 패턴을 다룹니다.',
     keywords: ['Zod', '스키마 파생', '폼 연동', 'API 검증'],
+  },
+  {
+    title: '폼 베스트 프랙티스',
+    href: '/form',
+    description: '실무에서 반복되는 폼 핸들링 패턴 — 자동 포커스, trim 유효성검증, 에러 피드백 등을 다룹니다.',
+    keywords: ['Form', 'Validation', 'UX'],
   },
 ];
