@@ -99,6 +99,12 @@
 - 상황: URL 쿼리스트링에서 같은 키가 값 1개면 string, 여러 개면 string[]로 파싱될 때. z.union + transform으로 항상 배열로 통일
 - 코드: docs/patterns/validation/ZodFormFilter.md
 
+### 폼 중심 페이지 자동 포커스
+
+- 기술스택: HTML autoFocus
+- 상황: `<input>`/`<textarea>`를 만들어야 하는데 autoFocus를 쓸지 판단해야 하는 경우
+- 코드: docs/patterns/form/AutoFocus.md
+
 ## 입력 검증
 
 ### URL 동적 세그먼트 ID 검증
