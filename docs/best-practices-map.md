@@ -202,6 +202,11 @@
 
 ## 테스팅
 
+### 테스트 대상·레벨 판단
+
+- 상황: 테스트를 쓰기 전 "무엇을 왜" 먼저 결정. 구현 세부사항 금지, Integration 우선, ApiClient 계약 테스트 제거·유지 기준
+- 코드: docs/patterns/testing/WhatToTest.md
+
 ### 테스트 코드 작성 패턴
 
 - 기술스택: Vitest + React Testing Library
