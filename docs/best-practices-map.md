@@ -1,5 +1,7 @@
 # Best Practices Map
 
+> 이 파일을 수정하기 전에 [`./meta/placement.md`](./meta/placement.md)를 읽는다. 추가하려는 내용이 KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
+
 ## 폴더 구조
 
 ### DDD 기반 폴더 구조

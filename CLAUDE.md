@@ -6,20 +6,9 @@
 
 각 패턴은 해당 주제만큼의 코드를 담고 있으며, 단독으로 완성된 구현이 아니다. 실제 구현 시에는 관련 패턴을 조합해야 한다. 예: URL `[id]` 검증은 에러 처리 이원화와 함께 사용해야 검증 실패 시 에러 페이지 흐름이 완성된다.
 
-### 작성 범위 — AI 지침 한정
+### 콘텐츠 배치 정책
 
-`docs/patterns/`와 `docs/best-practices-map.md`는 AI가 코드를 쓸 때 참조하는 지침이다. 배경·원문·방법론은 KA(`knowledge-archive`)로 위임한다.
-
-패턴 문서에 넣지 않는 것:
-
-- 규칙의 근거·이론 설명 (why, false negative/positive 같은 논리)
-- 1차 소스 URL 목록 (Fowler, Kent C. Dodds 등 외부 원문)
-- 학습용 방법론 (예: "테스트 대상 결정 5단계" 같은 프로세스)
-- 섹션마다 달리는 "출처: knowledge/..." 각주
-- 배경 도입부, 연결 문장, 풍성한 설명
-- 패턴 간 상호 참조 ("관련: TestWriting.md" 같은 링크 섹션) — best-practices-map.md가 전담
-
-패턴 문서에는 판단 기준·규칙·MP 고유 코드/사례만 남긴다. 근거가 KA에 있으면 파일 맨 아래에 `배경: KA knowledge/<경로>` 한 줄로만 남긴다.
+`docs/patterns/`, `docs/best-practices-map.md`를 수정하기 전에 [`docs/meta/placement.md`](docs/meta/placement.md)를 읽는다. KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
 
 ### 코드 복사 금지
 
