@@ -54,6 +54,25 @@ export const baseRules = {
       reservedFirst: true,
     },
   ],
+  'no-restricted-imports': [
+    'error',
+    {
+      paths: [
+        {
+          name: 'react',
+          importNames: ['forwardRef'],
+          message:
+            'forwardRef 사용 금지. React 19부터 함수 컴포넌트가 ref를 일반 prop으로 받습니다. 예: function Input({ref, ...props}: ComponentProps<"input">) { return <input ref={ref} {...props} />; }',
+        },
+        {
+          name: 'react',
+          importNames: ['ComponentPropsWithoutRef', 'ComponentPropsWithRef'],
+          message:
+            'ComponentPropsWithoutRef·ComponentPropsWithRef 사용 금지. ComponentProps를 사용하세요. React 19에서는 함수 컴포넌트·forwardRef·HTML 태그에 대해 ComponentProps가 ref를 포함하도록 동작합니다.',
+        },
+      ],
+    },
+  ],
   'no-restricted-syntax': [
     'error',
     {

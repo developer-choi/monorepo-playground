@@ -316,6 +316,30 @@ array.sort((left, right) => left - right);
 for (let index = 0; index < 10; index++) { ... }
 ```
 
+#### `no-restricted-imports` — `react`의 구버전 ref API 금지
+
+React 19부터 함수 컴포넌트가 `ref`를 일반 prop으로 받을 수 있어 `forwardRef`가 불필요합니다. 이에 따라 `forwardRef`와, `forwardRef` 래핑 시 props 타입에서 ref를 빼기 위해 주로 쓰이던 `ComponentPropsWithoutRef`·`ComponentPropsWithRef`를 함께 금지합니다. 대신 ref prop을 직접 받고 props 타입은 `ComponentProps`를 사용합니다.
+
+에러 메시지는 API별로 분리되어 있어 AI/사람 모두 메시지만 보고 바로 수정할 수 있도록 구체적인 대체 코드 예시나 대안 선택 기준을 포함합니다.
+
+```tsx
+// ❌
+import {forwardRef, ComponentPropsWithoutRef} from 'react';
+
+type Props = ComponentPropsWithoutRef<'input'>;
+const Input = forwardRef<HTMLInputElement, Props>((props, ref) => <input ref={ref} {...props} />);
+
+// ✅
+import {ComponentProps} from 'react';
+
+type Props = ComponentProps<'input'>;
+function Input({ref, ...props}: Props) {
+  return <input ref={ref} {...props} />;
+}
+```
+
+AST 기반 규칙이라 `import {forwardRef as fr}`, type-only import, 여러 줄 import, `import * as React` 네임스페이스 import까지 모두 막힙니다.
+
 #### `no-restricted-syntax` — 금지 패턴 모음
 
 AST 셀렉터로 프로젝트에서 허용하지 않는 패턴을 일괄 금지합니다. 위반 시 `eslint-disable` + 사유 주석으로 예외를 처리합니다.
