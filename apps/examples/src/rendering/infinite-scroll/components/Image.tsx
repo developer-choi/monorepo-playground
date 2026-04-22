@@ -1,8 +1,8 @@
-import {ComponentPropsWithoutRef} from 'react';
+import {ComponentProps} from 'react';
 import classNames from 'classnames';
 import styles from './Image.module.scss';
 
-interface BaseImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 'src'> {
+interface BaseImageProps extends Omit<ComponentProps<'img'>, 'src'> {
   src: string;
   alt: string;
 }
@@ -14,7 +14,7 @@ export function BaseImage({src, className, alt, ...rest}: BaseImageProps) {
   );
 }
 
-interface OptimizedImageProps extends Omit<ComponentPropsWithoutRef<'img'>, 'src' | 'sizes'> {
+interface OptimizedImageProps extends Omit<ComponentProps<'img'>, 'src' | 'sizes'> {
   src: string;
   alt: string;
   sizes: string;
