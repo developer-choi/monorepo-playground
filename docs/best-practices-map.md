@@ -212,7 +212,7 @@
 ### 테스트 코드 작성 패턴
 
 - 기술스택: Vitest + React Testing Library
-- 상황: 테스트 구조(describe/it 네이밍, describe.each), 쿼리(getByRole 우선, 접두사 용도), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문)
+- 상황: 테스트 구조(describe/it 네이밍, describe.each), 쿼리(getByRole 우선, 접두사 용도), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문), 네이밍(사용자 관점 it 워딩), 검증 범위(mock 인덱스 접근 금지, 라이브러리 기본 동작 재검증 금지)
 - 코드: docs/patterns/testing/TestWriting.md
 
 ## 쿼리

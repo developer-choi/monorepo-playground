@@ -85,7 +85,7 @@ describe.each(algorithms)('정렬 알고리즘 > $name', ({fn}) => {
 ```tsx
 // before (컴포넌트)
 export const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
-<p>{EMPTY_KEYWORDS_MESSAGE}</p>
+<p>{EMPTY_KEYWORDS_MESSAGE}</p>;
 
 // before (테스트)
 import {EMPTY_KEYWORDS_MESSAGE} from './RecentSearches';
@@ -93,7 +93,7 @@ expect(screen.getByText(EMPTY_KEYWORDS_MESSAGE)).toBeInTheDocument();
 
 // after (컴포넌트)
 const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
-<p role="status">{EMPTY_KEYWORDS_MESSAGE}</p>
+<p role="status">{EMPTY_KEYWORDS_MESSAGE}</p>;
 
 // after (테스트)
 expect(screen.getByRole('status')).toBeInTheDocument();
@@ -140,5 +140,49 @@ expect(screen.getByRole('button', {name: '원피스'})).toBeInTheDocument();
 const names = ['니트', '원피스'];
 names.forEach((name) => {
   expect(screen.getByRole('button', {name})).toBeInTheDocument();
+});
+```
+
+## 네이밍
+
+### it 설명은 사용자 관점 워딩
+
+구현 용어(URL 파라미터명, 변수명, 메서드명) 대신 사용자가 인식하는 워딩으로 쓴다. 훅 테스트도 예외 없다.
+
+```typescript
+// before
+it('gender=F로 이동한다', ...);
+it('sortBy를 price_asc로 바꾸면 URL이 변경된다', ...);
+it('router.replace가 호출된다', ...);
+
+// after
+it('여성 필터를 선택하면 해당 조건으로 이동한다', ...);
+it('낮은 가격순으로 정렬을 바꾸면 URL이 변경된다', ...);
+it('선택을 확정하면 URL이 갱신된다', ...);
+```
+
+## 검증 범위
+
+### mock 호출 인덱스 접근 금지
+
+`mock.calls[0]![0]` 같은 인덱스 접근은 호출 횟수·인자 순서에 결합된다. `toHaveBeenCalledWith`로 인자를 직접 매칭한다.
+
+```typescript
+// before
+expect(mockReplace.mock.calls[0]![0]).toBe('/search?searchText=니트');
+
+// after
+expect(mockReplace).toHaveBeenCalledWith('/search?searchText=니트');
+```
+
+### 라이브러리 동작 재검증 금지
+
+zod `.catch()`, react-hook-form 기본 검증 같은 라이브러리 API 기본 동작은 테스트하지 않는다. 프로젝트 비즈니스 로직만 검증한다.
+
+```typescript
+// ❌ zod .catch() 자체를 재검증
+it('잘못된 값이 오면 기본값으로 대체된다', () => {
+  const schema = z.enum(['a', 'b']).catch('a');
+  expect(schema.parse('xxx')).toBe('a');
 });
 ```
