@@ -109,5 +109,13 @@ export const baseRules = {
       selector: 'TSTypeReference > TSQualifiedName[left.name="React"]',
       message: 'React.X 대신 import { X } from "react"를 사용하세요.',
     },
+    {
+      selector: 'MemberExpression[object.name="React"]',
+      message: 'React.X 대신 import { X } from "react"를 사용하세요.',
+    },
+    {
+      selector: 'JSXMemberExpression[object.name="React"]',
+      message: 'React.X 대신 import { X } from "react"를 사용하세요.',
+    },
   ],
 };

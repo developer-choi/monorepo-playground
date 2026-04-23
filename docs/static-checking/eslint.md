@@ -421,17 +421,25 @@ import {CheckIcon} from '@radix-ui/react-icons';
 <CheckIcon height={24} width={24} />;
 ```
 
-**`React.X` 네임스페이스 접근 금지** (`TSTypeReference > TSQualifiedName[left.name="React"]`)
+**`React.X` 네임스페이스 접근 금지** (셀렉터 3개)
 
-`React.FormEvent` 같은 네임스페이스 접근 대신 `import { FormEvent } from 'react'`로 named import를 사용합니다.
+- `TSTypeReference > TSQualifiedName[left.name="React"]` — 타입 위치 (`React.FormEvent`, `React.ReactNode` 등)
+- `MemberExpression[object.name="React"]` — 값 위치 (`React.useState`, `React.createRef()`, `React.memo` 등)
+- `JSXMemberExpression[object.name="React"]` — JSX 위치 (`<React.Fragment>`, `<React.Suspense>` 등)
 
-```typescript
+타입·값·JSX 어느 위치에서든 `React.X` 네임스페이스 접근 대신 named import를 사용합니다.
+
+```tsx
 // ❌
 function handleSubmit(event: React.FormEvent<HTMLFormElement>) { ... }
+const [count, setCount] = React.useState(0);
+return <React.Fragment>...</React.Fragment>;
 
 // ✅
-import {type FormEvent} from 'react';
+import {type FormEvent, useState, Fragment} from 'react';
 function handleSubmit(event: FormEvent<HTMLFormElement>) { ... }
+const [count, setCount] = useState(0);
+return <Fragment>...</Fragment>;
 ```
 
 ### 워크스페이스별 추가 규칙
