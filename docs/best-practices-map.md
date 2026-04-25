@@ -238,3 +238,45 @@
 - 기술스택: overlay-kit
 - 상황: 모달·다이얼로그·Alert를 `useState` boolean 대신 `overlay.open`/`overlay.openAsync`로 명령형 호출. 결과값이 필요하면 `openAsync`로 Promise를 await. OverlayProvider는 ProviderComposition에서 세팅
 - 코드: docs/patterns/overlay/OverlayKitModal.md
+
+## 라이브러리 빌드
+
+### Vite 라이브러리 빌드
+
+- 기술스택: Vite + vite-plugin-dts + vite-plugin-static-copy
+- 상황: 라이브러리를 ESM-only로 빌드. package.json type/main/module과 vite.config build.lib을 함께 설정. d.ts 단일 파일(rollupTypes), 공통 SCSS 동봉(viteStaticCopy), import alias 이중 등록(tsconfig paths + vite resolve.alias)
+- 코드: docs/patterns/library/ViteLibraryBuild.md
+
+### 라이브러리 publishing
+
+- 기술스택: package.json `files`/`exports` + JSDoc `@internal` + `stripInternal`
+- 상황: 라이브러리 공개 API 통제. dist만 배포(`files`), 진입점 re-export로 공개 범위 결정, internal 모듈은 `@internal` + `stripInternal`로 d.ts에서 제거. `preserveModules` 사용 시 공통 클래스 중복 함정. 의존성은 peer + dev 이중 등록으로 빌드 산출물에서 제외
+- 코드: docs/patterns/library/LibraryPublishing.md
+
+### 디자인 시스템 라이브러리
+
+- 기술스택: Vite + SCSS + viteStaticCopy
+- 상황: 사내 디자인 시스템을 별도 패키지로 빌드. SCSS 셋업, reset/global/design-tokens 같은 공통 스타일시트 동봉, 외부에서 .tsx와 .scss의 import 경로 차이(`@scope/core/typography.module.scss` vs `@scope/core/dist/typography.module`). 라이브러리 프로젝트 공통 요구사항 체크리스트 포함
+- 코드: docs/patterns/library/DesignSystemLibrary.md
+
+### 라이브러리 publishing 함정·체크포인트
+
+- 상황: React 버전 불일치 에러, 원본 .tsx 노출, import 경로 형태, tree-shaking 검증, 디자인 토큰 SCSS 중복, Next.js Client Component 지원
+- 코드: docs/tips/library-publishing.md
+
+## 모듈·번들러
+
+### 모듈 시스템 — ESM, ESM/CJS 호환, tree shaking
+
+- 상황: ESM 동작(`export {}`, wildcard re-export 함정, top-level 평가 1회), ESM-only를 CJS에서 require할 때의 호환 한계, ESM이 tree shaking에 강한 이유
+- 코드: docs/tips/modules.md
+
+### 번들러 일반 + Vite
+
+- 상황: Turbopack vs Turborepo, 번들링·tree-shaking·chunk splitting의 관계, Vite dev의 native ESM 서빙·pre-bundle, 라이브러리 모드 진입점 필수, `vite.config.ts` 타입 셋업, alias 이중 등록 등
+- 코드: docs/tips/bundlers.md
+
+### 패키징 / 매니페스트
+
+- 상황: yarn Berry·Corepack 설치 경로, scoped 패키지 publish 시 `--access=public`, `type`/`module`/`exports` 비공식성, peer 버전 범위, 모노레포에서 `transpilePackages`로 원본 소스 사용
+- 코드: docs/tips/packaging.md
