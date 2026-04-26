@@ -23,6 +23,7 @@ module.exports = {
         // project-level
         'setting',
         'best-practice-map',
+        'archives',
       ],
     ],
     'scope-empty': [2, 'never'],

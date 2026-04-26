@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Step 6 — 전체 흐름</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #eee;
+      min-height: 100dvh;
+    }
+
+    /* 그리드 화면 */
+    .grid-screen {
+      padding: 16px;
+    }
+
+    .header {
+      padding: 16px 0 20px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .subheader {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    .thumb {
+      aspect-ratio: 1 / 1;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: opacity 0.15s;
+    }
+    .thumb:first-child { border-radius: 12px 4px 4px 4px; }
+    .thumb:nth-child(3) { border-radius: 4px 12px 4px 4px; }
+    .thumb:nth-child(7) { border-radius: 4px 4px 4px 12px; }
+    .thumb:last-child { border-radius: 4px 4px 12px 4px; }
+    .thumb:hover { opacity: 0.85; }
+
+    /* ★ 오버레이: 항상 position:fixed;inset:0 — DOM 크기는 항상 전체화면 */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: #1a1a1a;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      /* 초기 상태: 클리핑되어 안 보임 */
+      clip-path: inset(50% 50% 50% 50% round 16px);
+      opacity: 0;
+      pointer-events: none;
+
+      transition: clip-path 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.35s ease-out;
+    }
+
+    .overlay.open {
+      clip-path: inset(0px 0px 0px 0px round 0px);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* 오버레이 내부 */
+    .overlay-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .overlay-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .overlay-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .overlay-sub {
+      font-size: 14px;
+      color: #888;
+    }
+
+    .overlay-desc {
+      font-size: 15px;
+      color: #bbb;
+      line-height: 1.7;
+    }
+
+    .meta-row {
+      padding: 14px 0;
+      border-top: 1px solid #333;
+      color: #888;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* 디버그 패널 */
+    .debug {
+      margin-top: 32px;
+      padding: 14px;
+      background: #1e1e1e;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #9cdcfe;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid-screen">
+    <div class="header">Step 6 — 전체 흐름 통합</div>
+    <p class="subheader">
+      썸네일 클릭 → getBoundingClientRect() → toInset() → clip-path 애니메이션<br />
+      실제 FullScreenOverlay 구현과 동일한 원리.
+    </p>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="debug" id="debug">썸네일을 클릭하면 여기에 rect → inset 변환 과정이 표시됩니다.</div>
+  </div>
+
+  <!-- ★ 오버레이: 항상 전체화면 DOM, clip-path로만 시각적 범위 제어 -->
+  <div class="overlay" id="overlay">
+    <img class="overlay-image" id="overlay-img" src="" alt="" />
+    <button class="close-btn" onclick="closeOverlay()" title="닫기">✕</button>
+    <div class="overlay-body">
+      <div class="overlay-title" id="overlay-title"></div>
+      <div class="overlay-sub">랜디 갤러리</div>
+      <div class="overlay-desc">
+        이 순간을 담은 특별한 사진입니다. 아래에서 위로 스와이프하거나 ✕ 버튼을 눌러 닫을 수 있어요.
+        clip-path: inset() 애니메이션으로 구현되었습니다.
+      </div>
+      <div class="meta-row"><span>장소 정보</span><span>›</span></div>
+      <div class="meta-row"><span>촬영 날짜</span><span>›</span></div>
+    </div>
+  </div>
+
+  <script>
+    const images = [
+      'https://framerusercontent.com/images/WLe8AV0lMA1c9jhg8MnwaytVZUs.jpg?width=400',
+      'https://framerusercontent.com/images/2TG3O4xozfrEeT26x4keFTByQ.jpg?width=400',
+      'https://framerusercontent.com/images/fpjUR5bJOy99km9hvtOMcLHEAdg.jpg?width=400',
+      'https://framerusercontent.com/images/0y6Hf5tJCR51Newm0yEDD3DMrug.jpg?width=400',
+      'https://framerusercontent.com/images/4qH1Mdqo3a6VZ0griLKUZUp0cu8.jpg?width=400',
+      'https://framerusercontent.com/images/4wtQQm7ryXos5CLsFaEnsKVvbUk.jpg?width=400',
+      'https://framerusercontent.com/images/vv7rtQjpRUmh68h4YIxj4sFO1n4.jpg?width=400',
+      'https://framerusercontent.com/images/PoHUsWSl5s4F4uuloqRxG8pGo.jpg?width=400',
+      'https://framerusercontent.com/images/k8RSf6SpAjOcp13QrVdJbQ.jpg?width=400',
+    ];
+
+    // 그리드 생성
+    const grid = document.getElementById('grid');
+    images.forEach((src, i) => {
+      const el = document.createElement('div');
+      el.className = 'thumb';
+      el.style.backgroundImage = `url(${src})`;
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.onclick = () => openOverlay(el, src, i + 1);
+      grid.appendChild(el);
+    });
+
+    let closeRect = null;
+
+    function toInset(rect) {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const top = Math.round(rect.top);
+      const right = Math.round(vw - rect.right);
+      const bottom = Math.round(vh - rect.bottom);
+      const left = Math.round(rect.left);
+      return { top, right, bottom, left, str: `inset(${top}px ${right}px ${bottom}px ${left}px round 16px)` };
+    }
+
+    function openOverlay(triggerEl, src, index) {
+      // ① 클릭 시점에 rect 캡처
+      const rect = triggerEl.getBoundingClientRect();
+      closeRect = rect;
+      const inset = toInset(rect);
+
+      // ② 오버레이 콘텐츠 세팅
+      document.getElementById('overlay-img').src = src;
+      document.getElementById('overlay-title').textContent = `사진 ${index}`;
+
+      // ③ 초기 상태: 버튼 rect 위치로 클리핑
+      const overlay = document.getElementById('overlay');
+      overlay.style.transition = 'none';
+      overlay.style.clipPath = inset.str;
+      overlay.style.opacity = '0';
+
+      // ④ 디버그 출력
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      document.getElementById('debug').innerHTML =
+        `<span style="color:#6a9955">// ① getBoundingClientRect()</span>\n` +
+        `top=${Math.round(rect.top)}, right=${Math.round(rect.right)}, bottom=${Math.round(rect.bottom)}, left=${Math.round(rect.left)}\n\n` +
+        `<span style="color:#6a9955">// ② toInset() 변환  (vw=${vw}, vh=${vh})</span>\n` +
+        `top=${inset.top}, right=${inset.right}, bottom=${inset.bottom}, left=${inset.left}\n\n` +
+        `<span style="color:#6a9955">// ③ initial</span>\n` +
+        `<span style="color:#dcdcaa">clipPath: "${inset.str}", opacity: 0</span>\n\n` +
+        `<span style="color:#6a9955">// ④ animate</span>\n` +
+        `<span style="color:#dcdcaa">clipPath: "inset(0px 0px 0px 0px round 0px)", opacity: 1</span>`;
+
+      // ⑤ 다음 프레임에서 애니메이션 시작 (initial → animate)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          overlay.style.transition =
+            'clip-path 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease-out';
+          overlay.classList.add('open');
+        });
+      });
+    }
+
+    function closeOverlay() {
+      const overlay = document.getElementById('overlay');
+      if (!closeRect) {
+        overlay.classList.remove('open');
+        return;
+      }
+
+      // exit: 전체화면 → 원래 버튼 rect로 오므라듦
+      const inset = toInset(closeRect);
+      overlay.style.clipPath = inset.str;
+      overlay.style.opacity = '0';
+
+      document.getElementById('debug').innerHTML +=
+        `\n\n<span style="color:#6a9955">// ⑤ exit (닫기)</span>\n` +
+        `<span style="color:#dcdcaa">clipPath: "${inset.str}", opacity: 0</span>`;
+
+      setTimeout(() => {
+        overlay.classList.remove('open');
+        overlay.style.transition = 'none';
+        overlay.style.clipPath = 'inset(50% 50% 50% 50% round 16px)';
+        overlay.style.opacity = '0';
+      }, 380);
+    }
+  </script>
+
+</body>
+</html>

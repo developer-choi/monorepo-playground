@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Step 3 — getBoundingClientRect()</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: sans-serif; padding: 24px; color: #111; line-height: 1.7; }
+
+    .explain {
+      background: #f0f4ff;
+      border-left: 4px solid #3b5bdb;
+      padding: 16px 20px;
+      border-radius: 4px;
+      margin-bottom: 32px;
+    }
+
+    .scene {
+      position: relative;
+      border: 2px dashed #ccc;
+      padding: 40px;
+      min-height: 340px;
+      border-radius: 8px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .scene-label {
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .target-btn {
+      padding: 16px 28px;
+      background: #3b5bdb;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .target-btn:hover { background: #364fc7; }
+
+    .target-btn-small {
+      padding: 10px 20px;
+      background: #f76707;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+
+    /* ★ 핵심: getBoundingClientRect로 얻은 rect를 시각화하는 레이어 */
+    .highlight {
+      position: fixed;
+      pointer-events: none;
+      border: 3px solid #f03e3e;
+      background: rgba(240, 62, 62, 0.12);
+      border-radius: 12px;
+      transition: all 0.1s;
+      display: none;
+    }
+
+    .result-box {
+      margin-top: 24px;
+      background: #1e1e1e;
+      color: #9cdcfe;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 13px;
+      min-height: 80px;
+    }
+
+    .result-box .key { color: #ce9178; }
+    .result-box .val { color: #b5cea8; }
+    .result-box .comment { color: #6a9955; }
+
+    .inset-result {
+      margin-top: 12px;
+      background: #1e1e1e;
+      color: #dcdcaa;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="explain">
+    <strong>Step 3: getBoundingClientRect() → toInset()</strong><br />
+    버튼을 클릭하면 해당 요소의 뷰포트 내 좌표를 읽고, 빨간 테두리로 시각화한다.<br />
+    그 값이 어떻게 <code>clip-path: inset()</code>으로 변환되는지 보여준다.
+  </div>
+
+  <div class="scene">
+    <span class="scene-label">클릭할 버튼들</span>
+    <button class="target-btn" onclick="inspect(this)">버튼 A — 클릭해서 rect 확인</button>
+    <button class="target-btn-small" onclick="inspect(this)">버튼 B (우하단)</button>
+  </div>
+
+  <div id="highlight" class="highlight"></div>
+
+  <div class="result-box" id="result">
+    버튼을 클릭하면 여기에 getBoundingClientRect() 결과가 표시됩니다.
+  </div>
+
+  <div class="inset-result" id="inset-result">
+    → toInset() 변환 결과가 여기에 표시됩니다.
+  </div>
+
+  <script>
+    function inspect(el) {
+      const rect = el.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // 빨간 테두리로 rect 시각화
+      const hl = document.getElementById('highlight');
+      hl.style.display = 'block';
+      hl.style.top = rect.top + 'px';
+      hl.style.left = rect.left + 'px';
+      hl.style.width = rect.width + 'px';
+      hl.style.height = rect.height + 'px';
+
+      // rect 값 출력
+      document.getElementById('result').innerHTML =
+        `<span class="comment">// el.getBoundingClientRect()</span>\n` +
+        `{\n` +
+        `  <span class="key">top</span>:    <span class="val">${Math.round(rect.top)}</span>,  <span class="comment">// 뷰포트 상단 → 요소 상단까지의 거리 (y축)</span>\n` +
+        `  <span class="key">right</span>:  <span class="val">${Math.round(rect.right)}</span>,  <span class="comment">// 뷰포트 좌단 → 요소 우단까지의 거리 (x축)</span>\n` +
+        `  <span class="key">bottom</span>: <span class="val">${Math.round(rect.bottom)}</span>,  <span class="comment">// 뷰포트 상단 → 요소 하단까지의 거리 (y축)</span>\n` +
+        `  <span class="key">left</span>:   <span class="val">${Math.round(rect.left)}</span>,   <span class="comment">// 뷰포트 좌단 → 요소 좌단까지의 거리 (x축)</span>\n` +
+        `  <span class="key">width</span>:  <span class="val">${Math.round(rect.width)}</span>,\n` +
+        `  <span class="key">height</span>: <span class="val">${Math.round(rect.height)}</span>,\n` +
+        `}`;
+
+      // toInset() 변환
+      const top = Math.round(rect.top);
+      const right = Math.round(vw - rect.right);
+      const bottom = Math.round(vh - rect.bottom);
+      const left = Math.round(rect.left);
+
+      document.getElementById('inset-result').innerHTML =
+        `<span style="color:#6a9955">// toInset(rect) — vw=${vw}, vh=${vh}</span>\n` +
+        `<span style="color:#9cdcfe">top</span>    = rect.top           = <span style="color:#b5cea8">${top}</span>\n` +
+        `<span style="color:#9cdcfe">right</span>  = vw - rect.right    = ${vw} - ${Math.round(rect.right)} = <span style="color:#b5cea8">${right}</span>\n` +
+        `<span style="color:#9cdcfe">bottom</span> = vh - rect.bottom   = ${vh} - ${Math.round(rect.bottom)} = <span style="color:#b5cea8">${bottom}</span>\n` +
+        `<span style="color:#9cdcfe">left</span>   = rect.left          = <span style="color:#b5cea8">${left}</span>\n\n` +
+        `<span style="color:#dcdcaa">clip-path: inset(${top}px ${right}px ${bottom}px ${left}px round 16px)</span>`;
+
+      setTimeout(() => { hl.style.display = 'none'; }, 1500);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Step 2 — clip-path: inset()</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: sans-serif; padding: 24px; color: #111; }
+
+    .explain {
+      background: #f0f4ff;
+      border-left: 4px solid #3b5bdb;
+      padding: 16px 20px;
+      border-radius: 4px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .demo-area {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .box-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ★ 핵심 박스: clip-path 적용 대상 */
+    .box {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #4dabf7, #3b5bdb);
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 260px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    label {
+      width: 80px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    input[type="range"] { flex: 1; }
+
+    .val {
+      width: 36px;
+      font-size: 13px;
+      font-family: monospace;
+      text-align: right;
+    }
+
+    .code-output {
+      background: #1e1e1e;
+      color: #9cdcfe;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 13px;
+      white-space: pre;
+      margin-top: 12px;
+    }
+
+    .preset-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .preset-btn {
+      padding: 6px 12px;
+      border: 1px solid #3b5bdb;
+      color: #3b5bdb;
+      background: white;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .preset-btn:hover { background: #e8edff; }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="explain">
+    <strong>Step 2: clip-path: inset(top right bottom left round R)</strong><br />
+    요소의 보이는 영역을 잘라낸다. DOM과 레이아웃은 그대로, 시각만 변한다.<br />
+    슬라이더를 움직이면서 inset 값이 어떻게 작용하는지 확인해봐.
+  </div>
+
+  <div class="demo-area">
+    <div class="box-wrap">
+      <div class="box" id="box">
+        이 박스는 300×300px<br/>
+        DOM 크기는 안 변해<br/>
+        clip-path만 바뀌는 거야
+      </div>
+      <p class="note">
+        각 방향에서 <strong>안쪽으로</strong> 얼마나 잘라낼지를 px로 지정.<br/>
+        잘라낸 영역 밖은 안 보이지만 공간은 그대로 차지함.
+      </p>
+    </div>
+
+    <div class="controls">
+      <div class="control-row">
+        <label>top</label>
+        <input type="range" id="top" min="0" max="150" value="0" oninput="update()" />
+        <span class="val" id="top-val">0</span>px
+      </div>
+      <div class="control-row">
+        <label>right</label>
+        <input type="range" id="right" min="0" max="150" value="0" oninput="update()" />
+        <span class="val" id="right-val">0</span>px
+      </div>
+      <div class="control-row">
+        <label>bottom</label>
+        <input type="range" id="bottom" min="0" max="150" value="0" oninput="update()" />
+        <span class="val" id="bottom-val">0</span>px
+      </div>
+      <div class="control-row">
+        <label>left</label>
+        <input type="range" id="left" min="0" max="150" value="0" oninput="update()" />
+        <span class="val" id="left-val">0</span>px
+      </div>
+      <div class="control-row">
+        <label>round</label>
+        <input type="range" id="round" min="0" max="80" value="0" oninput="update()" />
+        <span class="val" id="round-val">0</span>px
+      </div>
+
+      <div class="code-output" id="code-output">clip-path: inset(0px 0px 0px 0px round 0px)</div>
+
+      <div class="preset-btns">
+        <button class="preset-btn" onclick="setPreset(0,0,0,0,0)">초기화 (전체 보임)</button>
+        <button class="preset-btn" onclick="setPreset(50,50,50,50,0)">균등 클리핑</button>
+        <button class="preset-btn" onclick="setPreset(50,50,50,50,16)">둥근 모서리</button>
+        <button class="preset-btn" onclick="setPreset(100,80,80,70,16)">버튼 크기처럼</button>
+        <button class="preset-btn" onclick="setPreset(0,0,0,0,0)">전체화면처럼 (inset 0)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function update() {
+      const t = +document.getElementById('top').value;
+      const r = +document.getElementById('right').value;
+      const b = +document.getElementById('bottom').value;
+      const l = +document.getElementById('left').value;
+      const rd = +document.getElementById('round').value;
+
+      document.getElementById('top-val').textContent = t;
+      document.getElementById('right-val').textContent = r;
+      document.getElementById('bottom-val').textContent = b;
+      document.getElementById('left-val').textContent = l;
+      document.getElementById('round-val').textContent = rd;
+
+      const clipPath = `inset(${t}px ${r}px ${b}px ${l}px round ${rd}px)`;
+      document.getElementById('box').style.clipPath = clipPath;
+      document.getElementById('code-output').textContent = `clip-path: ${clipPath}`;
+    }
+
+    function setPreset(t, r, b, l, rd) {
+      document.getElementById('top').value = t;
+      document.getElementById('right').value = r;
+      document.getElementById('bottom').value = b;
+      document.getElementById('left').value = l;
+      document.getElementById('round').value = rd;
+      update();
+    }
+  </script>
+
+</body>
+</html>

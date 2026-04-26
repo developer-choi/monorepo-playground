@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Step 4 — initial / animate / exit</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: sans-serif; padding: 24px; color: #111; line-height: 1.7; }
+
+    .explain {
+      background: #f0f4ff;
+      border-left: 4px solid #3b5bdb;
+      padding: 16px 20px;
+      border-radius: 4px;
+      margin-bottom: 32px;
+    }
+
+    .demos {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .demo {
+      border: 1px solid #dee2e6;
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .demo h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .demo p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    .btn-primary { background: #3b5bdb; color: white; }
+    .btn-secondary { background: #e9ecef; color: #333; }
+
+    /* ★ animate-box: initial/animate/exit를 CSS로 시뮬레이션 */
+    .anim-box {
+      width: 200px;
+      height: 80px;
+      background: linear-gradient(135deg, #4dabf7, #3b5bdb);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    /* Demo 1: opacity */
+    .demo1-box {
+      opacity: 0;                        /* initial */
+      transition: opacity 0.4s ease-out; /* animate */
+    }
+    .demo1-box.visible { opacity: 1; }   /* animate 도달 */
+    .demo1-box.exiting { opacity: 0; }   /* exit */
+
+    /* Demo 2: scale */
+    .demo2-box {
+      transform: scale(0);                       /* initial */
+      transform-origin: center;
+      transition: transform 0.4s ease-out;       /* animate */
+    }
+    .demo2-box.visible { transform: scale(1); }  /* animate 도달 */
+    .demo2-box.exiting { transform: scale(0); }  /* exit */
+
+    /* Demo 3: clip-path (실제 구현과 동일) */
+    .demo3-box {
+      width: 100%;
+      height: 120px;
+      clip-path: inset(50% 40% 50% 40% round 16px);  /* initial: 작은 rect */
+      transition: clip-path 0.4s ease-out, opacity 0.4s ease-out;
+      opacity: 0;
+    }
+    .demo3-box.visible {
+      clip-path: inset(0% 0% 0% 0% round 0px);        /* animate: 전체 */
+      opacity: 1;
+    }
+    .demo3-box.exiting {
+      clip-path: inset(50% 40% 50% 40% round 16px);   /* exit: 다시 작은 rect */
+      opacity: 0;
+    }
+
+    .code-block {
+      background: #1e1e1e;
+      color: #9cdcfe;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      margin-top: 16px;
+      white-space: pre;
+    }
+    .code-key { color: #ce9178; }
+    .code-str { color: #98c379; }
+    .code-num { color: #b5cea8; }
+    .code-comment { color: #6a9955; }
+
+    .phase-label {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .phase-initial { background: #ffe3e3; color: #c92a2a; }
+    .phase-animate { background: #d3f9d8; color: #2b8a3e; }
+    .phase-exit    { background: #fff3bf; color: #856404; }
+  </style>
+</head>
+<body>
+
+  <div class="explain">
+    <strong>Step 4: initial / animate / exit 개념</strong><br />
+    framer-motion에서 세 가지 상태를 정의한다: 마운트 직후(initial), 목표 상태(animate), 언마운트 시(exit).<br />
+    CSS transition으로 동일한 개념을 시뮬레이션한다.
+  </div>
+
+  <div class="demos">
+
+    <!-- Demo 1: opacity -->
+    <div class="demo">
+      <h3>Demo 1 — opacity 0 → 1 → (닫기) → 0</h3>
+      <p>가장 기본. <code>initial={{ opacity: 0 }}</code> / <code>animate={{ opacity: 1 }}</code> / <code>exit={{ opacity: 0 }}</code></p>
+      <button class="btn btn-primary" onclick="toggle('d1')">열기 / 닫기</button>
+      <span class="phase-label" id="d1-phase">initial</span>
+      <div class="anim-box demo1-box" id="d1">opacity 0 → 1</div>
+      <div class="code-block"><span class="code-comment">// framer-motion 코드</span>
+&lt;motion.div
+  <span class="code-key">initial</span>={{ <span class="code-key">opacity</span>: <span class="code-num">0</span> }}
+  <span class="code-key">animate</span>={{ <span class="code-key">opacity</span>: <span class="code-num">1</span> }}
+  <span class="code-key">exit</span>={{ <span class="code-key">opacity</span>: <span class="code-num">0</span> }}
+/&gt;</div>
+    </div>
+
+    <!-- Demo 2: scale -->
+    <div class="demo">
+      <h3>Demo 2 — scale 0 → 1 → (닫기) → 0</h3>
+      <p>기본 모드 (triggerRect 없을 때). <code>initial={{ scale: 0 }}</code></p>
+      <button class="btn btn-primary" onclick="toggle('d2')">열기 / 닫기</button>
+      <span class="phase-label" id="d2-phase">initial</span>
+      <div class="anim-box demo2-box" id="d2">scale 0 → 1</div>
+      <div class="code-block"><span class="code-comment">// framer-motion 코드</span>
+&lt;motion.div
+  <span class="code-key">initial</span>={{ <span class="code-key">scale</span>: <span class="code-num">0</span> }}
+  <span class="code-key">animate</span>={{ <span class="code-key">scale</span>: <span class="code-num">1</span> }}
+  <span class="code-key">exit</span>={{ <span class="code-key">scale</span>: <span class="code-num">0</span> }}
+/&gt;</div>
+    </div>
+
+    <!-- Demo 3: clip-path (실제 구현) -->
+    <div class="demo">
+      <h3>Demo 3 — clip-path inset (triggerRect 모드, 실제 구현)</h3>
+      <p>가운데 작은 rect에서 전체로 확장. 닫히면 다시 작은 rect로 오므라듦.</p>
+      <button class="btn btn-primary" onclick="toggle('d3')">열기 / 닫기</button>
+      <span class="phase-label" id="d3-phase">initial</span>
+      <div class="anim-box demo3-box" id="d3">clip-path: inset 애니메이션</div>
+      <div class="code-block"><span class="code-comment">// framer-motion 코드 (FullScreenOverlay 실제)</span>
+&lt;motion.div
+  <span class="code-key">initial</span>={{ <span class="code-key">clipPath</span>: <span class="code-str">'inset(버튼위치 round 16px)'</span>, <span class="code-key">opacity</span>: <span class="code-num">0</span> }}
+  <span class="code-key">animate</span>={{ <span class="code-key">clipPath</span>: <span class="code-str">'inset(0px 0px 0px 0px round 0px)'</span>, <span class="code-key">opacity</span>: <span class="code-num">1</span> }}
+  <span class="code-key">exit</span>={{   <span class="code-key">clipPath</span>: <span class="code-str">'inset(버튼위치 round 16px)'</span>, <span class="code-key">opacity</span>: <span class="code-num">0</span> }}
+/&gt;</div>
+    </div>
+
+  </div>
+
+  <script>
+    const states = { d1: false, d2: false, d3: false };
+
+    function toggle(id) {
+      const el = document.getElementById(id);
+      const phase = document.getElementById(id + '-phase');
+      const isOpen = states[id];
+
+      if (!isOpen) {
+        // 열기: initial → animate
+        el.classList.remove('exiting');
+        el.classList.add('visible');
+        phase.textContent = 'animate';
+        phase.className = 'phase-label phase-animate';
+      } else {
+        // 닫기: animate → exit
+        el.classList.remove('visible');
+        el.classList.add('exiting');
+        phase.textContent = 'exit';
+        phase.className = 'phase-label phase-exit';
+        setTimeout(() => {
+          el.classList.remove('exiting');
+          phase.textContent = 'initial';
+          phase.className = 'phase-label phase-initial';
+        }, 400);
+      }
+      states[id] = !isOpen;
+    }
+  </script>
+
+</body>
+</html>

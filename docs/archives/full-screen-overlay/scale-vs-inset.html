@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Step 7 — scale vs inset 비교</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #eee;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .label {
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* 트리거 박스 */
+    .trigger-box {
+      width: 200px;
+      height: 60px;
+      background: #4dabf7;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-scale { background: #e8590c; color: white; }
+    .btn-inset { background: #2f9e44; color: white; }
+
+    /* 공통 오버레이 */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    /*
+     * ★ scale 방식
+     *
+     * 오버레이 전체가 scale(0→1)로 커진다.
+     * 문제: 내부 콘텐츠(텍스트, 버튼 등)도 같이 쪼그라들었다 커진다.
+     * 개미만한 글씨가 보이는 이유가 이것 — DOM은 전체크기지만 transform으로 줄어든 것.
+     *
+     * transformOrigin은 동적으로 계산해야 해서 JS에서 CSS변수로 넘긴다.
+     * JS가 할 일: 박스 중심 좌표 계산 → --origin 변수 설정 → .open 토글
+     */
+    .overlay-scale {
+      background: #e8590c;
+      transform-origin: var(--origin, center);
+      transform: scale(0);
+      transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .overlay-scale.open {
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    /*
+     * ★ inset 방식
+     *
+     * DOM은 처음부터 전체화면(position:fixed; inset:0).
+     * clip-path로 버튼 크기만큼만 잘라내서 버튼처럼 보이게 한 뒤,
+     * clip-path를 inset(0 0 0 0)으로 애니메이션해서 전체화면으로 확장.
+     *
+     * 내부 콘텐츠는 처음부터 전체화면 크기 그대로 — scale처럼 쪼그라들지 않는다.
+     * 단, 클리핑 경계 밖의 배경 UI가 비쳐 보일 수 있어서 실제 구현에서는 opacity도 같이 쓴다.
+     * (이 데모에서는 차이를 명확히 보기 위해 opacity 제거)
+     *
+     * 시작 clip-path는 동적으로 계산해야 해서 JS에서 CSS변수로 넘긴다.
+     * JS가 할 일: 박스 rect 계산 → --clip-start 변수 설정 → reflow 강제 → .open 토글
+     */
+    .overlay-inset {
+      background: #2b8a3e;
+      clip-path: var(--clip-start, inset(50% 50% 50% 50% round 12px));
+      transition: clip-path 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .overlay-inset.open {
+      clip-path: inset(0px 0px 0px 0px round 0px);
+      pointer-events: auto;
+    }
+
+    .close-btn {
+      padding: 10px 24px;
+      background: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      /*
+       * pointer-events: none 필수.
+       * 부모(.overlay)의 pointer-events: none은 자식에게 상속되지 않는다.
+       * 오버레이가 숨겨진 상태에서도 닫기 버튼이 클릭을 가로채버리는 문제가 있었음.
+       */
+      pointer-events: none;
+    }
+
+    .overlay.open .close-btn {
+      pointer-events: auto;
+    }
+
+    .method-label {
+      font-size: 13px;
+      opacity: 0.7;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="label">200 × 60px 트리거 박스</p>
+  <div class="trigger-box" id="trigger">트리거 박스</div>
+
+  <div class="btn-row">
+    <button class="btn btn-scale" onclick="openScale()">scale 방식</button>
+    <button class="btn btn-inset" onclick="openInset()">inset 방식</button>
+  </div>
+
+  <!-- scale 오버레이 -->
+  <div class="overlay overlay-scale" id="overlay-scale">
+    scale 방식
+    <p class="method-label">transformOrigin = 박스 정중앙, scale 0 → 1</p>
+    <button class="close-btn" onclick="closeScale()">닫기</button>
+  </div>
+
+  <!-- inset 오버레이 -->
+  <div class="overlay overlay-inset" id="overlay-inset">
+    inset 방식
+    <p class="method-label">clipPath: 박스 크기로 클리핑 → inset(0 0 0 0)</p>
+    <button class="close-btn" onclick="closeInset()">닫기</button>
+  </div>
+
+  <script>
+    // rect → clip-path inset() 문자열 변환
+    // right = vw - rect.right : rect.right는 뷰포트 좌단 기준 x좌표, inset right는 뷰포트 우단 기준이라 방향이 반대
+    // bottom = vh - rect.bottom : 동일한 이유
+    function toInset(rect) {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      return `inset(${Math.round(rect.top)}px ${Math.round(vw - rect.right)}px ${Math.round(vh - rect.bottom)}px ${Math.round(rect.left)}px round 12px)`;
+    }
+
+    // scale 방식: 동적 값(origin)만 CSS변수로 넘기고 class 토글
+    function openScale() {
+      const rect = document.getElementById('trigger').getBoundingClientRect();
+      const overlay = document.getElementById('overlay-scale');
+      overlay.style.setProperty('--origin', `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`);
+      overlay.classList.add('open');
+    }
+    function closeScale() {
+      document.getElementById('overlay-scale').classList.remove('open');
+    }
+
+    // inset 방식: 동적 값(시작 clip-path)만 CSS변수로 넘기고 class 토글
+    function openInset() {
+      const rect = document.getElementById('trigger').getBoundingClientRect();
+      const overlay = document.getElementById('overlay-inset');
+      overlay.style.setProperty('--clip-start', toInset(rect));
+      // offsetHeight 참조로 reflow 강제 — 브라우저가 --clip-start 초기 상태를 확정한 뒤 transition 시작
+      // 이게 없으면 변수 설정과 .open 추가가 같은 프레임에 처리되어 애니메이션이 재생되지 않는다
+      overlay.offsetHeight;
+      overlay.classList.add('open');
+    }
+    function closeInset() {
+      // .open 제거만 하면 CSS transition이 자동으로 역방향 재생
+      document.getElementById('overlay-inset').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
