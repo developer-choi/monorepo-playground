@@ -7,7 +7,7 @@ EXIT_CODE=0
 # 최초 도입 커밋 시 STYLELINT_INIT=1로 스킵
 if [ "$STYLELINT_INIT" = "1" ]; then exit 0; fi
 
-for file in $(git diff --cached --name-only --diff-filter=ACM -- '*.scss'); do
+for file in $(git diff --cached --name-only --diff-filter=ACM -- '*.scss' ':!docs/**'); do
   if head -5 "$file" | grep -q 'stylelint-disable '; then
     echo "❌ $file"
     echo "   file-level stylelint-disable 감지. 제거 후 per-line disable로 전환하세요."

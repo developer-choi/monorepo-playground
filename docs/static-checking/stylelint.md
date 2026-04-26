@@ -10,6 +10,10 @@ ESLint가 TypeScript 코드를 검사하듯, Stylelint는 SCSS 파일의 문법 
 
 Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`/`stylelint:fix` 스크립트, lint-staged 모두). severity가 `warning`인 규칙도 실패로 간주됩니다. `test-all`(pre-push)에 `npm run stylelint`가 포함되어 있어, lint-staged 범위를 벗어난 SCSS 변경도 푸시 시점에 전체 검사됩니다.
 
+## 검사 대상 제외
+
+`.stylelintignore`에 `docs`를 두어 문서 폴더를 검사 대상에서 제외합니다. `docs/`는 사람이 직접 작성하는 문서 영역이며 ESLint/tsc 대상도 아니므로, Stylelint도 적용하지 않습니다. 같은 이유로 `scripts/check-file-level-disable.sh`도 `docs/**`를 pathspec에서 제외합니다.
+
 ## 오버라이드 규칙
 
 | 규칙                                  | 설정           | 사유                                                                     |
