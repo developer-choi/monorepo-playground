@@ -30,6 +30,10 @@ export default defineConfig([
 
 프리셋(`recommendedTypeChecked`)은 `parserOptions.projectService`가 필요하므로 워크스페이스별로 설정합니다.
 
+## 경고도 차단
+
+ESLint는 `--max-warnings 0` 옵션으로 실행합니다 (워크스페이스별 `lint` 스크립트, lint-staged 모두). severity가 `'warn'`인 규칙도 실패로 간주되어 푸시·커밋을 막습니다. 새 규칙은 처음부터 `'error'`로 도입하고, `'warn'`으로 둘 이유가 있다면 [gradual-migration.md](gradual-migration.md)의 file-level disable + hook 패턴으로 대체합니다.
+
 ## 도입한 ESLint 규칙
 
 ### 수동 추가 (`eslint.config.base.mts`)

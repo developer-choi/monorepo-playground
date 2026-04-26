@@ -31,10 +31,12 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 
 커밋할 때마다 전체 린트 + 타입 체크를 돌리면 느립니다. 커밋 시점에는 변경된 파일 위주로 빠르게 검사하고, 푸시 전에 전체를 돌려 보완합니다.
 
-| 시점       | 스크립트      | 내용                               |
-| ---------- | ------------- | ---------------------------------- |
-| pre-commit | `test-staged` | `lint-staged && turbo check-types` |
-| pre-push   | `test-all`    | `turbo check-types && turbo lint`  |
+| 시점       | 스크립트      | 내용                                                   |
+| ---------- | ------------- | ------------------------------------------------------ |
+| pre-commit | `test-staged` | `lint-staged && turbo check-types`                     |
+| pre-push   | `test-all`    | `turbo check-types && turbo lint && npm run stylelint` |
+
+ESLint·Stylelint는 모두 `--max-warnings 0` 옵션으로 실행하므로, severity가 `'warn'`인 규칙도 실패로 간주되어 커밋·푸시를 차단합니다. 새 규칙을 도입할 때 `'warn'`으로 두지 말고 처음부터 `'error'`로 도입하거나, 점진적 적용이 필요한 경우 [gradual-migration.md](static-checking/gradual-migration.md)의 file-level disable + hook 패턴을 사용합니다.
 
 ### lint-staged — staged 파일만 린트
 
@@ -44,10 +46,10 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 {
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
-    "**/*.scss": "stylelint --fix",
-    "apps/examples/**/*.{ts,tsx}": "eslint --fix --config apps/examples/eslint.config.mjs",
-    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --config packages/design-system/eslint.config.js",
-    "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --config packages/recruitment/eslint.config.js"
+    "**/*.scss": "stylelint --fix --max-warnings 0",
+    "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config apps/examples/eslint.config.mjs",
+    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/design-system/eslint.config.js",
+    "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/recruitment/eslint.config.js"
   }
 }
 ```

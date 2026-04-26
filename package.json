@@ -10,19 +10,19 @@
     "examples": "turbo build --filter=@monorepo-playground/design-system && turbo dev --filter=examples",
     "design-system": "turbo storybook --filter=@monorepo-playground/design-system",
     "test-staged": "lint-staged && turbo check-types",
-    "test-all": "turbo check-types && turbo lint",
+    "test-all": "turbo check-types && turbo lint && npm run stylelint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "stylelint": "stylelint \"**/*.scss\"",
-    "stylelint:fix": "stylelint \"**/*.scss\" --fix",
+    "stylelint": "stylelint \"**/*.scss\" --max-warnings 0",
+    "stylelint:fix": "stylelint \"**/*.scss\" --fix --max-warnings 0",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
-    "**/*.scss": "stylelint --fix",
-    "apps/examples/**/*.{ts,tsx}": "eslint --fix --config apps/examples/eslint.config.mjs",
-    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --config packages/design-system/eslint.config.js",
-    "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --config packages/recruitment/eslint.config.js"
+    "**/*.scss": "stylelint --fix --max-warnings 0",
+    "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config apps/examples/eslint.config.mjs",
+    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/design-system/eslint.config.js",
+    "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/recruitment/eslint.config.js"
   },
   "repository": {
     "type": "git",
