@@ -7,3 +7,7 @@ package-lock.json
 .yarn
 turbo
 .turbo
+
+# docs/는 사람이 직접 작성하는 문서 영역. ESLint/tsc 검사 대상도 아니라
+# 빌드·린트와 무관하므로 Prettier도 적용하지 않는다.
+docs
