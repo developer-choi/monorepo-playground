@@ -10,6 +10,14 @@
 
 `docs/patterns/`, `docs/best-practices-map.md`를 수정하기 전에 [`docs/meta/placement.md`](docs/meta/placement.md)를 읽는다. KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
 
+### 문서 수정 시 작성 규칙 역제안
+
+`docs/` 하위 문서(특히 `docs/patterns/`, `docs/tips/`, `docs/best-practices-map.md`) 수정 시:
+
+1. 요청된 수정을 수행
+2. 패턴성 판단 (동일 실수·요청이 재발할 가능성)
+3. 패턴성이면, 해당 영역의 작성 규칙(`docs/best-practices-map.md` 상단 / `docs/meta/placement.md` / 관련 메타 파일)에 추가할 규칙을 구체적 문안과 함께 역제안
+
 ### 코드 복사 금지
 
 레포 내에 원본 파일이 이미 존재하면 코드를 문서에 복사하지 않는다. 원본 파일 경로를 링크로 참조한다. 단, 핵심 코드라인만 별도로 코드 블록으로 발췌하는 것은 예외다.
