@@ -233,6 +233,12 @@
 - 상황: queryKey + queryFn을 팩토리 객체로 중앙화. useSuspenseQuery, prefetchQuery, invalidateQueries에서 동일 옵션 재사용
 - 코드: docs/patterns/query/QueryOptionsFactory.md
 
+### 변경 API 호출 — useMutation vs 직접 호출
+
+- 기술스택: TanStack Query v5
+- 상황: 변경(POST/PATCH/DELETE) API 호출 시 useMutation으로 감쌀지 직접 호출할지 선택
+- 코드: docs/patterns/query/MutationCallApproach.md
+
 ## 접근성 / 시맨틱
 
 ### 시맨틱 마크업 — a/Link, form 요소 선택
