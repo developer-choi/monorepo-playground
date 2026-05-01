@@ -4,7 +4,16 @@
 
 - FormData 지원: buildBody에서 FormData 분기, buildHeaders에서 Content-Type 자동 설정 방지 (브라우저가 multipart boundary 처리). 현재 코드에서 제거됨, 여기서 재도입
 - ky + Next.js 옵션 호환성 테스트 필요
-- 절대 URL 감지: `startsWith('https://')` 시 baseUrl을 붙이지 않는 로직. 외부 API 호출 시 필요
+- 절대 URL 감지: `startsWith('https://')` 시 baseUrl을 붙이지 않는 로직. 외부 API 호출 시 필요. `http://`도 함께 처리.
+- baseUrl + path 결합 시 슬래시 정규화
+  - 현상: baseUrl 끝 `/`가 없고 path 시작 `/`도 없으면 그냥 이어붙어 `http://localhost:3000api/board` 같은 잘못된 URL이 만들어짐 (실제 발생 사례 — commit f0ea62e4).
+  - 정책 결정 필요:
+    - strict (ky 방식): prefixUrl이 있고 input이 `/`로 시작하면 throw, prefixUrl이 `/`로 끝나지 않으면 자동 추가 (`node_modules/ky/distribution/core/Ky.js:160-168`).
+    - lenient: 양쪽 슬래시를 정규화하여 단일 `/`로 결합.
+- ky 원본코드 정독으로 추가 보완 항목 도출
+  - 위 슬래시 처리 외에 ky가 fetch 위에 추가한 기능들을 한 번에 훑어 우리 ApiClient에 누락된 항목을 정리.
+  - 살짝 본 결과 후보: `searchParams` 직렬화 시 `undefined` 필터링·`?` 접두 제거 (Ky.js:120-126, 191-200), `parseJson`/`stringifyJson` 훅 (Ky.js:178-181, 289-294), 204 응답 + `.json()` → 빈 문자열 (Ky.js:101-103), 빈 본문 + `.json()` → 빈 문자열 (Ky.js:106-108).
+  - 정독 대상: `Ky.js` (생성자/요청 생성/재시도/훅), `utils/normalize.js`, `utils/options.js`, `utils/merge.js`.
 
 ## ky 도입 검토
 
