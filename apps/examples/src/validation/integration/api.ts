@@ -19,7 +19,7 @@ export async function getBoardListApi(
   params: Partial<BoardListFilter & PaginationParams>,
 ): Promise<BoardListApiResponse> {
   const raw = await api.get<ServerBoardListResponse>(
-    buildUrlWithQuery({pathname: 'api/board', params: toSnakeCaseKeys(params)}),
+    buildUrlWithQuery({pathname: '/api/board', params: toSnakeCaseKeys(params)}),
   );
   return {
     ...toCamelCaseKeys(raw),
@@ -35,7 +35,7 @@ export async function getBoardApi(id: number) {
 }
 
 export async function postBoardApi(body: CreateBoardApiRequest) {
-  const raw = await api.post<ServerBoardDetail>('api/board', {body: toSnakeCaseKeys(body)});
+  const raw = await api.post<ServerBoardDetail>('/api/board', {body: toSnakeCaseKeys(body)});
   return validateApiResponse(BoardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
