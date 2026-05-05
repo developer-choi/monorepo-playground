@@ -1,17 +1,10 @@
 'use client';
 
-import * as Sentry from '@sentry/nextjs';
 import NextError from 'next/error';
-import {useEffect} from 'react';
+import {useReportPageError} from '@/shared/error/handler/useReportPageError';
 
 export default function GlobalError({error}: {error: Error & {digest?: string}}) {
-  useEffect(() => {
-    // digest가 있으면 server side에서 던져진 에러. instrumentation.ts의 onRequestError(captureRequestError)에서 이미 잡혔으므로 중복 캡처 방지.
-    if (error.digest) {
-      return;
-    }
-    Sentry.captureException(error);
-  }, [error]);
+  useReportPageError(error);
 
   return (
     <html lang="en">
