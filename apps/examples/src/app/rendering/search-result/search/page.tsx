@@ -1,7 +1,7 @@
 'use client';
 
 import {memo, useDeferredValue, useState} from 'react';
-import {useSuspenseQuery} from '@tanstack/react-query';
+import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
 import {Box, Button, Card, Callout, Container, Heading, Text, TextField} from '@radix-ui/themes';
 import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icons';
@@ -55,13 +55,15 @@ function SearchForm() {
 }
 
 const SearchResults = memo(function SearchResults({query}: {query: string}) {
-  const {data: results = []} = useSuspenseQuery({
+  const {data: results = [], isPlaceholderData} = useQuery({
     queryKey: ['search', query],
     queryFn: () => getSearchResultsApi(query),
+    placeholderData: keepPreviousData,
     retry: 0,
+    throwOnError: true,
   });
 
-  if (query !== '' && results.length === 0) {
+  if (query !== '' && results.length === 0 && !isPlaceholderData) {
     return <Text color="gray">검색결과가 없습니다.</Text>;
   }
 
