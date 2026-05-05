@@ -1,12 +1,11 @@
 'use client';
 
-import {ErrorBoundary} from 'react-error-boundary';
 import {useSuspenseInfiniteQuery} from '@tanstack/react-query';
 import {boardQueries} from '../queries';
 import {useInfiniteScroll} from '../hooks/useInfiniteScroll';
 import BoardCard from './BoardCard';
 import BoardCardSkeleton from './BoardCardSkeleton';
-import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
+import HandledErrorBoundary from '@/shared/error/handler/HandledErrorBoundary';
 import styles from './BoardListPage.module.scss';
 
 export default function BoardListPage() {
@@ -23,15 +22,7 @@ export default function BoardListPage() {
   });
 
   return (
-    <ErrorBoundary
-      fallbackRender={({resetErrorBoundary}) => (
-        <ErrorPageTemplate
-          content="잠시 후 다시 시도해 주세요."
-          title="게시글 목록을 불러오지 못했습니다"
-          onAction={resetErrorBoundary}
-        />
-      )}
-    >
+    <HandledErrorBoundary>
       <section className={styles.container}>
         {boards.length === 0 ? (
           <p className={styles.message}>게시글이 없습니다.</p>
@@ -49,7 +40,7 @@ export default function BoardListPage() {
           </>
         )}
       </section>
-    </ErrorBoundary>
+    </HandledErrorBoundary>
   );
 }
 
