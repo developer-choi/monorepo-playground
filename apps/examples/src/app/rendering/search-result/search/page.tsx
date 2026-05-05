@@ -5,6 +5,7 @@ import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
 import {Box, Button, Card, Callout, Container, Heading, Text, TextField} from '@radix-ui/themes';
 import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icons';
+import {escapeRegExp} from 'es-toolkit';
 
 export default function SearchPage() {
   return (
@@ -103,7 +104,7 @@ function Highlight({text, query}: {text: string; query: string}) {
     return <>{text}</>;
   }
 
-  const regex = new RegExp(`(${query})`, 'gi');
+  const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
   const parts = text.split(regex);
 
   return (
