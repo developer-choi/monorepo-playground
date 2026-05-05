@@ -2,7 +2,7 @@ import {type ReactNode} from 'react';
 import {notFound, redirect} from 'next/navigation';
 import InvalidAccessError from '@/shared/error/class/InvalidAccessError';
 import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
-import {getErrorMessage} from '@/shared/error/handler/message';
+import {getErrorInfo} from '@/shared/error/handler/info';
 import ApiResponseError from '@/shared/error/class/ApiResponseError';
 import {captureException} from '@sentry/nextjs';
 
@@ -15,13 +15,21 @@ export function handleServerSideError(error: unknown): ReactNode {
     }
   }
 
-  if (error instanceof ApiResponseError && error.status === HTTP_STATUS_NOT_FOUND) {
-    notFound();
+  if (error instanceof ApiResponseError) {
+    if (error.status === HTTP_STATUS_NOT_FOUND) {
+      notFound();
+    }
+
+    if (error.status < HTTP_STATUS_INTERNAL_SERVER_ERROR) {
+      const {title, content} = getErrorInfo(error);
+      return <ErrorPageTemplate content={content} title={title} />;
+    }
   }
 
+  // 5xx 또는 그 외 예측 못한 에러는 error.tsx로 위임. 그래야 error.tsx의 reset()으로 복구를 시도할 수 있음.
   captureException(error);
-
-  return <ErrorPageTemplate message={getErrorMessage(error)} />;
+  throw error;
 }
 
 const HTTP_STATUS_NOT_FOUND = 404;
+const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
