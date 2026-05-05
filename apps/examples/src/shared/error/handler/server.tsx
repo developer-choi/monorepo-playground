@@ -1,9 +1,9 @@
 import {type ReactNode} from 'react';
 import {notFound, redirect} from 'next/navigation';
-import {HTTPError} from 'ky';
 import InvalidAccessError from '@/shared/error/class/InvalidAccessError';
 import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
 import {getErrorMessage} from '@/shared/error/handler/message';
+import ApiResponseError from '@/shared/error/class/ApiResponseError';
 
 export function handleServerSideError(error: unknown): ReactNode {
   if (error instanceof InvalidAccessError) {
@@ -14,7 +14,7 @@ export function handleServerSideError(error: unknown): ReactNode {
     }
   }
 
-  if (error instanceof HTTPError && error.response.status === HTTP_STATUS_NOT_FOUND) {
+  if (error instanceof ApiResponseError && error.status === HTTP_STATUS_NOT_FOUND) {
     notFound();
   }
 
