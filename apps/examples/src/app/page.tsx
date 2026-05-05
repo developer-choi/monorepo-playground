@@ -1,5 +1,5 @@
 import {Container, Flex, Heading, Link, Text} from '@radix-ui/themes';
-import {ExternalLinkIcon, GitHubLogoIcon} from '@radix-ui/react-icons';
+import {GitHubLogoIcon} from '@radix-ui/react-icons';
 import LinkCardGrid, {type LinkCardItem} from '@/shared/components/LinkCardGrid';
 
 export default function Home() {
@@ -14,11 +14,6 @@ export default function Home() {
           <Link href={GITHUB_URL} size="2" target="_blank">
             <Flex align="center" gap="1">
               <GitHubLogoIcon /> GitHub
-            </Flex>
-          </Link>
-          <Link href={DESIGN_SYSTEM_URL} size="2" target="_blank">
-            <Flex align="center" gap="1">
-              <ExternalLinkIcon /> Design System
             </Flex>
           </Link>
         </Flex>
