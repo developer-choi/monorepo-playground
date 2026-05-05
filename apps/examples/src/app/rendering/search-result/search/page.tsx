@@ -130,13 +130,10 @@ function ErrorFallback({resetErrorBoundary}: FallbackProps) {
         <ExclamationTriangleIcon />
       </Callout.Icon>
       <Callout.Text>
-        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Radix Box에 inline-flex 레이아웃을 줄 Radix prop이 없어 임시 사용. CSS Module 대체 검토 필요 */}
-        <Box style={{display: 'inline-flex', alignItems: 'center', gap: '8px'}}>
-          검색 중 오류가 발생했습니다.
-          <Button size="1" variant="ghost" onClick={resetErrorBoundary}>
-            다시 시도
-          </Button>
-        </Box>
+        검색 중 오류가 발생했습니다.{' '}
+        <Button size="1" variant="ghost" onClick={resetErrorBoundary}>
+          다시 시도
+        </Button>
       </Callout.Text>
     </Callout.Root>
   );
