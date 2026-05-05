@@ -4,6 +4,7 @@ import InvalidAccessError from '@/shared/error/class/InvalidAccessError';
 import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
 import {getErrorMessage} from '@/shared/error/handler/message';
 import ApiResponseError from '@/shared/error/class/ApiResponseError';
+import {captureException} from '@sentry/nextjs';
 
 export function handleServerSideError(error: unknown): ReactNode {
   if (error instanceof InvalidAccessError) {
@@ -17,6 +18,8 @@ export function handleServerSideError(error: unknown): ReactNode {
   if (error instanceof ApiResponseError && error.status === HTTP_STATUS_NOT_FOUND) {
     notFound();
   }
+
+  captureException(error);
 
   return <ErrorPageTemplate message={getErrorMessage(error)} />;
 }
