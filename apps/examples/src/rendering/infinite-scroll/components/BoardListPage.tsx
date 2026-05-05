@@ -8,7 +8,6 @@ import BoardCard from './BoardCard';
 import BoardCardSkeleton from './BoardCardSkeleton';
 import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
 import styles from './BoardListPage.module.scss';
-import {Button} from '@radix-ui/themes';
 
 export default function BoardListPage() {
   const {data, fetchNextPage, hasNextPage, isFetchingNextPage, isError} = useSuspenseInfiniteQuery(
@@ -27,8 +26,9 @@ export default function BoardListPage() {
     <ErrorBoundary
       fallbackRender={({resetErrorBoundary}) => (
         <ErrorPageTemplate
-          action={<Button onClick={resetErrorBoundary}>다시 시도</Button>}
-          message="게시글 목록을 불러오지 못했습니다."
+          content="잠시 후 다시 시도해 주세요."
+          title="게시글 목록을 불러오지 못했습니다"
+          onAction={resetErrorBoundary}
         />
       )}
     >
