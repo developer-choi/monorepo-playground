@@ -216,7 +216,7 @@
 
 ### 테스트 대상·레벨 판단
 
-- 상황: 테스트 대상·레벨 선정. 판단 기준, 구현 세부사항 금지, Integration 우선
+- 상황: 테스트 대상·레벨 선정. Yes 디폴트, 면제 화이트리스트, 구현 세부사항 금지, Integration 우선
 - 코드: docs/patterns/testing/WhatToTest.md
 
 ### 테스트 코드 작성 패턴
