@@ -254,3 +254,11 @@
 - 기술스택: overlay-kit
 - 상황: 모달·다이얼로그·Alert를 `useState` boolean 대신 `overlay.open`/`overlay.openAsync`로 명령형 호출. 결과값이 필요하면 `openAsync`로 Promise를 await. OverlayProvider는 ProviderComposition에서 세팅
 - 코드: docs/patterns/overlay/OverlayKitModal.md
+
+## 스토리북
+
+### Controls 패널 — render 반영 원칙
+
+- 기술스택: Storybook
+- 상황: 스토리 작성 시 Controls 패널에 노출된 prop을 render가 사용하지 않으면 토글해도 화면이 안 바뀐다. args / argTypes / render 사이의 정합성 처리
+- 코드: docs/patterns/storybook/ControlsPanel.md
