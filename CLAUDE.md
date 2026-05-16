@@ -8,7 +8,7 @@
 
 ### 콘텐츠 배치 정책
 
-`docs/patterns/`, `docs/best-practices-map.md`를 수정하기 전에 [`docs/meta/placement.md`](docs/meta/placement.md)를 읽는다. KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
+`docs/patterns/`, `docs/best-practices-map.md`를 수정하기 전에 AC `.claude/skills/doc-router/references/placement.md`(글로벌 분업 정책)를 본다. KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
 
 ### 문서 수정 시 작성 규칙 역제안
 
@@ -16,7 +16,7 @@
 
 1. 요청된 수정을 수행
 2. 패턴성 판단 (동일 실수·요청이 재발할 가능성)
-3. 패턴성이면, 해당 영역의 작성 규칙(`docs/best-practices-map.md` 상단 / `docs/meta/placement.md` / 관련 메타 파일)에 추가할 규칙을 구체적 문안과 함께 역제안
+3. 패턴성이면, 해당 영역의 작성 규칙(`docs/best-practices-map.md` 상단 / 관련 메타 파일)에 추가할 규칙을 구체적 문안과 함께 역제안
 
 ### 코드 복사 금지
 
