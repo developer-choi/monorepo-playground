@@ -1,3 +1,15 @@
+## 폴더 규칙
+
+### 대주제 (이 콘텐츠가 MP에 속하는가)
+
+콘텐츠 추가 전 AC `deploy/contexts/placement.md`(글로벌 분업 정책)를 본다. MP로 갈지, KA(학습 노트)·AC(공통 원칙)로 갈지 먼저 판단한다.
+
+### 소주제 (MP 안에서 어디로)
+
+- **예제 코드 본체** → `apps/example/`, `packages/design-system/`
+- **코드 직결 가이드** → `docs/patterns/<주제>.md`
+- **인덱스** → `docs/best-practices-map.md`
+
 ## docs/patterns/ 와 docs/best-practices-map.md
 
 ### 로드 규칙
@@ -5,10 +17,6 @@
 패턴 문서는 코드를 직접 포함하거나, 소스 파일 링크로 참조한다. 코드를 직접 포함하면 중복이 생기므로 링크로 분리하는 경우가 있는데, 이때 `[CRITICAL]`로 표기된 링크는 패턴의 실체이므로 반드시 Read한다. 그 외 링크(설계 히스토리 등)는 선택 참조.
 
 각 패턴은 해당 주제만큼의 코드를 담고 있으며, 단독으로 완성된 구현이 아니다. 실제 구현 시에는 관련 패턴을 조합해야 한다. 예: URL `[id]` 검증은 에러 처리 이원화와 함께 사용해야 검증 실패 시 에러 페이지 흐름이 완성된다.
-
-### 콘텐츠 배치 정책
-
-`docs/patterns/`, `docs/best-practices-map.md`를 수정하기 전에 AC `.claude/skills/doc-router/references/placement.md`(글로벌 분업 정책)를 본다. KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
 
 ### 문서 수정 시 작성 규칙 역제안
 

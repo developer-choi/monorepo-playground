@@ -1,6 +1,6 @@
 # Best Practices Map
 
-> 이 파일을 수정하기 전에 AC `.claude/skills/doc-router/references/placement.md`(글로벌 분업 정책)를 본다. 추가하려는 내용이 KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
+> 이 파일을 수정하기 전에 AC `deploy/contexts/placement.md`(글로벌 분업 정책)를 본다. 추가하려는 내용이 KA·AC로 가야 할 콘텐츠인지 먼저 판단한다.
 
 ## 작성 규칙
 
