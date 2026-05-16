@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
+.yarn/
 
 # testing
 /coverage
@@ -45,3 +45,4 @@ next-env.d.ts
 .idea/
 .agents/
 AGENTS.md
+nul
