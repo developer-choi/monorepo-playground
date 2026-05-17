@@ -2,7 +2,7 @@
 
 ## 선행 패턴
 
-- docs/patterns/api/FetchApiClientUsage.md
+- apps/examples/docs/patterns/api/FetchApiClientUsage.md
 
 ## 개요
 
