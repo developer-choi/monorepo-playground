@@ -18,7 +18,6 @@
 ## .gitignore 필수 항목
 
 ```gitignore
-plan/
 .claude/
 ```
 
