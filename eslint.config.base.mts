@@ -117,5 +117,9 @@ export const baseRules = {
       selector: 'JSXMemberExpression[object.name="React"]',
       message: 'React.X 대신 import { X } from "react"를 사용하세요.',
     },
+    {
+      selector: 'CatchClause > Identifier.param[typeAnnotation]',
+      message: 'catch 변수의 타입 어노테이션 금지. TS 4.4+에서 catch 변수는 기본 unknown입니다.',
+    },
   ],
 };

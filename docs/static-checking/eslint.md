@@ -185,9 +185,9 @@ function createUser(params: { name: string; email: string; age: number }) { ... 
 // ❌
 function parse(data: any) { ... }
 
-// ✅ catch 절
-try { ... } catch (e: unknown) {
-  if (e instanceof Error) console.error(e.message);
+// ✅ catch 절 — 어노테이션 없이도 TS 4.4+에서 unknown
+try { ... } catch (error) {
+  if (error instanceof Error) console.error(error.message);
 }
 
 // ✅ 불명확한 외부 데이터
@@ -423,6 +423,21 @@ SVG를 JSX에 직접 작성하면 번들 크기가 커지고 재사용이 어렵
 // ✅
 import {CheckIcon} from '@radix-ui/react-icons';
 <CheckIcon height={24} width={24} />;
+```
+
+**catch 변수 타입 어노테이션 금지** (`CatchClause > Identifier.param[typeAnnotation]`)
+
+TypeScript 4.4의 `useUnknownInCatchVariables`(strict에 포함)가 켜져 있으면 catch 변수는 명시하지 않아도 `unknown`이 기본입니다. `: unknown`은 잉여이고 `: any`는 타입 안전성을 무너뜨리므로 둘 다 금지합니다.
+
+```typescript
+// ❌
+try { ... } catch (error: unknown) { ... }
+try { ... } catch (error: any) { ... }
+
+// ✅
+try { ... } catch (error) {
+  if (error instanceof Error) console.error(error.message);
+}
 ```
 
 **`React.X` 네임스페이스 접근 금지** (셀렉터 3개)
