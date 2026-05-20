@@ -8,7 +8,6 @@
 `useMutation`이 제공하는 RQ 기능을 실제로 활용할 때 적합하다.
 
 - API 호출 결과(에러)를 컴포넌트에 표시한 뒤, 사용자의 다음 액션 시점에 리셋해야 한다 → `mutation.reset()`
-- `onSuccess` / `onError` 콜백에 후속 동작(invalidate, redirect 등)을 묶어 일관 처리한다
 - `isPending`을 컴포넌트 트리 여러 곳에서 공유해야 한다
 
 ### 예: mutation.reset() 활용
@@ -22,7 +21,7 @@ const mutation = useMutation({
 
 return (
   <>
-    <PostForm onSubmit={(data) => mutation.mutate(data)} onChange={() => mutation.reset()} />
+    <PostForm onSubmit={(data) => mutation.mutateAsync(data)} onChange={() => mutation.reset()} />
     {mutation.error && <ErrorBanner message={mutation.error.message} />}
   </>
 );
@@ -32,7 +31,7 @@ return (
 
 `useMutation`이 제공하는 기능을 활용하지 않는다면 감싸지 않고 직접 호출한다.
 
-- `mutate(...)` / `mutateAsync(...)`만 호출하고 `isPending`·`mutation.reset()`·`onSuccess`·`onError` 등을 활용하지 않는다
+- `mutateAsync(...)`만 호출하고 `isPending`·`mutation.reset()` 등을 활용하지 않는다
 - 호출 중복 방지를 버튼 disabled / 폼 제출 락 같은 로컬 상태로 처리할 수 있다
 - 폼 라이브러리(예: React Hook Form)가 제출 상태·에러를 이미 관리한다 → `mutation.reset()` 등을 별도로 쓸 일은 없다
 
@@ -45,7 +44,7 @@ async function handleSubmit(data: PostInput) {
 }
 ```
 
-`useMutation(createPost)`로 감싸고 `mutate`만 호출했을 때와 동작 차이가 없다면 B가 적합하다.
+`useMutation(createPost)`로 감싸고 `mutateAsync`만 호출했을 때와 동작 차이가 없다면 B가 적합하다.
 
 ## 함정
 
