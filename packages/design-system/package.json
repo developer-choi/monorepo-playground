@@ -58,6 +58,6 @@
     "vitest": "^4.0.17"
   },
   "dependencies": {
-    "classnames": "^2.5.1"
+    "clsx": "^2.1.1"
   }
 }

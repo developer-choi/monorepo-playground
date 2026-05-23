@@ -1,5 +1,5 @@
 import {type ReactNode} from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Modal, {type ModalProps} from './Modal';
 import styles from './Drawer.module.scss';
 
@@ -13,7 +13,7 @@ export default function Drawer(props: DrawerProps) {
 
   return (
     <Modal className={className} {...modalProps}>
-      <div className={classNames(styles.drawer, styles[anchor])} tabIndex={-1}>
+      <div className={clsx(styles.drawer, styles[anchor])} tabIndex={-1}>
         {children}
       </div>
     </Modal>

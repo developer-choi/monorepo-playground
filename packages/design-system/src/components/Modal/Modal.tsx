@@ -7,7 +7,7 @@ import {
   useCallback,
   useRef,
 } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import FocusTrap from './FocusTrap';
 import Portal from './Portal';
 import styles from './Modal.module.scss';
@@ -76,7 +76,7 @@ export default function Modal(props: ModalProps) {
 
   return (
     <Portal>
-      <div className={classNames(styles.modalRoot, className)} onKeyDown={handleKeyDown} {...other}>
+      <div className={clsx(styles.modalRoot, className)} onKeyDown={handleKeyDown} {...other}>
         <div className={styles.backdrop} onClick={handleBackdropClick} onMouseDown={handleBackdropMouseDown} />
         <FocusTrap open={open}>{children}</FocusTrap>
       </div>

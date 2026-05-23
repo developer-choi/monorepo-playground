@@ -178,7 +178,7 @@
 
 ### 실제 클래스 재사용
 
-- 기술스택: CSS Modules + classNames (또는 react-loading-skeleton)
+- 기술스택: CSS Modules + clsx (또는 react-loading-skeleton)
 - 상황: 스켈레톤과 실제 컴포넌트의 레이아웃·타이포그래피 동기화. CLS 방지. 컨테이너 클래스 재사용 + 타이포그래피 클래스와 bone 합치기(`&nbsp;`로 line-height 높이 자동 확보)
 - 코드: apps/examples/docs/patterns/skeleton/SkeletonReuse.md
 

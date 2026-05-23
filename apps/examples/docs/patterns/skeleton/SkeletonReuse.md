@@ -51,9 +51,9 @@
 스켈레톤:
 
 ```tsx
-<div className={classnames(cardStyles.title, styles.bone)} style={{ width: '70%' }}>&nbsp;</div>
-<div className={classnames(cardStyles.description, styles.bone)} style={{ width: '90%' }}>&nbsp;</div>
-<div className={classnames(cardStyles.prize, styles.bone)} style={{ width: 80 }}>&nbsp;</div>
+<div className={clsx(cardStyles.title, styles.bone)} style={{ width: '70%' }}>&nbsp;</div>
+<div className={clsx(cardStyles.description, styles.bone)} style={{ width: '90%' }}>&nbsp;</div>
+<div className={clsx(cardStyles.prize, styles.bone)} style={{ width: 80 }}>&nbsp;</div>
 ```
 
 타이포그래피 클래스가 제공하는 것:
@@ -120,7 +120,7 @@ function ApplyFormSkeleton() {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <div className={classnames(styles.heading, styles.bone)} style={{width: '70%'}}>
+        <div className={clsx(styles.heading, styles.bone)} style={{width: '70%'}}>
           &nbsp;
         </div>
         <div className={styles.form}>
@@ -140,7 +140,7 @@ function ApplyFormSkeleton() {
 스켈레톤이 다른 파일에 있으면, 실제 컴포넌트의 `.module.scss`를 cross-import한다.
 
 ```tsx
-import classnames from 'classnames';
+import clsx from 'clsx';
 import cardStyles from '@/components/main/ContestCard.module.scss';
 import listStyles from '@/components/main/ContestList.module.scss';
 import styles from './MainPage.module.scss'; // .bone은 여기에
@@ -152,17 +152,17 @@ function ContestListSkeleton() {
         <div key={i} className={cardStyles.card}>
           <div className={cardStyles.meta}>
             <div className={styles.bone} style={{width: 60, height: 18, borderRadius: 80}} />
-            <div className={classnames(cardStyles.categoryIndustry, styles.bone)} style={{width: 100}}>
+            <div className={clsx(cardStyles.categoryIndustry, styles.bone)} style={{width: 100}}>
               &nbsp;
             </div>
           </div>
-          <div className={classnames(cardStyles.title, styles.bone)} style={{width: '70%'}}>
+          <div className={clsx(cardStyles.title, styles.bone)} style={{width: '70%'}}>
             &nbsp;
           </div>
-          <div className={classnames(cardStyles.description, styles.bone)} style={{width: '90%'}}>
+          <div className={clsx(cardStyles.description, styles.bone)} style={{width: '90%'}}>
             &nbsp;
           </div>
-          <div className={classnames(cardStyles.prize, styles.bone)} style={{width: 80}}>
+          <div className={clsx(cardStyles.prize, styles.bone)} style={{width: 80}}>
             &nbsp;
           </div>
         </div>

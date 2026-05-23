@@ -2,7 +2,7 @@
 
 import {TextField} from '@radix-ui/themes';
 import {ComponentProps, ReactNode} from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import {Caption, Label} from './elements';
 import styles from './Input.module.scss';
 
@@ -18,7 +18,7 @@ export default function Input({label, caption, error, color, className, ref, ...
       {label && <Label>{label}</Label>}
       <TextField.Root
         ref={ref}
-        className={classNames(error ? styles.error : undefined, className)}
+        className={clsx(error && styles.error, className)}
         color={error ? 'red' : color}
         {...props}
       />

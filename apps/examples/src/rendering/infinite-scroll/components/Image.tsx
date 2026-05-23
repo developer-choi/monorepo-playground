@@ -1,5 +1,5 @@
 import {ComponentProps} from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import styles from './Image.module.scss';
 
 interface BaseImageProps extends Omit<ComponentProps<'img'>, 'src'> {
@@ -10,7 +10,7 @@ interface BaseImageProps extends Omit<ComponentProps<'img'>, 'src'> {
 export function BaseImage({src, className, alt, ...rest}: BaseImageProps) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img {...rest} alt={alt} className={classNames(styles.image, className)} loading="lazy" src={src} />
+    <img {...rest} alt={alt} className={clsx(styles.image, className)} loading="lazy" src={src} />
   );
 }
 

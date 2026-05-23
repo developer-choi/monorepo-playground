@@ -2,7 +2,7 @@
 
 import {Button as RadixButton} from '@radix-ui/themes';
 import {ComponentProps} from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import styles from './Button.module.scss';
 
 interface ButtonProps extends Omit<ComponentProps<typeof RadixButton>, 'size'> {
@@ -10,5 +10,5 @@ interface ButtonProps extends Omit<ComponentProps<typeof RadixButton>, 'size'> {
 }
 
 export default function Button({size = 'medium', className, ...props}: ButtonProps) {
-  return <RadixButton className={classNames(size === 'large' && styles.large, className)} size="2" {...props} />;
+  return <RadixButton className={clsx(size === 'large' && styles.large, className)} size="2" {...props} />;
 }
