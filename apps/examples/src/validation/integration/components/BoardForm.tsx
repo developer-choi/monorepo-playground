@@ -28,7 +28,7 @@ import {revalidatePathFromClient} from '@/shared/server-actions';
 import {
   type BoardDetail,
   CreateBoardApiRequest,
-  CreateBoardSchema,
+  createBoardSchema,
   BOARD_TYPES,
   BOARD_CATEGORIES,
   BOARD_LIMITS,
@@ -48,7 +48,7 @@ export default function BoardForm({board}: BoardFormProps) {
     control,
     formState: {errors},
   } = useForm<CreateBoardApiRequest>({
-    resolver: zodResolver(CreateBoardSchema),
+    resolver: zodResolver(createBoardSchema),
     defaultValues: board ?? DEFAULT_FORM_DATA,
   });
 

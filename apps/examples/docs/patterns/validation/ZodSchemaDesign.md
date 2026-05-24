@@ -63,7 +63,7 @@ z.string()
 
 ```ts
 // 원본 — 도메인 전체 필드와 제약을 한 곳에 정의
-const BoardOriginalSchema = z.object({
+const boardOriginalSchema = z.object({
   id: numericIdSchema,
   postTitle: z
     .string()
@@ -81,10 +81,10 @@ const BoardOriginalSchema = z.object({
 });
 
 // 상세 — 전체 필드가 필요하면 원본을 그대로 할당 (pick으로 전체 나열은 불필요)
-export const BoardDetailSchema = BoardOriginalSchema;
+export const boardDetailSchema = boardOriginalSchema;
 
 // 목록 — 필요한 필드만 pick
-export const BoardRowSchema = BoardOriginalSchema.pick({
+export const boardRowSchema = boardOriginalSchema.pick({
   id: true,
   postTitle: true,
   boardType: true,
@@ -93,7 +93,7 @@ export const BoardRowSchema = BoardOriginalSchema.pick({
 });
 
 // 생성 — id를 제외한 입력 필드만 pick
-export const CreateBoardSchema = BoardOriginalSchema.pick({
+export const createBoardSchema = boardOriginalSchema.pick({
   postTitle: true,
   postContent: true,
   boardType: true,
@@ -102,13 +102,13 @@ export const CreateBoardSchema = BoardOriginalSchema.pick({
 });
 
 // 수정 — pick으로 id를 취하고 extend로 필드를 오버라이드
-const UpdateBoardSchema = BoardOriginalSchema.pick({id: true}).extend({
-  ...CreateBoardSchema.shape,
+const updateBoardSchema = boardOriginalSchema.pick({id: true}).extend({
+  ...createBoardSchema.shape,
   boardType: boardTypeEnum.nullable(), // 백엔드에서 null을 명시적으로 요구하는 경우
 });
 ```
 
-원본 스키마(`BoardOriginalSchema`) 자체는 export하지 않는다. 상세 뷰처럼 전체 필드가 필요한 경우에도 `BoardDetailSchema`라는 파생 이름으로 할당하여, 외부에서는 항상 용도별 파생 스키마를 통해 접근한다.
+원본 스키마(`boardOriginalSchema`) 자체는 export하지 않는다. 상세 뷰처럼 전체 필드가 필요한 경우에도 `boardDetailSchema`라는 파생 이름으로 할당하여, 외부에서는 항상 용도별 파생 스키마를 통해 접근한다.
 
 ## z.infer로 타입 추론
 
@@ -116,11 +116,11 @@ API 요청·응답 타입을 별도 `interface`로 선언하지 않고 스키마
 스키마와 타입을 분리 관리하면 스키마가 바뀔 때 타입도 수동으로 수정해야 하는 이중 작업이 생긴다.
 
 ```ts
-export type BoardDetail = z.infer<typeof BoardDetailSchema>;
-export type BoardRow = z.infer<typeof BoardRowSchema>;
-export type CreateBoardApiRequest = z.infer<typeof CreateBoardSchema>;
-export type UpdateBoardApiRequest = z.infer<typeof UpdateBoardSchema>;
-export type BoardListFilter = z.infer<typeof BoardListFilterSchema>;
+export type BoardDetail = z.infer<typeof boardDetailSchema>;
+export type BoardRow = z.infer<typeof boardRowSchema>;
+export type CreateBoardApiRequest = z.infer<typeof createBoardSchema>;
+export type UpdateBoardApiRequest = z.infer<typeof updateBoardSchema>;
+export type BoardListFilter = z.infer<typeof boardListFilterSchema>;
 ```
 
 스키마를 수정하면 타입이 자동으로 따라오므로 타입과 검증 로직 사이의 불일치가 없다.
@@ -131,8 +131,8 @@ export type BoardListFilter = z.infer<typeof BoardListFilterSchema>;
 `optional()`은 해당 키 자체를 생략(undefined)하는 반면, 일부 백엔드는 `null`과 `undefined`를 다르게 처리한다. 이 경우 `optional()`을 쓰면 런타임에서 계약 위반이 발생한다.
 
 ```ts
-const UpdateBoardSchema = BoardOriginalSchema.pick({id: true}).extend({
-  ...CreateBoardSchema.shape,
+const updateBoardSchema = boardOriginalSchema.pick({id: true}).extend({
+  ...createBoardSchema.shape,
   boardType: boardTypeEnum.nullable(), // 백엔드에서 null을 명시적으로 요구하는 경우
 });
 ```

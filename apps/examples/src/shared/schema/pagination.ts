@@ -7,7 +7,7 @@ export const PAGINATION_LIMITS = {
   defaultLimit: 10,
 };
 
-export const PaginationParamsSchema = z.object({
+export const paginationParamsSchema = z.object({
   page: z.coerce
     .number()
     .int()
@@ -21,7 +21,7 @@ export const PaginationParamsSchema = z.object({
     .default(PAGINATION_LIMITS.defaultLimit),
 });
 
-export type PaginationParams = z.infer<typeof PaginationParamsSchema>;
+export type PaginationParams = z.infer<typeof paginationParamsSchema>;
 
 export interface PaginationMeta {
   total: number;

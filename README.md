@@ -72,16 +72,16 @@ const deferredQuery = useDeferredValue(query);
 
 ```typescript
 // 스키마 하나로 타입 + 검증 + 에러 메시지를 통합합니다
-const LessonSchema = z.object({
+const lessonSchema = z.object({
   title: z.string().min(1).max(LESSON_LIMITS.title.max),
   lessonType: z.enum(LESSON_TYPES.values),
 });
 
 // 폼 — 같은 스키마로 검증
-useForm<z.infer<typeof LessonSchema>>({resolver: zodResolver(LessonSchema)});
+useForm<z.infer<typeof lessonSchema>>({resolver: zodResolver(lessonSchema)});
 
 // URL 쿼리스트링 — 같은 스키마로 검증
-const {success, data: filter} = LessonSchema.safeParse(searchParams);
+const {success, data: filter} = lessonSchema.safeParse(searchParams);
 ```
 
 enum 값과 한글 라벨도 하나의 배열로 관리합니다.

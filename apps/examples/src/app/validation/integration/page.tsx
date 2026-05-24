@@ -2,8 +2,8 @@ import {Container, Heading, Button, Flex} from '@radix-ui/themes';
 import Link from 'next/link';
 import {PlusIcon} from '@radix-ui/react-icons';
 import {getBoardListApi} from '@/validation/integration/api';
-import {BoardListFilterSchema} from '@/validation/integration/schema';
-import {PaginationParamsSchema} from '@/shared/schema/pagination';
+import {boardListFilterSchema} from '@/validation/integration/schema';
+import {paginationParamsSchema} from '@/shared/schema/pagination';
 import {safeParsePartial} from '@/shared/utils/zod';
 import BoardFilter from '@/validation/integration/components/BoardFilter';
 import BoardTable from '@/validation/integration/components/BoardTable';
@@ -14,8 +14,8 @@ interface PageProps {
 
 export default async function Page({searchParams}: PageProps) {
   const query = await searchParams;
-  const filters = safeParsePartial(BoardListFilterSchema, query);
-  const pagination = safeParsePartial(PaginationParamsSchema, query);
+  const filters = safeParsePartial(boardListFilterSchema, query);
+  const pagination = safeParsePartial(paginationParamsSchema, query);
   const data = await getBoardListApi({...filters, ...pagination});
 
   return (

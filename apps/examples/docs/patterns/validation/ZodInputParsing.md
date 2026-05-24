@@ -45,8 +45,8 @@ export function safeParsePartial<T extends z.ZodObject<z.ZodRawShape>>(
 
 ```ts
 // apps/examples/src/app/validation/integration/page.tsx
-const filters = safeParsePartial(BoardListFilterSchema, query);
-const pagination = safeParsePartial(PaginationParamsSchema, query);
+const filters = safeParsePartial(boardListFilterSchema, query);
+const pagination = safeParsePartial(paginationParamsSchema, query);
 ```
 
 **클라이언트 컴포넌트에서의 사용**
@@ -54,7 +54,7 @@ const pagination = safeParsePartial(PaginationParamsSchema, query);
 ```ts
 // apps/examples/src/validation/integration/components/BoardFilter.tsx
 const parsed = safeParsePartial(
-  BoardListFilterSchema,
+  boardListFilterSchema,
   queryString.parse(searchParams.toString()),
 );
 ```
@@ -116,7 +116,7 @@ export const PAGINATION_LIMITS = {
   defaultLimit: 10,
 };
 
-export const PaginationParamsSchema = z.object({
+export const paginationParamsSchema = z.object({
   page: z.coerce
     .number()
     .int()
@@ -135,7 +135,7 @@ export const PaginationParamsSchema = z.object({
 
 ```ts
 // apps/examples/src/app/validation/integration/page.tsx
-const pagination = safeParsePartial(PaginationParamsSchema, query);
+const pagination = safeParsePartial(paginationParamsSchema, query);
 // "1" → 1, "abc" → 필드 제외(safeParsePartial과 조합), 없음 → 기본값
 ```
 

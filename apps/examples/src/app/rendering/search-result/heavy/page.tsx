@@ -80,6 +80,7 @@ function RightGoodUsage() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention -- memo로 감싼 컴포넌트는 JSX 사용을 위해 PascalCase 변수가 필수
 const SlowList = memo(function SlowList({text}: {text: string}) {
   const items = [];
   for (let index = 0; index < SLOW_LIST_ITEM_COUNT; index++) {

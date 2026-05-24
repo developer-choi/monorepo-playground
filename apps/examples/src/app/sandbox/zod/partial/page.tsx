@@ -4,12 +4,12 @@ import {safeParsePartial} from '@/shared/utils/zod';
 
 const ALLOWED_TYPES = ['admin', 'user', 'manager'] as const;
 
-const SchemaStrict = z.object({
+const schemaStrict = z.object({
   type: z.enum(ALLOWED_TYPES),
   age: z.number().int().positive(),
 });
 
-const SchemaPartial = SchemaStrict.partial();
+const schemaPartial = schemaStrict.partial();
 
 const testCases = [
   {label: 'type 없음', data: {age: 25}},
@@ -26,9 +26,9 @@ function formatResult(result: ReturnType<typeof z.safeParse>) {
 
 export default function Page() {
   const rows = testCases.map(({label, data}) => {
-    const withoutPartial = formatResult(z.safeParse(SchemaStrict, data));
-    const withPartial = formatResult(z.safeParse(SchemaPartial, data));
-    const withSafeParsePartial = safeParsePartial(SchemaPartial, data);
+    const withoutPartial = formatResult(z.safeParse(schemaStrict, data));
+    const withPartial = formatResult(z.safeParse(schemaPartial, data));
+    const withSafeParsePartial = safeParsePartial(schemaPartial, data);
 
     return {label, data, withoutPartial, withPartial, withSafeParsePartial: JSON.stringify(withSafeParsePartial)};
   });

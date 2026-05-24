@@ -55,6 +55,7 @@ function SearchForm() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention -- memo로 감싼 컴포넌트는 JSX 사용을 위해 PascalCase 변수가 필수
 const SearchResults = memo(function SearchResults({query}: {query: string}) {
   const {data: results = [], isPlaceholderData} = useQuery({
     queryKey: ['search', query],

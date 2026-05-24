@@ -26,14 +26,14 @@ interface LessonRow {
 
 ```typescript
 // 타입, 유효성 검증, 에러메시지를 하나의 스키마에 통합
-const LessonSchema = z.object({
+const lessonSchema = z.object({
   lessonType: z.enum(['online', 'offline'], {
     errorMap: () => ({message: '수업 유형을 선택해주세요'}),
   }),
 });
 
 // 타입은 스키마에서 자동 추론
-type Lesson = z.infer<typeof LessonSchema>;
+type Lesson = z.infer<typeof lessonSchema>;
 ```
 
 ## 2. 폼과 URL에서 같은 필드를 각각 검증해야 합니다
@@ -57,20 +57,20 @@ export default function LessonListPage({ searchParams }: { searchParams: Record<
 ### zod로 구현하면?
 
 ```typescript
-const LessonSchema = z.object({
+const lessonSchema = z.object({
   lessonType: z.enum(['online', 'offline'], {
     errorMap: () => ({message: '수업 유형을 선택해주세요'}),
   }),
 });
 
 // 폼 — 같은 스키마로 검증
-const {register} = useForm<z.infer<typeof LessonSchema>>({
-  resolver: zodResolver(LessonSchema),
+const {register} = useForm<z.infer<typeof lessonSchema>>({
+  resolver: zodResolver(lessonSchema),
 });
 
 // URL 쿼리스트링 — 같은 스키마로 검증
 export default function LessonListPage({searchParams}: {searchParams: Record<string, string | string[] | undefined>}) {
-  const {success, data: filter} = LessonSchema.safeParse(searchParams);
+  const {success, data: filter} = lessonSchema.safeParse(searchParams);
 }
 ```
 
@@ -100,7 +100,7 @@ zod에서는 **전체 필드를 가진 원본 스키마**를 하나 정의하고
 
 ```typescript
 // 원본 — 전체 필드를 가진 단일 원천(Single Source of Truth)
-const LessonOriginalSchema = z.object({
+const lessonOriginalSchema = z.object({
   pk: z.number().int().positive(),
   title: z.string().min(1).max(100),
   description: z.string().min(1).max(5000),
@@ -110,7 +110,7 @@ const LessonOriginalSchema = z.object({
 });
 
 // 목록 — description 제외
-export const LessonRowSchema = LessonOriginalSchema.pick({
+export const lessonRowSchema = lessonOriginalSchema.pick({
   pk: true,
   title: true,
   lessonType: true,
@@ -118,10 +118,10 @@ export const LessonRowSchema = LessonOriginalSchema.pick({
 });
 
 // 상세 — 전체 필드
-export const LessonDetailSchema = LessonOriginalSchema;
+export const lessonDetailSchema = lessonOriginalSchema;
 
 // 생성 — pk, description 제외
-export const CreateLessonSchema = LessonOriginalSchema.pick({
+export const createLessonSchema = lessonOriginalSchema.pick({
   title: true,
   lessonType: true,
   capacity: true,
@@ -232,7 +232,7 @@ if (data.category !== 'all') params.set('category', data.category);
 
 ```typescript
 // 스키마 타입 — API와 URL에서 사용
-type LessonListFilter = z.infer<typeof LessonListFilterSchema>;
+type LessonListFilter = z.infer<typeof lessonListFilterSchema>;
 // { category: 'notice' | 'free' | 'question' | 'info' }
 
 // 필터 폼 타입 — 이 컴포넌트에서만 사용, 'all' 추가

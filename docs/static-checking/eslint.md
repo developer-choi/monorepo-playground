@@ -239,7 +239,18 @@ const myVariable = 1;
 type UserType = {name: string};
 ```
 
-React 컴포넌트(PascalCase 함수/변수), Next.js 라우트 핸들러(`GET`, `POST` 등), Zod 스키마(PascalCase 변수), 구조 분해 변수(외부 API 키 이름 그대로 사용)는 예외를 허용합니다. 객체 property는 camelCase/UPPER_CASE만 허용하며, 서버 DTO 등 snake_case가 필요한 파일은 파일 단위 eslint-disable로 처리합니다.
+변수는 `camelCase` 또는 `UPPER_CASE`만 허용합니다. **PascalCase 변수는 차단**하여 `const SomeComponent = () => <div />` 같은 화살표 컴포넌트 패턴(`react/function-component-definition`과 짝)과 `const UserSchema = z.object(...)` 같은 PascalCase Zod 스키마 변수까지 일관되게 막습니다.
+
+React 컴포넌트(PascalCase 함수), Next.js 라우트 핸들러(`GET`, `POST` 등), 구조 분해 변수(외부 API 키 이름 그대로 사용)는 예외를 허용합니다. 객체 property는 camelCase/UPPER_CASE만 허용하며, 서버 DTO 등 snake_case가 필요한 파일은 파일 단위 eslint-disable로 처리합니다.
+
+Storybook의 `**/*.stories.{ts,tsx}` 파일은 Story export(`export const BasicUsage: Story = {...}`)가 Storybook 사이드바 표시 컨벤션상 PascalCase여야 하므로, 워크스페이스 eslint config에서 file-pattern override로 variable PascalCase를 다시 허용합니다.
+
+`memo`로 감싼 컴포넌트는 JSX 사용을 위해 PascalCase 변수가 필수이므로 line-level eslint-disable + 사유 주석으로 예외 처리합니다.
+
+```tsx
+// eslint-disable-next-line @typescript-eslint/naming-convention -- memo로 감싼 컴포넌트는 JSX 사용을 위해 PascalCase 변수가 필수
+const SlowList = memo(function SlowList({text}: {text: string}) { ... });
+```
 
 #### `curly` (all)
 

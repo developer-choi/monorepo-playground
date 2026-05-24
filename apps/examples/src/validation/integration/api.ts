@@ -4,8 +4,8 @@ import {validateApiResponse} from '@/shared/api/parse';
 import {
   BoardListApiResponse,
   BoardListFilter,
-  BoardDetailSchema,
-  BoardRowSchema,
+  boardDetailSchema,
+  boardRowSchema,
   CreateBoardApiRequest,
   UpdateBoardApiRequest,
   BOARD_TYPES,
@@ -24,24 +24,24 @@ export async function getBoardListApi(
   return {
     ...toCamelCaseKeys(raw),
     list: raw.list.map((row) =>
-      validateApiResponse(BoardRowSchema, {...toCamelCaseKeys(row), tagList: row.tag_list ?? []}),
+      validateApiResponse(boardRowSchema, {...toCamelCaseKeys(row), tagList: row.tag_list ?? []}),
     ),
   };
 }
 
 export async function getBoardApi(id: number) {
   const raw = await api.get<ServerBoardDetail>(`api/board/${id}`);
-  return validateApiResponse(BoardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
+  return validateApiResponse(boardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
 export async function postBoardApi(body: CreateBoardApiRequest) {
   const raw = await api.post<ServerBoardDetail>('/api/board', {body: toSnakeCaseKeys(body)});
-  return validateApiResponse(BoardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
+  return validateApiResponse(boardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
 export async function patchBoardApi({id, ...body}: UpdateBoardApiRequest) {
   const raw = await api.patch<ServerBoardDetail>(`api/board/${id}`, {body: toSnakeCaseKeys(body)});
-  return validateApiResponse(BoardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
+  return validateApiResponse(boardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
 export function deleteBoardApi(id: number) {

@@ -40,7 +40,7 @@ const tagSchema = z
   .string()
   .max(BOARD_LIMITS.tagList.maxLength, `태그는 ${BOARD_LIMITS.tagList.maxLength}자 이내로 입력하세요`);
 
-const BoardOriginalSchema = z.object({
+const boardOriginalSchema = z.object({
   id: numericIdSchema,
   postTitle: z
     .string()
@@ -60,9 +60,9 @@ const BoardOriginalSchema = z.object({
 /*************************************************************************************************************
  * Derived Schemas
  *************************************************************************************************************/
-export const BoardDetailSchema = BoardOriginalSchema;
+export const boardDetailSchema = boardOriginalSchema;
 
-export const BoardRowSchema = BoardOriginalSchema.pick({
+export const boardRowSchema = boardOriginalSchema.pick({
   id: true,
   postTitle: true,
   boardType: true,
@@ -70,7 +70,7 @@ export const BoardRowSchema = BoardOriginalSchema.pick({
   tagList: true,
 });
 
-export const CreateBoardSchema = BoardOriginalSchema.pick({
+export const createBoardSchema = boardOriginalSchema.pick({
   postTitle: true,
   postContent: true,
   boardType: true,
@@ -79,14 +79,14 @@ export const CreateBoardSchema = BoardOriginalSchema.pick({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UpdateBoardSchema = BoardOriginalSchema.pick({id: true}).extend({
-  ...CreateBoardSchema.shape,
+const updateBoardSchema = boardOriginalSchema.pick({id: true}).extend({
+  ...createBoardSchema.shape,
   boardType: boardTypeEnum.nullable(), // 백엔드에서 의도적으로 빈값이 아닌 null을 보내달라고 요구하는 경우 nullable로 대응
 });
 
 const stringOrStringArray = z.union([z.string().transform((val) => [val]), z.array(z.string())]);
 
-export const BoardListFilterSchema = BoardOriginalSchema.pick({postTitle: true, category: true}).extend({
+export const boardListFilterSchema = boardOriginalSchema.pick({postTitle: true, category: true}).extend({
   boardType: z.union([boardTypeEnum.transform((val) => [val]), z.array(boardTypeEnum)]),
   tagList: stringOrStringArray,
 });
@@ -94,11 +94,11 @@ export const BoardListFilterSchema = BoardOriginalSchema.pick({postTitle: true, 
 /*************************************************************************************************************
  * Types
  *************************************************************************************************************/
-export type BoardDetail = z.infer<typeof BoardDetailSchema>;
-export type BoardRow = z.infer<typeof BoardRowSchema>;
-export type CreateBoardApiRequest = z.infer<typeof CreateBoardSchema>;
-export type UpdateBoardApiRequest = z.infer<typeof UpdateBoardSchema>;
-export type BoardListFilter = z.infer<typeof BoardListFilterSchema>;
+export type BoardDetail = z.infer<typeof boardDetailSchema>;
+export type BoardRow = z.infer<typeof boardRowSchema>;
+export type CreateBoardApiRequest = z.infer<typeof createBoardSchema>;
+export type UpdateBoardApiRequest = z.infer<typeof updateBoardSchema>;
+export type BoardListFilter = z.infer<typeof boardListFilterSchema>;
 
 export interface BoardListApiResponse {
   list: BoardRow[];

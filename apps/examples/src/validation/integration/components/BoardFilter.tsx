@@ -7,7 +7,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import queryString from 'query-string';
 import {safeParsePartial} from '@/shared/utils/zod';
 import {buildUrlWithQuery} from '@/shared/utils/url';
-import {BoardListFilter, BoardListFilterSchema, BOARD_CATEGORIES, BOARD_TYPES} from '@/validation/integration/schema';
+import {BoardListFilter, boardListFilterSchema, BOARD_CATEGORIES, BOARD_TYPES} from '@/validation/integration/schema';
 
 interface BoardListFilterForm extends Omit<BoardListFilter, 'category'> {
   category: BoardListFilter['category'] | 'all';
@@ -17,7 +17,7 @@ export default function BoardFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const parsed = safeParsePartial(BoardListFilterSchema, queryString.parse(searchParams.toString()));
+  const parsed = safeParsePartial(boardListFilterSchema, queryString.parse(searchParams.toString()));
 
   const {control, handleSubmit, reset} = useForm<BoardListFilterForm>({
     defaultValues: {
