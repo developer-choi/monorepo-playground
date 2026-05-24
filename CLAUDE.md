@@ -10,6 +10,10 @@
 - **코드 직결 가이드** → `docs/patterns/<주제>.md`
 - **인덱스** → `docs/best-practices-map.md`
 
+## packages/design-system 작업
+
+`packages/design-system` 내부 코드를 수정·추가할 때는 `docs/convention.md`를 따른다.
+
 ## docs/patterns/ 와 docs/best-practices-map.md
 
 ### 로드 규칙

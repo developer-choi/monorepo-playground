@@ -1,4 +1,7 @@
-/* stylelint-disable scale-unlimited/declaration-strict-value */
+$dialogMaxWidth: 600px;
+$h2FontSize: 20px;
+$descriptionLineHeight: 1.5;
+
 .container {
   height: 100%;
   outline: 0;
@@ -8,18 +11,70 @@
 }
 
 .paper {
-  margin: 32px;
+  margin: var(--spacing-xl);
   position: relative;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   max-height: calc(100% - 64px);
-  max-width: 600px;
+  max-width: $dialogMaxWidth;
   width: calc(100% - 64px);
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow:
-    0 11px 15px -7px rgb(0 0 0 / 20%),
-    0 24px 38px 3px rgb(0 0 0 / 14%),
-    0 9px 46px 8px rgb(0 0 0 / 12%);
+}
+
+.paper.styled {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-dialog);
+}
+
+.content {
+  padding: var(--spacing-lg);
+}
+
+.header {
+  margin-bottom: var(--spacing-md);
+
+  h2 {
+    margin: 0 0 var(--spacing-lg);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+:where(.header.styled) {
+  h2 {
+    font-size: $h2FontSize;
+    color: var(--color-fg-primary);
+  }
+
+  p {
+    color: var(--color-fg-muted);
+    font-size: var(--font-size-md);
+  }
+}
+
+.criticalTitle {
+  color: var(--color-fg-destructive);
+}
+
+.description {
+  margin-bottom: var(--spacing-md);
+}
+
+.description.styled {
+  color: var(--color-fg-secondary);
+  font-size: var(--font-size-md);
+  line-height: $descriptionLineHeight;
+}
+
+.body {
+  margin-bottom: var(--spacing-lg);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
 }

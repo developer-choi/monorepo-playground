@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Modal, {type ModalProps} from './Modal';
 import styles from './Dialog.module.scss';
 
@@ -24,7 +25,7 @@ export default function Dialog(props: DialogProps) {
       {...other}
     >
       <div className={styles.container} tabIndex={-1}>
-        <div className={styles.paper}>{children}</div>
+        <div className={clsx(styles.paper, styles.styled)}>{children}</div>
       </div>
     </Modal>
   );

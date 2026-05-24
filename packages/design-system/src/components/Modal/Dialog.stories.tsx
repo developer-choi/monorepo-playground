@@ -1,8 +1,10 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
+import clsx from 'clsx';
 import Dialog, {type DialogProps} from './Dialog';
 import Drawer from './Drawer';
-import styles from './DialogStories.module.scss';
+import styles from './Dialog.module.scss';
+import drawerStyles from './Drawer.module.scss';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Components/Modal/Dialog',
@@ -41,29 +43,29 @@ interface FormDialogContentProps {
 
 function FormDialogContent({title, descriptions, onClose}: FormDialogContentProps) {
   return (
-    <div className={styles.dialogContent}>
-      <div className={styles.dialogHeader}>
+    <div className={styles.content}>
+      <div className={clsx(styles.header, styles.styled)}>
         <h2>{title}</h2>
       </div>
 
       {descriptions.map((description, index) => (
-        <p key={index} className={styles.dialogDescription}>
+        <p key={index} className={clsx(styles.description, styles.styled)}>
           {description}
         </p>
       ))}
 
-      <div className={styles.dialogBody}>
-        <div className={styles.formGroup}>
+      <div className={styles.body}>
+        <div className="formGroup">
           <label htmlFor="form-name">이름</label>
           <input id="form-name" placeholder="이름을 입력하세요" type="text" />
         </div>
-        <div className={styles.formGroup}>
+        <div className="formGroup">
           <label htmlFor="form-email">이메일</label>
           <input id="form-email" placeholder="이메일을 입력하세요" type="email" />
         </div>
       </div>
 
-      <div className={styles.dialogFooter}>
+      <div className={styles.footer}>
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
         <button onClick={onClose}>취소</button>
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
@@ -79,7 +81,7 @@ function BasicUsageStory(args: DialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="story-layout">
+    <div className="storyLayout">
       {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>Dialog 열기</button>
 
@@ -91,16 +93,16 @@ function BasicUsageStory(args: DialogProps) {
           args.onClose(event, reason);
         }}
       >
-        <div className={styles.dialogContent}>
-          <div className={styles.dialogHeader}>
+        <div className={styles.content}>
+          <div className={clsx(styles.header, styles.styled)}>
             <h2>Dialog 제목</h2>
           </div>
 
-          <div className={styles.dialogBody}>
+          <div className={styles.body}>
             <p>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</p>
           </div>
 
-          <div className={styles.dialogFooter}>
+          <div className={styles.footer}>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button onClick={() => setOpen(false)}>취소</button>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
@@ -127,8 +129,8 @@ function FocusStory(args: DialogProps) {
   const [trapOpen, setTrapOpen] = useState(false);
 
   return (
-    <div className="story-layout">
-      <div className="btn-group">
+    <div className="storyLayout">
+      <div className="buttonGroup">
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
         <button onClick={() => setRestoreOpen(true)}>포커스 복원 & 첫 요소 지정</button>
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
@@ -187,9 +189,9 @@ function CriticalAlertStory(args: DialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="story-layout">
+    <div className="storyLayout">
       {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-      <button className="danger" onClick={() => setOpen(true)}>
+      <button className="destructive" onClick={() => setOpen(true)}>
         계정 영구 삭제
       </button>
 
@@ -201,24 +203,23 @@ function CriticalAlertStory(args: DialogProps) {
           args.onClose(event, reason);
         }}
       >
-        <div className={styles.dialogContent}>
-          <div className={styles.dialogHeader}>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 임시 스타일. DialogStories.module.scss에 클래스 추가 검토 필요 */}
-            <h2 style={{color: '#d32f2f'}}>정말 삭제하시겠습니까?</h2>
+        <div className={styles.content}>
+          <div className={clsx(styles.header, styles.styled)}>
+            <h2 className={styles.criticalTitle}>정말 삭제하시겠습니까?</h2>
           </div>
 
-          <div className={styles.dialogBody}>
+          <div className={styles.body}>
             <p>
               중요한 작업이므로 실수로 닫는 것을 방지하기 위해
               <strong> ESC 키와 배경 클릭 닫기가 비활성화</strong> 되었습니다.
             </p>
           </div>
 
-          <div className={styles.dialogFooter}>
+          <div className={styles.footer}>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
             <button onClick={() => setOpen(false)}>취소</button>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className="danger" onClick={() => setOpen(false)}>
+            <button className="destructive" onClick={() => setOpen(false)}>
               삭제 확인
             </button>
           </div>
@@ -240,26 +241,26 @@ function DrawerExampleStory(args: DialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="story-layout">
+    <div className="storyLayout">
       {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>전체 메뉴 열기1</button>
       {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>전체 메뉴 열기2</button>
 
       <Drawer {...args} anchor="left" open={open} onClose={() => setOpen(false)}>
-        <div className={styles.drawerContent}>
-          <div className={styles.drawerHeader}>
+        <div className={drawerStyles.content}>
+          <div className={clsx(drawerStyles.header, drawerStyles.styled)}>
             <h2>Dialog에 있던 기능 모두 테스트</h2>
           </div>
-          <div className={styles.drawerMenu}>
+          <div className={drawerStyles.menu}>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={styles.menuItem}>닫으면 포커스 돌아가기</button>
+            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>닫으면 포커스 돌아가기</button>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={styles.menuItem}>배경 / ESC로 닫기</button>
+            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>배경 / ESC로 닫기</button>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={styles.menuItem}>Tab 계속 누르기</button>
+            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>Tab 계속 누르기</button>
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={styles.menuItem}>Shift Tab 계속 누르기</button>
+            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>Shift Tab 계속 누르기</button>
           </div>
         </div>
       </Drawer>

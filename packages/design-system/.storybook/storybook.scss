@@ -1,0 +1,103 @@
+$storyLayoutMaxWidth: 600px;
+$descriptionH3FontSize: 16px;
+$descriptionLineHeight: 1.5;
+
+button,
+input {
+  border: 1px solid var(--color-fg-subtle);
+  border-radius: var(--radius-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-md);
+  background: var(--color-bg-primary);
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+}
+
+.storyLayout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  color: var(--color-fg-secondary);
+  padding: var(--spacing-md);
+  max-width: $storyLayoutMaxWidth;
+  width: 100%;
+}
+
+.description {
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-secondary);
+  border-left: 4px solid var(--color-fg-accent);
+  border-radius: var(--radius-xs);
+
+  h3 {
+    margin: 0 0 var(--spacing-sm);
+    font-size: $descriptionH3FontSize;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: var(--font-size-md);
+    line-height: $descriptionLineHeight;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.primary {
+  background-color: var(--color-bg-accent);
+  color: var(--color-on-accent);
+  border-color: var(--color-bg-accent);
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.destructive {
+  background-color: var(--color-bg-destructive);
+  color: var(--color-on-destructive);
+  border-color: var(--color-bg-destructive);
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-md);
+
+  label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+    font-size: var(--font-size-md);
+    color: var(--color-fg-secondary);
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.infoBox {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-base);
+  color: var(--color-fg-secondary);
+
+  strong {
+    font-weight: 600;
+  }
+}

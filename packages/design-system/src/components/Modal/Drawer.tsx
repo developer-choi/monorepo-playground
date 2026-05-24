@@ -13,7 +13,7 @@ export default function Drawer(props: DrawerProps) {
 
   return (
     <Modal className={className} {...modalProps}>
-      <div className={clsx(styles.drawer, styles[anchor])} tabIndex={-1}>
+      <div className={clsx(styles.root, styles[anchor], styles.styled)} tabIndex={-1}>
         {children}
       </div>
     </Modal>
