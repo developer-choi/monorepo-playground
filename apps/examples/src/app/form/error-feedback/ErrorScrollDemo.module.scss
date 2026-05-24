@@ -6,6 +6,7 @@ $scroll-container-max-height: 240px;
 }
 
 .form {
+  /* stylelint-disable-next-line selector-class-pattern -- Radix 내부 클래스 override */
   :global(.rt-TextFieldRoot):has(input:read-only) {
     background-image: none;
   }

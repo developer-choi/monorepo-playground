@@ -3,7 +3,10 @@
   "plugins": ["stylelint-declaration-strict-value"],
   "rules": {
     "at-rule-disallowed-list": ["import"],
-    "selector-class-pattern": null,
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]*$",
+      {"message": "클래스명은 camelCase만 허용합니다 (예: buttonPrimary)"}
+    ],
     "selector-pseudo-class-no-unknown": [true, {"ignorePseudoClasses": ["global"]}],
     "scss/at-mixin-pattern": null,
     "scss/dollar-variable-pattern": null,
