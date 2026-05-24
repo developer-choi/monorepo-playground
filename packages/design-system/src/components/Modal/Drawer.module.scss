@@ -2,6 +2,7 @@ $drawerLateralSize: 280px;
 $drawerLongitudinalSize: 200px;
 $drawerMaxLateral: 80%;
 $drawerMaxLongitudinal: 80%;
+$rootShadow: (0 8px 10px -5px rgb(0 0 0 / 20%), 0 16px 24px 2px rgb(0 0 0 / 14%), 0 6px 30px 5px rgb(0 0 0 / 12%));
 
 .root {
   position: fixed;
@@ -44,7 +45,7 @@ $drawerMaxLongitudinal: 80%;
 
 .root.styled {
   background-color: var(--color-bg-primary);
-  box-shadow: var(--shadow-drawer);
+  box-shadow: $rootShadow;
 }
 
 .content {

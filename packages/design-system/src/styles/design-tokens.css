@@ -1,6 +1,3 @@
-/* 디자인 토큰. 회색조 톤은 my-else/blog의 globals.scss에서 가져왔지만
-   이 레포가 캐논. 명명·구성은 docs/patterns/DesignTokens.md 정책 따름. */
-
 :root {
   /* === 컬러: fg (전경 - 텍스트·아이콘·보더) === */
   --color-fg-primary: #1a1a1a;
@@ -60,7 +57,5 @@
   --spacing-grid-gap: 12px;
 
   /* === Shadow === */
-  --shadow-dialog: 0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%);
-  --shadow-drawer: 0 8px 10px -5px rgb(0 0 0 / 20%), 0 16px 24px 2px rgb(0 0 0 / 14%), 0 6px 30px 5px rgb(0 0 0 / 12%);
   --shadow-focus: 0 0 0 3px rgb(26 26 26 / 25%);
 }

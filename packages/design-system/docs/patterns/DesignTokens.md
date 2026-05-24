@@ -79,14 +79,31 @@ CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 `
 
 ## SCSS 변수 vs CSS 변수 사용 구분
 
-- **CSS 변수 (`--name`)** — 디자인 토큰. 컬러·radius·font-size·spacing·shadow 등 테마 단위 교체 대상.
-- **SCSS 변수 (`$name`)** — 컴포넌트 로컬 상수. 그 컴포넌트에서만 의미 있는 1회성 값(예: Dialog `max-width: 600px`, Drawer `width: 280px`), SCSS 컨디셔널, 믹스인.
+### 순서: 먼저 토큰화 시도
 
-**판단 기준:** 2개 이상 파일에서 같은 값이 반복되면 토큰으로, 1개 파일 전용이면 그 파일의 SCSS 변수로.
+1. **공통화·재사용 가능한 의미가 있으면 토큰(CSS 변수)으로** — 컬러·spacing 스케일·font-size·radius, 다른 컴포넌트도 쓸 만한 shadow 등.
+2. **시도해 봤더니 그 컴포넌트 한 곳에서만 의미 있는 값**이면 그 파일의 SCSS 로컬 변수로 — Dialog `max-width: 600px`, Drawer `width: 280px`, Dialog만의 box-shadow 3-stop 조합 등.
+
+판단 기준은 **명명**으로 드러난다.
+
+- 의미 단어로 명명 가능 (`md`, `lg`, `accent`, `subtle`) → 토큰
+- 컴포넌트명/특정 사이즈가 박혀야만 식별 가능 (`paperShadow`, `dialogMaxWidth`) → SCSS 로컬
+
+### 금지: 공통화 불가능한 값을 토큰 파일에 두기
+
+**가장 나쁜 패턴**이다. 예: `--shadow-dialog`는 Dialog 한 곳에서만 의미 있는 깊이/길이 조합이라 다른 컴포넌트가 재사용할 일이 없다. 그런데도 공통 토큰에 두면:
+
+- 토큰 100컴포넌트 = `--shadow-dialog`, `--shadow-drawer`, `--shadow-tooltip`, ... 무한 증식
+- 테마 교체할 때 일괄 갱신 의미가 사라짐 (이미 컴포넌트 단위로 분기)
+- 토큰의 정체성 상실
+
+이런 값은 해당 컴포넌트 `module.scss` 상단에 SCSS 로컬 변수로 둔다.
 
 ```scss
-$dialogMaxWidth: 600px;
-$drawerWidth: 280px;
+$paperShadow: (
+  0 11px 15px -7px rgb(0 0 0 / 20%),
+  ...
+);
 ```
 
-테마 교체와 무관한 컴포넌트 고유 사이즈는 토큰화하지 않는다.
+shadow 형태(ring vs depth) 자체가 여러 컴포넌트에서 공유될 가능성이 있으면 (예: `--shadow-focus`는 input·button focus 링) 토큰화한다.
