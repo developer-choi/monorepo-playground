@@ -270,6 +270,21 @@ if (items.length > MAX_VISIBLE_ITEMS) { ... }
 const TIMEOUT_MS = 3000;
 ```
 
+#### `react/function-component-definition`
+
+함수 컴포넌트는 `function` 키워드로 선언합니다. `const Foo = () => <div />` 같은 화살표 컴포넌트를 금지하여 선언 형태를 통일합니다. `memo`로 감싼 경우는 `CallExpression`이라 이 룰이 잡지 않습니다 (반환 변수의 PascalCase 처리는 별도 `naming-convention` 룰 영역).
+
+```tsx
+// ❌
+const Input = (props: ComponentProps<'input'>) => <input {...props} />;
+const Input = function(props: ComponentProps<'input'>) { return <input {...props} />; };
+
+// ✅
+function Input(props: ComponentProps<'input'>) {
+  return <input {...props} />;
+}
+```
+
 #### `react/jsx-sort-props`
 
 JSX 속성을 알파벳 순으로 정렬합니다. 콜백(on\*)은 마지막, shorthand는 먼저, key/ref는 최우선으로 배치합니다. auto-fix 지원.

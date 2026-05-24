@@ -46,6 +46,10 @@ export const baseRules = {
       enforceConst: true,
     },
   ],
+  'react/function-component-definition': [
+    'error',
+    {namedComponents: 'function-declaration', unnamedComponents: 'arrow-function'},
+  ],
   'react/jsx-sort-props': [
     'error',
     {

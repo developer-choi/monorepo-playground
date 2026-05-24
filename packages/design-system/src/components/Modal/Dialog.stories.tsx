@@ -39,41 +39,43 @@ interface FormDialogContentProps {
   onClose: () => void;
 }
 
-const FormDialogContent = ({title, descriptions, onClose}: FormDialogContentProps) => (
-  <div className={styles.dialogContent}>
-    <div className={styles.dialogHeader}>
-      <h2>{title}</h2>
-    </div>
-
-    {descriptions.map((description, index) => (
-      <p key={index} className={styles.dialogDescription}>
-        {description}
-      </p>
-    ))}
-
-    <div className={styles.dialogBody}>
-      <div className={styles.formGroup}>
-        <label htmlFor="form-name">이름</label>
-        <input id="form-name" placeholder="이름을 입력하세요" type="text" />
+function FormDialogContent({title, descriptions, onClose}: FormDialogContentProps) {
+  return (
+    <div className={styles.dialogContent}>
+      <div className={styles.dialogHeader}>
+        <h2>{title}</h2>
       </div>
-      <div className={styles.formGroup}>
-        <label htmlFor="form-email">이메일</label>
-        <input id="form-email" placeholder="이메일을 입력하세요" type="email" />
+
+      {descriptions.map((description, index) => (
+        <p key={index} className={styles.dialogDescription}>
+          {description}
+        </p>
+      ))}
+
+      <div className={styles.dialogBody}>
+        <div className={styles.formGroup}>
+          <label htmlFor="form-name">이름</label>
+          <input id="form-name" placeholder="이름을 입력하세요" type="text" />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="form-email">이메일</label>
+          <input id="form-email" placeholder="이메일을 입력하세요" type="email" />
+        </div>
+      </div>
+
+      <div className={styles.dialogFooter}>
+        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
+        <button onClick={onClose}>취소</button>
+        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
+        <button className="primary" onClick={onClose}>
+          저장
+        </button>
       </div>
     </div>
+  );
+}
 
-    <div className={styles.dialogFooter}>
-      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-      <button onClick={onClose}>취소</button>
-      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-      <button className="primary" onClick={onClose}>
-        저장
-      </button>
-    </div>
-  </div>
-);
-
-const BasicUsageStory = (args: DialogProps) => {
+function BasicUsageStory(args: DialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -110,7 +112,7 @@ const BasicUsageStory = (args: DialogProps) => {
       </Dialog>
     </div>
   );
-};
+}
 
 export const BasicUsage: Story = {
   args: {
@@ -120,7 +122,7 @@ export const BasicUsage: Story = {
   render: (args) => <BasicUsageStory {...args} />,
 };
 
-const FocusStory = (args: DialogProps) => {
+function FocusStory(args: DialogProps) {
   const [restoreOpen, setRestoreOpen] = useState(false);
   const [trapOpen, setTrapOpen] = useState(false);
 
@@ -171,7 +173,7 @@ const FocusStory = (args: DialogProps) => {
       </Dialog>
     </div>
   );
-};
+}
 
 export const Focus: Story = {
   args: {
@@ -181,7 +183,7 @@ export const Focus: Story = {
   render: (args) => <FocusStory {...args} />,
 };
 
-const CriticalAlertStory = (args: DialogProps) => {
+function CriticalAlertStory(args: DialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -224,7 +226,7 @@ const CriticalAlertStory = (args: DialogProps) => {
       </Dialog>
     </div>
   );
-};
+}
 
 export const CriticalAlert: Story = {
   args: {
@@ -234,7 +236,7 @@ export const CriticalAlert: Story = {
   render: (args) => <CriticalAlertStory {...args} />,
 };
 
-const DrawerExampleStory = (args: DialogProps) => {
+function DrawerExampleStory(args: DialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -263,7 +265,7 @@ const DrawerExampleStory = (args: DialogProps) => {
       </Drawer>
     </div>
   );
-};
+}
 
 export const DrawerExample: Story = {
   args: {
