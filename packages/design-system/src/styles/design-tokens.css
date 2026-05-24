@@ -1,0 +1,66 @@
+/* 디자인 토큰. 회색조 톤은 my-else/blog의 globals.scss에서 가져왔지만
+   이 레포가 캐논. 명명·구성은 docs/patterns/DesignTokens.md 정책 따름. */
+
+:root {
+  /* === 컬러: fg (전경 - 텍스트·아이콘·보더) === */
+  --color-fg-primary: #1a1a1a;
+  --color-fg-secondary: #666;
+  --color-fg-muted: #999;
+  --color-fg-subtle: #e5e5e5;
+  --color-fg-accent: #1a1a1a;
+  --color-fg-destructive: #d32f2f;
+
+  /* === 컬러: bg (배경) === */
+  --color-bg-primary: #fff;
+  --color-bg-secondary: #fafafa;
+  --color-bg-tertiary: #f0f0f0;
+  --color-bg-accent: #1a1a1a;
+  --color-bg-destructive: #ff6b6b;
+
+  /* === 컬러: on-X (X 배경 위 텍스트) === */
+  --color-on-accent: #fff;
+  --color-on-destructive: #fff;
+
+  /* === 컬러: 도메인 특수 (코드 블록·인용구) === */
+  --color-code-bg: #f3f4f6;
+  --color-code-block-bg: #24292e;
+  --color-code-block-text: #e5e7eb;
+  --color-code-title-bg: #1c2028;
+  --color-code-title-text: #8b949e;
+  --color-code-title-border: #30363d;
+  --color-blockquote-bg: #f9fafb;
+  --color-blockquote-border: #1a1a1a;
+
+  /* === 레이아웃 === */
+  --max-width: 1080px;
+  --header-height: 64px;
+
+  /* === Border radius === */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-full: 20px;
+
+  /* === Font sizes === */
+  --font-size-2xs: 10px;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 18px;
+  --font-size-2xl: 36px;
+
+  /* === Spacing === */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-page-x: 24px;
+  --spacing-grid-gap: 12px;
+
+  /* === Shadow === */
+  --shadow-dialog: 0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%);
+  --shadow-drawer: 0 8px 10px -5px rgb(0 0 0 / 20%), 0 16px 24px 2px rgb(0 0 0 / 14%), 0 6px 30px 5px rgb(0 0 0 / 12%);
+  --shadow-focus: 0 0 0 3px rgb(26 26 26 / 25%);
+}

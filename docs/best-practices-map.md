@@ -262,3 +262,11 @@
 - 기술스택: Storybook
 - 상황: 스토리 작성 시 Controls 패널에 노출된 prop을 render가 사용하지 않으면 토글해도 화면이 안 바뀐다. args / argTypes / render 사이의 정합성 처리
 - 코드: docs/patterns/storybook/ControlsPanel.md
+
+## 디자인 시스템
+
+### 디자인 토큰 출처·운영
+
+- 기술스택: CSS
+- 상황: packages/design-system 내부에서 색·여백·폰트·radius·shadow 값을 토큰화할 때. fg/bg 명명 정책으로 통일, 회색조 톤은 blog 레퍼런스에서 출발
+- 코드: packages/design-system/docs/patterns/DesignTokens.md
