@@ -11,6 +11,7 @@
     "scss/at-mixin-pattern": null,
     "scss/dollar-variable-pattern": null,
     "scss/at-function-pattern": null,
+    "scss/at-use-no-unnamespaced": true,
     "value-keyword-case": null,
     "scale-unlimited/declaration-strict-value": [
       [

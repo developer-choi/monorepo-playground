@@ -24,6 +24,7 @@ Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`
 | `scss/at-mixin-pattern`               | `null`         | camelCase mixin 이름 허용                                                |
 | `scss/dollar-variable-pattern`        | `null`         | camelCase 변수 이름 허용                                                 |
 | `scss/at-function-pattern`            | `null`         | camelCase 함수 이름 허용                                                 |
+| `scss/at-use-no-unnamespaced`         | `true`         | `@use 'foo' as *;` 금지. namespace prefix 강제(`color.$X` 형태)로 변수 출처를 명시 |
 | `value-keyword-case`                  | `null`         | SCSS map 키를 CSS 키워드로 오인하는 false positive 방지                  |
 
 ## declaration-strict-value
