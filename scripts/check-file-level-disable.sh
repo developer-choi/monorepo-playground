@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# staged된 SCSS 파일에 file-level stylelint-disable이 있으면 커밋을 차단한다.
+# staged된 SCSS/CSS 파일에 file-level stylelint-disable이 있으면 커밋을 차단한다.
 # 개발자는 file-level disable을 제거하고 per-line disable로 전환해야 한다.
 
 EXIT_CODE=0
@@ -7,7 +7,7 @@ EXIT_CODE=0
 # 최초 도입 커밋 시 STYLELINT_INIT=1로 스킵
 if [ "$STYLELINT_INIT" = "1" ]; then exit 0; fi
 
-for file in $(git diff --cached --name-only --diff-filter=ACM -- '*.scss' ':!docs/**'); do
+for file in $(git diff --cached --name-only --diff-filter=ACM -- '*.scss' '*.css' ':!docs/**'); do
   if head -5 "$file" | grep -q 'stylelint-disable '; then
     echo "❌ $file"
     echo "   file-level stylelint-disable 감지. 제거 후 per-line disable로 전환하세요."

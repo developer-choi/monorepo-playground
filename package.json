@@ -13,13 +13,13 @@
     "test-all": "turbo check-types && turbo lint && npm run stylelint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "stylelint": "stylelint \"**/*.scss\" --max-warnings 0",
-    "stylelint:fix": "stylelint \"**/*.scss\" --fix --max-warnings 0",
+    "stylelint": "stylelint \"**/*.{scss,css}\" --max-warnings 0",
+    "stylelint:fix": "stylelint \"**/*.{scss,css}\" --fix --max-warnings 0",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
-    "**/*.scss": "stylelint --fix --max-warnings 0",
+    "**/*.{scss,css}": "stylelint --fix --max-warnings 0",
     "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config apps/examples/eslint.config.mjs",
     "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/design-system/eslint.config.js",
     "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/recruitment/eslint.config.js"
