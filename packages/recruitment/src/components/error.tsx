@@ -39,15 +39,15 @@ export function ErrorPageTemplate({content, action}: ErrorPageTemplateProps) {
 }
 
 export function HandledErrorBoundary({children}: PropsWithChildren) {
-  const ErrorFallback = ({error, resetErrorBoundary}: FallbackProps) => {
-    if (error instanceof ExampleError) {
-      return <ErrorPageTemplate action={{text: '새로고침', onClick: resetErrorBoundary}} content="이런 에러에요" />;
-    }
-
-    return <ErrorPageTemplate action={{text: '홈으로 돌아가기', href: '/'}} content="적당한 500에러 메시지" />;
-  };
-
   return <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>;
+}
+
+function ErrorFallback({error, resetErrorBoundary}: FallbackProps) {
+  if (error instanceof ExampleError) {
+    return <ErrorPageTemplate action={{text: '새로고침', onClick: resetErrorBoundary}} content="이런 에러에요" />;
+  }
+
+  return <ErrorPageTemplate action={{text: '홈으로 돌아가기', href: '/'}} content="적당한 500에러 메시지" />;
 }
 
 class ExampleError extends Error {}
