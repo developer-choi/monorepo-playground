@@ -29,7 +29,7 @@ Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`
 
 ## declaration-strict-value
 
-하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·간격뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`)도 대상에 포함하여, `max-width: 480px` 같은 매직넘버를 차단합니다.
+하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·간격뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`)과 레이어 속성(`z-index`)도 대상에 포함하여, `max-width: 480px`이나 `z-index: 1300` 같은 매직넘버를 차단합니다. 토큰화된 z-index map(예: `$zIndexes`)이나 CSS 변수만 통과합니다.
 
 ### 주요 설정 포인트
 

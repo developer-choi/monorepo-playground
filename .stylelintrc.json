@@ -43,7 +43,8 @@
         "min-width",
         "min-height",
         "max-width",
-        "max-height"
+        "max-height",
+        "z-index"
       ],
       {
         "ignoreValues": [
