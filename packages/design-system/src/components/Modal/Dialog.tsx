@@ -56,7 +56,7 @@ export function Header({children, className}: WrapperProps) {
 }
 
 export function Content({children, className}: WrapperProps) {
-  return <div className={clsx(styles.body, className)}>{children}</div>;
+  return <div className={clsx(styles.body, styles.styled, className)}>{children}</div>;
 }
 
 export function Footer({children, className}: WrapperProps) {
