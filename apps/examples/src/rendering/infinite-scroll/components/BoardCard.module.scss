@@ -1,6 +1,7 @@
-/* stylelint-disable scale-unlimited/declaration-strict-value */
 @use '../variables';
 @use '@monorepo-playground/design-system/styles/typography';
+
+$infoPadding: 12px;
 
 .imageWrapper {
   aspect-ratio: 1 / 1;
@@ -15,7 +16,7 @@
 }
 
 .info {
-  padding: 12px 0 0;
+  padding: $infoPadding 0 0;
 }
 
 .title {
@@ -31,10 +32,10 @@
 }
 
 .meta {
-  margin-top: 8px;
+  margin-top: variables.$space8;
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: variables.$space8;
 }
 
 .author {
