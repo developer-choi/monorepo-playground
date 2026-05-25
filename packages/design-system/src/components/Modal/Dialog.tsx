@@ -1,24 +1,24 @@
-import {type PropsWithChildren} from 'react';
-import {Dialog as Rd} from 'radix-ui';
+import {type PropsWithChildren, type ComponentProps} from 'react';
+import {Dialog as RadixDialog} from 'radix-ui';
 import clsx from 'clsx';
 import styles from './Dialog.module.scss';
 
-export interface DialogProps {
+export interface RootProps {
   open: boolean;
   onClose: () => void;
   disableEscapeKeyDown?: boolean;
   disableBackdropClick?: boolean;
 }
 
-export default function Dialog({
+export function Root({
   open,
   onClose,
   disableEscapeKeyDown = false,
   disableBackdropClick = false,
   children,
-}: PropsWithChildren<DialogProps>) {
+}: PropsWithChildren<RootProps>) {
   return (
-    <Rd.Root
+    <RadixDialog.Root
       open={open}
       onOpenChange={(isOpen) => {
         if (!isOpen) {
@@ -26,9 +26,10 @@ export default function Dialog({
         }
       }}
     >
-      <Rd.Portal>
-        <Rd.Overlay className={styles.overlay} />
-        <Rd.Content
+      <RadixDialog.Portal>
+        <RadixDialog.Overlay className={styles.overlay} />
+        <RadixDialog.Content
+          aria-describedby={undefined}
           className={clsx(styles.paper, styles.styled)}
           onEscapeKeyDown={(event) => {
             if (disableEscapeKeyDown) {
@@ -41,9 +42,27 @@ export default function Dialog({
             }
           }}
         >
-          {children}
-        </Rd.Content>
-      </Rd.Portal>
-    </Rd.Root>
+          <div className={styles.content}>{children}</div>
+        </RadixDialog.Content>
+      </RadixDialog.Portal>
+    </RadixDialog.Root>
   );
+}
+
+type WrapperProps = PropsWithChildren<{className?: string}>;
+
+export function Header({children, className}: WrapperProps) {
+  return <div className={clsx(styles.header, styles.styled, className)}>{children}</div>;
+}
+
+export function Content({children, className}: WrapperProps) {
+  return <div className={clsx(styles.body, className)}>{children}</div>;
+}
+
+export function Footer({children, className}: WrapperProps) {
+  return <div className={clsx(styles.footer, className)}>{children}</div>;
+}
+
+export function Title(props: ComponentProps<typeof RadixDialog.Title>) {
+  return <RadixDialog.Title {...props} />;
 }

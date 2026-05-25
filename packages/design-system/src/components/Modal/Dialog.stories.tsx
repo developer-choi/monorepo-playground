@@ -1,13 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
-import clsx from 'clsx';
-import Dialog, {type DialogProps} from './Dialog';
+import * as Dialog from './Dialog';
 import styles from './Dialog.module.scss';
-import typography from '../../styles/typography.module.scss';
 
-const meta: Meta<typeof Dialog> = {
+const meta: Meta<typeof Dialog.Root> = {
   title: 'Components/Modal/Dialog',
-  component: Dialog,
+  component: Dialog.Root,
   parameters: {
     layout: 'centered',
   },
@@ -32,7 +30,7 @@ const meta: Meta<typeof Dialog> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Dialog>;
+type Story = StoryObj<typeof Dialog.Root>;
 
 interface FormDialogContentProps {
   title: string;
@@ -42,18 +40,16 @@ interface FormDialogContentProps {
 
 function FormDialogContent({title, descriptions, onClose}: FormDialogContentProps) {
   return (
-    <div className={styles.content}>
-      <div className={clsx(styles.header, styles.styled)}>
-        <h2>{title}</h2>
-      </div>
+    <>
+      <Dialog.Header>
+        <Dialog.Title>{title}</Dialog.Title>
+      </Dialog.Header>
 
-      {descriptions.map((description, index) => (
-        <p key={index} className={clsx(styles.description, styles.styled)}>
-          {description}
-        </p>
-      ))}
+      <Dialog.Content>
+        {descriptions.map((description, index) => (
+          <p key={index}>{description}</p>
+        ))}
 
-      <div className={styles.body}>
         <div className="formGroup">
           <label htmlFor="form-name">이름</label>
           <input id="form-name" placeholder="이름을 입력하세요" type="text" />
@@ -62,21 +58,21 @@ function FormDialogContent({title, descriptions, onClose}: FormDialogContentProp
           <label htmlFor="form-email">이메일</label>
           <input id="form-email" placeholder="이메일을 입력하세요" type="email" />
         </div>
-      </div>
+      </Dialog.Content>
 
-      <div className={styles.footer}>
+      <Dialog.Footer>
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
         <button onClick={onClose}>취소</button>
         {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
         <button className="primary" onClick={onClose}>
           저장
         </button>
-      </div>
-    </div>
+      </Dialog.Footer>
+    </>
   );
 }
 
-function BasicUsageStory(args: DialogProps) {
+function BasicUsageStory(args: Dialog.RootProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -84,7 +80,7 @@ function BasicUsageStory(args: DialogProps) {
       {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
       <button onClick={() => setOpen(true)}>Dialog 열기</button>
 
-      <Dialog
+      <Dialog.Root
         {...args}
         open={open}
         onClose={() => {
@@ -92,25 +88,21 @@ function BasicUsageStory(args: DialogProps) {
           args.onClose();
         }}
       >
-        <div className={styles.content}>
-          <div className={clsx(styles.header, styles.styled)}>
-            <h2>Dialog 제목</h2>
-          </div>
+        <Dialog.Header>
+          <Dialog.Title>Dialog 제목</Dialog.Title>
+        </Dialog.Header>
 
-          <div className={styles.body}>
-            <p className={typography.body2}>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</p>
-          </div>
+        <Dialog.Content>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</Dialog.Content>
 
-          <div className={styles.footer}>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button onClick={() => setOpen(false)}>취소</button>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className="primary" onClick={() => setOpen(false)}>
-              확인
-            </button>
-          </div>
-        </div>
-      </Dialog>
+        <Dialog.Footer>
+          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
+          <button onClick={() => setOpen(false)}>취소</button>
+          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
+          <button className="primary" onClick={() => setOpen(false)}>
+            확인
+          </button>
+        </Dialog.Footer>
+      </Dialog.Root>
     </div>
   );
 }
@@ -123,7 +115,7 @@ export const BasicUsage: Story = {
   render: (args) => <BasicUsageStory {...args} />,
 };
 
-function FocusStory(args: DialogProps) {
+function FocusStory(args: Dialog.RootProps) {
   const [restoreOpen, setRestoreOpen] = useState(false);
   const [trapOpen, setTrapOpen] = useState(false);
 
@@ -136,7 +128,7 @@ function FocusStory(args: DialogProps) {
         <button onClick={() => setTrapOpen(true)}>포커스 Trap 테스트</button>
       </div>
 
-      <Dialog
+      <Dialog.Root
         {...args}
         open={restoreOpen}
         onClose={() => {
@@ -153,9 +145,9 @@ function FocusStory(args: DialogProps) {
           title="포커스 복원 & 첫 요소 지정"
           onClose={() => setRestoreOpen(false)}
         />
-      </Dialog>
+      </Dialog.Root>
 
-      <Dialog
+      <Dialog.Root
         {...args}
         open={trapOpen}
         onClose={() => {
@@ -171,7 +163,7 @@ function FocusStory(args: DialogProps) {
           title="포커스 Trap 테스트"
           onClose={() => setTrapOpen(false)}
         />
-      </Dialog>
+      </Dialog.Root>
     </div>
   );
 }
@@ -184,7 +176,7 @@ export const Focus: Story = {
   render: (args) => <FocusStory {...args} />,
 };
 
-function CriticalAlertStory(args: DialogProps) {
+function CriticalAlertStory(args: Dialog.RootProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -194,7 +186,7 @@ function CriticalAlertStory(args: DialogProps) {
         계정 영구 삭제
       </button>
 
-      <Dialog
+      <Dialog.Root
         {...args}
         open={open}
         onClose={() => {
@@ -202,28 +194,24 @@ function CriticalAlertStory(args: DialogProps) {
           args.onClose();
         }}
       >
-        <div className={styles.content}>
-          <div className={clsx(styles.header, styles.styled)}>
-            <h2 className={styles.criticalTitle}>정말 삭제하시겠습니까?</h2>
-          </div>
+        <Dialog.Header>
+          <Dialog.Title className={styles.criticalTitle}>정말 삭제하시겠습니까?</Dialog.Title>
+        </Dialog.Header>
 
-          <div className={styles.body}>
-            <p className={typography.body2}>
-              중요한 작업이므로 실수로 닫는 것을 방지하기 위해
-              <strong> ESC 키와 배경 클릭 닫기가 비활성화</strong> 되었습니다.
-            </p>
-          </div>
+        <Dialog.Content>
+          중요한 작업이므로 실수로 닫는 것을 방지하기 위해
+          <strong> ESC 키와 배경 클릭 닫기가 비활성화</strong> 되었습니다.
+        </Dialog.Content>
 
-          <div className={styles.footer}>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button onClick={() => setOpen(false)}>취소</button>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className="destructive" onClick={() => setOpen(false)}>
-              삭제 확인
-            </button>
-          </div>
-        </div>
-      </Dialog>
+        <Dialog.Footer>
+          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
+          <button onClick={() => setOpen(false)}>취소</button>
+          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
+          <button className="destructive" onClick={() => setOpen(false)}>
+            삭제 확인
+          </button>
+        </Dialog.Footer>
+      </Dialog.Root>
     </div>
   );
 }

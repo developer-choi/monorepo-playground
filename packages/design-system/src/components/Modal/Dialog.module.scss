@@ -39,10 +39,6 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
   h2 {
     margin: 0 0 var(--spacing-lg);
   }
-
-  p {
-    margin: 0;
-  }
 }
 
 :where(.header.styled) {
@@ -51,29 +47,17 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 
     color: var(--color-fg-primary);
   }
-
-  p {
-    color: var(--color-fg-muted);
-    font-size: var(--font-size-md);
-  }
 }
 
 .criticalTitle {
   color: var(--color-fg-destructive);
 }
 
-.description {
-  margin-bottom: var(--spacing-md);
-}
-
-.description.styled {
+.body {
   @include typography.body2;
 
-  color: var(--color-fg-secondary);
-}
-
-.body {
   margin-bottom: var(--spacing-lg);
+  color: var(--color-fg-secondary);
 }
 
 .footer {
