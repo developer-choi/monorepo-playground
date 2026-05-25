@@ -14,6 +14,7 @@
 |  4   | tsconfig                | `docs/static-checking/tsconfig.md`                     |
 |  5   | ESLint                  | `docs/static-checking/eslint.md`                       |
 |  6   | reset.css               | `docs/patterns/setup/ResetCss.md`                      |
+|  7   | 기본 폰트 (Next.js)     | `docs/patterns/setup/NextRootLayout.md`                |
 
 ## .gitignore 필수 항목
 
