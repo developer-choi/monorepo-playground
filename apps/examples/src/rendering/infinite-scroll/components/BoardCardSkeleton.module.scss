@@ -1,4 +1,3 @@
-/* stylelint-disable scale-unlimited/declaration-strict-value */
 @use '../variables';
 
 @keyframes pulse {
@@ -15,16 +14,4 @@
 .bone {
   background-color: variables.$colorSkeleton;
   animation: pulse 1.5s ease-in-out infinite;
-}
-
-.textBone {
-  height: 14px;
-}
-
-.titleBone {
-  width: 90%;
-}
-
-.metaBone {
-  width: 40%;
 }
