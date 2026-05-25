@@ -21,57 +21,12 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-    children: '저장',
+    children: '버튼',
     color: 'primary',
     variant: 'contained',
     size: 'medium',
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    children: '취소',
-    color: 'secondary',
-    variant: 'contained',
-    size: 'medium',
-  },
-};
-
-export const Destructive: Story = {
-  args: {
-    children: '삭제',
-    color: 'destructive',
-    variant: 'contained',
-    size: 'medium',
-  },
-};
-
-export const Outlined: Story = {
-  args: {
-    children: '더 보기',
-    color: 'primary',
-    variant: 'outlined',
-    size: 'medium',
-  },
-};
-
-export const Small: Story = {
-  args: {
-    children: '작은 버튼',
-    color: 'primary',
-    variant: 'contained',
-    size: 'small',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    children: '큰 버튼',
-    color: 'primary',
-    variant: 'contained',
-    size: 'large',
   },
 };
 
@@ -83,6 +38,9 @@ export const Loading: Story = {
     size: 'medium',
     loading: true,
   },
+  argTypes: {
+    loading: {table: {disable: true}},
+  },
 };
 
 export const Disabled: Story = {
@@ -92,5 +50,8 @@ export const Disabled: Story = {
     variant: 'contained',
     size: 'medium',
     disabled: true,
+  },
+  argTypes: {
+    disabled: {table: {disable: true}},
   },
 };
