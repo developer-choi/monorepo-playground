@@ -1,8 +1,7 @@
-/* stylelint-disable scale-unlimited/declaration-strict-value */
 @use '../variables';
 
 .container {
-  padding: 24px 0 80px;
+  padding: variables.$space24 0 variables.$space80;
 }
 
 .grid {
@@ -12,7 +11,7 @@
 }
 
 .message {
-  padding: 80px 0;
+  padding: variables.$space80 0;
   text-align: center;
   font-size: variables.$fontSizeSm;
   color: variables.$colorTextDisabled;
