@@ -1,5 +1,6 @@
 /* stylelint-disable scale-unlimited/declaration-strict-value */
 @use '../variables';
+@use '@monorepo-playground/design-system/styles/typography';
 
 .imageWrapper {
   aspect-ratio: 1 / 1;
@@ -18,9 +19,9 @@
 }
 
 .title {
-  font-size: variables.$fontSizeSm;
+  @include typography.body2;
+
   font-weight: 500;
-  line-height: 1.4;
   color: variables.$colorTextPrimary;
   overflow: hidden;
   text-overflow: ellipsis;
