@@ -3,21 +3,22 @@
 $dialogMaxWidth: 600px;
 $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%));
 
-.container {
-  height: 100%;
-  outline: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay-backdrop);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .paper {
-  margin: var(--spacing-xl);
-  position: relative;
-  overflow-y: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  max-height: calc(100% - 64px);
+  overflow-y: auto;
+  max-height: calc(100vh - 64px);
   max-width: $dialogMaxWidth;
   width: calc(100% - 64px);
 }

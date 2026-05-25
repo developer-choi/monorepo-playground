@@ -18,6 +18,9 @@
   --color-on-accent: #fff;
   --color-on-destructive: #fff;
 
+  /* === 컬러: overlay (modal backdrop 등) === */
+  --color-overlay-backdrop: rgb(0 0 0 / 50%);
+
   /* === 컬러: 도메인 특수 (코드 블록·인용구) === */
   --color-code-bg: #f3f4f6;
   --color-code-block-bg: #24292e;

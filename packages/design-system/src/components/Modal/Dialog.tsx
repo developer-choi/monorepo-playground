@@ -1,32 +1,49 @@
+import {type PropsWithChildren} from 'react';
+import {Dialog as Rd} from 'radix-ui';
 import clsx from 'clsx';
-import Modal, {type ModalProps} from './Modal';
 import styles from './Dialog.module.scss';
 
-export type DialogProps = ModalProps;
+export interface DialogProps {
+  open: boolean;
+  onClose: () => void;
+  disableEscapeKeyDown?: boolean;
+  disableBackdropClick?: boolean;
+}
 
-export default function Dialog(props: DialogProps) {
-  const {
-    children,
-    className,
-    disableEscapeKeyDown = false,
-    disableBackdropClick = false,
-    onClose,
-    open,
-    ...other
-  } = props;
-
+export default function Dialog({
+  open,
+  onClose,
+  disableEscapeKeyDown = false,
+  disableBackdropClick = false,
+  children,
+}: PropsWithChildren<DialogProps>) {
   return (
-    <Modal
-      className={className}
-      disableBackdropClick={disableBackdropClick}
-      disableEscapeKeyDown={disableEscapeKeyDown}
+    <Rd.Root
       open={open}
-      onClose={onClose}
-      {...other}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          onClose();
+        }
+      }}
     >
-      <div className={styles.container} tabIndex={-1}>
-        <div className={clsx(styles.paper, styles.styled)}>{children}</div>
-      </div>
-    </Modal>
+      <Rd.Portal>
+        <Rd.Overlay className={styles.overlay} />
+        <Rd.Content
+          className={clsx(styles.paper, styles.styled)}
+          onEscapeKeyDown={(event) => {
+            if (disableEscapeKeyDown) {
+              event.preventDefault();
+            }
+          }}
+          onPointerDownOutside={(event) => {
+            if (disableBackdropClick) {
+              event.preventDefault();
+            }
+          }}
+        >
+          {children}
+        </Rd.Content>
+      </Rd.Portal>
+    </Rd.Root>
   );
 }
