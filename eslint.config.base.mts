@@ -76,6 +76,13 @@ export const baseRules = {
             'ComponentPropsWithoutRef·ComponentPropsWithRef 사용 금지. ComponentProps를 사용하세요. React 19에서는 함수 컴포넌트·forwardRef·HTML 태그에 대해 ComponentProps가 ref를 포함하도록 동작합니다.',
         },
       ],
+      patterns: [
+        {
+          group: ['**/index', '**/index.ts', '**/index.tsx'],
+          message:
+            '내부 barrel(index) import 금지. 대상 모듈을 직접 import 하세요. 패키지 entry는 alias(@scope/pkg)로 import.',
+        },
+      ],
     },
   ],
   'no-restricted-syntax': [

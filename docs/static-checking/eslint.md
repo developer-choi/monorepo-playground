@@ -386,6 +386,25 @@ function Input({ref, ...props}: Props) {
 
 AST 기반 규칙이라 `import {forwardRef as fr}`, type-only import, 여러 줄 import, `import * as React` 네임스페이스 import까지 모두 막힙니다.
 
+#### `no-restricted-imports` — 내부 barrel(`index`) import 금지
+
+`**/index`, `**/index.ts`, `**/index.tsx`로 끝나는 import 경로를 패턴으로 차단합니다. 디렉토리별 `index.ts`(barrel)을 만들어 묶어서 re-export하는 패턴은 tree shaking 방해, 순환 의존, 빌드 성능 저하의 원인이 되므로 사용을 금지합니다.
+
+```typescript
+// ❌ 내부 barrel
+import {Button} from './components/index';
+import {Button} from '@/components';   // ./components/index.ts를 가리킴
+
+// ✅ 직접 import
+import {Button} from './components/Button';
+import {Button} from '@/components/Button';
+
+// ✅ 패키지 entry는 alias로 통과 — packages/design-system/src/index.ts는 패키지의 public API라 예외
+import {Button} from '@monorepo-playground/design-system';
+```
+
+패키지 entry(예: `packages/design-system/src/index.ts`)는 외부 사용자가 `import {X} from '@scope/pkg'`로 접근하는 진입점이라 alias를 통해 통과합니다. 내부 디렉토리별 barrel만 금지합니다.
+
 #### `no-restricted-syntax` — 금지 패턴 모음
 
 AST 셀렉터로 프로젝트에서 허용하지 않는 패턴을 일괄 금지합니다. 위반 시 `eslint-disable` + 사유 주석으로 예외를 처리합니다.
