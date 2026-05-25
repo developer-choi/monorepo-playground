@@ -346,6 +346,22 @@ array.sort((left, right) => left - right);
 for (let index = 0; index < 10; index++) { ... }
 ```
 
+#### `id-denylist` (`['Props', 'State']`)
+
+`Props`, `State`를 식별자(interface/type/변수) 이름으로 단독 사용하는 것을 금지합니다. 컴포넌트별로 prefix를 붙여 `ButtonProps`, `BoardFormProps`처럼 사용하도록 강제합니다.
+
+```typescript
+// ❌
+interface Props { onClick: () => void; }
+type State = {value: string};
+
+// ✅
+interface ButtonProps { onClick: () => void; }
+type FormState = {value: string};
+```
+
+같은 모듈 안에서 컴포넌트 이름을 prefix로 붙이면 export 시 충돌이 없고, IDE에서 컴포넌트 따라 찾기가 쉽습니다.
+
 #### `no-restricted-imports` — `react`의 구버전 ref API 금지
 
 React 19부터 함수 컴포넌트가 `ref`를 일반 prop으로 받을 수 있어 `forwardRef`가 불필요합니다. 이에 따라 `forwardRef`와, `forwardRef` 래핑 시 props 타입에서 ref를 빼기 위해 주로 쓰이던 `ComponentPropsWithoutRef`·`ComponentPropsWithRef`를 함께 금지합니다. 대신 ref prop을 직접 받고 props 타입은 `ComponentProps`를 사용합니다.

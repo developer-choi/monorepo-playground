@@ -24,6 +24,7 @@ export const baseRules = {
   '@typescript-eslint/restrict-template-expressions': ['error', {allowNullish: false}],
   '@typescript-eslint/parameter-properties': 'error',
   'id-length': ['error', {min: 2}],
+  'id-denylist': ['error', 'Props', 'State'],
   'max-params': ['error', 2],
   '@typescript-eslint/naming-convention': [
     'error',
