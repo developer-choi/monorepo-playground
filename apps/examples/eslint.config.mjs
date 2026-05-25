@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/naming-convention -- ESLint rule keys(kebab-case)와 plugin namespace 등 외부 컨벤션 다수 */
 import {defineConfig, globalIgnores} from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
