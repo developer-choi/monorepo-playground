@@ -1,6 +1,6 @@
 import type {ComponentProps} from 'react';
 import clsx from 'clsx';
-import styles from './index.module.scss';
+import styles from './Spinner.module.scss';
 
 const DEFAULT_SIZE = 20;
 const DEFAULT_STROKE_WIDTH = 3;

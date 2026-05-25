@@ -3,7 +3,7 @@
 import {type ComponentProps, type MouseEvent, useCallback} from 'react';
 import clsx from 'clsx';
 import {Spinner} from '@/components/Spinner';
-import styles from './index.module.scss';
+import styles from './Button.module.scss';
 
 type UsedProps = 'style' | 'className' | 'onClick' | 'disabled' | 'children' | 'type' | 'ref';
 
