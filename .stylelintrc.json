@@ -1,6 +1,6 @@
 {
   "extends": ["stylelint-config-standard-scss"],
-  "plugins": ["stylelint-declaration-strict-value"],
+  "plugins": ["stylelint-declaration-strict-value", "./stylelint-plugins/at-use-no-short-alias.mjs"],
   "rules": {
     "at-rule-disallowed-list": ["import"],
     "selector-class-pattern": [
@@ -21,6 +21,8 @@
       {"message": "function 이름은 camelCase만 허용합니다 (예: safeMapGet). _ prefix는 SCSS private 관례로 허용"}
     ],
     "scss/at-use-no-unnamespaced": true,
+    "scss/at-use-no-redundant-alias": true,
+    "monorepo-playground/at-use-no-short-alias": true,
     "value-keyword-case": null,
     "scale-unlimited/declaration-strict-value": [
       [
