@@ -1,6 +1,6 @@
+@use '../src/styles/typography.module' as typography;
+
 $storyLayoutMaxWidth: 600px;
-$descriptionH3FontSize: 16px;
-$descriptionLineHeight: 1.5;
 
 button,
 input {
@@ -34,15 +34,16 @@ input {
   border-radius: var(--radius-xs);
 
   h3 {
+    @include typography.body1;
+
     margin: 0 0 var(--spacing-sm);
-    font-size: $descriptionH3FontSize;
     font-weight: 600;
   }
 
   p {
+    @include typography.body2;
+
     margin: 0;
-    font-size: var(--font-size-md);
-    line-height: $descriptionLineHeight;
   }
 }
 

@@ -1,6 +1,6 @@
+@use '@/styles/typography.module' as typography;
+
 $dialogMaxWidth: 600px;
-$h2FontSize: 20px;
-$descriptionLineHeight: 1.5;
 $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%));
 
 .container {
@@ -46,7 +46,8 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 
 :where(.header.styled) {
   h2 {
-    font-size: $h2FontSize;
+    @include typography.h3;
+
     color: var(--color-fg-primary);
   }
 
@@ -65,9 +66,9 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 }
 
 .description.styled {
+  @include typography.body2;
+
   color: var(--color-fg-secondary);
-  font-size: var(--font-size-md);
-  line-height: $descriptionLineHeight;
 }
 
 .body {

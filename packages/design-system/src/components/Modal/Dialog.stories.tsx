@@ -5,6 +5,7 @@ import Dialog, {type DialogProps} from './Dialog';
 import Drawer from './Drawer';
 import styles from './Dialog.module.scss';
 import drawerStyles from './Drawer.module.scss';
+import typography from '../../styles/typography.module.scss';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Components/Modal/Dialog',
@@ -99,7 +100,7 @@ function BasicUsageStory(args: DialogProps) {
           </div>
 
           <div className={styles.body}>
-            <p>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</p>
+            <p className={typography.body2}>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</p>
           </div>
 
           <div className={styles.footer}>
@@ -209,7 +210,7 @@ function CriticalAlertStory(args: DialogProps) {
           </div>
 
           <div className={styles.body}>
-            <p>
+            <p className={typography.body2}>
               중요한 작업이므로 실수로 닫는 것을 방지하기 위해
               <strong> ESC 키와 배경 클릭 닫기가 비활성화</strong> 되었습니다.
             </p>
