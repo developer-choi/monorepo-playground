@@ -11,7 +11,8 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./style.css": "./dist/design-system.css"
+    "./style.css": "./dist/design-system.css",
+    "./styles/typography": "./src/styles/typography.module.scss"
   },
   "files": [
     "dist"
