@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
+import checkFile from 'eslint-plugin-check-file';
 import {defineConfig, globalIgnores} from 'eslint/config';
 import {baseRules} from '../../eslint.config.base.mts';
 
@@ -26,9 +27,17 @@ export default defineConfig([
     },
     plugins: {
       react,
+      'check-file': checkFile,
     },
     rules: {
       ...baseRules,
+      'check-file/folder-naming-convention': [
+        'error',
+        {
+          'src/!(components)/**/*': 'KEBAB_CASE',
+          'src/components/*': 'PASCAL_CASE',
+        },
+      ],
     },
   },
   {

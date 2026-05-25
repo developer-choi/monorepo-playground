@@ -544,6 +544,18 @@ fetchV2();
 
 React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
 
+#### `check-file/folder-naming-convention` — 워크스페이스별
+
+`eslint-plugin-check-file` 도입. 폴더 네이밍을 워크스페이스 성격에 맞게 강제합니다.
+
+| 워크스페이스        | 패턴                                         | 의도                                                            |
+| ------------------ | -------------------------------------------- | --------------------------------------------------------------- |
+| `apps/examples`    | `src/**/*` → `NEXT_JS_APP_ROUTER_CASE`       | Next.js 동적 라우트(`[id]`, `[...slug]`) 자동 인정 + 그 외 kebab-case |
+| `design-system`    | `src/!(components)/**/*` → `KEBAB_CASE`<br>`src/components/*` → `PASCAL_CASE` | 일반 폴더는 kebab, 컴포넌트 폴더만 PascalCase (예: `Button`, `Modal`)      |
+| `recruitment`      | `src/**/*` → `KEBAB_CASE`                    | 컴포넌트 폴더가 따로 없어 kebab으로 통일                         |
+
+`src/components/*`처럼 더 구체적인 패턴이 일반 패턴(`src/**/*`)을 override 하지 않으므로, design-system은 negation(`!(components)`)으로 컴포넌트 폴더를 제외한 뒤 별도 패턴으로 PASCAL_CASE를 강제합니다.
+
 ### `recommendedTypeChecked` 프리셋
 
 `recommendedTypeChecked` 프리셋에 포함된 규칙들입니다. `recommended`에서 업그레이드하면 활성화되며, TypeScript 컴파일러의 타입 정보를 활용합니다.

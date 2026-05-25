@@ -4,6 +4,7 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import tseslint from 'typescript-eslint';
+import checkFile from 'eslint-plugin-check-file';
 import {baseRules} from '../../eslint.config.base.mts';
 
 const eslintConfig = defineConfig([
@@ -33,9 +34,11 @@ const eslintConfig = defineConfig([
       'react-hooks/error-boundaries': 'off',
       '@typescript-eslint/no-deprecated': 'error',
       'custom/src-folder-whitelist': 'error',
+      'check-file/folder-naming-convention': ['error', {'src/**/*': 'NEXT_JS_APP_ROUTER_CASE'}],
     },
     plugins: {
       custom: {rules: {'src-folder-whitelist': createSrcFolderWhitelistRule()}},
+      'check-file': checkFile,
     },
   },
 ]);
