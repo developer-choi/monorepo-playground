@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import {fileURLToPath} from 'node:url';
@@ -10,6 +9,7 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 export default defineConfig({
   resolve: {
     alias: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention -- TypeScript path alias 컨벤션
       '@': path.resolve(dirname, './src'),
     },
   },
