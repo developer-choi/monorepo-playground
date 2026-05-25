@@ -6,7 +6,7 @@
  *************************************************************************************************************/
 .body {
   display: flex;
-  max-width: variables.$max-width;
+  max-width: variables.$maxWidth;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -23,21 +23,21 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: variables.$color-header-bg;
-  color: variables.$color-header-text;
+  background-color: variables.$colorHeaderBg;
+  color: variables.$colorHeaderText;
 }
 
 .inner {
   display: flex;
   align-items: center;
-  max-width: variables.$max-width;
+  max-width: variables.$maxWidth;
   margin: 0 auto;
   padding: 0 24px;
   height: 56px;
 }
 
 .logo {
-  font-size: variables.$font-size-lg;
+  font-size: variables.$fontSizeLg;
   font-weight: 900;
   white-space: nowrap;
 }
@@ -52,9 +52,9 @@
 }
 
 .title {
-  font-size: variables.$font-size-xl;
+  font-size: variables.$fontSizeXl;
   font-weight: 900;
-  color: variables.$color-text-primary;
+  color: variables.$colorTextPrimary;
   margin-bottom: 24px;
 }
 
@@ -65,14 +65,14 @@
 }
 
 .categoryItem {
-  font-size: variables.$font-size-sm;
-  color: variables.$color-text-muted;
+  font-size: variables.$fontSizeSm;
+  color: variables.$colorTextMuted;
   cursor: pointer;
   user-select: none;
 
   &.active {
     font-weight: 700;
-    color: variables.$color-text-primary;
+    color: variables.$colorTextPrimary;
     text-decoration: underline;
     text-underline-offset: 3px;
   }

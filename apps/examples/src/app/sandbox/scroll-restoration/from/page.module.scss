@@ -1,50 +1,50 @@
-$container-gap: 300px;
-$container-padding: 24px;
-$button-padding-y: 12px;
-$button-padding-x: 20px;
-$button-border-radius: 6px;
-$input-padding: 8px;
-$input-font-size: 16px;
-$color-border: #ccc;
-$color-border-hover: #666;
-$color-surface: #fff;
-$color-surface-hover: #f0f0f0;
-$color-number: #e65100;
-$transition-duration: 0.15s;
-$font-weight-bold: 700;
+$containerGap: 300px;
+$containerPadding: 24px;
+$buttonPaddingY: 12px;
+$buttonPaddingX: 20px;
+$buttonBorderRadius: 6px;
+$inputPadding: 8px;
+$inputFontSize: 16px;
+$colorBorder: #ccc;
+$colorBorderHover: #666;
+$colorSurface: #fff;
+$colorSurfaceHover: #f0f0f0;
+$colorNumber: #e65100;
+$transitionDuration: 0.15s;
+$fontWeightBold: 700;
 
 .container {
   display: flex;
   flex-direction: column;
-  gap: $container-gap;
-  padding: $container-padding;
+  gap: $containerGap;
+  padding: $containerPadding;
 }
 
 .button {
   align-self: flex-start;
-  padding: $button-padding-y $button-padding-x;
-  border: 1px solid $color-border;
-  border-radius: $button-border-radius;
-  background-color: $color-surface;
+  padding: $buttonPaddingY $buttonPaddingX;
+  border: 1px solid $colorBorder;
+  border-radius: $buttonBorderRadius;
+  background-color: $colorSurface;
   color: inherit;
   text-decoration: none;
   cursor: pointer;
   transition:
-    background-color $transition-duration,
-    border-color $transition-duration;
+    background-color $transitionDuration,
+    border-color $transitionDuration;
 
   &:hover {
-    background-color: $color-surface-hover;
-    border-color: $color-border-hover;
+    background-color: $colorSurfaceHover;
+    border-color: $colorBorderHover;
   }
 }
 
 .number {
-  color: $color-number;
-  font-weight: $font-weight-bold;
+  color: $colorNumber;
+  font-weight: $fontWeightBold;
 }
 
 .input {
-  padding: $input-padding;
-  font-size: $input-font-size;
+  padding: $inputPadding;
+  font-size: $inputFontSize;
 }

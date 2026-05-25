@@ -8,22 +8,22 @@
 }
 
 .title {
-  font-size: variables.$font-size-lg;
+  font-size: variables.$fontSizeLg;
   font-weight: 600;
 }
 
 .code {
   margin-top: 8px;
-  color: variables.$color-text-disabled;
+  color: variables.$colorTextDisabled;
 }
 
 .card {
   margin-top: 24px;
   padding: 24px;
-  background: variables.$color-surface;
+  background: variables.$colorSurface;
   border-radius: 8px;
-  border: 1px solid variables.$color-border;
-  font-size: variables.$font-size-sm;
+  border: 1px solid variables.$colorBorder;
+  font-size: variables.$fontSizeSm;
   line-height: 1.8;
   display: flex;
   flex-direction: column;

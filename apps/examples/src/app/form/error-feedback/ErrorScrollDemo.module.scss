@@ -1,7 +1,7 @@
-$scroll-container-max-height: 240px;
+$scrollContainerMaxHeight: 240px;
 
 .scrollContainer {
-  max-height: $scroll-container-max-height;
+  max-height: $scrollContainerMaxHeight;
   overflow-y: auto;
 }
 

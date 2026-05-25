@@ -22,7 +22,7 @@ Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`
 | `selector-class-pattern`              | `^[a-z][a-zA-Z0-9]*$` | CSS Modules 클래스명 camelCase 강제. `:global()` 안의 외부 라이브러리 클래스는 `stylelint-disable-next-line` + 사유 주석으로 예외 처리 |
 | `selector-pseudo-class-no-unknown`    | `:global` 허용 | CSS Modules의 `:global` pseudo-class 허용                                |
 | `scss/at-mixin-pattern`               | `^_?[a-z][a-zA-Z0-9]*$` | mixin 이름 camelCase 강제 (예: `flexCenter`). `_` prefix는 SCSS private 관례로 허용 (예: `_apply`) |
-| `scss/dollar-variable-pattern`        | `null`         | camelCase 변수 이름 허용                                                 |
+| `scss/dollar-variable-pattern`        | `^_?[a-z][a-zA-Z0-9]*$` | 변수 이름 camelCase 강제 (예: `$colorPrimary`). `_` prefix는 SCSS private 관례로 허용 |
 | `scss/at-function-pattern`            | `^_?[a-z][a-zA-Z0-9]*$` | function 이름 camelCase 강제 (예: `safeMapGet`). `_` prefix는 SCSS private 관례로 허용 |
 | `scss/at-use-no-unnamespaced`         | `true`         | `@use 'foo' as *;` 금지. namespace prefix 강제(`color.$X` 형태)로 변수 출처를 명시 |
 | `value-keyword-case`                  | `null`         | SCSS map 키를 CSS 키워드로 오인하는 false positive 방지                  |

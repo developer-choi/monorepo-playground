@@ -3,7 +3,7 @@
 
 .imageWrapper {
   aspect-ratio: 1 / 1;
-  background-color: variables.$color-surface;
+  background-color: variables.$colorSurface;
 }
 
 .image {
@@ -18,10 +18,10 @@
 }
 
 .title {
-  font-size: variables.$font-size-sm;
+  font-size: variables.$fontSizeSm;
   font-weight: 500;
   line-height: 1.4;
-  color: variables.$color-text-primary;
+  color: variables.$colorTextPrimary;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -37,12 +37,12 @@
 }
 
 .author {
-  font-size: variables.$font-size-xs;
+  font-size: variables.$fontSizeXs;
   font-weight: 700;
-  color: variables.$color-text-primary;
+  color: variables.$colorTextPrimary;
 }
 
 .date {
-  font-size: variables.$font-size-xs;
-  color: variables.$color-text-disabled;
+  font-size: variables.$fontSizeXs;
+  color: variables.$colorTextDisabled;
 }

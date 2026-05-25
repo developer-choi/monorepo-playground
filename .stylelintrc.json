@@ -12,7 +12,10 @@
       "^_?[a-z][a-zA-Z0-9]*$",
       {"message": "mixin 이름은 camelCase만 허용합니다 (예: flexCenter). _ prefix는 SCSS private 관례로 허용"}
     ],
-    "scss/dollar-variable-pattern": null,
+    "scss/dollar-variable-pattern": [
+      "^_?[a-z][a-zA-Z0-9]*$",
+      {"message": "변수 이름은 camelCase만 허용합니다 (예: $colorPrimary). _ prefix는 SCSS private 관례로 허용"}
+    ],
     "scss/at-function-pattern": [
       "^_?[a-z][a-zA-Z0-9]*$",
       {"message": "function 이름은 camelCase만 허용합니다 (예: safeMapGet). _ prefix는 SCSS private 관례로 허용"}
