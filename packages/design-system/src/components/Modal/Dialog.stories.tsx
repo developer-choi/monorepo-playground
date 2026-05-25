@@ -2,9 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
 import clsx from 'clsx';
 import Dialog, {type DialogProps} from './Dialog';
-import Drawer from './Drawer';
 import styles from './Dialog.module.scss';
-import drawerStyles from './Drawer.module.scss';
 import typography from '../../styles/typography.module.scss';
 
 const meta: Meta<typeof Dialog> = {
@@ -236,43 +234,4 @@ export const CriticalAlert: Story = {
     disableBackdropClick: true,
   },
   render: (args) => <CriticalAlertStory {...args} />,
-};
-
-function DrawerExampleStory(args: DialogProps) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="storyLayout">
-      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-      <button onClick={() => setOpen(true)}>전체 메뉴 열기1</button>
-      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-      <button onClick={() => setOpen(true)}>전체 메뉴 열기2</button>
-
-      <Drawer {...args} anchor="left" open={open} onClose={() => setOpen(false)}>
-        <div className={drawerStyles.content}>
-          <div className={clsx(drawerStyles.header, drawerStyles.styled)}>
-            <h2>Dialog에 있던 기능 모두 테스트</h2>
-          </div>
-          <div className={drawerStyles.menu}>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>닫으면 포커스 돌아가기</button>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>배경 / ESC로 닫기</button>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>Tab 계속 누르기</button>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-            <button className={clsx(drawerStyles.menuItem, drawerStyles.styled)}>Shift Tab 계속 누르기</button>
-          </div>
-        </div>
-      </Drawer>
-    </div>
-  );
-}
-
-export const DrawerExample: Story = {
-  args: {
-    disableEscapeKeyDown: false,
-    disableBackdropClick: false,
-  },
-  render: (args) => <DrawerExampleStory {...args} />,
 };
