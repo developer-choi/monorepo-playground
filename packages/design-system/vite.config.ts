@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 /// <reference types="vitest/config" />
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
@@ -22,6 +21,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention -- TypeScript path alias 컨벤션
       '@': path.resolve(dirname, './src'),
     },
   },
@@ -38,7 +38,9 @@ export default defineConfig({
       output: {
         globals: {
           react: 'React',
+          // eslint-disable-next-line @typescript-eslint/naming-convention -- npm 패키지 이름
           'react-dom': 'ReactDOM',
+          // eslint-disable-next-line @typescript-eslint/naming-convention -- npm 패키지 subpath
           'react/jsx-runtime': 'jsxRuntime',
         },
         assetFileNames: '[name][extname]',
