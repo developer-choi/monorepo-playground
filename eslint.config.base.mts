@@ -133,5 +133,10 @@ export const baseRules = {
       selector: 'CatchClause > Identifier.param[typeAnnotation]',
       message: 'catch 변수의 타입 어노테이션 금지. TS 4.4+에서 catch 변수는 기본 unknown입니다.',
     },
+    {
+      selector: "JSXAttribute[name.name=/^aria-/]:not([value.expression.name='undefined'])",
+      message:
+        'aria-* 속성 사용 금지. 현 단계에서는 보조 기술(스크린 리더 등) 지원이 범위 밖이라 접근성 속성을 도입하지 않습니다. `aria-x={undefined}`(라이브러리 경고 회피용 no-op)는 예외로 허용합니다. 향후 정책 변경 시 이 룰을 해제합니다.',
+    },
   ],
 };

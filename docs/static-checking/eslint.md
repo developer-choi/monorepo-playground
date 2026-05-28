@@ -486,6 +486,26 @@ import {CheckIcon} from '@radix-ui/react-icons';
 <CheckIcon height={24} width={24} />;
 ```
 
+**`aria-*` 속성 금지** (`JSXAttribute[name.name=/^aria-/]:not([value.expression.name='undefined'])`)
+
+현 단계 본 프로젝트의 1차 지원 범위는 표준 입력 환경(키보드·마우스·터치)을 사용하는 사용자입니다. 보조 기술(스크린 리더 등)을 통한 웹 접근성은 현재 지원 범위 밖이며, 이에 따라 `aria-*` 속성 사용을 일괄 금지합니다. 코드베이스에 부분적으로만 적용된 `aria-*`는 "지원되는 것처럼 보이지만 실제로는 누락된 곳이 더 많은" 상태를 만들어 오히려 신뢰도를 떨어뜨립니다. 정책이 변경되어 접근성을 본격 지원하는 시점에 룰을 해제하고 패턴 문서를 추가합니다.
+
+`role` 속성은 같은 a11y 계열이지만 별도로 막지 않습니다. RTL의 `getByRole('alert')`·`getByRole('status')`로 에러/상태 페이지를 검증하려면 컴포넌트에 명시적 `role="alert"`/`role="status"`가 필요하기 때문입니다. 이 경우 `role`은 a11y 목적이 아니라 **테스트 셀렉터 후크 용도**로 사용됩니다.
+
+`aria-x={undefined}`는 예외로 허용합니다. 일부 라이브러리(예: Radix UI의 `Dialog.Content`)는 `aria-describedby`가 누락되면 dev 경고를 띄우므로, 회피용 no-op로 `undefined`를 명시해야 합니다. `undefined`는 React가 속성을 렌더하지 않으니 실제 a11y 효과가 없는 boilerplate입니다.
+
+```tsx
+// ❌
+<button aria-label="닫기" aria-pressed={isOpen}>×</button>;
+<Dialog aria-labelledby="title">...</Dialog>;
+
+// ✅ — 시맨틱 마크업으로 의미를 전달 (docs/patterns/accessibility/SemanticElements.md)
+<button>닫기</button>;
+
+// ✅ — 라이브러리 경고 회피용 no-op
+<RadixDialog.Content aria-describedby={undefined}>...</RadixDialog.Content>;
+```
+
 **catch 변수 타입 어노테이션 금지** (`CatchClause > Identifier.param[typeAnnotation]`)
 
 TypeScript 4.4의 `useUnknownInCatchVariables`(strict에 포함)가 켜져 있으면 catch 변수는 명시하지 않아도 `unknown`이 기본입니다. `: unknown`은 잉여이고 `: any`는 타입 안전성을 무너뜨리므로 둘 다 금지합니다.
