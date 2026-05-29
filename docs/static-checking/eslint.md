@@ -524,29 +524,33 @@ return <Fragment>...</Fragment>;
 
 #### `custom/filename-export-convention` (커스텀 룰)
 
-`src/` 하위 모듈에서 **named default export가 있으면 파일명(첫 `.` 이전)이 그 export 이름과 같아야** 합니다. 단일 컴포넌트·클래스·함수를 default export할 때 파일명과 심볼명을 일치시켜, import 경로만 보고도 무엇이 들어있는지 알 수 있게 합니다. default export가 없는 named export 묶음이나 익명 default export(`export default () => ...`, 설정 객체 등)는 검사하지 않습니다.
+`src/` 하위에서 **컴포넌트(PascalCase)·훅(`use*`) export가 정확히 하나인 파일**은 파일명(첫 `.` 이전)에 **kebab-case(하이픈)·snake_case(언더스코어)를 쓸 수 없습니다** — PascalCase(컴포넌트) 또는 camelCase(훅)여야 합니다. 컴포넌트·훅이 0개거나 2개 이상(여러 컴포넌트를 묶은 모듈)이면 검사하지 않습니다.
 
-파일명 casing만 보는 `check-file`로는 "default 단일 vs named 묶음" export 형태를 판정할 수 없어, `eslint.config.base.mts`에 AST 룰로 구현하고 3개 워크스페이스에 공통 적용합니다.
+파일명과 심볼명의 **정확한 일치는 요구하지 않습니다** — 검사하는 건 casing뿐입니다. 따라서 컨텍스트 기반 단일 단어 파일명(`client.tsx`에 훅 하나 등)은 허용됩니다. casing만 보는 `check-file`로는 "컴포넌트/훅이 몇 개인지"를 판정할 수 없어 `eslint.config.base.mts`에 AST 룰로 구현하고 3개 워크스페이스에 공통 적용합니다.
 
 제외 대상:
 
 - `src/` 밖 파일 (루트 `*.config.*`, `.storybook/` 등 도구 설정 파일)
-- Next.js App Router 규약 파일 (`page`, `layout`, `error`, `not-found` 등 — 프레임워크가 파일명을 고정하지만 export 컴포넌트는 PascalCase)
+- Next.js App Router 규약 파일 (`page`, `layout`, `error`, `not-found` 등 — 프레임워크가 파일명을 고정)
 - `*.test.*`, `*.spec.*`, `*.stories.*`, `*.d.ts`
 
 ```tsx
-// ❌ 파일명(kebab) ≠ default export 이름
-// error-modal.tsx
-export default function AlertModal() { ... }
+// ❌ 단일 컴포넌트인데 kebab 파일명
+// some-component.tsx
+export function SomeComponent() { ... }
 
-// ✅ 파일명 = default export 이름
-// AlertModal.tsx
-export default function AlertModal() { ... }
+// ❌ 단일 훅인데 kebab 파일명
+// use-some-hook.ts
+export function useSomeHook() { ... }
 
-// ✅ named export 묶음은 default 없이 kebab-case 파일명 (default export 없음 → 무검사)
-// auth-cookie.ts
-export function readRoleFromCookie() { ... }
-export function writeRoleCookie() { ... }
+// ✅ 단일 컴포넌트는 PascalCase, 단일 훅은 camelCase
+// SomeComponent.tsx → export function SomeComponent
+// useSomeHook.ts    → export function useSomeHook
+
+// ✅ 여러 컴포넌트를 묶으면 kebab 파일명 + named export (컴포넌트 2개 이상 → 무검사)
+// buttons.tsx
+export function PrimaryButton() { ... }
+export function SecondaryButton() { ... }
 ```
 
 ### 워크스페이스별 추가 규칙
