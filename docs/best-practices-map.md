@@ -239,6 +239,13 @@
 - 상황: 변경(POST/PATCH/DELETE) API 호출 시 useMutation으로 감쌀지 직접 호출할지 선택
 - 코드: apps/examples/docs/patterns/query/MutationCallApproach.md
 
+## 컴포넌트 설계
+
+### 프레젠테이션 컴포넌트 atomic 분리
+
+- 상황: 아이콘·상태 표시처럼 한 prop 값에 따라 여러 모양을 그려야 하는 프레젠테이션 컴포넌트를 만들 때
+- 코드: docs/patterns/component/AtomicPresentationComponent.md
+
 ## 접근성 / 시맨틱
 
 ### 시맨틱 마크업 — a/Link, form 요소 선택
