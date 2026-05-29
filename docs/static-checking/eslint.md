@@ -522,6 +522,33 @@ const [count, setCount] = useState(0);
 return <Fragment>...</Fragment>;
 ```
 
+#### `custom/filename-export-convention` (커스텀 룰)
+
+`src/` 하위 모듈에서 **named default export가 있으면 파일명(첫 `.` 이전)이 그 export 이름과 같아야** 합니다. 단일 컴포넌트·클래스·함수를 default export할 때 파일명과 심볼명을 일치시켜, import 경로만 보고도 무엇이 들어있는지 알 수 있게 합니다. default export가 없는 named export 묶음이나 익명 default export(`export default () => ...`, 설정 객체 등)는 검사하지 않습니다.
+
+파일명 casing만 보는 `check-file`로는 "default 단일 vs named 묶음" export 형태를 판정할 수 없어, `eslint.config.base.mts`에 AST 룰로 구현하고 3개 워크스페이스에 공통 적용합니다.
+
+제외 대상:
+
+- `src/` 밖 파일 (루트 `*.config.*`, `.storybook/` 등 도구 설정 파일)
+- Next.js App Router 규약 파일 (`page`, `layout`, `error`, `not-found` 등 — 프레임워크가 파일명을 고정하지만 export 컴포넌트는 PascalCase)
+- `*.test.*`, `*.spec.*`, `*.stories.*`, `*.d.ts`
+
+```tsx
+// ❌ 파일명(kebab) ≠ default export 이름
+// error-modal.tsx
+export default function AlertModal() { ... }
+
+// ✅ 파일명 = default export 이름
+// AlertModal.tsx
+export default function AlertModal() { ... }
+
+// ✅ named export 묶음은 default 없이 kebab-case 파일명 (default export 없음 → 무검사)
+// auth-cookie.ts
+export function readRoleFromCookie() { ... }
+export function writeRoleCookie() { ... }
+```
+
 ### 워크스페이스별 추가 규칙
 
 `baseRules` 외에 특정 워크스페이스에서만 추가한 규칙입니다.

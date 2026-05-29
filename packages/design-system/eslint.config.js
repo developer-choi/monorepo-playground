@@ -6,7 +6,7 @@ import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import checkFile from 'eslint-plugin-check-file';
 import {defineConfig, globalIgnores} from 'eslint/config';
-import {baseRules} from '../../eslint.config.base.mts';
+import {baseRules, createFilenameExportConventionRule} from '../../eslint.config.base.mts';
 
 export default defineConfig([
   globalIgnores(['dist', '**/*.d.ts']),
@@ -28,6 +28,7 @@ export default defineConfig([
     plugins: {
       react,
       'check-file': checkFile,
+      custom: {rules: {'filename-export-convention': createFilenameExportConventionRule()}},
     },
     rules: {
       ...baseRules,

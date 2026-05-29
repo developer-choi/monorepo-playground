@@ -5,7 +5,7 @@ import nextTs from 'eslint-config-next/typescript';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import tseslint from 'typescript-eslint';
 import checkFile from 'eslint-plugin-check-file';
-import {baseRules} from '../../eslint.config.base.mts';
+import {baseRules, createFilenameExportConventionRule} from '../../eslint.config.base.mts';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -37,7 +37,12 @@ const eslintConfig = defineConfig([
       'check-file/folder-naming-convention': ['error', {'src/**/*': 'NEXT_JS_APP_ROUTER_CASE'}],
     },
     plugins: {
-      custom: {rules: {'src-folder-whitelist': createSrcFolderWhitelistRule()}},
+      custom: {
+        rules: {
+          'src-folder-whitelist': createSrcFolderWhitelistRule(),
+          'filename-export-convention': createFilenameExportConventionRule(),
+        },
+      },
       'check-file': checkFile,
     },
   },
