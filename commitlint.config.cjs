@@ -5,7 +5,7 @@ module.exports = {
       rules: {
         'subject-korean': ({subject}) => {
           const hasKorean = /[\uAC00-\uD7AF]/.test(subject);
-          return [hasKorean, '커밋 메시지(subject)에 한글이 포함되어야 합니다'];
+          return [hasKorean, 'subject에 한글이 없습니다 — 영어 전용 커밋은 금지입니다 (한글 필수)'];
         },
       },
     },
