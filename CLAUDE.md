@@ -47,3 +47,7 @@
 ### 포매터
 
 `.prettierrc`, `.prettierignore`, `.editorconfig` 변경 시 `docs/formatter.md`를 함께 최신화한다.
+
+### 채용과제 템플릿
+
+`eslint.config.base.mts`, `tsconfig.base.json`, `.stylelintrc.json`, `commitlint.config.cjs` 변경 시 `templates/recruitment/`의 산출물을 함께 최신화한다.
