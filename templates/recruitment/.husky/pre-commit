@@ -1,0 +1,2 @@
+bash scripts/check-file-level-disable.sh
+npm run test-staged
