@@ -1,6 +1,6 @@
 # packages/design-system 컨벤션
 
-> 이 컨벤션은 `packages/design-system` 내부 코드에만 적용된다. `apps/*`, `packages/recruitment` 등은 적용 대상이 아니다.
+> 이 컨벤션은 `packages/design-system` 내부 코드에만 적용된다. `apps/*` 등은 적용 대상이 아니다.
 
 이 레포의 디자인 시스템은 **학습** + **"마크업은 공유, 시각 스타일은 채용과제별로 교체"** 패턴을 목표로 한다. 그래서 마크업과 시각을 명시적으로 분리한다.
 

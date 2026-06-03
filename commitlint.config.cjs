@@ -19,7 +19,6 @@ module.exports = {
         'examples',
         // packages/
         'design-system',
-        'recruitment',
         // project-level
         'setting',
         'best-practice-map',

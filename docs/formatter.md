@@ -56,7 +56,6 @@ lint-staged는 glob 패턴별로 독립 실행되며, 아래 3개 그룹이 stag
 | `**/*.scss`                              | `stylelint --fix --max-warnings 0`                                               |
 | `apps/examples/**/*.{ts,tsx}`            | `eslint --fix --max-warnings 0 --config apps/examples/eslint.config.mjs`         |
 | `packages/design-system/**/*.{ts,tsx}`   | `eslint --fix --max-warnings 0 --config packages/design-system/eslint.config.js` |
-| `packages/recruitment/**/*.{ts,tsx}`     | `eslint --fix --max-warnings 0 --config packages/recruitment/eslint.config.js`   |
 
 - Prettier와 ESLint가 같은 파일에 대해 모두 매칭될 수 있으며, lint-staged가 glob 순서대로 실행하므로 Prettier가 먼저 정리한 뒤 ESLint가 검사합니다.
 - SCSS 파일은 Prettier(포맷팅)와 Stylelint(린트) 두 단계를 모두 거칩니다.

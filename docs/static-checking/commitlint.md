@@ -8,7 +8,7 @@ type(scope): subject
 
 | 규칙             | 설정                                          | 설명                                  |
 | ---------------- | --------------------------------------------- | ------------------------------------- |
-| `scope-enum`     | examples, design-system, recruitment, setting | 허용되는 scope 목록                   |
+| `scope-enum`     | examples, design-system, setting | 허용되는 scope 목록                   |
 | `scope-empty`    | never                                         | scope 필수                            |
 | `subject-case`   | off                                           | 한글 커밋 메시지 허용                 |
 | `subject-korean` | always                                        | subject에 한글 필수 (커스텀 플러그인) |

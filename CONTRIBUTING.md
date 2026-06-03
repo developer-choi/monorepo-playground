@@ -41,7 +41,6 @@ npm install
 │   ├── best-practices-map.md  # 베스트프랙티스 인덱스
 │   └── patterns/              # 주제별 패턴 코드 ([ai-only] 주석으로 규칙 설명 포함)
 ├── packages/
-│   ├── design-system/     # 공통 UI 컴포넌트
-│   └── recruitment/       # 채용 도메인 공통 컴포넌트
+│   └── design-system/     # 공통 UI 컴포넌트
 └── package.json
 ```

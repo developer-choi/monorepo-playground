@@ -1,7 +1,6 @@
 /**
  * Vite + React 단일레포 채용과제용 ESLint config.
- * MP `packages/recruitment/eslint.config.js` 패턴 기반. 모노레포 의존(`../../eslint.config.base.mts` import)만
- * 로컬 base로 교체했고 나머지는 동일.
+ * 모노레포 base(`../../eslint.config.base.mts`) 의존을 로컬 base로 교체한 단일레포용 자기완결 config.
  *
  * 사용: `npm create vite` 스캐폴드 후 이 파일을 `eslint.config.js`로, `eslint.config.base.mjs`와 함께 프로젝트 루트에 둔다.
  */

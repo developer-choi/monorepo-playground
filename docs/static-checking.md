@@ -48,8 +48,7 @@ ESLint·Stylelint는 모두 `--max-warnings 0` 옵션으로 실행하므로, sev
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
     "**/*.scss": "stylelint --fix --max-warnings 0",
     "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config apps/examples/eslint.config.mjs",
-    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/design-system/eslint.config.js",
-    "packages/recruitment/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/recruitment/eslint.config.js"
+    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/design-system/eslint.config.js"
   }
 }
 ```
