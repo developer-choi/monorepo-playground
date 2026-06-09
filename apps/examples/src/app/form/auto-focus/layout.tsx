@@ -4,7 +4,7 @@ import ExampleHeader from '@/shared/components/ExampleHeader';
 export default function AutoFocusLayout({children}: PropsWithChildren) {
   return (
     <>
-      <ExampleHeader readmePath="src/form/README.md" sourcePath="src/form/auto-focus" />
+      <ExampleHeader sourcePath="src/app/form/auto-focus" />
       {children}
     </>
   );

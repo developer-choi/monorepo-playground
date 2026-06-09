@@ -4,7 +4,7 @@ import ExampleHeader from '@/shared/components/ExampleHeader';
 export default function ErrorFeedbackLayout({children}: PropsWithChildren) {
   return (
     <>
-      <ExampleHeader readmePath="src/form/README.md" sourcePath="src/form/error-feedback" />
+      <ExampleHeader sourcePath="src/app/form/error-feedback" />
       {children}
     </>
   );
