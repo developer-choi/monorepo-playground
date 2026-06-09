@@ -1,0 +1,9 @@
+@use '@monorepo-playground/design-system/styles/typography';
+
+.logo {
+  @include typography.h4;
+
+  font-weight: bold;
+  color: var(--color-fg-primary);
+  text-decoration: none;
+}
