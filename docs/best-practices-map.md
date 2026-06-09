@@ -277,3 +277,8 @@
 - 기술스택: CSS
 - 상황: packages/design-system 내부에서 색·여백·폰트·radius·shadow 값을 토큰화할 때. fg/bg 명명 정책으로 통일, 회색조 톤은 blog 레퍼런스에서 출발
 - 코드: packages/design-system/docs/patterns/DesignTokens.md
+
+### 컴포넌트 분류 — design-system / examples / 컴포넌트 없음
+
+- 상황: 어떤 UI 요소를 design-system에 둘지, examples에 남길지, 컴포넌트화하지 않을지 판단할 때
+- 코드: packages/design-system/docs/components-map.md
