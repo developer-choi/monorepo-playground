@@ -1,4 +1,5 @@
-import {Button, Container, Flex, Heading, Text} from '@radix-ui/themes';
+import {Container, Flex, Heading, Text} from '@radix-ui/themes';
+import {Button} from '@monorepo-playground/design-system';
 
 interface ErrorPageTemplateProps {
   title: string;

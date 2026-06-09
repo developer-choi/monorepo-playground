@@ -3,7 +3,8 @@
 import {memo, useDeferredValue, useState} from 'react';
 import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
-import {Box, Button, Card, Callout, Container, Heading, Text, TextField} from '@radix-ui/themes';
+import {Box, Card, Callout, Container, Heading, Text, TextField} from '@radix-ui/themes';
+import {Button} from '@monorepo-playground/design-system';
 import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icons';
 import {escapeRegExp} from 'es-toolkit';
 
@@ -133,7 +134,7 @@ function ErrorFallback({resetErrorBoundary}: FallbackProps) {
       </Callout.Icon>
       <Callout.Text>
         검색 중 오류가 발생했습니다.{' '}
-        <Button size="1" variant="ghost" onClick={resetErrorBoundary}>
+        <Button size="small" variant="outlined" onClick={resetErrorBoundary}>
           다시 시도
         </Button>
       </Callout.Text>

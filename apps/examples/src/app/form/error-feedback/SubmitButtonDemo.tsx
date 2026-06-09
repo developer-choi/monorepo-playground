@@ -3,7 +3,7 @@
 import {FormEvent, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Badge, Box, Callout, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
-import Button from '@/shared/components/form/Button';
+import {Button} from '@monorepo-playground/design-system';
 import Input, {InputProps} from '@/shared/components/form/Input';
 
 interface FormValues {

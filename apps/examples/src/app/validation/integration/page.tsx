@@ -1,6 +1,7 @@
-import {Container, Heading, Button, Flex} from '@radix-ui/themes';
+import {Container, Heading, Flex} from '@radix-ui/themes';
 import Link from 'next/link';
 import {PlusIcon} from '@radix-ui/react-icons';
+import {Button} from '@monorepo-playground/design-system';
 import {getBoardListApi} from '@/validation/integration/api';
 import {boardListFilterSchema} from '@/validation/integration/schema';
 import {paginationParamsSchema} from '@/shared/schema/pagination';
@@ -22,7 +23,7 @@ export default async function Page({searchParams}: PageProps) {
     <Container p="6" size="3">
       <Flex align="center" justify="between" mb="5">
         <Heading size="7">게시판</Heading>
-        <Button asChild size="2">
+        <Button asChild size="medium">
           <Link href="/validation/integration/create">
             <PlusIcon /> 새 글 작성
           </Link>

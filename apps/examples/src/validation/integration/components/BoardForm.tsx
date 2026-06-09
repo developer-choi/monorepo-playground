@@ -6,7 +6,6 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
 import {
   Box,
-  Button,
   Card,
   Container,
   Flex,
@@ -20,6 +19,7 @@ import {
   Select,
 } from '@radix-ui/themes';
 import {Cross2Icon} from '@radix-ui/react-icons';
+import {Button} from '@monorepo-playground/design-system';
 import {useRouter} from 'next/navigation';
 import {postBoardApi, patchBoardApi} from '@/validation/integration/api';
 import {isMutationSettling} from '@/shared/query/mutation';
@@ -193,10 +193,10 @@ export default function BoardForm({board}: BoardFormProps) {
             <Separator size="4" />
 
             <Flex gap="2" justify="end">
-              <Button color="gray" size="2" type="button" variant="soft" onClick={() => router.back()}>
+              <Button color="secondary" size="medium" type="button" variant="outlined" onClick={() => router.back()}>
                 취소
               </Button>
-              <Button loading={isPending} size="2" type="submit">
+              <Button loading={isPending} size="medium" type="submit">
                 저장
               </Button>
             </Flex>
@@ -242,7 +242,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
             }
           }}
         />
-        <Button type="button" variant="soft" onClick={addTag}>
+        <Button type="button" variant="outlined" onClick={addTag}>
           추가
         </Button>
       </Flex>

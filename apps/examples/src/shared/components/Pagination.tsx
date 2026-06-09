@@ -1,7 +1,8 @@
 'use client';
 
-import {Button, Flex, Text} from '@radix-ui/themes';
+import {Flex, Text} from '@radix-ui/themes';
 import {ChevronLeftIcon, ChevronRightIcon} from '@radix-ui/react-icons';
+import {Button} from '@monorepo-playground/design-system';
 
 interface PaginationProps {
   page: number;
@@ -16,7 +17,7 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
 
   return (
     <Flex align="center" gap="1">
-      <Button disabled={page <= 1} size="1" variant="soft" onClick={() => onPageChange(page - 1)}>
+      <Button disabled={page <= 1} size="small" variant="outlined" onClick={() => onPageChange(page - 1)}>
         <ChevronLeftIcon />
       </Button>
 
@@ -28,8 +29,8 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
         ) : (
           <Button
             key={pageNum}
-            size="1"
-            variant={pageNum === page ? 'solid' : 'soft'}
+            size="small"
+            variant={pageNum === page ? 'contained' : 'outlined'}
             onClick={() => onPageChange(pageNum)}
           >
             {pageNum}
@@ -37,7 +38,7 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
         ),
       )}
 
-      <Button disabled={page >= totalPages} size="1" variant="soft" onClick={() => onPageChange(page + 1)}>
+      <Button disabled={page >= totalPages} size="small" variant="outlined" onClick={() => onPageChange(page + 1)}>
         <ChevronRightIcon />
       </Button>
     </Flex>

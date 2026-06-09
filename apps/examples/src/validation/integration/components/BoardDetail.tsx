@@ -1,7 +1,8 @@
 'use client';
 
 import {useMutation} from '@tanstack/react-query';
-import {Container, Heading, Text, Card, Flex, Button, Badge, Separator, AlertDialog} from '@radix-ui/themes';
+import {Container, Heading, Text, Card, Flex, Badge, Separator, AlertDialog} from '@radix-ui/themes';
+import {Button} from '@monorepo-playground/design-system';
 import {useRouter} from 'next/navigation';
 import {deleteBoardApi} from '@/validation/integration/api';
 import {isMutationSettling} from '@/shared/query/mutation';
@@ -58,16 +59,26 @@ export default function BoardDetail({board}: BoardDetailProps) {
         <Separator mb="4" size="4" />
 
         <Flex align="center" justify="between">
-          <Button color="gray" size="2" variant="soft" onClick={() => router.push('/validation/integration')}>
+          <Button
+            color="secondary"
+            size="medium"
+            variant="outlined"
+            onClick={() => router.push('/validation/integration')}
+          >
             목록으로
           </Button>
           <Flex gap="2">
-            <Button size="2" onClick={() => router.push(`/validation/integration/${board.id}/edit`)}>
+            <Button size="medium" onClick={() => router.push(`/validation/integration/${board.id}/edit`)}>
               수정
             </Button>
             <AlertDialog.Root>
               <AlertDialog.Trigger>
-                <Button color="red" loading={isMutationSettling(deleteMutation)} size="2" variant="soft">
+                <Button
+                  color="destructive"
+                  loading={isMutationSettling(deleteMutation)}
+                  size="medium"
+                  variant="outlined"
+                >
                   삭제
                 </Button>
               </AlertDialog.Trigger>
@@ -78,12 +89,12 @@ export default function BoardDetail({board}: BoardDetailProps) {
                 </AlertDialog.Description>
                 <Flex gap="3" justify="end" mt="4">
                   <AlertDialog.Cancel>
-                    <Button color="gray" size="2" variant="soft">
+                    <Button color="secondary" size="medium" variant="outlined">
                       취소
                     </Button>
                   </AlertDialog.Cancel>
                   <AlertDialog.Action>
-                    <Button color="red" size="2" onClick={() => void handleDelete()}>
+                    <Button color="destructive" size="medium" onClick={() => void handleDelete()}>
                       삭제
                     </Button>
                   </AlertDialog.Action>

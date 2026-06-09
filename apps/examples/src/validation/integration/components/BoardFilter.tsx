@@ -1,8 +1,9 @@
 'use client';
 
 import {useForm, Controller} from 'react-hook-form';
-import {Box, Button, Card, Checkbox, Flex, Select, Text, TextField} from '@radix-ui/themes';
+import {Box, Card, Checkbox, Flex, Select, Text, TextField} from '@radix-ui/themes';
 import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
+import {Button} from '@monorepo-playground/design-system';
 import {useRouter, useSearchParams} from 'next/navigation';
 import queryString from 'query-string';
 import {safeParsePartial} from '@/shared/utils/zod';
@@ -166,10 +167,10 @@ export default function BoardFilter() {
           </Box>
 
           <Flex gap="2" justify="end">
-            <Button color="gray" size="2" type="button" variant="soft" onClick={handleReset}>
+            <Button color="secondary" size="medium" type="button" variant="outlined" onClick={handleReset}>
               초기화
             </Button>
-            <Button size="2" type="submit">
+            <Button size="medium" type="submit">
               검색
             </Button>
           </Flex>

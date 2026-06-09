@@ -1,4 +1,5 @@
-import {AlertDialog, Button, Flex} from '@radix-ui/themes';
+import {AlertDialog, Flex} from '@radix-ui/themes';
+import {Button} from '@monorepo-playground/design-system';
 
 interface AlertProps {
   title: string;

@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Box, Callout, Card, Flex, Text} from '@radix-ui/themes';
-import Button from '@/shared/components/form/Button';
+import {Button} from '@monorepo-playground/design-system';
 import Input, {InputProps} from '@/shared/components/form/Input';
 import styles from './ErrorScrollDemo.module.scss';
 
