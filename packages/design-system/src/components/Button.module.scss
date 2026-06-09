@@ -13,6 +13,9 @@
   border-radius: var(--radius-xs);
   cursor: pointer;
 
+  // asChild일 때는 내부 .children span이 없으므로 루트에서 아이콘/텍스트 간격을 잡는다.
+  column-gap: var(--spacing-xs);
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
