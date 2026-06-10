@@ -6,12 +6,14 @@ import {fileURLToPath} from 'node:url';
 import {storybookTest} from '@storybook/addon-vitest/vitest-plugin';
 import {playwright} from '@vitest/browser-playwright';
 import dts from 'vite-plugin-dts';
+import preserveDirectives from 'rollup-preserve-directives';
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [
     react(),
+    preserveDirectives(),
     dts({
       tsconfigPath: './tsconfig.app.json',
       entryRoot: 'src',
@@ -29,12 +31,16 @@ export default defineConfig({
     lib: {
       entry: path.resolve(dirname, 'src/index.ts'),
       formats: ['es'],
-      fileName: () => 'index.js',
     },
     cssCodeSplit: false,
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: [/^react($|\/)/, /^react-dom($|\/)/, 'clsx', /^radix-ui($|\/)/],
       output: {
+        format: 'es',
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+        entryFileNames: '[name].js',
+        dir: 'dist',
         assetFileNames: '[name][extname]',
       },
     },
