@@ -28,21 +28,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(dirname, 'src/index.ts'),
-      name: 'DesignSystem',
-      formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      formats: ['es'],
+      fileName: () => 'index.js',
     },
     cssCodeSplit: false,
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
-        globals: {
-          react: 'React',
-          // eslint-disable-next-line @typescript-eslint/naming-convention -- npm 패키지 이름
-          'react-dom': 'ReactDOM',
-          // eslint-disable-next-line @typescript-eslint/naming-convention -- npm 패키지 subpath
-          'react/jsx-runtime': 'jsxRuntime',
-        },
         assetFileNames: '[name][extname]',
       },
     },
