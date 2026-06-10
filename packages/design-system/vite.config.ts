@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {storybookTest} from '@storybook/addon-vitest/vitest-plugin';
 import {playwright} from '@vitest/browser-playwright';
 import dts from 'vite-plugin-dts';
+import {viteStaticCopy} from 'vite-plugin-static-copy';
 import preserveDirectives from 'rollup-preserve-directives';
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
@@ -14,6 +15,12 @@ export default defineConfig({
   plugins: [
     react(),
     preserveDirectives(),
+    // typography.module.scss는 믹스인 라이브러리라 import 그래프에 없어 lib 빌드가 자동으로 dist에 옮기지 않는다.
+    // 소비자가 @use(sass)/CSS Module import(JS)로 가져갈 수 있도록 원본 scss와 타입선언(.d.ts)을 dist/styles로 복사한다.
+    // exports의 ./styles/typography가 이 산출물(default=scss, types=d.ts)을 가리킨다.
+    viteStaticCopy({
+      targets: [{src: 'src/styles/typography.{module.scss,d.ts}', dest: 'styles', rename: {stripBase: true}}],
+    }),
     dts({
       tsconfigPath: './tsconfig.app.json',
       entryRoot: 'src',
