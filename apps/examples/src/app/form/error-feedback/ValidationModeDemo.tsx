@@ -2,9 +2,12 @@
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Box, Callout, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
+import {Badge, Box, Callout, Card, Flex, Grid} from '@radix-ui/themes';
+import clsx from 'clsx';
 import {Button} from '@monorepo-playground/design-system';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import Input, {InputProps} from '@/shared/components/form/Input';
+import styles from './ValidationModeDemo.module.scss';
 
 interface FormValues {
   email: string;
@@ -33,12 +36,10 @@ function ModeForm({mode, label, badgeColor, description}: ModeFormProps) {
   return (
     <Card>
       <Box p="4">
-        <Heading mb="1" size="3">
+        <h4 className={clsx(typography.body1, styles.cardTitle)}>
           <Badge color={badgeColor}>{label}</Badge>
-        </Heading>
-        <Text as="p" color="gray" mb="3" size="1">
-          {description}
-        </Text>
+        </h4>
+        <p className={clsx(typography.body3, styles.description)}>{description}</p>
         <form onSubmit={form.onSubmit}>
           <Flex direction="column" gap="3">
             <Input {...inputProps.email} />

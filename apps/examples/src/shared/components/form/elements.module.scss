@@ -1,9 +1,18 @@
 .label {
   display: block;
   margin-bottom: var(--space-1);
+  font-weight: 500;
 }
 
 .caption {
   display: block;
   margin-top: var(--space-1);
+}
+
+.error {
+  color: var(--color-fg-destructive);
+}
+
+.info {
+  color: var(--color-fg-secondary);
 }

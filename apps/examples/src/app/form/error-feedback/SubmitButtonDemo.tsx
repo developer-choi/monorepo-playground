@@ -2,9 +2,12 @@
 
 import {FormEvent, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Box, Callout, Card, Flex, Grid, Heading, Text} from '@radix-ui/themes';
+import {Badge, Box, Callout, Card, Flex, Grid} from '@radix-ui/themes';
+import clsx from 'clsx';
 import {Button} from '@monorepo-playground/design-system';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import Input, {InputProps} from '@/shared/components/form/Input';
+import styles from './SubmitButtonDemo.module.scss';
 
 interface FormValues {
   name: string;
@@ -31,15 +34,13 @@ function BadSubmit() {
   return (
     <Card>
       <Box p="4">
-        <Heading mb="2" size="4">
+        <h4 className={clsx(typography.h4, styles.cardTitle)}>
           <Badge color="red" mr="2">
             BAD
           </Badge>
           isValid로 비활성화
-        </Heading>
-        <Text as="p" color="gray" mb="4" size="2">
-          버튼이 비활성화되어 클릭 자체가 불가능합니다.
-        </Text>
+        </h4>
+        <p className={clsx(typography.body2, styles.description)}>버튼이 비활성화되어 클릭 자체가 불가능합니다.</p>
         <form onSubmit={form.onSubmit}>
           <Flex direction="column" gap="3">
             <Input {...inputProps.name} />
@@ -60,15 +61,13 @@ function GoodSubmit() {
   return (
     <Card>
       <Box p="4">
-        <Heading mb="2" size="4">
+        <h4 className={clsx(typography.h4, styles.cardTitle)}>
           <Badge color="green" mr="2">
             GOOD
           </Badge>
           항상 활성화
-        </Heading>
-        <Text as="p" color="gray" mb="4" size="2">
-          제출 시 에러 피드백으로 안내합니다.
-        </Text>
+        </h4>
+        <p className={clsx(typography.body2, styles.description)}>제출 시 에러 피드백으로 안내합니다.</p>
         <form onSubmit={form.onSubmit}>
           <Flex direction="column" gap="3">
             <Input {...inputProps.name} />

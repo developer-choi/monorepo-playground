@@ -1,14 +1,17 @@
 'use client';
 
 import {useForm, Controller} from 'react-hook-form';
-import {Box, Card, Checkbox, Flex, Select, Text, TextField} from '@radix-ui/themes';
+import {Box, Card, Checkbox, Flex, Select, TextField} from '@radix-ui/themes';
+import clsx from 'clsx';
 import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
 import {Button} from '@monorepo-playground/design-system';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import {useRouter, useSearchParams} from 'next/navigation';
 import queryString from 'query-string';
 import {safeParsePartial} from '@/shared/utils/zod';
 import {buildUrlWithQuery} from '@/shared/utils/url';
 import {BoardListFilter, boardListFilterSchema, BOARD_CATEGORIES, BOARD_TYPES} from '@/validation/integration/schema';
+import styles from './BoardFilter.module.scss';
 
 interface BoardListFilterForm extends Omit<BoardListFilter, 'category'> {
   category: BoardListFilter['category'] | 'all';
@@ -52,10 +55,7 @@ export default function BoardFilter() {
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
         <Flex direction="column" gap="4">
           <Box>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-            <Text size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
-              검색
-            </Text>
+            <p className={clsx(typography.body2, styles.fieldLabel)}>검색</p>
             <Controller
               control={control}
               name="postTitle"
@@ -72,16 +72,13 @@ export default function BoardFilter() {
           <Flex gap="6" wrap="wrap">
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box style={{flex: 1, minWidth: 200}}>
-              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
-                타입
-              </Text>
+              <p className={clsx(typography.body2, styles.fieldLabel)}>타입</p>
               <Controller
                 control={control}
                 name="boardType"
                 render={({field}) => (
                   <Flex gap="3" wrap="wrap">
-                    <Text as="label" size="2">
+                    <label className={typography.body2}>
                       <Flex align="center" gap="2">
                         <Checkbox
                           checked={BOARD_TYPES.values.every((type) => field.value.includes(type))}
@@ -89,9 +86,9 @@ export default function BoardFilter() {
                         />
                         전체
                       </Flex>
-                    </Text>
+                    </label>
                     {BOARD_TYPES.items.map(({value, label}) => (
-                      <Text key={value} as="label" size="2">
+                      <label key={value} className={typography.body2}>
                         <Flex align="center" gap="2">
                           <Checkbox
                             checked={field.value.includes(value)}
@@ -104,7 +101,7 @@ export default function BoardFilter() {
                           />
                           {label}
                         </Flex>
-                      </Text>
+                      </label>
                     ))}
                   </Flex>
                 )}
@@ -113,10 +110,7 @@ export default function BoardFilter() {
 
             {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
             <Box style={{flex: 1, minWidth: 200}}>
-              {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-              <Text as="div" size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
-                카테고리
-              </Text>
+              <div className={clsx(typography.body2, styles.fieldLabel)}>카테고리</div>
               <Controller
                 control={control}
                 name="category"
@@ -138,17 +132,14 @@ export default function BoardFilter() {
           </Flex>
 
           <Box>
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-            <Text size="2" style={{display: 'block', marginBottom: 6}} weight="medium">
-              태그
-            </Text>
+            <p className={clsx(typography.body2, styles.fieldLabel)}>태그</p>
             <Controller
               control={control}
               name="tagList"
               render={({field}) => (
                 <Flex gap="3" wrap="wrap">
                   {AVAILABLE_TAGS.map((tag) => (
-                    <Text key={tag} as="label" size="2">
+                    <label key={tag} className={typography.body2}>
                       <Flex align="center" gap="2">
                         <Checkbox
                           checked={field.value.includes(tag)}
@@ -159,7 +150,7 @@ export default function BoardFilter() {
                         />
                         {tag}
                       </Flex>
-                    </Text>
+                    </label>
                   ))}
                 </Flex>
               )}

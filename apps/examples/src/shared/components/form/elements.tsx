@@ -1,7 +1,8 @@
 'use client';
 
-import {Text} from '@radix-ui/themes';
 import {PropsWithChildren} from 'react';
+import clsx from 'clsx';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import styles from './elements.module.scss';
 
 interface CaptionProps extends PropsWithChildren {
@@ -9,11 +10,7 @@ interface CaptionProps extends PropsWithChildren {
 }
 
 export function Label({children}: PropsWithChildren) {
-  return (
-    <Text as="span" className={styles.label} size="2" weight="medium">
-      {children}
-    </Text>
-  );
+  return <span className={clsx(typography.body2, styles.label)}>{children}</span>;
 }
 
 export function Caption({type = 'info', children}: CaptionProps) {
@@ -22,8 +19,8 @@ export function Caption({type = 'info', children}: CaptionProps) {
   }
 
   return (
-    <Text className={styles.caption} color={type === 'error' ? 'red' : 'gray'} size="1">
+    <span className={clsx(typography.body3, styles.caption, type === 'error' ? styles.error : styles.info)}>
       {children}
-    </Text>
+    </span>
   );
 }

@@ -3,10 +3,13 @@
 import {memo, useDeferredValue, useState} from 'react';
 import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
-import {Box, Card, Callout, Container, Heading, Text, TextField} from '@radix-ui/themes';
+import {Box, Card, Callout, Container, TextField} from '@radix-ui/themes';
 import {Button} from '@monorepo-playground/design-system';
 import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icons';
 import {escapeRegExp} from 'es-toolkit';
+import clsx from 'clsx';
+import typography from '@monorepo-playground/design-system/styles/typography';
+import styles from './page.module.scss';
 
 export default function SearchPage() {
   return (
@@ -20,9 +23,7 @@ export default function SearchPage() {
 function Header() {
   return (
     <Box mb="6">
-      <Heading mb="2" size="7">
-        검색결과 목록 Best Practice
-      </Heading>
+      <h2 className={clsx(typography.h2, styles.heading)}>검색결과 목록 Best Practice</h2>
     </Box>
   );
 }
@@ -67,7 +68,7 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
   });
 
   if (query !== '' && results.length === 0 && !isPlaceholderData) {
-    return <Text color="gray">검색결과가 없습니다.</Text>;
+    return <p className={clsx(typography.body1, styles.empty)}>검색결과가 없습니다.</p>;
   }
 
   return (
@@ -75,9 +76,9 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
       {results.map((result, index) => (
         <Card key={index} mb="2">
           <Box p="3">
-            <Text>
+            <p className={typography.body1}>
               <Highlight query={query} text={result} />
-            </Text>
+            </p>
           </Box>
         </Card>
       ))}
@@ -114,9 +115,13 @@ function Highlight({text, query}: {text: string; query: string}) {
       {/* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */}
       {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <Text key={index} style={{backgroundColor: 'var(--yellow-4)'}} weight="bold">
+          <span
+            key={index}
+            className={clsx(typography.body1, styles.highlight)}
+            style={{backgroundColor: 'var(--yellow-4)'}}
+          >
             {part}
-          </Text>
+          </span>
         ) : (
           <span key={index}>{part}</span>
         ),

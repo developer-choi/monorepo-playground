@@ -1,8 +1,11 @@
 'use client';
 
-import {Flex, Text} from '@radix-ui/themes';
+import {Flex} from '@radix-ui/themes';
 import {ChevronLeftIcon, ChevronRightIcon} from '@radix-ui/react-icons';
+import clsx from 'clsx';
 import {Button} from '@monorepo-playground/design-system';
+import typography from '@monorepo-playground/design-system/styles/typography';
+import styles from './Pagination.module.scss';
 
 interface PaginationProps {
   page: number;
@@ -23,9 +26,9 @@ export default function Pagination({page, totalPages, onPageChange}: PaginationP
 
       {getPageNumbers(page, totalPages).map((pageNum, index) =>
         pageNum === '...' ? (
-          <Text key={`ellipsis-${index}`} color="gray" mx="1" size="2">
+          <span key={`ellipsis-${index}`} className={clsx(typography.body2, styles.ellipsis)}>
             ...
-          </Text>
+          </span>
         ) : (
           <Button
             key={pageNum}

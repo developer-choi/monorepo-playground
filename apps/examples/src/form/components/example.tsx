@@ -2,9 +2,12 @@
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Box, Callout, Card, Flex, Heading, Text} from '@radix-ui/themes';
+import {Badge, Box, Callout, Card, Flex} from '@radix-ui/themes';
+import clsx from 'clsx';
 import {Button} from '@monorepo-playground/design-system';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import Input from '@/shared/components/form/Input';
+import styles from './example.module.scss';
 
 interface FormValues {
   name: string;
@@ -16,15 +19,15 @@ export function BadExample() {
   return (
     <Card>
       <Box p="4">
-        <Heading mb="2" size="4">
+        <h4 className={clsx(typography.h4, styles.cardTitle)}>
           <Badge color="red" mr="2">
             BAD
           </Badge>
           기본 required만 사용
-        </Heading>
-        <Text as="p" color="gray" mb="4" size="2">
+        </h4>
+        <p className={clsx(typography.body2, styles.description)}>
           공백만 입력해도 통과됩니다. &quot; &quot; 입력 후 제출해보세요.
-        </Text>
+        </p>
 
         <form onSubmit={form.onSubmit}>
           <Flex direction="column" gap="3">
@@ -81,15 +84,15 @@ export function GoodExample() {
   return (
     <Card>
       <Box p="4">
-        <Heading mb="2" size="4">
+        <h4 className={clsx(typography.h4, styles.cardTitle)}>
           <Badge color="green" mr="2">
             GOOD
           </Badge>
           유효성검증 + trim 분리
-        </Heading>
-        <Text as="p" color="gray" mb="4" size="2">
+        </h4>
+        <p className={clsx(typography.body2, styles.description)}>
           공백만 입력하면 에러, 앞뒤 공백은 제출 시 자동 제거됩니다.
-        </Text>
+        </p>
 
         <form onSubmit={form.onSubmit}>
           <Flex direction="column" gap="3">

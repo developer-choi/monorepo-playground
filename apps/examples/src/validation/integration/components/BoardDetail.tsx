@@ -1,14 +1,17 @@
 'use client';
 
 import {useMutation} from '@tanstack/react-query';
-import {Container, Heading, Text, Card, Flex, Badge, Separator, AlertDialog} from '@radix-ui/themes';
+import {Container, Card, Flex, Badge, Separator, AlertDialog} from '@radix-ui/themes';
+import clsx from 'clsx';
 import {Button} from '@monorepo-playground/design-system';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import {useRouter} from 'next/navigation';
 import {deleteBoardApi} from '@/validation/integration/api';
 import {isMutationSettling} from '@/shared/query/mutation';
 import {useHandleClientSideError} from '@/shared/error/handler/client';
 import {revalidatePathFromClient} from '@/shared/server-actions';
 import {type BoardDetail, BOARD_TYPES, BOARD_CATEGORIES} from '@/validation/integration/schema';
+import styles from './BoardDetail.module.scss';
 
 interface BoardDetailProps {
   board: BoardDetail;
@@ -33,9 +36,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
   return (
     <Container p="6" size="2">
       <Card size="3">
-        <Heading mb="3" size="6">
-          {board.postTitle}
-        </Heading>
+        <h2 className={clsx(typography.h2, styles.title)}>{board.postTitle}</h2>
 
         <Flex gap="2" mb="4" wrap="wrap">
           <Badge size="2">{BOARD_TYPES.record[board.boardType]}</Badge>
@@ -51,10 +52,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
 
         <Separator mb="4" size="4" />
 
-        {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-        <Text as="p" mb="6" size="3" style={{whiteSpace: 'pre-wrap', lineHeight: 1.8}}>
-          {board.postContent}
-        </Text>
+        <p className={clsx(typography.body1, styles.content)}>{board.postContent}</p>
 
         <Separator mb="4" size="4" />
 

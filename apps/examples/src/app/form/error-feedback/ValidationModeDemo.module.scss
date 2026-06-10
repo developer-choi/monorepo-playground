@@ -1,0 +1,10 @@
+$descriptionGap: 12px;
+
+.cardTitle {
+  margin-bottom: var(--spacing-xs);
+}
+
+.description {
+  margin-bottom: $descriptionGap;
+  color: var(--color-fg-secondary);
+}

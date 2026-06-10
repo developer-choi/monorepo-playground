@@ -2,8 +2,10 @@
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Box, Callout, Card, Flex, Text} from '@radix-ui/themes';
+import {Box, Callout, Card, Flex} from '@radix-ui/themes';
+import clsx from 'clsx';
 import {Button} from '@monorepo-playground/design-system';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import Input, {InputProps} from '@/shared/components/form/Input';
 import styles from './ErrorScrollDemo.module.scss';
 
@@ -22,9 +24,7 @@ export default function ErrorScrollDemo() {
   return (
     <Card>
       <Box p="4">
-        <Text as="p" color="gray" mb="4" size="2">
-          스크롤을 내려 하단의 제출 버튼을 클릭해보세요.
-        </Text>
+        <p className={clsx(typography.body2, styles.description)}>스크롤을 내려 하단의 제출 버튼을 클릭해보세요.</p>
         <Box className={styles.scrollContainer}>
           <form className={styles.form} onSubmit={form.onSubmit}>
             <Flex direction="column" gap="3" p="1">

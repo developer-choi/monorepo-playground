@@ -1,0 +1,36 @@
+$tightGap: 12px;
+
+.pageTitle {
+  margin-bottom: var(--spacing-sm);
+}
+
+.description {
+  color: var(--color-fg-secondary);
+}
+
+.sectionTitle {
+  margin-bottom: var(--spacing-sm);
+}
+
+.descriptionWide {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-fg-secondary);
+}
+
+.descriptionNarrow {
+  margin-bottom: $tightGap;
+  color: var(--color-fg-secondary);
+}
+
+.descriptionSpaced {
+  margin-top: var(--spacing-md);
+  color: var(--color-fg-secondary);
+}
+
+.item {
+  margin-bottom: $tightGap;
+}
+
+.itemWide {
+  margin-bottom: var(--spacing-md);
+}

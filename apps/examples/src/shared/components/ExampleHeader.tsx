@@ -1,6 +1,6 @@
-import {Flex, Link} from '@radix-ui/themes';
+import {Flex} from '@radix-ui/themes';
 import {CodeIcon, FileTextIcon, GitHubLogoIcon} from '@radix-ui/react-icons';
-import NextLink from 'next/link';
+import Link from 'next/link';
 import styles from './ExampleHeader.module.scss';
 
 type DocLink = {type: 'internal'; path: `src/${string}`} | {type: 'external'; url: string};
@@ -22,26 +22,30 @@ export default function ExampleHeader({doc, sourcePath}: ExampleHeaderProps) {
       style={{zIndex: 10, backgroundColor: 'var(--color-background)', borderBottom: '1px solid var(--gray-a5)'}}
       top="0"
     >
-      <NextLink className={styles.logo} href="/">
+      <Link className={styles.logo} href="/">
         Examples
-      </NextLink>
+      </Link>
 
       <Flex align="center" gap="4" ml="auto">
         {doc && (
-          <Link href={doc.type === 'external' ? doc.url : `${PROJECT_BASE}/${doc.path}`} size="2" target="_blank">
+          <Link
+            className={styles.docLink}
+            href={doc.type === 'external' ? doc.url : `${PROJECT_BASE}/${doc.path}`}
+            target="_blank"
+          >
             <Flex align="center" gap="1">
               <FileTextIcon /> 설명서
             </Flex>
           </Link>
         )}
         {sourcePath && (
-          <Link href={`${PROJECT_BASE}/${sourcePath}`} size="2" target="_blank">
+          <Link className={styles.docLink} href={`${PROJECT_BASE}/${sourcePath}`} target="_blank">
             <Flex align="center" gap="1">
               <CodeIcon /> 소스코드
             </Flex>
           </Link>
         )}
-        <Link href="https://github.com/developer-choi" size="2" target="_blank">
+        <Link className={styles.docLink} href="https://github.com/developer-choi" target="_blank">
           <Flex align="center" gap="1">
             <GitHubLogoIcon /> GitHub
           </Flex>

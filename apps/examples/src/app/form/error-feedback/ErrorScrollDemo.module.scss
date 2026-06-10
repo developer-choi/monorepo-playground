@@ -5,6 +5,11 @@ $scrollContainerMaxHeight: 240px;
   overflow-y: auto;
 }
 
+.description {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-fg-secondary);
+}
+
 .form {
   /* stylelint-disable-next-line selector-class-pattern -- Radix 내부 클래스 override */
   :global(.rt-TextFieldRoot):has(input:read-only) {

@@ -1,6 +1,9 @@
 import {z} from 'zod';
-import {Container, Heading, Table, Code, Badge} from '@radix-ui/themes';
+import {Container, Table, Code, Badge} from '@radix-ui/themes';
+import clsx from 'clsx';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import {safeParsePartial} from '@/shared/utils/zod';
+import styles from './page.module.scss';
 
 const ALLOWED_TYPES = ['admin', 'user', 'manager'] as const;
 
@@ -35,9 +38,7 @@ export default function Page() {
 
   return (
     <Container p="6" size="4">
-      <Heading mb="4" size="6">
-        Zod partial() 비교 테스트
-      </Heading>
+      <h2 className={clsx(typography.h2, styles.heading)}>Zod partial() 비교 테스트</h2>
 
       <Table.Root size="1" variant="surface">
         <Table.Header>

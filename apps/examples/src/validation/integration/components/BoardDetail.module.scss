@@ -1,0 +1,12 @@
+$titleGap: 12px;
+$contentLineHeight: 1.8;
+
+.title {
+  margin-bottom: $titleGap;
+}
+
+.content {
+  margin-bottom: var(--spacing-xl);
+  white-space: pre-wrap;
+  line-height: $contentLineHeight;
+}

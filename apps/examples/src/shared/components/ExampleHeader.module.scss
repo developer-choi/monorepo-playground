@@ -7,3 +7,9 @@
   color: var(--color-fg-primary);
   text-decoration: none;
 }
+
+.docLink {
+  @include typography.body2;
+
+  text-decoration: none;
+}

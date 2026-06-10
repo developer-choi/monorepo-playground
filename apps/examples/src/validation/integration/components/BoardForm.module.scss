@@ -1,0 +1,16 @@
+.formTitle {
+  margin-bottom: var(--spacing-lg);
+}
+
+$labelGap: 6px;
+
+.fieldLabel {
+  display: block;
+  margin-bottom: $labelGap;
+  font-weight: 500;
+}
+
+.errorMessage {
+  margin-top: var(--spacing-xs);
+  color: var(--color-fg-destructive);
+}

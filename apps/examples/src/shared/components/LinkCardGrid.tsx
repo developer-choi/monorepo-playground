@@ -1,5 +1,7 @@
-import {Badge, Card, Flex, Heading, Text} from '@radix-ui/themes';
-import NextLink from 'next/link';
+import {Badge, Card, Flex} from '@radix-ui/themes';
+import clsx from 'clsx';
+import Link from 'next/link';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import styles from './LinkCardGrid.module.scss';
 
 export interface LinkCardItem {
@@ -21,10 +23,8 @@ export default function LinkCardGrid({items}: LinkCardGridProps) {
         const card = (
           <Card className={styles.card} size="3">
             <Flex direction="column" gap="3">
-              <Heading size="4">{item.title}</Heading>
-              <Text as="p" color="gray" size="2">
-                {item.description}
-              </Text>
+              <h4 className={typography.h4}>{item.title}</h4>
+              <p className={clsx(typography.body2, styles.description)}>{item.description}</p>
               <Flex gap="2" wrap="wrap">
                 {item.keywords.map((keyword) => (
                   <Badge key={keyword} variant="soft">
@@ -41,9 +41,9 @@ export default function LinkCardGrid({items}: LinkCardGridProps) {
             {card}
           </a>
         ) : (
-          <NextLink key={item.href} className={styles.cardLink} href={item.href}>
+          <Link key={item.href} className={styles.cardLink} href={item.href}>
             {card}
-          </NextLink>
+          </Link>
         );
       })}
     </div>

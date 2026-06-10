@@ -1,9 +1,12 @@
 'use client';
 
-import {Table, Badge, Flex, Text} from '@radix-ui/themes';
+import {Table, Badge, Flex} from '@radix-ui/themes';
+import clsx from 'clsx';
 import {useRouter} from 'next/navigation';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import {BoardListApiResponse, BOARD_TYPES, BOARD_CATEGORIES} from '@/validation/integration/schema';
 import Pagination from '@/shared/components/Pagination';
+import styles from './BoardTable.module.scss';
 
 interface BoardTableProps {
   data: BoardListApiResponse;
@@ -34,9 +37,7 @@ export default function BoardTable({data}: BoardTableProps) {
           {data.list.length === 0 && (
             <Table.Row>
               <Table.Cell colSpan={5}>
-                <Text align="center" color="gray">
-                  게시글이 없습니다.
-                </Text>
+                <p className={clsx(typography.body1, styles.empty)}>게시글이 없습니다.</p>
               </Table.Cell>
             </Table.Row>
           )}

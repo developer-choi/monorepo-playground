@@ -10,6 +10,10 @@ $cardHoverShadow: 0 2px 8px rgb(0 0 0 / 10%);
   }
 }
 
+.description {
+  color: var(--color-fg-secondary);
+}
+
 .cardLink {
   text-decoration: none;
   color: inherit;

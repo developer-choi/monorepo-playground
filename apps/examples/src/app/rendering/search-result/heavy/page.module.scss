@@ -1,0 +1,17 @@
+.heading {
+  margin-bottom: var(--spacing-sm);
+}
+
+.description {
+  color: var(--color-fg-secondary);
+}
+
+.titleBad {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-fg-destructive);
+}
+
+.titleGood {
+  margin-bottom: var(--spacing-md);
+  color: var(--color-fg-success);
+}

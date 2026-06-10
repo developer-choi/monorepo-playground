@@ -1,6 +1,9 @@
-import {Box, Callout, Container, Grid, Heading, Text} from '@radix-ui/themes';
+import {Box, Callout, Container, Grid} from '@radix-ui/themes';
 import {codeToHtml} from 'shiki';
+import clsx from 'clsx';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import {BadExample, GoodExample} from '@/form/components/example';
+import styles from './page.module.scss';
 
 export default async function ValidationPage() {
   const [codeHtml, trimObjectCodeHtml] = await Promise.all([
@@ -11,15 +14,13 @@ export default async function ValidationPage() {
   return (
     <Container p="6" size="4">
       <Box mb="6">
-        <Heading mb="2" size="7">
-          Trim 유효성검증
-        </Heading>
-        <Text as="p" color="gray" size="3">
+        <h2 className={clsx(typography.h2, styles.pageTitle)}>Trim 유효성검증</h2>
+        <p className={clsx(typography.body1, styles.description)}>
           공백만 입력된 경우는 미입력과 동일하게 취급하고, 제출 시점에는 trim된 값을 보냅니다.
-        </Text>
-        <Text as="p" color="gray" mt="2" size="3">
+        </p>
+        <p className={clsx(typography.body1, styles.descriptionSpaced)}>
           <strong>핵심: 폼 데이터는 공백이 포함된 원본 그대로 유지하고, 유효성검증과 trim을 분리합니다.</strong>
-        </Text>
+        </p>
       </Box>
 
       <Grid columns="2" gap="4">
@@ -28,14 +29,10 @@ export default async function ValidationPage() {
       </Grid>
 
       <Box mb="8" mt="8">
-        <Heading mb="4" size="5">
-          왜 유효성검증과 trim을 분리하는가?
-        </Heading>
+        <h3 className={clsx(typography.h3, styles.sectionTitle)}>왜 유효성검증과 trim을 분리하는가?</h3>
 
         <Callout.Root color="orange">
-          <Heading mb="2" size="4">
-            시도: onChange에서 실시간 trim
-          </Heading>
+          <h4 className={clsx(typography.h4, styles.calloutTitle)}>시도: onChange에서 실시간 trim</h4>
           {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
           <div dangerouslySetInnerHTML={{__html: codeHtml}} />
           <Callout.Text>
@@ -49,20 +46,18 @@ export default async function ValidationPage() {
       </Box>
 
       <Box mb="8">
-        <Heading mb="2" size="5">
-          3. 서버 전송 시 일괄 trim
-        </Heading>
-        <Text as="p" color="gray" mb="4" size="2">
+        <h3 className={clsx(typography.h3, styles.sectionTitleTight)}>3. 서버 전송 시 일괄 trim</h3>
+        <p className={clsx(typography.body2, styles.descriptionWide)}>
           필드가 하나라면 <code>data.name.trim()</code>으로 충분하지만, 실무 폼은 필드가 수십 개입니다. 하나하나
           trim하는 건 비현실적이므로, 객체를 재귀 순회하며 모든 문자열을 한번에 trim하는 유틸리티 함수를 만들어
           사용합니다.
-        </Text>
+        </p>
         {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
         <div dangerouslySetInnerHTML={{__html: trimObjectCodeHtml}} />
-        <Text as="p" mt="4" size="2">
+        <p className={clsx(typography.body2, styles.itemSpaced)}>
           <code>trimObject()</code>는 중첩된 객체와 배열도 재귀적으로 순회합니다. 서버로 보내기 직전에{' '}
           <code>trimObject(formData)</code> 한 줄이면 모든 문자열 필드가 정리됩니다.
-        </Text>
+        </p>
       </Box>
     </Container>
   );

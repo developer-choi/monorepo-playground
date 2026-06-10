@@ -1,7 +1,11 @@
 'use client';
 
-import {Box, Card, Container, Flex, Grid, Heading, Link, Text, TextField} from '@radix-ui/themes';
+import {Box, Card, Container, Flex, Grid, TextField} from '@radix-ui/themes';
 import {memo, useDeferredValue, useState} from 'react';
+import clsx from 'clsx';
+import Link from 'next/link';
+import typography from '@monorepo-playground/design-system/styles/typography';
+import styles from './page.module.scss';
 
 export default function HeavyPage() {
   return (
@@ -19,12 +23,14 @@ export default function HeavyPage() {
 function Header() {
   return (
     <Box mb="6">
-      <Heading mb="2" size="7">
-        useDeferredValue 렌더링 비교
-      </Heading>
-      <Text color="gray">150개 아이템 × 1ms = 약 150ms 렌더링 시간</Text>
+      <h2 className={clsx(typography.h2, styles.heading)}>useDeferredValue 렌더링 비교</h2>
+      <p className={clsx(typography.body1, styles.description)}>150개 아이템 × 1ms = 약 150ms 렌더링 시간</p>
       <Box mt="2">
-        <Link href="https://react.dev/reference/react/useDeferredValue#examples" size="2" target="_blank">
+        <Link
+          className={typography.body2}
+          href="https://react.dev/reference/react/useDeferredValue#examples"
+          target="_blank"
+        >
           React 공식문서 원본 예제
         </Link>
       </Box>
@@ -38,9 +44,7 @@ function LeftBadUsage() {
   return (
     <Card>
       <Box p="4">
-        <Heading color="red" mb="4" size="4">
-          Without useDeferredValue
-        </Heading>
+        <h4 className={clsx(typography.h4, styles.titleBad)}>Without useDeferredValue</h4>
 
         <TextField.Root
           autoFocus
@@ -63,9 +67,7 @@ function RightGoodUsage() {
   return (
     <Card>
       <Box p="4">
-        <Heading color="green" mb="4" size="4">
-          With useDeferredValue
-        </Heading>
+        <h4 className={clsx(typography.h4, styles.titleGood)}>With useDeferredValue</h4>
 
         <TextField.Root
           mb="4"
@@ -102,7 +104,7 @@ function SlowItem({text}: {text: string}) {
   /* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */
   return (
     <Flex py="2" style={{borderBottom: '1px solid var(--gray-4)'}}>
-      <Text>Text: {text}</Text>
+      <span className={typography.body1}>Text: {text}</span>
     </Flex>
   );
   /* eslint-enable no-restricted-syntax */

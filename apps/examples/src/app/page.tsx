@@ -1,17 +1,21 @@
-import {Container, Flex, Heading, Link, Text} from '@radix-ui/themes';
+import {Container, Flex} from '@radix-ui/themes';
 import {GitHubLogoIcon} from '@radix-ui/react-icons';
+import clsx from 'clsx';
+import Link from 'next/link';
+import typography from '@monorepo-playground/design-system/styles/typography';
 import LinkCardGrid, {type LinkCardItem} from '@/shared/components/LinkCardGrid';
+import styles from './page.module.scss';
 
 export default function Home() {
   return (
     <Container px="4" py="9" size="3">
       <Flex direction="column" gap="3" mb="8">
-        <Heading size="8">Examples</Heading>
-        <Text color="gray" size="4">
+        <h1 className={typography.h1}>Examples</h1>
+        <p className={clsx(typography.h4, styles.description)}>
           실무에서 반복적으로 사용되는 프론트엔드 패턴들을 Next.js 예제로 정리한 프로젝트입니다.
-        </Text>
+        </p>
         <Flex gap="4" mt="1">
-          <Link href={GITHUB_URL} size="2" target="_blank">
+          <Link className={typography.body2} href={GITHUB_URL} target="_blank">
             <Flex align="center" gap="1">
               <GitHubLogoIcon /> GitHub
             </Flex>
