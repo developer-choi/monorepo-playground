@@ -6,6 +6,7 @@
   --color-fg-subtle: #e5e5e5;
   --color-fg-accent: #1a1a1a;
   --color-fg-destructive: #d32f2f;
+  --color-fg-success: #2e7d32;
 
   /* === 컬러: bg (배경) === */
   --color-bg-primary: #fff;

@@ -14,7 +14,11 @@
       "import": "./dist/index.js"
     },
     "./style.css": "./dist/design-system.css",
-    "./styles/typography": "./dist/styles/typography.module.scss"
+    "./styles/typography": {
+      "types": "./dist/styles/typography.d.ts",
+      "sass": "./dist/styles/typography.module.scss",
+      "default": "./dist/styles/typography.module.scss"
+    }
   },
   "files": [
     "dist"
