@@ -47,13 +47,15 @@ ESLint·Stylelint는 모두 `--max-warnings 0` 옵션으로 실행하므로, sev
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
     "**/*.scss": "stylelint --fix --max-warnings 0",
-    "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config apps/examples/eslint.config.mjs",
-    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --config packages/design-system/eslint.config.js"
+    "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --no-warn-ignored --config apps/examples/eslint.config.mjs",
+    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --no-warn-ignored --config packages/design-system/eslint.config.js"
   }
 }
 ```
 
 Prettier가 먼저 실행되어 포맷팅을 정리한 뒤, Stylelint가 SCSS를, ESLint가 TypeScript 로직 규칙을 검사합니다. Prettier 설정에 대한 자세한 내용은 [docs/formatter.md](formatter.md)를 참고하세요.
+
+`--no-warn-ignored`는 eslint config의 `globalIgnores`(예: `**/*.d.ts`)에 해당하는 파일이 staged되어 lint-staged가 명시적으로 넘길 때 발생하는 "File ignored" 경고를 억제합니다. 이 경고는 `--max-warnings 0`에서 커밋을 차단하므로, ignore 대상 파일(타입 선언 등)을 커밋할 수 있게 합니다.
 
 ### turbo check-types — 전체 타입 체크
 
