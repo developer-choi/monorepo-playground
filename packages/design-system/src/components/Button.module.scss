@@ -14,7 +14,8 @@
   cursor: pointer;
 
   // asChild일 때는 내부 .children span이 없으므로 루트에서 아이콘/텍스트 간격을 잡는다.
-  column-gap: var(--spacing-xs);
+  // --button-gap은 사이즈 클래스(small~xLarge)가 정의한다.
+  column-gap: var(--button-gap);
 
   &:disabled {
     opacity: 0.5;
@@ -26,22 +27,46 @@
   }
 }
 
-.button.styled.large {
-  @include typography.body1;
+// 높이·가로패딩·gap은 radix themes 버튼 스케일(size 1~4 = space-5~8)을 그대로 따른다.
+// 세로 패딩은 두지 않고 고정 height + 가운데 정렬로 잡는다(radix와 동일).
+.button.styled.small {
+  @include typography.body3;
 
-  padding: var(--spacing-sm) var(--spacing-xl);
+  --button-gap: var(--spacing-xs);
+
+  height: var(--spacing-lg);
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
 }
 
 .button.styled.medium {
   @include typography.body2;
 
-  padding: var(--spacing-xs) var(--spacing-md);
+  --button-gap: var(--spacing-sm);
+
+  height: var(--spacing-xl);
+  padding-left: var(--spacing-grid-gap);
+  padding-right: var(--spacing-grid-gap);
 }
 
-.button.styled.small {
-  @include typography.body3;
+.button.styled.large {
+  @include typography.body1;
 
-  padding: var(--spacing-xs) var(--spacing-sm);
+  --button-gap: var(--spacing-grid-gap);
+
+  height: var(--spacing-2xl);
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+.button.styled.xLarge {
+  @include typography.h4;
+
+  --button-gap: var(--spacing-grid-gap);
+
+  height: var(--spacing-3xl);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
 }
 
 .button.styled.primary.contained {
@@ -84,7 +109,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  column-gap: var(--spacing-xs);
+  column-gap: var(--button-gap);
   white-space: nowrap;
   overflow: hidden;
 
