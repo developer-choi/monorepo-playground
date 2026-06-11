@@ -26,7 +26,7 @@ const SPINNER_SIZE_BY_BUTTON_SIZE: Record<NonNullable<ButtonProps['size']>, numb
   small: 16,
 };
 
-export function Button({
+export default function Button({
   children,
   className,
   type = 'button',
