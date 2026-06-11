@@ -1,9 +1,10 @@
 'use client';
 
 import {useMutation} from '@tanstack/react-query';
-import {Container, Card, Flex, Badge, Separator, AlertDialog} from '@radix-ui/themes';
+import {Container, Card, Flex, Badge, Separator} from '@radix-ui/themes';
 import clsx from 'clsx';
-import {Button} from '@monorepo-playground/design-system';
+import {overlay} from 'overlay-kit';
+import {Button, Confirm} from '@monorepo-playground/design-system';
 import typography from '@monorepo-playground/design-system/styles/typography';
 import {useRouter} from 'next/navigation';
 import {deleteBoardApi} from '@/validation/integration/api';
@@ -30,6 +31,24 @@ export default function BoardDetail({board}: BoardDetailProps) {
       router.push('/validation/integration');
     } catch (error) {
       handleClientSideError(error);
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    const confirmed = await overlay.openAsync<boolean>(({isOpen, close}) => (
+      <Confirm
+        destructive
+        confirmText="삭제"
+        content="정말 이 게시글을 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다."
+        open={isOpen}
+        title="게시글 삭제"
+        onCancel={() => close(false)}
+        onConfirm={() => close(true)}
+      />
+    ));
+
+    if (confirmed) {
+      await handleDelete();
     }
   };
 
@@ -69,36 +88,15 @@ export default function BoardDetail({board}: BoardDetailProps) {
             <Button size="medium" onClick={() => router.push(`/validation/integration/${board.id}/edit`)}>
               수정
             </Button>
-            <AlertDialog.Root>
-              <AlertDialog.Trigger>
-                <Button
-                  color="destructive"
-                  loading={isMutationSettling(deleteMutation)}
-                  size="medium"
-                  variant="outlined"
-                >
-                  삭제
-                </Button>
-              </AlertDialog.Trigger>
-              <AlertDialog.Content maxWidth="450px">
-                <AlertDialog.Title>게시글 삭제</AlertDialog.Title>
-                <AlertDialog.Description size="2">
-                  정말 이 게시글을 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.
-                </AlertDialog.Description>
-                <Flex gap="3" justify="end" mt="4">
-                  <AlertDialog.Cancel>
-                    <Button color="secondary" size="medium" variant="outlined">
-                      취소
-                    </Button>
-                  </AlertDialog.Cancel>
-                  <AlertDialog.Action>
-                    <Button color="destructive" size="medium" onClick={() => void handleDelete()}>
-                      삭제
-                    </Button>
-                  </AlertDialog.Action>
-                </Flex>
-              </AlertDialog.Content>
-            </AlertDialog.Root>
+            <Button
+              color="destructive"
+              loading={isMutationSettling(deleteMutation)}
+              size="medium"
+              variant="outlined"
+              onClick={() => void handleDeleteClick()}
+            >
+              삭제
+            </Button>
           </Flex>
         </Flex>
       </Card>

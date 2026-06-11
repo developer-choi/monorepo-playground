@@ -26,7 +26,7 @@ function BadConfirmDeleteButton({onConfirm}: {onConfirm: () => void}) {
     <>
       <button onClick={() => setOpen(true)}>삭제</button>
       {open && (
-        <ConfirmDialog
+        <Confirm
           onConfirm={() => {
             setOpen(false);
             onConfirm();
@@ -42,7 +42,7 @@ function BadConfirmDeleteButton({onConfirm}: {onConfirm: () => void}) {
 function GoodConfirmDeleteButton({onConfirm}: {onConfirm: () => void}) {
   const handleClick = async () => {
     const confirmed = await overlay.openAsync<boolean>(({isOpen, close}) => (
-      <ConfirmDialog isOpen={isOpen} onConfirm={() => close(true)} onCancel={() => close(false)} />
+      <Confirm isOpen={isOpen} onConfirm={() => close(true)} onCancel={() => close(false)} />
     ));
     if (confirmed) onConfirm();
   };

@@ -1,0 +1,5 @@
+// Dialog 헤더 h2 색은 :where(.header.styled) h2 (zero-specificity)로 지정되므로,
+// 이 클래스(0,1,0)가 우선해 destructive 색을 적용한다.
+.criticalTitle {
+  color: var(--color-fg-destructive);
+}

@@ -38,8 +38,9 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 .header {
   margin-bottom: var(--spacing-md);
 
+  // h2 자체 마진을 두지 않고 .header의 margin-bottom 하나로 타이틀→내용 간격을 잡는다.
   h2 {
-    margin: 0 0 var(--spacing-lg);
+    margin: 0;
   }
 }
 
