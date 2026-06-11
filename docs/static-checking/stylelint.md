@@ -31,7 +31,7 @@ Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`
 
 ## declaration-strict-value
 
-하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·간격뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`)과 레이어 속성(`z-index`)도 대상에 포함하여, `max-width: 480px`이나 `z-index: 1300` 같은 매직넘버를 차단합니다. 토큰화된 z-index map(예: `$zIndexes`)이나 CSS 변수만 통과합니다.
+하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·여백뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`), 간격 속성(`gap`, `row-gap`, `column-gap`), 레이어 속성(`z-index`)도 대상에 포함하여, `max-width: 480px`이나 `z-index: 1300` 같은 매직넘버를 차단합니다. 토큰화된 z-index map(예: `$zIndexes`)이나 CSS 변수만 통과합니다.
 
 ### 주요 설정 포인트
 
@@ -66,6 +66,22 @@ text-shadow: 1px 1px 2px red;
 ```
 
 shadow 속성은 속성 목록에 포함하되, 잡을 수 있는 케이스(단일 값, 변수 없이 하드코딩)만 기대합니다.
+
+## declaration-property-value-disallowed-list — SCSS 변수 raw 값 금지
+
+`declaration-strict-value`는 **CSS 속성 값**만 검사하므로, `$gap: 12px; margin: $gap`처럼 **SCSS 변수에 raw 값을 담아 우회**하면 잡지 못합니다 (값 자리에 `$gap`이라는 변수 참조가 와서 통과). 이 세탁을 막기 위해, SCSS 변수(`$`) 선언의 값에 raw px·색(`px`, `#`, `rgb`, `hsl`)이 들어가면 차단합니다.
+
+```json
+"declaration-property-value-disallowed-list": [
+  {"/^\\$/": ["/px/", "/^#/", "/rgb/", "/hsl/"]},
+  {"message": "..."}
+]
+```
+
+- **토큰이 있는 값** → `var(--...)`을 직접 쓴다 (`$gap: 12px` → `gap: var(--spacing-grid-gap)`).
+- **컴포넌트 전용 일회성 값** (Dialog `$dialogMaxWidth`·`$paperShadow`, 타이포 스케일 `$typography` 맵 등 [DesignTokens.md](../../packages/design-system/docs/patterns/DesignTokens.md)의 "공통화 불가 → 로컬 SCSS 변수" 정책에 해당) → `stylelint-disable + 사유`로 명시적으로 예외 처리한다. 이 disable이 "의도된 일회성"임을 드러내는 표식이 되어, 토큰이어야 할 값을 변수로 세탁하는 것과 구분된다.
+
+> 이 룰은 "토큰 값과 정확히 일치하는 것만 막기"(brittle한 토큰값 나열)가 아니라 "raw 값은 전부 막고 일회성은 disable로 증명"하는 방식이다. lint가 의도(토큰화 대상 vs 일회성)를 자동 판별할 수 없어, 후자를 택했다.
 
 ## 미도입 규칙과 사유
 

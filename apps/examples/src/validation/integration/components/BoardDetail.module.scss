@@ -1,8 +1,7 @@
-$titleGap: 12px;
 $contentLineHeight: 1.8;
 
 .title {
-  margin-bottom: $titleGap;
+  margin-bottom: var(--spacing-grid-gap);
 }
 
 .content {

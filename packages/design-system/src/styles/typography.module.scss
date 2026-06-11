@@ -1,5 +1,6 @@
 @use 'sass:map';
 
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- 타이포그래피 스케일 정의 (시스템 소스 맵, @each로 클래스·믹스인 생성) */
 $typography: (
   h1: (
     size: 36px,

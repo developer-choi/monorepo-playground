@@ -1,8 +1,6 @@
 @use '../variables';
 @use '@monorepo-playground/design-system/styles/typography';
 
-$infoPadding: 12px;
-
 .imageWrapper {
   aspect-ratio: 1 / 1;
   background-color: variables.$colorSurface;
@@ -16,7 +14,7 @@ $infoPadding: 12px;
 }
 
 .info {
-  padding: $infoPadding 0 0;
+  padding: var(--spacing-grid-gap) 0 0;
 }
 
 .title {

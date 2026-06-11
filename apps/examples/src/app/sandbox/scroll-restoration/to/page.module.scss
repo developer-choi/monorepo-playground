@@ -1,5 +1,3 @@
-$containerPadding: 24px;
-
 .container {
-  padding: $containerPadding;
+  padding: var(--spacing-lg);
 }

@@ -1,9 +1,7 @@
-$cardHoverShadow: 0 2px 8px rgb(0 0 0 / 10%);
-
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: var(--spacing-md);
 
   @media (width <= 768px) {
     grid-template-columns: 1fr;
@@ -24,6 +22,6 @@ $cardHoverShadow: 0 2px 8px rgb(0 0 0 / 10%);
   transition: box-shadow 0.2s;
 
   &:hover {
-    box-shadow: $cardHoverShadow;
+    box-shadow: var(--shadow-hover);
   }
 }

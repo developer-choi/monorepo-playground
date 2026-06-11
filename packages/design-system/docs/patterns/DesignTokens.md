@@ -66,6 +66,7 @@ fg / bg 안에서 의미 단어로 파생한다.
 | `subtle` | 가장 약함 (가는 보더, 디바이더 등) |
 | `accent` | 강조 (focus 인디케이터, 강조 보더, primary 액션 배경 등) |
 | `destructive` | 돌이킬 수 없는 위험·삭제 액션 |
+| `success` | 성공·완료 상태 (긍정 피드백) |
 
 `on-X` (예: `--color-on-accent`)는 X 배경 위에 올라갈 텍스트 색 관용 패턴. 별도 카테고리.
 
@@ -97,7 +98,7 @@ CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 `
 - 테마 교체할 때 일괄 갱신 의미가 사라짐 (이미 컴포넌트 단위로 분기)
 - 토큰의 정체성 상실
 
-이런 값은 해당 컴포넌트 `module.scss` 상단에 SCSS 로컬 변수로 둔다.
+이런 값은 해당 컴포넌트 `module.scss` 상단에 SCSS 로컬 변수로 둔다. 단 lint(`declaration-property-value-disallowed-list`)가 raw 값 SCSS 변수를 막으므로, 일회성임을 명시하는 `stylelint-disable + 사유`를 함께 단다.
 
 ```scss
 $paperShadow: (
@@ -106,4 +107,4 @@ $paperShadow: (
 );
 ```
 
-shadow 형태(ring vs depth) 자체가 여러 컴포넌트에서 공유될 가능성이 있으면 (예: `--shadow-focus`는 input·button focus 링) 토큰화한다.
+shadow 형태(ring vs depth) 자체가 여러 컴포넌트에서 공유될 가능성이 있으면 토큰화한다 (예: `--shadow-focus`는 input·button focus 링, `--shadow-hover`는 카드·타일의 호버 elevation depth).

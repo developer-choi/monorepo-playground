@@ -1,5 +1,6 @@
 @use '@/rendering/infinite-scroll/variables';
 
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- 데모 전용 컨테이너 폭 */
 $containerMaxWidth: 600px;
 $cardLineHeight: 1.8;
 
@@ -29,7 +30,7 @@ $cardLineHeight: 1.8;
   line-height: $cardLineHeight;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .cardTitle {

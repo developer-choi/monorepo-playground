@@ -1,6 +1,8 @@
 @use '@/styles/typography.module' as typography;
 
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- Dialog 전용 일회성 (DesignTokens.md: 공통화 불가 → 로컬 SCSS 변수) */
 $dialogMaxWidth: 600px;
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- Dialog 전용 3-stop 그림자 (공통화 불가) */
 $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%));
 
 .overlay {

@@ -62,4 +62,5 @@
 
   /* === Shadow === */
   --shadow-focus: 0 0 0 3px rgb(26 26 26 / 25%);
+  --shadow-hover: 0 2px 8px rgb(0 0 0 / 10%);
 }

@@ -24,6 +24,12 @@
     "scss/at-use-no-redundant-alias": true,
     "monorepo-playground/at-use-no-short-alias": true,
     "value-keyword-case": null,
+    "declaration-property-value-disallowed-list": [
+      {"/^\\$/": ["/px/", "/^#/", "/rgb/", "/hsl/"]},
+      {
+        "message": "SCSS 변수에 raw 값(px·색) 금지 — 토큰이 있으면 var(--...)을, 컴포넌트 전용 일회성이면 stylelint-disable + 사유를 단다"
+      }
+    ],
     "scale-unlimited/declaration-strict-value": [
       [
         "/color$/",
@@ -49,7 +55,10 @@
         "min-height",
         "max-width",
         "max-height",
-        "z-index"
+        "z-index",
+        "gap",
+        "row-gap",
+        "column-gap"
       ],
       {
         "ignoreValues": [

@@ -1,5 +1,8 @@
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- 검색 데모 전용 입력 폭 */
 $searchInputMaxWidth: 600px;
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- 검색 데모 전용 입력 높이 */
 $searchInputHeight: 44px;
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- 검색 데모 전용 입력 폰트 */
 $searchInputFontSize: 16px;
 
 .searchInput {

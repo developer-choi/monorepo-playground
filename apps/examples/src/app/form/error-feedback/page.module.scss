@@ -1,5 +1,3 @@
-$tightGap: 12px;
-
 .pageTitle {
   margin-bottom: var(--spacing-sm);
 }
@@ -18,7 +16,7 @@ $tightGap: 12px;
 }
 
 .descriptionNarrow {
-  margin-bottom: $tightGap;
+  margin-bottom: var(--spacing-grid-gap);
   color: var(--color-fg-secondary);
 }
 
@@ -28,7 +26,7 @@ $tightGap: 12px;
 }
 
 .item {
-  margin-bottom: $tightGap;
+  margin-bottom: var(--spacing-grid-gap);
 }
 
 .itemWide {

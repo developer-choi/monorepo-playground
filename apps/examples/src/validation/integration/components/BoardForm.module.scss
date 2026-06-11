@@ -2,11 +2,9 @@
   margin-bottom: var(--spacing-lg);
 }
 
-$labelGap: 6px;
-
 .fieldLabel {
   display: block;
-  margin-bottom: $labelGap;
+  margin-bottom: var(--spacing-sm);
   font-weight: 500;
 }
 
