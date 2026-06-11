@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
 import * as Dialog from './Dialog';
-import styles from './Dialog.module.scss';
+import Button from '@/components/Button';
 
 const meta: Meta<typeof Dialog.Root> = {
   title: 'Components/Modal/Dialog',
@@ -61,12 +61,10 @@ function FormDialogContent({title, descriptions, onClose}: FormDialogContentProp
       </Dialog.Content>
 
       <Dialog.Footer>
-        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-        <button onClick={onClose}>취소</button>
-        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-        <button className="primary" onClick={onClose}>
-          저장
-        </button>
+        <Button color="secondary" variant="outlined" onClick={onClose}>
+          취소
+        </Button>
+        <Button onClick={onClose}>저장</Button>
       </Dialog.Footer>
     </>
   );
@@ -77,8 +75,9 @@ function BasicUsageStory(args: Dialog.RootProps) {
 
   return (
     <div className="storyLayout">
-      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-      <button onClick={() => setOpen(true)}>Dialog 열기</button>
+      <Button color="secondary" variant="outlined" onClick={() => setOpen(true)}>
+        Dialog 열기
+      </Button>
 
       <Dialog.Root
         {...args}
@@ -95,12 +94,10 @@ function BasicUsageStory(args: Dialog.RootProps) {
         <Dialog.Content>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</Dialog.Content>
 
         <Dialog.Footer>
-          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-          <button onClick={() => setOpen(false)}>취소</button>
-          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-          <button className="primary" onClick={() => setOpen(false)}>
-            확인
-          </button>
+          <Button color="secondary" variant="outlined" onClick={() => setOpen(false)}>
+            취소
+          </Button>
+          <Button onClick={() => setOpen(false)}>확인</Button>
         </Dialog.Footer>
       </Dialog.Root>
     </div>
@@ -122,10 +119,12 @@ function FocusStory(args: Dialog.RootProps) {
   return (
     <div className="storyLayout">
       <div className="buttonGroup">
-        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-        <button onClick={() => setRestoreOpen(true)}>첫 요소 포커스 지정</button>
-        {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-        <button onClick={() => setTrapOpen(true)}>포커스 Trap 테스트</button>
+        <Button color="secondary" variant="outlined" onClick={() => setRestoreOpen(true)}>
+          첫 요소 포커스 지정
+        </Button>
+        <Button color="secondary" variant="outlined" onClick={() => setTrapOpen(true)}>
+          포커스 Trap 테스트
+        </Button>
       </div>
 
       <Dialog.Root
@@ -173,52 +172,4 @@ export const Focus: Story = {
     disableBackdropClick: false,
   },
   render: (args) => <FocusStory {...args} />,
-};
-
-function CriticalAlertStory(args: Dialog.RootProps) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="storyLayout">
-      {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-      <button className="destructive" onClick={() => setOpen(true)}>
-        계정 영구 삭제
-      </button>
-
-      <Dialog.Root
-        {...args}
-        open={open}
-        onClose={() => {
-          setOpen(false);
-          args.onClose();
-        }}
-      >
-        <Dialog.Header>
-          <Dialog.Title className={styles.criticalTitle}>정말 삭제하시겠습니까?</Dialog.Title>
-        </Dialog.Header>
-
-        <Dialog.Content>
-          중요한 작업이므로 실수로 닫는 것을 방지하기 위해
-          <strong> ESC 키와 배경 클릭 닫기가 비활성화</strong> 되었습니다.
-        </Dialog.Content>
-
-        <Dialog.Footer>
-          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-          <button onClick={() => setOpen(false)}>취소</button>
-          {/* eslint-disable-next-line no-restricted-syntax -- TODO: Storybook 데모용 원시 버튼. 공통 Button 컴포넌트 적용 검토 필요 */}
-          <button className="destructive" onClick={() => setOpen(false)}>
-            삭제 확인
-          </button>
-        </Dialog.Footer>
-      </Dialog.Root>
-    </div>
-  );
-}
-
-export const CriticalAlert: Story = {
-  args: {
-    disableEscapeKeyDown: true,
-    disableBackdropClick: true,
-  },
-  render: (args) => <CriticalAlertStory {...args} />,
 };
