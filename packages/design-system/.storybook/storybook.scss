@@ -1,5 +1,6 @@
 @use '../src/styles/typography.module' as typography;
 
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- Storybook 스토리 레이아웃 전용 일회성 너비 (토큰화 불가) */
 $storyLayoutMaxWidth: 600px;
 
 button,
@@ -51,26 +52,6 @@ input {
   display: flex;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
-}
-
-.primary {
-  background-color: var(--color-bg-accent);
-  color: var(--color-on-accent);
-  border-color: var(--color-bg-accent);
-
-  &:hover {
-    opacity: 0.85;
-  }
-}
-
-.destructive {
-  background-color: var(--color-bg-destructive);
-  color: var(--color-on-destructive);
-  border-color: var(--color-bg-destructive);
-
-  &:hover {
-    opacity: 0.85;
-  }
 }
 
 .formGroup {
