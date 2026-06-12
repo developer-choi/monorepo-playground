@@ -1,0 +1,46 @@
+@use 'sass:list';
+@use '@/styles/typography.module' as typography;
+
+$colors: (
+  neutral: (
+    var(--color-fg-secondary),
+    var(--color-bg-neutral-soft),
+  ),
+  info: (
+    var(--color-fg-info),
+    var(--color-bg-info-soft),
+  ),
+  success: (
+    var(--color-fg-success),
+    var(--color-bg-success-soft),
+  ),
+  warning: (
+    var(--color-fg-warning),
+    var(--color-bg-warning-soft),
+  ),
+  danger: (
+    var(--color-fg-destructive),
+    var(--color-bg-danger-soft),
+  ),
+);
+
+.callout {
+  display: block;
+}
+
+.callout.styled {
+  @include typography.body2;
+
+  padding: var(--spacing-grid-gap);
+  border-radius: var(--radius-sm);
+}
+
+@each $color, $c in $colors {
+  $fg: list.nth($c, 1);
+  $soft: list.nth($c, 2);
+
+  .callout.styled.#{$color} {
+    background-color: $soft;
+    color: $fg;
+  }
+}
