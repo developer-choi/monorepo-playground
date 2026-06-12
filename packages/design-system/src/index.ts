@@ -17,6 +17,8 @@ export {default as Alert} from '@/components/Modal/Alert';
 export type {AlertProps} from '@/components/Modal/Alert';
 export {default as Confirm} from '@/components/Modal/Confirm';
 export type {ConfirmProps} from '@/components/Modal/Confirm';
+export {default as TextArea} from '@/components/TextArea/TextArea';
+export type {TextAreaProps} from '@/components/TextArea/TextArea';
 export {default as TextField} from '@/components/TextField/TextField';
 export type {TextFieldProps} from '@/components/TextField/TextField';
 export {default as PasswordField} from '@/components/PasswordField/PasswordField';

@@ -7,6 +7,7 @@ export interface InputBaseProps extends Omit<ComponentProps<'label'>, 'children'
   trailing?: ReactNode;
   suffix?: string;
   isInvalid?: boolean;
+  multiline?: boolean;
   children: ReactElement;
 }
 
@@ -15,12 +16,22 @@ export default function InputBase({
   trailing,
   suffix,
   isInvalid,
+  multiline,
   className,
   children,
   ...rest
 }: InputBaseProps) {
   return (
-    <label className={clsx(styles.inputBase, styles.styled, isInvalid && styles.invalid, className)} {...rest}>
+    <label
+      className={clsx(
+        styles.inputBase,
+        styles.styled,
+        isInvalid && styles.invalid,
+        multiline && styles.multiline,
+        className,
+      )}
+      {...rest}
+    >
       {leading && <span className={clsx(styles.slot, styles.styled)}>{leading}</span>}
       <span className={clsx(styles.content, styles.styled)}>
         {children}

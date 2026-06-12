@@ -4,6 +4,10 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+
+  &.multiline {
+    align-items: stretch;
+  }
 }
 
 .inputBase.styled {
@@ -14,11 +18,11 @@
   background: var(--color-bg-primary);
   box-shadow: var(--shadow-ring-rest);
 
-  &:not(:has(input:disabled)).invalid {
+  &:not(:has(input:disabled, textarea:disabled)).invalid {
     box-shadow: var(--shadow-ring-invalid);
   }
 
-  &:not(:has(input:disabled)) {
+  &:not(:has(input:disabled, textarea:disabled)) {
     cursor: auto;
 
     &:has(.content :focus) {
@@ -26,17 +30,23 @@
     }
   }
 
-  &:has(input:disabled) {
+  &:has(input:disabled, textarea:disabled) {
     color: var(--color-fg-muted);
     cursor: not-allowed;
 
-    .content > input {
+    .content > input,
+    .content > textarea {
       cursor: not-allowed;
     }
 
     .suffix {
       color: var(--color-fg-muted);
     }
+  }
+
+  &.multiline {
+    height: auto;
+    padding-block: var(--spacing-sm);
   }
 }
 
@@ -61,12 +71,14 @@
   gap: var(--spacing-xs);
 }
 
-.content > input {
+.content > input,
+.content > textarea {
   flex: 1;
   min-width: 0;
 }
 
-.content.styled > input {
+.content.styled > input,
+.content.styled > textarea {
   @include typography.body1;
 
   border: none;
