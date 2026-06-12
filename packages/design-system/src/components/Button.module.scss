@@ -109,13 +109,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  column-gap: var(--button-gap);
   white-space: nowrap;
   overflow: hidden;
 
   &.loading {
     visibility: hidden;
   }
+}
+
+.children.styled {
+  column-gap: var(--button-gap);
 }
 
 .spinner {

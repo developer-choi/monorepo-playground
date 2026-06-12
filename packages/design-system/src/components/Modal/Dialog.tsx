@@ -27,7 +27,7 @@ export function Root({
       }}
     >
       <RadixDialog.Portal>
-        <RadixDialog.Overlay className={styles.overlay} />
+        <RadixDialog.Overlay className={clsx(styles.overlay, styles.styled)} />
         <RadixDialog.Content
           aria-describedby={undefined}
           className={clsx(styles.paper, styles.styled)}
@@ -42,7 +42,7 @@ export function Root({
             }
           }}
         >
-          <div className={styles.content}>{children}</div>
+          <div className={clsx(styles.content, styles.styled)}>{children}</div>
         </RadixDialog.Content>
       </RadixDialog.Portal>
     </RadixDialog.Root>
@@ -60,7 +60,7 @@ export function Content({children, className}: WrapperProps) {
 }
 
 export function Footer({children, className}: WrapperProps) {
-  return <div className={clsx(styles.footer, className)}>{children}</div>;
+  return <div className={clsx(styles.footer, styles.styled, className)}>{children}</div>;
 }
 
 export function Title(props: ComponentProps<typeof RadixDialog.Title>) {

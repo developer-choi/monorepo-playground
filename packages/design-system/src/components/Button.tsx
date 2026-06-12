@@ -73,7 +73,7 @@ export default function Button({
         // Slottable로 감싼 자식이 slot 대상이 되어, loading 시 Spinner를 자식 내부로 합쳐준다.
         <Slot.Slottable>{children}</Slot.Slottable>
       ) : (
-        <span className={clsx(styles.children, loading && styles.loading)}>{children}</span>
+        <span className={clsx(styles.children, styles.styled, loading && styles.loading)}>{children}</span>
       )}
       {loading ? <Spinner className={styles.spinner} size={SPINNER_SIZE_BY_BUTTON_SIZE[size]} /> : null}
     </Comp>

@@ -8,6 +8,9 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 .overlay {
   position: fixed;
   inset: 0;
+}
+
+.overlay.styled {
   background-color: var(--color-overlay-backdrop);
   -webkit-tap-highlight-color: transparent;
 }
@@ -31,11 +34,11 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
   box-shadow: $paperShadow;
 }
 
-.content {
+.content.styled {
   padding: var(--spacing-lg);
 }
 
-.header {
+.header.styled {
   margin-bottom: var(--spacing-md);
 
   // h2 자체 마진을 두지 않고 .header의 margin-bottom 하나로 타이틀→내용 간격을 잡는다.
@@ -52,22 +55,18 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
   }
 }
 
-.criticalTitle {
-  color: var(--color-fg-destructive);
-}
-
-.body {
-  margin-bottom: var(--spacing-lg);
-}
-
 .body.styled {
   @include typography.body2;
 
+  margin-bottom: var(--spacing-lg);
   color: var(--color-fg-secondary);
 }
 
 .footer {
   display: flex;
+}
+
+.footer.styled {
   justify-content: flex-end;
   gap: var(--spacing-sm);
 }

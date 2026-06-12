@@ -36,7 +36,7 @@ export default function Confirm({
   return (
     <Dialog.Root open={open} onClose={onCancel}>
       <Dialog.Header>
-        <Dialog.Title className={clsx(destructive && styles.criticalTitle)}>{title}</Dialog.Title>
+        <Dialog.Title className={clsx(destructive && [styles.criticalTitle, styles.styled])}>{title}</Dialog.Title>
       </Dialog.Header>
       <Dialog.Content>{content}</Dialog.Content>
       <Dialog.Footer>
