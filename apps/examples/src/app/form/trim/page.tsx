@@ -1,16 +1,11 @@
 import {Callout} from '@monorepo-playground/design-system';
-import {codeToHtml} from 'shiki';
 import clsx from 'clsx';
 import typography from '@monorepo-playground/design-system/styles/typography';
+import CodeBlock from '@/shared/components/CodeBlock';
 import {BadExample, GoodExample} from '@/form/components/example';
 import styles from './page.module.scss';
 
-export default async function ValidationPage() {
-  const [codeHtml, trimObjectCodeHtml] = await Promise.all([
-    codeToHtml(SAMPLE_CODE, {lang: 'tsx', theme: 'github-light'}),
-    codeToHtml(TRIM_OBJECT_CODE, {lang: 'ts', theme: 'github-light'}),
-  ]);
-
+export default function ValidationPage() {
   return (
     <div className={styles.page}>
       <div className={styles.section}>
@@ -34,8 +29,7 @@ export default async function ValidationPage() {
         <Callout color="warning">
           <div className={styles.calloutBody}>
             <h4 className={clsx(typography.h4, styles.calloutTitle)}>시도: onChange에서 실시간 trim</h4>
-            {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-            <div dangerouslySetInnerHTML={{__html: codeHtml}} />
+            <CodeBlock code={SAMPLE_CODE} />
             <p>
               &quot;101동&quot; 입력 후 &quot; 105호&quot;를 이어 쓰려고 스페이스바를 누르면 공백이 즉시 제거됩니다.
             </p>
@@ -54,8 +48,7 @@ export default async function ValidationPage() {
           trim하는 건 비현실적이므로, 객체를 재귀 순회하며 모든 문자열을 한번에 trim하는 유틸리티 함수를 만들어
           사용합니다.
         </p>
-        {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-        <div dangerouslySetInnerHTML={{__html: trimObjectCodeHtml}} />
+        <CodeBlock code={TRIM_OBJECT_CODE} lang="ts" />
         <p className={clsx(typography.body2, styles.itemSpaced)}>
           <code>trimObject()</code>는 중첩된 객체와 배열도 재귀적으로 순회합니다. 서버로 보내기 직전에{' '}
           <code>trimObject(formData)</code> 한 줄이면 모든 문자열 필드가 정리됩니다.

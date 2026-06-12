@@ -5,7 +5,6 @@ import {PropsWithChildren, useState} from 'react';
 import {OverlayProvider} from 'overlay-kit';
 import {Toaster} from 'sonner';
 import '@monorepo-playground/design-system/style.css';
-import '@/shared/global.css';
 
 export default function AppProvider({children}: PropsWithChildren) {
   const [queryClient] = useState(

@@ -1,16 +1,11 @@
 import {Callout} from '@monorepo-playground/design-system';
-import {codeToHtml} from 'shiki';
 import clsx from 'clsx';
 import typography from '@monorepo-playground/design-system/styles/typography';
+import CodeBlock from '@/shared/components/CodeBlock';
 import AutoFocusDemo from './AutoFocusDemo';
 import styles from './page.module.scss';
 
-export default async function AutoFocusPage() {
-  const [autoFocusHtml, hookHtml] = await Promise.all([
-    codeToHtml(AUTO_FOCUS_CODE, {lang: 'tsx', theme: 'github-light'}),
-    codeToHtml(HOOK_CODE, {lang: 'tsx', theme: 'github-light'}),
-  ]);
-
+export default function AutoFocusPage() {
   return (
     <div className={styles.page}>
       <div className={styles.section}>
@@ -41,8 +36,7 @@ export default async function AutoFocusPage() {
         <p className={clsx(typography.body2, styles.descriptionTight)}>
           HTML 표준 속성 하나로 끝납니다. 별도 구현이 필요 없습니다.
         </p>
-        {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-        <div dangerouslySetInnerHTML={{__html: autoFocusHtml}} />
+        <CodeBlock code={AUTO_FOCUS_CODE} />
       </div>
 
       <Callout color="warning">
@@ -53,8 +47,7 @@ export default async function AutoFocusPage() {
             <code>focus</code> 이벤트에서 <code>[autofocus]</code> 요소를 재포커스하는 방식이고, 이 페이지 상단 데모에서
             실제로 동작합니다.
           </p>
-          {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-          <div dangerouslySetInnerHTML={{__html: hookHtml}} />
+          <CodeBlock code={HOOK_CODE} />
           <h4 className={clsx(typography.body1, styles.calloutSubTitle)}>발견한 엣지 케이스</h4>
           <p>
             • 로그인처럼 여러 필드가 있는 폼에서 password 필드로 이동한 뒤 다른 탭에 다녀오면, 포커스가 첫 필드인

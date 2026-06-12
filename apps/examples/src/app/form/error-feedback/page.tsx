@@ -1,18 +1,12 @@
-import {codeToHtml} from 'shiki';
 import clsx from 'clsx';
 import typography from '@monorepo-playground/design-system/styles/typography';
+import CodeBlock from '@/shared/components/CodeBlock';
 import ValidationModeDemo from './ValidationModeDemo';
 import SubmitButtonDemo from './SubmitButtonDemo';
 import ErrorScrollDemo from './ErrorScrollDemo';
 import styles from './page.module.scss';
 
-export default async function ErrorFeedbackPage() {
-  const [modeCodeHtml, submitCodeHtml, scrollCodeHtml] = await Promise.all([
-    codeToHtml(MODE_CODE, {lang: 'tsx', theme: 'github-light'}),
-    codeToHtml(SUBMIT_CODE, {lang: 'tsx', theme: 'github-light'}),
-    codeToHtml(SCROLL_CODE, {lang: 'tsx', theme: 'github-light'}),
-  ]);
-
+export default function ErrorFeedbackPage() {
   return (
     <div className={styles.page}>
       <div className={styles.intro}>
@@ -44,8 +38,7 @@ export default async function ErrorFeedbackPage() {
         </p>
         <ValidationModeDemo />
         <div className={styles.codeBlock}>
-          {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-          <div dangerouslySetInnerHTML={{__html: modeCodeHtml}} />
+          <CodeBlock code={MODE_CODE} />
         </div>
         <p className={clsx(typography.body2, styles.descriptionSpaced)}>
           <strong>onSubmit의 한계</strong> — 폼이 길면 제출 버튼(하단)과 에러 필드(상단)의 거리가 멀어집니다. 에러
@@ -65,8 +58,7 @@ export default async function ErrorFeedbackPage() {
         </p>
         <SubmitButtonDemo />
         <div className={styles.codeBlock}>
-          {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-          <div dangerouslySetInnerHTML={{__html: submitCodeHtml}} />
+          <CodeBlock code={SUBMIT_CODE} />
         </div>
       </div>
 
@@ -84,8 +76,7 @@ export default async function ErrorFeedbackPage() {
         </p>
         <ErrorScrollDemo />
         <div className={styles.codeBlock}>
-          {/* eslint-disable-next-line @typescript-eslint/naming-convention */}
-          <div dangerouslySetInnerHTML={{__html: scrollCodeHtml}} />
+          <CodeBlock code={SCROLL_CODE} />
         </div>
       </div>
     </div>
