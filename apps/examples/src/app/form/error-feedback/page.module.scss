@@ -1,3 +1,25 @@
+.page {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.intro {
+  margin-bottom: var(--spacing-xl);
+}
+
+.section {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.subBlock {
+  margin-bottom: var(--spacing-xl);
+}
+
+.codeBlock {
+  margin-top: var(--spacing-md);
+}
+
 .pageTitle {
   margin-bottom: var(--spacing-sm);
 }

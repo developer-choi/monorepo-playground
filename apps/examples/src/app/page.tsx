@@ -1,4 +1,3 @@
-import {Container, Flex} from '@radix-ui/themes';
 import {GitHubLogoIcon} from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -8,23 +7,23 @@ import styles from './page.module.scss';
 
 export default function Home() {
   return (
-    <Container px="4" py="9" size="3">
-      <Flex direction="column" gap="3" mb="8">
+    <div className={styles.page}>
+      <div className={styles.intro}>
         <h1 className={typography.h1}>Examples</h1>
         <p className={clsx(typography.h4, styles.description)}>
           실무에서 반복적으로 사용되는 프론트엔드 패턴들을 Next.js 예제로 정리한 프로젝트입니다.
         </p>
-        <Flex gap="4" mt="1">
+        <div className={styles.links}>
           <Link className={typography.body2} href={GITHUB_URL} target="_blank">
-            <Flex align="center" gap="1">
+            <span className={styles.linkInner}>
               <GitHubLogoIcon /> GitHub
-            </Flex>
+            </span>
           </Link>
-        </Flex>
-      </Flex>
+        </div>
+      </div>
 
       <LinkCardGrid items={ITEMS} />
-    </Container>
+    </div>
   );
 }
 

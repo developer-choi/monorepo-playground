@@ -43,7 +43,13 @@
 
   /* === 레이아웃 === */
   --max-width: 1080px;
+  --max-width-narrow: 688px;
+  --max-width-content: 880px;
+  --max-width-wide: 1136px;
   --header-height: 64px;
+
+  /* === z-index === */
+  --z-pc-sticky-header: 10;
 
   /* === Border radius === */
   --radius-xs: 4px;

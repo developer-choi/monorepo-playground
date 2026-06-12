@@ -1,3 +1,18 @@
+.page {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-grid-gap);
+  padding-block: var(--spacing-3xl);
+}
+
 .title {
   font-weight: bold;
   color: var(--color-fg-destructive);

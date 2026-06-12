@@ -1,4 +1,3 @@
-import {Container, Flex} from '@radix-ui/themes';
 import clsx from 'clsx';
 import typography from '@monorepo-playground/design-system/styles/typography';
 import ExampleHeader from '@/shared/components/ExampleHeader';
@@ -9,16 +8,16 @@ export default function FormPage() {
   return (
     <>
       <ExampleHeader sourcePath="src/form" />
-      <Container px="4" py="9" size="3">
-        <Flex direction="column" gap="3" mb="8">
+      <div className={styles.page}>
+        <div className={styles.intro}>
           <h1 className={typography.h1}>폼 베스트 프랙티스</h1>
           <p className={clsx(typography.h4, styles.description)}>
             실무에서 반복되는 폼 핸들링 패턴을 주제별로 정리한 예제 모음입니다.
           </p>
-        </Flex>
+        </div>
 
         <LinkCardGrid items={ITEMS} />
-      </Container>
+      </div>
     </>
   );
 }

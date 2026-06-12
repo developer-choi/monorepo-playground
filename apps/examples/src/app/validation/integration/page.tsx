@@ -1,4 +1,3 @@
-import {Container, Flex} from '@radix-ui/themes';
 import Link from 'next/link';
 import {PlusIcon} from '@radix-ui/react-icons';
 import {Button} from '@monorepo-playground/design-system';
@@ -9,6 +8,7 @@ import {paginationParamsSchema} from '@/shared/schema/pagination';
 import {safeParsePartial} from '@/shared/utils/zod';
 import BoardFilter from '@/validation/integration/components/BoardFilter';
 import BoardTable from '@/validation/integration/components/BoardTable';
+import styles from './page.module.scss';
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -21,17 +21,17 @@ export default async function Page({searchParams}: PageProps) {
   const data = await getBoardListApi({...filters, ...pagination});
 
   return (
-    <Container p="6" size="3">
-      <Flex align="center" justify="between" mb="5">
+    <div className={styles.page}>
+      <div className={styles.header}>
         <h2 className={typography.h2}>게시판</h2>
         <Button asChild size="medium">
           <Link href="/validation/integration/create">
             <PlusIcon /> 새 글 작성
           </Link>
         </Button>
-      </Flex>
+      </div>
       <BoardFilter />
       <BoardTable data={data} />
-    </Container>
+    </div>
   );
 }
