@@ -12,6 +12,8 @@ export {default as Caption} from '@/components/Caption/Caption';
 export type {CaptionProps} from '@/components/Caption/Caption';
 export {default as Card} from '@/components/Card/Card';
 export type {CardProps} from '@/components/Card/Card';
+export {default as Checkbox} from '@/components/Checkbox/Checkbox';
+export type {CheckboxProps} from '@/components/Checkbox/Checkbox';
 export {default as IconButton} from '@/components/IconButton/IconButton';
 export type {IconButtonProps} from '@/components/IconButton/IconButton';
 export {default as InputBase} from '@/components/InputBase/InputBase';

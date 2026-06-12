@@ -1,0 +1,41 @@
+@use '@/styles/typography.module' as typography;
+
+.option {
+  display: inline-flex;
+  align-items: center;
+}
+
+.option.styled {
+  gap: var(--spacing-xs);
+  cursor: pointer;
+
+  // 포커스 표시는 래퍼(label)가 전담 — 키보드 포커스 시 글자까지 감싸는 링.
+  &:has(.checkbox:focus-visible) {
+    border-radius: var(--radius-xs);
+    box-shadow: var(--shadow-focus);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+
+    .label {
+      color: var(--color-fg-muted);
+    }
+  }
+}
+
+.checkbox.styled {
+  accent-color: var(--color-fg-accent);
+  outline: none;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.label.styled {
+  @include typography.body2;
+
+  color: var(--color-fg-primary);
+}
