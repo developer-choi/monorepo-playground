@@ -1,0 +1,108 @@
+@use '@/styles/typography.module' as typography;
+
+.inputBase {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.inputBase.styled {
+  gap: var(--spacing-sm);
+  height: var(--spacing-2xl);
+  padding-inline: var(--spacing-md);
+  border-radius: var(--radius-xs);
+  background: var(--color-bg-primary);
+  box-shadow: var(--shadow-ring-rest);
+
+  &:not(:has(input:disabled)).invalid {
+    box-shadow: var(--shadow-ring-invalid);
+  }
+
+  &:not(:has(input:disabled)) {
+    cursor: auto;
+
+    &:has(.content :focus) {
+      box-shadow: var(--shadow-focus);
+    }
+  }
+
+  &:has(input:disabled) {
+    color: var(--color-fg-muted);
+    cursor: not-allowed;
+
+    .content > input {
+      cursor: not-allowed;
+    }
+
+    .suffix {
+      color: var(--color-fg-muted);
+    }
+  }
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.slot.styled {
+  gap: var(--spacing-xs);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+}
+
+.content.styled {
+  gap: var(--spacing-xs);
+}
+
+.content > input {
+  flex: 1;
+  min-width: 0;
+}
+
+.content.styled > input {
+  @include typography.body1;
+
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: var(--color-fg-primary);
+  outline: none;
+  box-shadow: none;
+
+  &::placeholder {
+    color: var(--color-fg-muted);
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.content.styled > input {
+  /* 자동완성 시 브라우저 기본 배경을 덮어 흰 배경을 유지 (input 높이만큼 inset fill). https://stackoverflow.com/a/14205976 */
+  --shadow-autofill: inset 0 0 0 var(--spacing-2xl) var(--color-bg-primary);
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    box-shadow: var(--shadow-autofill);
+  }
+}
+
+.suffix {
+  flex-shrink: 0;
+}
+
+.suffix.styled {
+  @include typography.body1;
+
+  color: var(--color-fg-primary);
+}
