@@ -137,6 +137,10 @@ export const baseRules = {
       selector: 'CatchClause > Identifier.param[typeAnnotation]',
       message: 'catch 변수의 타입 어노테이션 금지. TS 4.4+에서 catch 변수는 기본 unknown입니다.',
     },
+    {
+      selector: "ConditionalExpression > CallExpression[callee.name='clsx']",
+      message: 'clsx를 삼항으로 감싸지 마세요. 조건은 clsx(a, cond && b) 인자로 표현합니다.',
+    },
   ],
 };
 

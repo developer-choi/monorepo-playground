@@ -522,6 +522,18 @@ const [count, setCount] = useState(0);
 return <Fragment>...</Fragment>;
 ```
 
+**clsx 삼항 래핑 금지** (`ConditionalExpression > CallExpression[callee.name='clsx']`)
+
+clsx는 falsy 인자를 버리므로 조건은 인자로 표현합니다. clsx 호출을 삼항으로 감싸면 공통 인자가 양 갈래에 중복됩니다.
+
+```tsx
+// ❌
+className={cond ? clsx(styles.a, styles.b, className) : clsx(styles.a, styles.b)}
+
+// ✅
+className={clsx(styles.a, styles.b, cond && className)}
+```
+
 #### `custom/filename-export-convention` (커스텀 룰)
 
 `src/` 하위에서 **컴포넌트(PascalCase)·훅(`use*`) export가 정확히 하나인 파일**은 파일명(첫 `.` 이전)에 **kebab-case(하이픈)·snake_case(언더스코어)를 쓸 수 없습니다** — PascalCase(컴포넌트) 또는 camelCase(훅)여야 합니다. 컴포넌트·훅이 0개거나 2개 이상(여러 컴포넌트를 묶은 모듈)이면 검사하지 않습니다.
