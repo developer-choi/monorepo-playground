@@ -4,10 +4,34 @@
   padding: var(--spacing-xl);
 }
 
-.heading {
-  margin-bottom: var(--spacing-md);
+.intro {
+  margin-bottom: var(--spacing-xl);
 }
 
-.statusBadge {
-  margin-right: var(--spacing-xs);
+.pageTitle {
+  margin-bottom: var(--spacing-sm);
+}
+
+.description {
+  color: var(--color-fg-secondary);
+}
+
+.section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.sectionTitle {
+  margin-bottom: var(--spacing-sm);
+}
+
+.resultCell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  align-items: flex-start;
+}
+
+.resultCode {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
