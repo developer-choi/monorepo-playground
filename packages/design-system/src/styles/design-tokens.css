@@ -7,6 +7,8 @@
   --color-fg-accent: #1a1a1a;
   --color-fg-destructive: #d32f2f;
   --color-fg-success: #2e7d32;
+  --color-fg-info: #1971c2;
+  --color-fg-warning: #e8590c;
 
   /* === 컬러: bg (배경) === */
   --color-bg-primary: #fff;
@@ -14,6 +16,13 @@
   --color-bg-tertiary: #f0f0f0;
   --color-bg-accent: #1a1a1a;
   --color-bg-destructive: #ff6b6b;
+
+  /* === 컬러: bg tone soft (badge soft·callout 배경) === */
+  --color-bg-neutral-soft: #f1f3f5;
+  --color-bg-info-soft: #e7f5ff;
+  --color-bg-success-soft: #ebfbee;
+  --color-bg-warning-soft: #fff4e6;
+  --color-bg-danger-soft: #fff5f5;
 
   /* === 컬러: on-X (X 배경 위 텍스트) === */
   --color-on-accent: #fff;
