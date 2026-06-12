@@ -2,6 +2,8 @@ import '@/styles/design-tokens.css';
 import '@/styles/reset.css';
 import '@/styles/global.css';
 
+export {default as Badge} from '@/components/Badge/Badge';
+export type {BadgeProps} from '@/components/Badge/Badge';
 export {default as Button} from '@/components/Button';
 export type {ButtonProps} from '@/components/Button';
 export {default as Caption} from '@/components/Caption/Caption';

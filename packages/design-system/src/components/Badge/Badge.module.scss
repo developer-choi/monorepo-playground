@@ -1,0 +1,71 @@
+@use 'sass:list';
+@use '@/styles/typography.module' as typography;
+
+$tones: (
+  neutral: (
+    var(--color-fg-secondary),
+    var(--color-bg-neutral-soft),
+  ),
+  info: (
+    var(--color-fg-info),
+    var(--color-bg-info-soft),
+  ),
+  success: (
+    var(--color-fg-success),
+    var(--color-bg-success-soft),
+  ),
+  warning: (
+    var(--color-fg-warning),
+    var(--color-bg-warning-soft),
+  ),
+  danger: (
+    var(--color-fg-destructive),
+    var(--color-bg-danger-soft),
+  ),
+);
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.badge.styled {
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+}
+
+.badge.styled.small {
+  @include typography.body3;
+
+  padding: calc(var(--spacing-xs) / 2) calc(var(--spacing-xs) * 1.5);
+}
+
+.badge.styled.medium {
+  @include typography.body2;
+
+  padding: var(--spacing-xs) calc(var(--spacing-sm) * 1.25);
+}
+
+@each $tone, $colors in $tones {
+  $fg: list.nth($colors, 1);
+  $soft: list.nth($colors, 2);
+
+  .badge.styled.#{$tone}.soft {
+    background-color: $soft;
+    color: $fg;
+  }
+
+  .badge.styled.#{$tone}.outline {
+    background-color: transparent;
+    border-color: $fg;
+    color: $fg;
+  }
+
+  .badge.styled.#{$tone}.surface {
+    background-color: $soft;
+    border-color: $fg;
+    color: $fg;
+  }
+}
