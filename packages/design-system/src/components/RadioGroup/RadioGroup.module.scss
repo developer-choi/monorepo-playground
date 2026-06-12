@@ -1,0 +1,16 @@
+.group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.group.styled {
+  gap: var(--spacing-md);
+}
+
+.group.row {
+  flex-direction: row;
+}
+
+.group.column {
+  flex-direction: column;
+}
