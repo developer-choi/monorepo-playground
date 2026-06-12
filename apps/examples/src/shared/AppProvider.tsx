@@ -2,11 +2,10 @@
 
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {PropsWithChildren, useState} from 'react';
-import {Theme} from '@radix-ui/themes';
 import {OverlayProvider} from 'overlay-kit';
 import {Toaster} from 'sonner';
-import '@radix-ui/themes/styles.css';
 import '@monorepo-playground/design-system/style.css';
+import '@/shared/global.css';
 
 export default function AppProvider({children}: PropsWithChildren) {
   const [queryClient] = useState(
@@ -22,12 +21,10 @@ export default function AppProvider({children}: PropsWithChildren) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme>
-        <OverlayProvider>
-          {children}
-          <Toaster richColors position="top-center" />
-        </OverlayProvider>
-      </Theme>
+      <OverlayProvider>
+        {children}
+        <Toaster richColors position="top-center" />
+      </OverlayProvider>
     </QueryClientProvider>
   );
 }

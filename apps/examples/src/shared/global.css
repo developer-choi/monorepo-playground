@@ -1,15 +1,12 @@
 .shiki {
-  margin: var(--space-3) 0;
-  border-radius: var(--radius-2);
-  overflow-x: auto;
-}
-
-.shiki pre {
   --code-font-size: 13px;
   --code-line-height: 1.6;
 
-  margin: 0;
-  padding: var(--space-3);
+  margin: var(--spacing-grid-gap) 0;
+  padding: var(--spacing-grid-gap);
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: var(--code-font-size);
   line-height: var(--code-line-height);
 }
