@@ -24,6 +24,8 @@ export {default as Radio} from '@/components/Radio/Radio';
 export type {RadioProps} from '@/components/Radio/Radio';
 export {default as RadioGroup} from '@/components/RadioGroup/RadioGroup';
 export type {RadioGroupProps} from '@/components/RadioGroup/RadioGroup';
+export {default as Select} from '@/components/Select/Select';
+export type {SelectOption, SelectProps} from '@/components/Select/Select';
 export * as Table from '@/components/Table/Table';
 export * as Dialog from '@/components/Modal/Dialog';
 export {default as Alert} from '@/components/Modal/Alert';

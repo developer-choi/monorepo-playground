@@ -1,0 +1,30 @@
+@use '@/styles/typography.module' as typography;
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field.styled {
+  gap: var(--spacing-xs);
+}
+
+.select {
+  flex: 1;
+  min-width: 0;
+}
+
+.select.styled {
+  @include typography.body1;
+
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  outline: none;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
