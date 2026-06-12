@@ -2,11 +2,9 @@
 
 import {FormEvent, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Box, Callout, Card, Flex, Grid} from '@radix-ui/themes';
+import {Badge, Button, Callout, Card, TextField, type TextFieldProps} from '@monorepo-playground/design-system';
 import clsx from 'clsx';
-import {Button} from '@monorepo-playground/design-system';
 import typography from '@monorepo-playground/design-system/styles/typography';
-import Input, {InputProps} from '@/shared/components/form/Input';
 import styles from './SubmitButtonDemo.module.scss';
 
 interface FormValues {
@@ -16,10 +14,10 @@ interface FormValues {
 
 export default function SubmitButtonDemo() {
   return (
-    <Grid columns="2" gap="4">
+    <div className={styles.compareGrid}>
       <BadSubmit />
       <GoodSubmit />
-    </Grid>
+    </div>
   );
 }
 
@@ -33,24 +31,22 @@ function BadSubmit() {
 
   return (
     <Card>
-      <Box p="4">
-        <h4 className={clsx(typography.h4, styles.cardTitle)}>
-          <Badge color="red" mr="2">
-            BAD
-          </Badge>
-          isValid로 비활성화
-        </h4>
-        <p className={clsx(typography.body2, styles.description)}>버튼이 비활성화되어 클릭 자체가 불가능합니다.</p>
-        <form onSubmit={form.onSubmit}>
-          <Flex direction="column" gap="3">
-            <Input {...inputProps.name} />
-            <Input {...inputProps.email} />
-            <Button disabled={!isValid} size="large" type="submit">
-              제출
-            </Button>
-          </Flex>
-        </form>
-      </Box>
+      <h4 className={clsx(typography.h4, styles.cardTitle)}>
+        <Badge className={styles.statusBadge} color="danger">
+          BAD
+        </Badge>
+        isValid로 비활성화
+      </h4>
+      <p className={clsx(typography.body2, styles.description)}>버튼이 비활성화되어 클릭 자체가 불가능합니다.</p>
+      <form onSubmit={form.onSubmit}>
+        <div className={styles.formFields}>
+          <TextField {...inputProps.name} />
+          <TextField {...inputProps.email} />
+          <Button disabled={!isValid} size="large" type="submit">
+            제출
+          </Button>
+        </div>
+      </form>
     </Card>
   );
 }
@@ -60,31 +56,27 @@ function GoodSubmit() {
 
   return (
     <Card>
-      <Box p="4">
-        <h4 className={clsx(typography.h4, styles.cardTitle)}>
-          <Badge color="green" mr="2">
-            GOOD
-          </Badge>
-          항상 활성화
-        </h4>
-        <p className={clsx(typography.body2, styles.description)}>제출 시 에러 피드백으로 안내합니다.</p>
-        <form onSubmit={form.onSubmit}>
-          <Flex direction="column" gap="3">
-            <Input {...inputProps.name} />
-            <Input {...inputProps.email} />
-            <Button size="large" type="submit">
-              제출
-            </Button>
-          </Flex>
-        </form>
-        {result && (
-          <Callout.Root color="blue" mt="4" size="1">
-            <Callout.Text>
-              <strong>제출된 값:</strong> {result}
-            </Callout.Text>
-          </Callout.Root>
-        )}
-      </Box>
+      <h4 className={clsx(typography.h4, styles.cardTitle)}>
+        <Badge className={styles.statusBadge} color="success">
+          GOOD
+        </Badge>
+        항상 활성화
+      </h4>
+      <p className={clsx(typography.body2, styles.description)}>제출 시 에러 피드백으로 안내합니다.</p>
+      <form onSubmit={form.onSubmit}>
+        <div className={styles.formFields}>
+          <TextField {...inputProps.name} />
+          <TextField {...inputProps.email} />
+          <Button size="large" type="submit">
+            제출
+          </Button>
+        </div>
+      </form>
+      {result && (
+        <Callout className={styles.resultCallout} color="info">
+          <strong>제출된 값:</strong> {result}
+        </Callout>
+      )}
     </Card>
   );
 }
@@ -95,13 +87,13 @@ function useBadSubmitForm() {
     formState: {errors, isValid},
   } = useForm<FormValues>({mode: 'onChange'});
 
-  const nameInputProps: InputProps = {
+  const nameInputProps: TextFieldProps = {
     ...register('name', {required: '이름을 입력해주세요.'}),
     label: '이름',
     error: errors.name?.message,
   };
 
-  const emailInputProps: InputProps = {
+  const emailInputProps: TextFieldProps = {
     ...register('email', EMAIL_RULES),
     label: '이메일',
     error: errors.email?.message,
@@ -127,13 +119,13 @@ function useGoodSubmitForm() {
   } = useForm<FormValues>();
   const [result, setResult] = useState('');
 
-  const nameInputProps: InputProps = {
+  const nameInputProps: TextFieldProps = {
     ...register('name', {required: '이름을 입력해주세요.'}),
     label: '이름',
     error: errors.name?.message,
   };
 
-  const emailInputProps: InputProps = {
+  const emailInputProps: TextFieldProps = {
     ...register('email', EMAIL_RULES),
     label: '이메일',
     error: errors.email?.message,

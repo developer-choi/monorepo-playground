@@ -1,4 +1,4 @@
-import {Badge, Card, Flex} from '@radix-ui/themes';
+import {Badge, Card} from '@monorepo-playground/design-system';
 import clsx from 'clsx';
 import Link from 'next/link';
 import typography from '@monorepo-playground/design-system/styles/typography';
@@ -21,18 +21,18 @@ export default function LinkCardGrid({items}: LinkCardGridProps) {
       {items.map((item) => {
         const isExternal = item.href.startsWith('http');
         const card = (
-          <Card className={styles.card} size="3">
-            <Flex direction="column" gap="3">
+          <Card className={styles.card}>
+            <div className={styles.cardInner}>
               <h4 className={typography.h4}>{item.title}</h4>
               <p className={clsx(typography.body2, styles.description)}>{item.description}</p>
-              <Flex gap="2" wrap="wrap">
+              <div className={styles.keywords}>
                 {item.keywords.map((keyword) => (
                   <Badge key={keyword} variant="soft">
                     {keyword}
                   </Badge>
                 ))}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           </Card>
         );
 

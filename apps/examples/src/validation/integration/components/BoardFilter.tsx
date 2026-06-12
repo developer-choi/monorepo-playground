@@ -1,11 +1,8 @@
 'use client';
 
 import {useForm, Controller} from 'react-hook-form';
-import {Box, Card, Checkbox, Flex, Select, TextField} from '@radix-ui/themes';
-import clsx from 'clsx';
+import {Button, Card, Checkbox, Label, Select, TextField} from '@monorepo-playground/design-system';
 import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
-import {Button} from '@monorepo-playground/design-system';
-import typography from '@monorepo-playground/design-system/styles/typography';
 import {useRouter, useSearchParams} from 'next/navigation';
 import queryString from 'query-string';
 import {safeParsePartial} from '@/shared/utils/zod';
@@ -16,6 +13,8 @@ import styles from './BoardFilter.module.scss';
 interface BoardListFilterForm extends Omit<BoardListFilter, 'category'> {
   category: BoardListFilter['category'] | 'all';
 }
+
+const CATEGORY_OPTIONS = [{value: 'all', label: '전체'}, ...BOARD_CATEGORIES.items];
 
 export default function BoardFilter() {
   const router = useRouter();
@@ -51,121 +50,102 @@ export default function BoardFilter() {
   };
 
   return (
-    <Card mb="5" variant="surface">
+    <Card className={styles.filterCard}>
       <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
-        <Flex direction="column" gap="4">
-          <Box>
-            <p className={clsx(typography.body2, styles.fieldLabel)}>검색</p>
-            <Controller
-              control={control}
-              name="postTitle"
-              render={({field}) => (
-                <TextField.Root {...field} placeholder="제목 검색" size="2" value={field.value}>
-                  <TextField.Slot>
-                    <MagnifyingGlassIcon />
-                  </TextField.Slot>
-                </TextField.Root>
-              )}
-            />
-          </Box>
+        <div className={styles.formCol}>
+          <Controller
+            control={control}
+            name="postTitle"
+            render={({field}) => (
+              <TextField
+                {...field}
+                label="검색"
+                leading={<MagnifyingGlassIcon />}
+                placeholder="제목 검색"
+                value={field.value}
+              />
+            )}
+          />
 
-          <Flex gap="6" wrap="wrap">
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-            <Box style={{flex: 1, minWidth: 200}}>
-              <p className={clsx(typography.body2, styles.fieldLabel)}>타입</p>
+          <div className={styles.fieldRow}>
+            <div className={styles.field}>
+              <Label>타입</Label>
               <Controller
                 control={control}
                 name="boardType"
                 render={({field}) => (
-                  <Flex gap="3" wrap="wrap">
-                    <label className={typography.body2}>
-                      <Flex align="center" gap="2">
-                        <Checkbox
-                          checked={BOARD_TYPES.values.every((type) => field.value.includes(type))}
-                          onCheckedChange={(checked) => field.onChange(checked ? BOARD_TYPES.values : [])}
-                        />
-                        전체
-                      </Flex>
-                    </label>
+                  <div className={styles.checkGroup}>
+                    <Checkbox
+                      checked={BOARD_TYPES.values.every((type) => field.value.includes(type))}
+                      onChange={(event) => field.onChange(event.target.checked ? BOARD_TYPES.values : [])}
+                    >
+                      전체
+                    </Checkbox>
                     {BOARD_TYPES.items.map(({value, label}) => (
-                      <label key={value} className={typography.body2}>
-                        <Flex align="center" gap="2">
-                          <Checkbox
-                            checked={field.value.includes(value)}
-                            onCheckedChange={(checked) => {
-                              const next = checked
-                                ? [...field.value, value]
-                                : field.value.filter((type) => type !== value);
-                              field.onChange(next);
-                            }}
-                          />
-                          {label}
-                        </Flex>
-                      </label>
+                      <Checkbox
+                        key={value}
+                        checked={field.value.includes(value)}
+                        onChange={(event) => {
+                          const next = event.target.checked
+                            ? [...field.value, value]
+                            : field.value.filter((type) => type !== value);
+                          field.onChange(next);
+                        }}
+                      >
+                        {label}
+                      </Checkbox>
                     ))}
-                  </Flex>
+                  </div>
                 )}
               />
-            </Box>
+            </div>
 
-            {/* eslint-disable-next-line no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
-            <Box style={{flex: 1, minWidth: 200}}>
-              <div className={clsx(typography.body2, styles.fieldLabel)}>카테고리</div>
+            <div className={styles.field}>
               <Controller
                 control={control}
                 name="category"
                 render={({field}) => (
-                  <Select.Root value={field.value} onValueChange={field.onChange}>
-                    <Select.Trigger placeholder="전체" />
-                    <Select.Content>
-                      <Select.Item value="all">전체</Select.Item>
-                      {BOARD_CATEGORIES.items.map(({value, label}) => (
-                        <Select.Item key={value} value={value}>
-                          {label}
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
+                  <Select label="카테고리" options={CATEGORY_OPTIONS} value={field.value} onChange={field.onChange} />
                 )}
               />
-            </Box>
-          </Flex>
+            </div>
+          </div>
 
-          <Box>
-            <p className={clsx(typography.body2, styles.fieldLabel)}>태그</p>
+          <div className={styles.field}>
+            <Label>태그</Label>
             <Controller
               control={control}
               name="tagList"
               render={({field}) => (
-                <Flex gap="3" wrap="wrap">
+                <div className={styles.checkGroup}>
                   {AVAILABLE_TAGS.map((tag) => (
-                    <label key={tag} className={typography.body2}>
-                      <Flex align="center" gap="2">
-                        <Checkbox
-                          checked={field.value.includes(tag)}
-                          onCheckedChange={(checked) => {
-                            const next = checked ? [...field.value, tag] : field.value.filter((item) => item !== tag);
-                            field.onChange(next);
-                          }}
-                        />
-                        {tag}
-                      </Flex>
-                    </label>
+                    <Checkbox
+                      key={tag}
+                      checked={field.value.includes(tag)}
+                      onChange={(event) => {
+                        const next = event.target.checked
+                          ? [...field.value, tag]
+                          : field.value.filter((item) => item !== tag);
+                        field.onChange(next);
+                      }}
+                    >
+                      {tag}
+                    </Checkbox>
                   ))}
-                </Flex>
+                </div>
               )}
             />
-          </Box>
+          </div>
 
-          <Flex gap="2" justify="end">
+          <div className={styles.actions}>
             <Button color="secondary" size="medium" type="button" variant="outlined" onClick={handleReset}>
               초기화
             </Button>
             <Button size="medium" type="submit">
               검색
             </Button>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </form>
     </Card>
   );

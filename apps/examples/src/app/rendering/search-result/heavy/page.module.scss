@@ -1,3 +1,33 @@
+.page {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.linkWrap {
+  margin-top: var(--spacing-sm);
+}
+
+.inputWrap {
+  margin-bottom: var(--spacing-md);
+}
+
+.slowItem {
+  display: flex;
+  padding-block: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-fg-subtle);
+}
+
 .heading {
   margin-bottom: var(--spacing-sm);
 }

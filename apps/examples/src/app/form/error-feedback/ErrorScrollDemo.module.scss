@@ -11,9 +11,13 @@ $scrollContainerMaxHeight: 240px;
   color: var(--color-fg-secondary);
 }
 
-.form {
-  /* stylelint-disable-next-line selector-class-pattern -- Radix 내부 클래스 override */
-  :global(.rt-TextFieldRoot):has(input:read-only) {
-    background-image: none;
-  }
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-grid-gap);
+  padding: var(--spacing-xs);
+}
+
+.resultCallout {
+  margin-top: var(--spacing-md);
 }

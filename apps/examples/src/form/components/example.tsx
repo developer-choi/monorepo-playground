@@ -2,11 +2,9 @@
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Box, Callout, Card, Flex} from '@radix-ui/themes';
+import {Badge, Button, Callout, Card, TextField} from '@monorepo-playground/design-system';
 import clsx from 'clsx';
-import {Button} from '@monorepo-playground/design-system';
 import typography from '@monorepo-playground/design-system/styles/typography';
-import Input from '@/shared/components/form/Input';
 import styles from './example.module.scss';
 
 interface FormValues {
@@ -18,36 +16,32 @@ export function BadExample() {
 
   return (
     <Card>
-      <Box p="4">
-        <h4 className={clsx(typography.h4, styles.cardTitle)}>
-          <Badge color="red" mr="2">
-            BAD
-          </Badge>
-          기본 required만 사용
-        </h4>
-        <p className={clsx(typography.body2, styles.description)}>
-          공백만 입력해도 통과됩니다. &quot; &quot; 입력 후 제출해보세요.
-        </p>
+      <h4 className={clsx(typography.h4, styles.cardTitle)}>
+        <Badge className={styles.statusBadge} color="danger">
+          BAD
+        </Badge>
+        기본 required만 사용
+      </h4>
+      <p className={clsx(typography.body2, styles.description)}>
+        공백만 입력해도 통과됩니다. &quot; &quot; 입력 후 제출해보세요.
+      </p>
 
-        <form onSubmit={form.onSubmit}>
-          <Flex direction="column" gap="3">
-            <Input {...inputProps.name} />
-            <Button size="large" type="submit">
-              제출
-            </Button>
-          </Flex>
-        </form>
+      <form onSubmit={form.onSubmit}>
+        <div className={styles.formFields}>
+          <TextField {...inputProps.name} />
+          <Button size="large" type="submit">
+            제출
+          </Button>
+        </div>
+      </form>
 
-        {result && (
-          <Callout.Root color="blue" mt="4">
-            <Callout.Text>
-              <strong>제출된 값:</strong> {result}
-              <br />
-              앞뒤 공백이 그대로 제출됩니다.
-            </Callout.Text>
-          </Callout.Root>
-        )}
-      </Box>
+      {result && (
+        <Callout className={styles.resultCallout} color="info">
+          <strong>제출된 값:</strong> {result}
+          <br />
+          앞뒤 공백이 그대로 제출됩니다.
+        </Callout>
+      )}
     </Card>
   );
 }
@@ -83,36 +77,32 @@ export function GoodExample() {
 
   return (
     <Card>
-      <Box p="4">
-        <h4 className={clsx(typography.h4, styles.cardTitle)}>
-          <Badge color="green" mr="2">
-            GOOD
-          </Badge>
-          유효성검증 + trim 분리
-        </h4>
-        <p className={clsx(typography.body2, styles.description)}>
-          공백만 입력하면 에러, 앞뒤 공백은 제출 시 자동 제거됩니다.
-        </p>
+      <h4 className={clsx(typography.h4, styles.cardTitle)}>
+        <Badge className={styles.statusBadge} color="success">
+          GOOD
+        </Badge>
+        유효성검증 + trim 분리
+      </h4>
+      <p className={clsx(typography.body2, styles.description)}>
+        공백만 입력하면 에러, 앞뒤 공백은 제출 시 자동 제거됩니다.
+      </p>
 
-        <form onSubmit={form.onSubmit}>
-          <Flex direction="column" gap="3">
-            <Input {...inputProps.name} />
-            <Button size="large" type="submit">
-              제출
-            </Button>
-          </Flex>
-        </form>
+      <form onSubmit={form.onSubmit}>
+        <div className={styles.formFields}>
+          <TextField {...inputProps.name} />
+          <Button size="large" type="submit">
+            제출
+          </Button>
+        </div>
+      </form>
 
-        {result && (
-          <Callout.Root color="green" mt="4">
-            <Callout.Text>
-              <strong>제출된 값 (trimmed):</strong> {result}
-              <br />
-              공백이 제거된 상태로 제출됩니다.
-            </Callout.Text>
-          </Callout.Root>
-        )}
-      </Box>
+      {result && (
+        <Callout className={styles.resultCallout} color="success">
+          <strong>제출된 값 (trimmed):</strong> {result}
+          <br />
+          공백이 제거된 상태로 제출됩니다.
+        </Callout>
+      )}
     </Card>
   );
 }

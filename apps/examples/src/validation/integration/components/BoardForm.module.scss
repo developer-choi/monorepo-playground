@@ -2,13 +2,43 @@
   margin-bottom: var(--spacing-lg);
 }
 
-.fieldLabel {
-  display: block;
-  margin-bottom: var(--spacing-sm);
-  font-weight: 500;
+// 단일 입력이 아닌 필드(라디오 그룹·태그)에서 DS TextField와 같은 Label-컨트롤 수직 리듬을 맞춘다.
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
-.errorMessage {
-  margin-top: var(--spacing-xs);
-  color: var(--color-fg-destructive);
+.page {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.formCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-grid-gap);
+}
+
+.tagInputRow {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.tagRemove {
+  margin-left: var(--spacing-xs);
 }

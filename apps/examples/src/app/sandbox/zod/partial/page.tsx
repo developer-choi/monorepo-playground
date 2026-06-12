@@ -1,7 +1,8 @@
 import {z} from 'zod';
-import {Container, Table, Code, Badge} from '@radix-ui/themes';
 import clsx from 'clsx';
+import {Badge, Table} from '@monorepo-playground/design-system';
 import typography from '@monorepo-playground/design-system/styles/typography';
+import Code from '@/shared/components/Code';
 import {safeParsePartial} from '@/shared/utils/zod';
 import styles from './page.module.scss';
 
@@ -37,10 +38,10 @@ export default function Page() {
   });
 
   return (
-    <Container p="6" size="4">
+    <div className={styles.page}>
       <h2 className={clsx(typography.h2, styles.heading)}>Zod partial() 비교 테스트</h2>
 
-      <Table.Root size="1" variant="surface">
+      <Table.Root size="small">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>케이스</Table.ColumnHeaderCell>
@@ -57,30 +58,30 @@ export default function Page() {
                 <strong>{row.label}</strong>
               </Table.Cell>
               <Table.Cell>
-                <Code size="1">{JSON.stringify(row.data)}</Code>
+                <Code>{JSON.stringify(row.data)}</Code>
               </Table.Cell>
               <Table.Cell>
-                <Badge color={row.withoutPartial.ok ? 'green' : 'red'} mr="1" size="1">
+                <Badge className={styles.statusBadge} color={row.withoutPartial.ok ? 'success' : 'danger'} size="small">
                   {row.withoutPartial.ok ? 'OK' : 'FAIL'}
                 </Badge>
-                <Code size="1">{row.withoutPartial.value}</Code>
+                <Code>{row.withoutPartial.value}</Code>
               </Table.Cell>
               <Table.Cell>
-                <Badge color={row.withPartial.ok ? 'green' : 'red'} mr="1" size="1">
+                <Badge className={styles.statusBadge} color={row.withPartial.ok ? 'success' : 'danger'} size="small">
                   {row.withPartial.ok ? 'OK' : 'FAIL'}
                 </Badge>
-                <Code size="1">{row.withPartial.value}</Code>
+                <Code>{row.withPartial.value}</Code>
               </Table.Cell>
               <Table.Cell>
-                <Badge color="blue" mr="1" size="1">
+                <Badge className={styles.statusBadge} color="info" size="small">
                   ALWAYS
                 </Badge>
-                <Code size="1">{row.withSafeParsePartial}</Code>
+                <Code>{row.withSafeParsePartial}</Code>
               </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table.Root>
-    </Container>
+    </div>
   );
 }

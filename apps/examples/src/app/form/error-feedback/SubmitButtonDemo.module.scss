@@ -1,8 +1,28 @@
+.compareGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
 .cardTitle {
   margin-bottom: var(--spacing-sm);
+}
+
+.statusBadge {
+  margin-right: var(--spacing-sm);
 }
 
 .description {
   margin-bottom: var(--spacing-md);
   color: var(--color-fg-secondary);
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-grid-gap);
+}
+
+.resultCallout {
+  margin-top: var(--spacing-md);
 }

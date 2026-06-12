@@ -2,3 +2,19 @@
   text-align: center;
   color: var(--color-fg-secondary);
 }
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-md);
+}

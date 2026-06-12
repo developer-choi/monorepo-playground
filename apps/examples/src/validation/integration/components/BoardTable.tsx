@@ -1,6 +1,6 @@
 'use client';
 
-import {Table, Badge, Flex} from '@radix-ui/themes';
+import {Badge, Table} from '@monorepo-playground/design-system';
 import clsx from 'clsx';
 import {useRouter} from 'next/navigation';
 import typography from '@monorepo-playground/design-system/styles/typography';
@@ -23,13 +23,13 @@ export default function BoardTable({data}: BoardTableProps) {
 
   return (
     <>
-      <Table.Root variant="surface">
+      <Table.Root>
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell width="60">ID</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell width={60}>ID</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>제목</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell width="80">타입</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell width="80">카테고리</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell width={80}>타입</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell width={100}>카테고리</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell>태그</Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
@@ -41,11 +41,10 @@ export default function BoardTable({data}: BoardTableProps) {
               </Table.Cell>
             </Table.Row>
           )}
-          {/* eslint-disable no-restricted-syntax -- TODO: CSS Module로 분리 필요 */}
           {data.list.map((row) => (
             <Table.Row
               key={row.id}
-              style={{cursor: 'pointer'}}
+              className={styles.clickableRow}
               onClick={() => router.push(`/validation/integration/${row.id}`)}
             >
               <Table.Cell>{row.id}</Table.Cell>
@@ -54,29 +53,28 @@ export default function BoardTable({data}: BoardTableProps) {
                 <Badge variant="soft">{BOARD_TYPES.record[row.boardType]}</Badge>
               </Table.Cell>
               <Table.Cell>
-                <Badge variant="surface">{BOARD_CATEGORIES.record[row.category]}</Badge>
+                <Badge>{BOARD_CATEGORIES.record[row.category]}</Badge>
               </Table.Cell>
               <Table.Cell>
-                <Flex gap="1" wrap="wrap">
+                <div className={styles.tags}>
                   {row.tagList.map((tag) => (
-                    <Badge key={tag} size="1" variant="outline">
+                    <Badge key={tag} size="small" variant="outline">
                       {tag}
                     </Badge>
                   ))}
-                </Flex>
+                </div>
               </Table.Cell>
             </Table.Row>
           ))}
-          {/* eslint-enable no-restricted-syntax */}
         </Table.Body>
       </Table.Root>
-      <Flex justify="center" mt="4">
+      <div className={styles.pagination}>
         <Pagination
           page={data.paginationMeta.page}
           totalPages={data.paginationMeta.totalPages}
           onPageChange={handlePageChange}
         />
-      </Flex>
+      </div>
     </>
   );
 }

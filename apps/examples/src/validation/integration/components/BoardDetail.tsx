@@ -1,10 +1,9 @@
 'use client';
 
 import {useMutation} from '@tanstack/react-query';
-import {Container, Card, Flex, Badge, Separator} from '@radix-ui/themes';
 import clsx from 'clsx';
 import {overlay} from 'overlay-kit';
-import {Button, Confirm} from '@monorepo-playground/design-system';
+import {Badge, Button, Card, Confirm} from '@monorepo-playground/design-system';
 import typography from '@monorepo-playground/design-system/styles/typography';
 import {useRouter} from 'next/navigation';
 import {deleteBoardApi} from '@/validation/integration/api';
@@ -53,29 +52,23 @@ export default function BoardDetail({board}: BoardDetailProps) {
   };
 
   return (
-    <Container p="6" size="2">
-      <Card size="3">
+    <div className={styles.page}>
+      <Card>
         <h2 className={clsx(typography.h2, styles.title)}>{board.postTitle}</h2>
 
-        <Flex gap="2" mb="4" wrap="wrap">
-          <Badge size="2">{BOARD_TYPES.record[board.boardType]}</Badge>
-          <Badge size="2" variant="surface">
-            {BOARD_CATEGORIES.record[board.category]}
-          </Badge>
+        <div className={styles.badges}>
+          <Badge>{BOARD_TYPES.record[board.boardType]}</Badge>
+          <Badge variant="surface">{BOARD_CATEGORIES.record[board.category]}</Badge>
           {board.tagList.map((tag) => (
-            <Badge key={tag} size="2" variant="soft">
+            <Badge key={tag} variant="soft">
               {tag}
             </Badge>
           ))}
-        </Flex>
-
-        <Separator mb="4" size="4" />
+        </div>
 
         <p className={clsx(typography.body1, styles.content)}>{board.postContent}</p>
 
-        <Separator mb="4" size="4" />
-
-        <Flex align="center" justify="between">
+        <div className={styles.actions}>
           <Button
             color="secondary"
             size="medium"
@@ -84,7 +77,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
           >
             목록으로
           </Button>
-          <Flex gap="2">
+          <div className={styles.actionGroup}>
             <Button size="medium" onClick={() => router.push(`/validation/integration/${board.id}/edit`)}>
               수정
             </Button>
@@ -97,9 +90,9 @@ export default function BoardDetail({board}: BoardDetailProps) {
             >
               삭제
             </Button>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Card>
-    </Container>
+    </div>
   );
 }

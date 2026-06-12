@@ -1,6 +1,6 @@
 'use client';
 
-import {Box, Card, Container, Flex, Grid, TextField} from '@radix-ui/themes';
+import {Card, TextField} from '@monorepo-playground/design-system';
 import {memo, useDeferredValue, useState} from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -9,23 +9,23 @@ import styles from './page.module.scss';
 
 export default function HeavyPage() {
   return (
-    <Container p="6" size="4">
+    <div className={styles.page}>
       <Header />
 
-      <Grid columns="2" gap="4">
+      <div className={styles.grid2}>
         <LeftBadUsage />
         <RightGoodUsage />
-      </Grid>
-    </Container>
+      </div>
+    </div>
   );
 }
 
 function Header() {
   return (
-    <Box mb="6">
+    <div className={styles.section}>
       <h2 className={clsx(typography.h2, styles.heading)}>useDeferredValue 렌더링 비교</h2>
       <p className={clsx(typography.body1, styles.description)}>150개 아이템 × 1ms = 약 150ms 렌더링 시간</p>
-      <Box mt="2">
+      <div className={styles.linkWrap}>
         <Link
           className={typography.body2}
           href="https://react.dev/reference/react/useDeferredValue#examples"
@@ -33,8 +33,8 @@ function Header() {
         >
           React 공식문서 원본 예제
         </Link>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 
@@ -43,19 +43,18 @@ function LeftBadUsage() {
 
   return (
     <Card>
-      <Box p="4">
-        <h4 className={clsx(typography.h4, styles.titleBad)}>Without useDeferredValue</h4>
+      <h4 className={clsx(typography.h4, styles.titleBad)}>Without useDeferredValue</h4>
 
-        <TextField.Root
+      <div className={styles.inputWrap}>
+        <TextField
           autoFocus
-          mb="4"
           placeholder="타이핑해보면 렉이 아주 심하게 걸립니다."
           value={text}
           onChange={(event) => setText(event.target.value)}
         />
+      </div>
 
-        <SlowList text={text} />
-      </Box>
+      <SlowList text={text} />
     </Card>
   );
 }
@@ -66,18 +65,17 @@ function RightGoodUsage() {
 
   return (
     <Card>
-      <Box p="4">
-        <h4 className={clsx(typography.h4, styles.titleGood)}>With useDeferredValue</h4>
+      <h4 className={clsx(typography.h4, styles.titleGood)}>With useDeferredValue</h4>
 
-        <TextField.Root
-          mb="4"
+      <div className={styles.inputWrap}>
+        <TextField
           placeholder="타이핑 해도 렉이 걸리지 않아요"
           value={text}
           onChange={(event) => setText(event.target.value)}
         />
+      </div>
 
-        <SlowList text={deferredText} />
-      </Box>
+      <SlowList text={deferredText} />
     </Card>
   );
 }
@@ -89,7 +87,7 @@ const SlowList = memo(function SlowList({text}: {text: string}) {
     items.push(<SlowItem key={index} text={text} />);
   }
 
-  return <Box>{items}</Box>;
+  return <div>{items}</div>;
 });
 
 function SlowItem({text}: {text: string}) {
@@ -101,13 +99,11 @@ function SlowItem({text}: {text: string}) {
     // 1ms 동안 블로킹
   }
 
-  /* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */
   return (
-    <Flex py="2" style={{borderBottom: '1px solid var(--gray-4)'}}>
+    <div className={styles.slowItem}>
       <span className={typography.body1}>Text: {text}</span>
-    </Flex>
+    </div>
   );
-  /* eslint-enable no-restricted-syntax */
 }
 
 const SLOW_LIST_ITEM_COUNT = 150;

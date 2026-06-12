@@ -9,3 +9,27 @@ $contentLineHeight: 1.8;
   white-space: pre-wrap;
   line-height: $contentLineHeight;
 }
+
+.page {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actionGroup {
+  display: flex;
+  gap: var(--spacing-sm);
+}

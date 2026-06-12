@@ -3,9 +3,8 @@
 import {memo, useDeferredValue, useState} from 'react';
 import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
-import {Box, Card, Callout, Container, TextField} from '@radix-ui/themes';
-import {Button} from '@monorepo-playground/design-system';
-import {ExclamationTriangleIcon, MagnifyingGlassIcon} from '@radix-ui/react-icons';
+import {Button, Callout, Card, TextField} from '@monorepo-playground/design-system';
+import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
 import {escapeRegExp} from 'es-toolkit';
 import clsx from 'clsx';
 import typography from '@monorepo-playground/design-system/styles/typography';
@@ -13,18 +12,18 @@ import styles from './page.module.scss';
 
 export default function SearchPage() {
   return (
-    <Container p="6" size="2">
+    <div className={styles.page}>
       <Header />
       <SearchForm />
-    </Container>
+    </div>
   );
 }
 
 function Header() {
   return (
-    <Box mb="6">
+    <div className={styles.section}>
       <h2 className={clsx(typography.h2, styles.heading)}>검색결과 목록 Best Practice</h2>
-    </Box>
+    </div>
   );
 }
 
@@ -34,25 +33,21 @@ function SearchForm() {
 
   return (
     <>
-      <Box mb="4">
-        <TextField.Root
+      <div className={styles.searchField}>
+        <TextField
           autoFocus
+          leading={<MagnifyingGlassIcon />}
           placeholder="검색어를 입력하세요."
-          size="3"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-        >
-          <TextField.Slot>
-            <MagnifyingGlassIcon />
-          </TextField.Slot>
-        </TextField.Root>
-      </Box>
+        />
+      </div>
 
-      <Box>
+      <div>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <SearchResults query={deferredQuery} />
         </ErrorBoundary>
-      </Box>
+      </div>
     </>
   );
 }
@@ -72,17 +67,15 @@ const SearchResults = memo(function SearchResults({query}: {query: string}) {
   }
 
   return (
-    <Box>
+    <div>
       {results.map((result, index) => (
-        <Card key={index} mb="2">
-          <Box p="3">
-            <p className={typography.body1}>
-              <Highlight query={query} text={result} />
-            </p>
-          </Box>
+        <Card key={index} className={styles.resultCard}>
+          <p className={typography.body1}>
+            <Highlight query={query} text={result} />
+          </p>
         </Card>
       ))}
-    </Box>
+    </div>
   );
 });
 
@@ -112,38 +105,27 @@ function Highlight({text, query}: {text: string; query: string}) {
 
   return (
     <>
-      {/* eslint-disable no-restricted-syntax -- TODO: CSS 변수 참조라 정적 CSS Module로 분리 불가. Radix 토큰 prop으로 대체 검토 필요 */}
       {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <span
-            key={index}
-            className={clsx(typography.body1, styles.highlight)}
-            style={{backgroundColor: 'var(--yellow-4)'}}
-          >
+          <span key={index} className={clsx(typography.body1, styles.highlight)}>
             {part}
           </span>
         ) : (
           <span key={index}>{part}</span>
         ),
       )}
-      {/* eslint-enable no-restricted-syntax */}
     </>
   );
 }
 
 function ErrorFallback({resetErrorBoundary}: FallbackProps) {
   return (
-    <Callout.Root color="red">
-      <Callout.Icon>
-        <ExclamationTriangleIcon />
-      </Callout.Icon>
-      <Callout.Text>
-        검색 중 오류가 발생했습니다.{' '}
-        <Button size="small" variant="outlined" onClick={resetErrorBoundary}>
-          다시 시도
-        </Button>
-      </Callout.Text>
-    </Callout.Root>
+    <Callout color="danger">
+      검색 중 오류가 발생했습니다.{' '}
+      <Button size="small" variant="outlined" onClick={resetErrorBoundary}>
+        다시 시도
+      </Button>
+    </Callout>
   );
 }
 

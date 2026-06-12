@@ -1,3 +1,21 @@
+.page {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.searchField {
+  margin-bottom: var(--spacing-md);
+}
+
+.resultCard {
+  margin-bottom: var(--spacing-sm);
+}
+
 .heading {
   margin-bottom: var(--spacing-sm);
 }
@@ -8,4 +26,6 @@
 
 .highlight {
   font-weight: bold;
+  /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- 검색 강조 전용 일회성 노랑 (도메인 색, 공통 토큰 없음) */
+  background-color: #ffe770;
 }

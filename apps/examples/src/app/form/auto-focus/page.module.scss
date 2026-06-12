@@ -1,3 +1,21 @@
+.page {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.calloutBody {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
 .pageTitle {
   margin-bottom: var(--spacing-sm);
 }
