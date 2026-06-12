@@ -31,10 +31,14 @@
 
 ### 마크업 vs 시각 기준
 
-"이 속성을 빼면 컴포넌트 동작이 깨지는가"로 판단한다.
+**`.styled`를 입히지 않은 상태가 headless 컴포넌트다.** radix primitives처럼 구조·동작·접근성만 남고 룩은 없는 상태가 되도록 나눈다. 판단이 애매하면 "headless 라이브러리가 이 속성을 출하할까"로 묻는다.
 
-- 다이얼로그의 `max-width: 600px` → **마크업** (없으면 뷰포트에 무한히 늘어남)
-- 다이얼로그의 `background-color: var(--color-bg-primary)` → **시각** (없어도 동작 OK, 색만 사라짐)
+단, 이 레포의 headless는 박스 모델이 무너지지 않을 최소 구조(display, position, overflow, 크기 제약)까지는 포함한다.
+
+- 다이얼로그의 `max-width: 600px` → **마크업** (없으면 뷰포트에 무한히 늘어남 — 구조)
+- 다이얼로그의 `background-color: var(--color-bg-primary)` → **시각** (룩)
+- 슬롯 사이 `gap`, 타이포 믹스인 → **시각** (간격·글꼴은 미관이지 구조가 아니다)
+- 타이포 믹스인은 TSX에서 `typography.bodyN` 클래스를 직접 붙이지 않고 `.X.styled` 안에서 `@include`한다 — headless 상태에 글꼴이 새지 않게.
 
 ### 시각 속성이 없는 클래스
 
