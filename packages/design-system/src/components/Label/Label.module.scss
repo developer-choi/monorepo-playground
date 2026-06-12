@@ -1,0 +1,21 @@
+@use '@/styles/typography.module' as typography;
+
+.label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.label.styled {
+  @include typography.body2;
+
+  gap: var(--spacing-xs);
+  color: var(--color-fg-primary);
+
+  &.invalid {
+    color: var(--color-fg-destructive);
+  }
+}
+
+.required.styled {
+  color: var(--color-fg-destructive);
+}

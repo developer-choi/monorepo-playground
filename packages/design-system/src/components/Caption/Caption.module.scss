@@ -1,0 +1,11 @@
+@use '@/styles/typography.module' as typography;
+
+.caption.styled {
+  @include typography.body3;
+
+  color: var(--color-fg-muted);
+
+  &.invalid {
+    color: var(--color-fg-destructive);
+  }
+}
