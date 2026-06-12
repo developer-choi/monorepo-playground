@@ -19,3 +19,5 @@ export {default as Confirm} from '@/components/Modal/Confirm';
 export type {ConfirmProps} from '@/components/Modal/Confirm';
 export {default as TextField} from '@/components/TextField/TextField';
 export type {TextFieldProps} from '@/components/TextField/TextField';
+export {default as PasswordField} from '@/components/PasswordField/PasswordField';
+export type {PasswordFieldProps} from '@/components/PasswordField/PasswordField';
