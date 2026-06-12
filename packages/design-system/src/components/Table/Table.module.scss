@@ -1,0 +1,51 @@
+@use '@/styles/typography.module' as typography;
+
+.wrapper {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.wrapper.styled {
+  border: 1px solid var(--color-fg-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cell {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.cell.styled {
+  border-bottom: 1px solid var(--color-fg-subtle);
+}
+
+// radix table 정합: size-1·2 모두 본문 폰트는 14px, 셀은 균등 패딩 + 최소 높이(td height = min-height로 동작)
+.medium .cell.styled {
+  @include typography.body2;
+
+  --cell-min-height: 44px;
+
+  height: var(--cell-min-height);
+  padding: var(--spacing-grid-gap);
+}
+
+.small .cell.styled {
+  @include typography.body2;
+
+  --cell-min-height: 36px;
+
+  height: var(--cell-min-height);
+  padding: var(--spacing-sm);
+}
+
+.columnHeaderCell.styled {
+  font-weight: bold;
+  color: var(--color-fg-secondary);
+  background-color: var(--color-bg-secondary);
+}

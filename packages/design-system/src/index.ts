@@ -22,6 +22,7 @@ export {default as Radio} from '@/components/Radio/Radio';
 export type {RadioProps} from '@/components/Radio/Radio';
 export {default as RadioGroup} from '@/components/RadioGroup/RadioGroup';
 export type {RadioGroupProps} from '@/components/RadioGroup/RadioGroup';
+export * as Table from '@/components/Table/Table';
 export * as Dialog from '@/components/Modal/Dialog';
 export {default as Alert} from '@/components/Modal/Alert';
 export type {AlertProps} from '@/components/Modal/Alert';
