@@ -1,0 +1,38 @@
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton.styled {
+  border: none;
+  background: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  color: var(--color-fg-muted);
+
+  &:hover {
+    color: var(--color-fg-primary);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.iconButton.styled.small {
+  padding: var(--spacing-xs);
+}
+
+.iconButton.styled.medium {
+  padding: var(--spacing-xs);
+}
+
+.iconButton.styled.large {
+  padding: var(--spacing-sm);
+}
+
+.icon {
+  display: inline-flex;
+}
