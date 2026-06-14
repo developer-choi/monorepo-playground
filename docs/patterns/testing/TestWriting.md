@@ -5,22 +5,28 @@
 ### 함수 테스트
 
 ```typescript
-describe('findKthElement()', () => {
+describe('clamp()', () => {
   describe('General cases', () => {
-    it('k번째로 큰 값을 찾아야 한다', () => {
-      expect(findKthElement([1, 2, 3], 3, 'largest')).toBe(1);
+    it('범위 안의 값은 그대로 반환해야 한다', () => {
+      expect(clamp(5, 1, 10)).toBe(5);
     });
   });
 
   describe('Boundary cases', () => {
-    it('배열 길이가 1이면 항상 그 요소를 반환해야 한다', () => {
-      expect(findKthElement([1], 1, 'largest')).toBe(1);
+    it('하한·상한값은 그대로 반환해야 한다', () => {
+      expect(clamp(1, 1, 10)).toBe(1);
+      expect(clamp(10, 1, 10)).toBe(10);
+    });
+
+    it('범위를 벗어나면 가까운 경계로 보정해야 한다', () => {
+      expect(clamp(-1, 1, 10)).toBe(1);
+      expect(clamp(11, 1, 10)).toBe(10);
     });
   });
 
   describe('Edge cases', () => {
-    it('k가 배열 길이보다 크면 에러를 던져야 한다', () => {
-      expect(() => findKthElement([100], 2, 'largest')).toThrow(TypeError);
+    it('NaN을 넣으면 에러를 던져야 한다', () => {
+      expect(() => clamp(NaN, 1, 10)).toThrow(TypeError);
     });
   });
 });
