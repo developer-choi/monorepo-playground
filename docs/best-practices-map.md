@@ -270,6 +270,12 @@
 - 상황: 스토리 작성 시 Controls 패널에 노출된 prop을 render가 사용하지 않으면 토글해도 화면이 안 바뀐다. args / argTypes / render 사이의 정합성 처리
 - 코드: docs/patterns/storybook/ControlsPanel.md
 
+### prop 조합 시각 검증 — 매트릭스 스토리
+
+- 기술스택: Storybook + Chromatic
+- 상황: variant×color×size처럼 시각 prop 조합이 많은 컴포넌트의 시각 회귀를 스토리로 다룰 때. 개별 스토리 분리 vs 한 스토리 격자 렌더 선택
+- 코드: docs/patterns/storybook/PropMatrix.md
+
 ## 디자인 시스템
 
 ### 디자인 토큰 출처·운영
