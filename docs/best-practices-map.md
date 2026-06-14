@@ -219,6 +219,11 @@
 - 상황: 테스트 대상·레벨 선정. Yes 디폴트, 면제 화이트리스트, 구현 세부사항 금지, Integration 우선
 - 코드: docs/patterns/testing/WhatToTest.md
 
+### 작성하지 않는 테스트 (안티패턴)
+
+- 상황: 컴포넌트 유닛 테스트에서 흔히 끌리지만 작성하지 않는 패턴을 판단할 때. 안 쓰는 코드 예시 + 대신 무엇이 검증하나
+- 코드: docs/patterns/testing/TestsWeAvoid.md
+
 ### 테스트 코드 작성 패턴
 
 - 기술스택: Vitest + React Testing Library
