@@ -15,7 +15,7 @@ describe('Button', () => {
       expect(screen.getByRole('button')).toHaveClass('custom');
     });
 
-    it('loading 중에는 클릭해도 onClick이 호출되지 않는다', async () => {
+    it('로딩 중에는 클릭해도 반응하지 않는다', async () => {
       const onClick = vi.fn();
       render(
         <Button loading onClick={onClick}>
