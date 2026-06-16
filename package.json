@@ -20,8 +20,14 @@
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
     "**/*.{scss,css}": "stylelint --fix --max-warnings 0",
-    "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --no-warn-ignored --config apps/examples/eslint.config.mjs",
-    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --no-warn-ignored --config packages/design-system/eslint.config.js"
+    "apps/examples/**/*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0 --no-warn-ignored --config apps/examples/eslint.config.mjs",
+      "vitest related --run --root apps/examples"
+    ],
+    "packages/design-system/**/*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0 --no-warn-ignored --config packages/design-system/eslint.config.js",
+      "vitest related --run --root packages/design-system"
+    ]
   },
   "repository": {
     "type": "git",
