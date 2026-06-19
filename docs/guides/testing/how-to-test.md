@@ -1,40 +1,26 @@
 # 테스트 선정과 작성
 
-## 선정 기준
+## 하나를 테스트할 때 세 가지 케이스를 확인합니다
 
-테스트를 쓰기 전에 "이걸 검증할 가치가 있나"부터 고릅니다. 두 가지 규칙이면 대부분 가려집니다.
+정상·경계·에러 세 갈래를 덮습니다.
 
-### 로직·경계·에러 세 갈래
+- 기대한 대로 동작하는 경우 (정상)
+- 범위의 끝에서도 올바르게 처리되는지 (경계)
+- 잘못된 입력을 만났을 때의 처리 (에러)
 
-하나의 대상을 테스트할 때 세 갈래를 덮습니다.
-- 코드가 갈라지는 모든 분기(로직)
-- 일반·경계·범위 밖 입력(경계)
-- 잘못된 입력을 만났을 때의 처리(에러)
+함수의 입력 범위가 1~10이라면,
 
-```ts
-function clamp(value: number, min: number, max: number): number {
-  if (Number.isNaN(value)) throw new Error('value must be a number');
-  return Math.min(Math.max(value, min), max);
-}
+- 5도 해봐야하고 (정상)
+- 1, 10도 해봐야하고 (경계)
+- 0, 11도 해봐야합니다 (범위 밖)
 
-it.each([
-  [5, 5], //    일반
-  [1, 1], //    경계(하한)
-  [10, 10], //  경계(상한)
-  [-1, 1], //   범위 밖 → 하한으로 보정
-  [11, 10], //  범위 밖 → 상한으로 보정
-])('clamp(%i, 1, 10)은 %i이다', (value, expected) => {
-  expect(clamp(value, 1, 10)).toBe(expected);
-});
+컴포넌트도 동일합니다.
 
-it('NaN을 넣으면 에러가 발생한다', () => {
-  expect(() => clamp(NaN, 1, 10)).toThrow();
-});
-```
+## 이런 경우는 테스트 코드를 작성하지 않습니다
 
-함수로 예를 들었지만 컴포넌트도 같은 세 갈래입니다.
+"쓸 수 있는 테스트"와 "써야 하는 테스트"는 다릅니다. 아래는 흔히 손이 가지만, 확신을 더해주지 않아 빼는 사례들입니다.
 
-### 검증된 기반: 더한 부분만
+### 이미 검증된 것은 다시 테스트하지 않습니다
 
 이미 누군가 검증한 것 위에 테스트를 또 쌓는 건 코드만 늘립니다. "이미 검증된 것"은 두 종류입니다.
 
@@ -62,19 +48,22 @@ it('형식이 맞으면 true, 아니면 false', () => {
 });
 ```
 
-컴포넌트도 같습니다. radix Select를 감싼 커스텀 Select라면 radix의 키보드 네비게이션을 다시 테스트하지 않고, 우리가 더한 것(예: 커스텀 className 전달)만 봅니다.
+컴포넌트도 같습니다. radix Select를 감싼 커스텀 Select라면:
 
 ```tsx
+// ❌ radix가 이미 보장하는 것: 중복
+it('화살표 키를 누르면 다음 옵션으로 이동한다', async () => {
+  render(<Select options={options} />);
+  await userEvent.keyboard('{ArrowDown}');
+  expect(screen.getByRole('option', {name: options[1]})).toHaveFocus();
+});
+
 // ✅ 우리가 더한 것만
 it('커스텀 className이 루트에 적용된다', () => {
   const {container} = render(<Select className="custom" options={[]} />);
   expect(container.firstChild).toHaveClass('custom');
 });
 ```
-
-## 제외 기준
-
-"쓸 수 있는 테스트"와 "써야 하는 테스트"는 다릅니다. 아래는 흔히 손이 가지만, 확신을 더해주지 않아 빼는 사례들입니다.
 
 ### 타입·정적 분석이 막는 것
 
@@ -111,36 +100,7 @@ it('children을 넘기면 화면에 보인다', () => {
 
 게다가 `getByText`는 "DOM에 글자가 있다"까지만 보지 "사용자 눈에 보인다"는 검증하지 못합니다(`display:none`·투명·가림이면 그대로 통과). 실제로 보이는지는 시각 회귀(Chromatic)가 봅니다.
 
-### ref 전달
-
-```tsx
-it('ref가 button에 전달된다', () => {
-  const ref = createRef<HTMLButtonElement>();
-  render(<Button ref={ref}>확인</Button>);
-  expect(ref.current).toBeInstanceOf(HTMLButtonElement);
-});
-```
-
-ref를 루트로 그냥 흘려보내는 것은 React가 보장합니다(앞의 "남이 보장하는 것"). 우리가 ref를 **재지정**할 때(내부 요소로 넘기거나, 여러 ref를 병합하는 등)만 `.focus()` 같은 관찰 가능한 동작으로 테스트합니다.
-
 ## 작성 규칙
-
-무엇을 쓸지 골랐다면, 이제 읽기 쉽고 실패가 또렷한 코드로 옮깁니다.
-
-### 준비-실행-검증(AAA)
-
-테스트는 세 단계로 씁니다. **준비**(Arrange: 렌더·입력 셋업), **실행**(Act: 사용자 행동), **검증**(Assert: 결과 확인)입니다.
-
-React Testing Library에선 각각 `render`, `userEvent`, `expect`가 맡습니다.
-
-```tsx
-it('이름을 입력하고 제출하면 확인 메시지가 뜬다', async () => {
-  render(<SignupForm />); // 준비
-  await userEvent.type(screen.getByLabelText('이름'), '홍길동'); // 실행
-  await userEvent.click(screen.getByRole('button', {name: '가입'}));
-  expect(screen.getByText('가입이 완료됐습니다')).toBeInTheDocument(); // 검증
-});
-```
 
 ### 한 테스트, 한 단언
 
