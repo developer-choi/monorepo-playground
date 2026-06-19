@@ -15,7 +15,6 @@ export default function PasswordField(props: PasswordFieldProps) {
       trailing={
         <IconButton
           icon={visible ? <EyeOpenIcon /> : <EyeClosedIcon />}
-          label={visible ? '비밀번호 숨기기' : '비밀번호 표시'}
           size="small"
           onClick={() => setVisible((prev) => !prev)}
         />

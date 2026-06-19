@@ -202,7 +202,6 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
             <IconButton
               className={styles.tagRemove}
               icon={<Cross2Icon />}
-              label={`${tag} 삭제`}
               size="small"
               onClick={() => onChange(value.filter((item) => item !== tag))}
             />

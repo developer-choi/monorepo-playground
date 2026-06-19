@@ -14,7 +14,6 @@ const meta: Meta<typeof IconButton> = {
     icon: {control: false},
   },
   args: {
-    label: '검색',
     icon: <MagnifyingGlassIcon />,
     size: 'medium',
   },
@@ -38,5 +37,5 @@ export const Disabled: Story = {
 };
 
 export const Close: Story = {
-  args: {label: '닫기', icon: <Cross2Icon />},
+  args: {icon: <Cross2Icon />},
 };
