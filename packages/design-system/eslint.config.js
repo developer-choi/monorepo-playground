@@ -42,6 +42,12 @@ export default defineConfig([
     },
   },
   {
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+    },
+  },
+  {
     files: ['**/*.stories.{ts,tsx}'],
     rules: {
       '@typescript-eslint/naming-convention': [
@@ -51,6 +57,7 @@ export default defineConfig([
         {selector: 'parameter', format: ['camelCase'], leadingUnderscore: 'allow'},
         {selector: 'function', format: ['camelCase', 'PascalCase']},
         {selector: 'typeLike', format: ['PascalCase']},
+        {selector: 'property', filter: {regex: '^aria-', match: true}, format: null},
         {selector: 'property', format: ['camelCase', 'UPPER_CASE']},
         {selector: 'method', format: ['camelCase']},
         {selector: 'import', format: null},
