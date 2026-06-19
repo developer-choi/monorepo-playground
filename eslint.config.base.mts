@@ -145,6 +145,26 @@ export const baseRules = {
 };
 
 /**
+ * 테스트 파일(`*.test.ts`, `*.test.tsx`) 전용 override. 각 워크스페이스 eslint config 배열에 추가해서 사용.
+ * 테스트 JSX에 `aria-*` 속성을 직접 쓰는 것을 금지한다(`getByRole`는 허용). 접근성 계약을 테스트로
+ * 암묵 강제하지 않기 위함. base의 기존 `no-restricted-syntax` 항목은 그대로 보존한 뒤 aria 규칙만 더한다.
+ */
+export const testFilesConfig = {
+  files: ['**/*.test.{ts,tsx}'],
+  rules: {
+    'no-restricted-syntax': [
+      'error',
+      ...baseRules['no-restricted-syntax'].slice(1),
+      {
+        selector: 'JSXAttribute[name.name=/^aria-/]',
+        message:
+          '테스트 JSX에 aria-* 속성을 직접 쓰지 않습니다. getByRole로 쿼리하거나, 불가피하면 eslint-disable + 사유 주석.',
+      },
+    ],
+  },
+};
+
+/**
  * Next.js App Router 규약 파일. 프레임워크가 파일명을 소문자로 고정하지만
  * default export 컴포넌트는 PascalCase(Page, RootLayout 등)라 파일명과 다르므로 검사에서 제외.
  */

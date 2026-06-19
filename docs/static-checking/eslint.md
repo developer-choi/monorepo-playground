@@ -534,6 +534,21 @@ className={cond ? clsx(styles.a, styles.b, className) : clsx(styles.a, styles.b)
 className={clsx(styles.a, styles.b, cond && className)}
 ```
 
+#### 테스트 파일 전용: `aria-*` 금지 (`testFilesConfig`)
+
+`eslint.config.base.mts`가 `testFilesConfig`(`files: ['**/*.test.{ts,tsx}']`)를 export하고, 각 워크스페이스 eslint config 배열에 추가해 적용합니다. 테스트 JSX에 `aria-*` 속성을 직접 쓰는 것을 `no-restricted-syntax`(`JSXAttribute[name.name=/^aria-/]`)로 금지합니다. `baseRules`의 기존 `no-restricted-syntax` 항목은 그대로 보존한 뒤 aria 규칙만 더합니다.
+
+`getByRole`은 허용합니다 — role 기반 쿼리 자체가 문제가 아니라, aria-* 속성을 테스트 코드에서 직접 명시하면 접근성 계약을 암묵적으로 강제하게 되는 것을 막기 위함입니다(접근성은 현재 우선순위에서 밀려 있음). 불가피한 경우 `eslint-disable` + 사유 주석으로 예외를 처리합니다.
+
+```tsx
+// ❌ 테스트 JSX에 aria-* 직접 작성
+render(<Callout aria-label="알림">내용</Callout>);
+
+// ✅ 컴포넌트가 노출하는 role로 쿼리
+render(<Callout>내용</Callout>);
+expect(screen.getByRole('note')).toBeInTheDocument();
+```
+
 #### `custom/filename-export-convention` (커스텀 룰)
 
 `src/` 하위에서 **컴포넌트(PascalCase)·훅(`use*`) export가 정확히 하나인 파일**은 파일명(첫 `.` 이전)에 **kebab-case(하이픈)·snake_case(언더스코어)를 쓸 수 없습니다** — PascalCase(컴포넌트) 또는 camelCase(훅)여야 합니다. 컴포넌트·훅이 0개거나 2개 이상(여러 컴포넌트를 묶은 모듈)이면 검사하지 않습니다.
