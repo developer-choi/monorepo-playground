@@ -1,6 +1,8 @@
 import {describe, it} from 'vitest';
 
 describe('Table', () => {
+  // ColumnHeaderCell·Cell은 <table> 컨텍스트로 감싸 렌더해야 getByRole('columnheader'/'cell')가 resolve된다
+  // (th/td 암묵 role은 table 조상 필요). Root는 자체가 table이라 무관.
   describe('General cases', () => {
     // Root: <table>에 clsx 병합 → getByRole('table').toHaveClass('custom')
     it.todo('Root에 className을 넘기면 table에 병합된다');
