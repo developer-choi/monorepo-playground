@@ -53,7 +53,7 @@ Cloudinary URL에 변환 파라미터(`w_{size},c_fill,f_auto`)를 붙이면 리
 ### 단점
 
 - **sizes를 문자열로 직접 작성해야 함**: `sizes="(max-width: 1023px) 50vw, 25vw"`처럼 미디어쿼리 기반 문자열을 레이아웃에 맞게 수동으로 작성해야 합니다.
-- 다만 next/image도 유사한 불편함이 있습니다:
+- 다만 next/image도 비슷한 불편함이 있습니다:
     - `width`/`height`를 props로 지정해야 하지만, 실제 화면에 렌더링되는 크기는 CSS가 결정하므로 이미지 크기를 props와 CSS 두 곳에서 따로 관리해야 합니다.
 
 ## 4. 구현
@@ -62,8 +62,8 @@ Cloudinary URL에 변환 파라미터(`w_{size},c_fill,f_auto`)를 붙이면 리
 
 ```
 Image.tsx
-├── BaseImage     — 모든 이미지 공통 (lazy loading, max-width: 100%)
-└── OptimizedImage — Cloudinary URL → 리사이즈 srcset 변환
+├── BaseImage     : 모든 이미지 공통 (lazy loading, max-width: 100%)
+└── OptimizedImage : Cloudinary URL → 리사이즈 srcset 변환
 ```
 
 ### BoardCard sizes 설정
@@ -78,7 +78,7 @@ Image.tsx
 
 기존 `.imageWrapper`에 `aspect-ratio: 1 / 1.2`가 적용되어 있어 이미지 로드 전에도 영역이 확보됩니다.
 
-## 5. 결과 — 이미지 용량 97% 감소
+## 5. 결과: 이미지 용량 97% 감소
 
 동일 이미지, 동일 렌더링 크기(320 × 384px) 기준:
 

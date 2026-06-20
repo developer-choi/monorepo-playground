@@ -18,10 +18,10 @@
 
 ## 구현 환경
 
-- **Mock API**: `GET /api/board` — page/limit 페이지네이션, 600개 게시글
+- **Mock API**: `GET /api/board`, page/limit 페이지네이션, 600개 게시글
 - **API 연동**: SSR prefetch + Streaming(`Suspense`) + `useSuspenseQuery` + ErrorBoundary
 
-## 1. CSR vs SSR Prefetch — Network Waterfall 비교
+## 1. CSR vs SSR Prefetch: Network Waterfall 비교
 
 | CSR (useQuery) | SSR (prefetch)              |
 |---|---|
