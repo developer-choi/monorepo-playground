@@ -4,6 +4,30 @@
 
 이 레포의 디자인 시스템은 **학습** + **"마크업은 공유, 시각 스타일은 채용과제별로 교체"** 패턴을 목표로 한다. 그래서 마크업과 시각을 명시적으로 분리한다.
 
+## 폴더 구조
+
+컴포넌트는 **카테고리 폴더 안에 플랫 파일**로 둔다. 폴더는 둘 이상을 묶을 때만 두므로, 컴포넌트 하나를 감싸는 폴더(`Button/Button.tsx`)는 만들지 않는다.
+
+```
+src/components/
+├── inputs/          # Button, IconButton, InputBase, TextField, TextArea,
+│   ├── Button.tsx           PasswordField, Select, Checkbox, Radio, RadioGroup, Label
+│   ├── Button.module.scss
+│   ├── Button.stories.tsx
+│   └── ...
+├── feedback/        # Callout, Spinner
+│   ├── modal/       # 관련 컴포넌트 묶음은 카테고리 안 kebab 서브폴더로 (Dialog, Alert, Confirm)
+│   └── ...
+├── data-display/    # Badge, Caption, Table
+└── surfaces/        # Card
+```
+
+- **카테고리**는 [MUI 분류](https://mui.com/material-ui/all-components/)를 차용한다(Inputs/Feedback/Data Display/Surfaces). 새 컴포넌트는 MUI가 두는 카테고리에 맞춰 배치한다.
+- **파일명**은 `ComponentName.tsx` / `ComponentName.module.scss` / `ComponentName.stories.tsx` — PascalCase, 컴포넌트명과 1:1. (파일명 규칙은 `eslint.config.base.mts`의 `filename-export-convention`이 강제.)
+- **폴더명**은 카테고리·묶음 모두 kebab-case. (`check-file/folder-naming-convention`이 `src/**/*`에 강제 — [eslint.md](static-checking/eslint.md) 참고.)
+- **컴포넌트 묶음**(`Dialog`와 그 위에 얹은 `Alert`·`Confirm`처럼 관련 컴포넌트 둘 이상)은 카테고리 폴더 안에 kebab 서브폴더로 둔다. 하나뿐이면 폴더 없이 플랫 파일로 둔다.
+- **스토리북 `title`은 폴더 경로와 1:1 일치**시킨다: `components/<category>/<Component>.tsx` → `title: 'Components/<category>/<Component>'`. 묶음은 `Components/feedback/modal/Alert`처럼 서브폴더까지 반영한다.
+
 ## 마크업/시각 스타일 분리
 
 ### 중첩 클래스 패턴

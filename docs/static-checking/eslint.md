@@ -594,9 +594,9 @@ React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
 | 워크스페이스        | 패턴                                         | 의도                                                            |
 | ------------------ | -------------------------------------------- | --------------------------------------------------------------- |
 | `apps/examples`    | `src/**/*` → `NEXT_JS_APP_ROUTER_CASE`       | Next.js 동적 라우트(`[id]`, `[...slug]`) 자동 인정 + 그 외 kebab-case |
-| `design-system`    | `src/!(components)/**/*` → `KEBAB_CASE`<br>`src/components/*` → `PASCAL_CASE` | 일반 폴더는 kebab, 컴포넌트 폴더만 PascalCase (예: `Button`, `Modal`)      |
+| `design-system`    | `src/**/*` → `KEBAB_CASE`                    | 모든 폴더 kebab. 카테고리(`inputs`/`feedback`/`data-display`/`surfaces`)도 묶음 서브폴더(`feedback/modal`)도 전부 kebab — PascalCase 폴더는 어느 깊이에서든 막힌다. |
 
-`src/components/*`처럼 더 구체적인 패턴이 일반 패턴(`src/**/*`)을 override 하지 않으므로, design-system은 negation(`!(components)`)으로 컴포넌트 폴더를 제외한 뒤 별도 패턴으로 PASCAL_CASE를 강제합니다.
+`src/**/*` 한 패턴으로 깊이 제한 없이 재귀 검사하므로 카테고리(depth 1)뿐 아니라 묶음 서브폴더(`feedback/modal`, depth 2 이하)까지 kebab을 강제합니다. 컴포넌트는 카테고리 폴더 안에 플랫 파일로 두고, 폴더는 관련 컴포넌트를 둘 이상 묶을 때만 만들며 그 묶음 폴더도 kebab으로 둡니다([convention.md](../convention.md)의 폴더 구조 참고).
 
 ### `recommendedTypeChecked` 프리셋
 

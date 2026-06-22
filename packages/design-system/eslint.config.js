@@ -32,13 +32,7 @@ export default defineConfig([
     },
     rules: {
       ...baseRules,
-      'check-file/folder-naming-convention': [
-        'error',
-        {
-          'src/!(components)/**/*': 'KEBAB_CASE',
-          'src/components/*': 'PASCAL_CASE',
-        },
-      ],
+      'check-file/folder-naming-convention': ['error', {'src/**/*': 'KEBAB_CASE'}],
     },
   },
   {
