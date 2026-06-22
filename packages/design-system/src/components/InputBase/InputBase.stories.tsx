@@ -33,6 +33,11 @@ const meta: Meta<typeof InputBase> = {
           '- "버튼이 포커스를 먹는 것"을 막으려는 `preventDefault`/`stopPropagation` 류를 넣지 마세요 — 정상 동작을 깨뜨립니다.',
           '',
           '검증은 `InteractiveSlots` 스토리에서 직접 할 수 있습니다.',
+          '',
+          '## 기술적 의사결정 과정',
+          '',
+          '- 책임 범위 — children 주입 vs `<input>` 직접 렌더: [inputbase-responsibility.md](https://github.com/developer-choi/monorepo-playground/blob/master/docs/decisions/inputbase-responsibility.md)',
+          '- 포커스 위임 — `<label>` 네이티브 vs `<div>` + handleClick: [inputbase-focus-delegation.md](https://github.com/developer-choi/monorepo-playground/blob/master/docs/decisions/inputbase-focus-delegation.md)',
         ].join('\n'),
       },
     },
@@ -97,7 +102,7 @@ export const InteractiveSlots: Story = {
     docs: {
       description: {
         story:
-          '슬롯에 인터랙티브 요소(버튼)를 넣었을 때 포커스 향방을 확인하는 스토리입니다. 박스 빈 곳/플레이스홀더를 클릭하면 input에 포커스가 가고(label 기본동작), 버튼을 클릭하면 버튼이 포커스를 가져갑니다(인터랙티브 자손이라 label 동작이 발동하지 않습니다).',
+          '슬롯에 인터랙티브 요소(버튼)를 넣었을 때 포커스 향방을 확인하는 스토리입니다. 박스 빈 곳/플레이스홀더를 클릭하면 input에 포커스가 가고(label 기본동작), 버튼을 클릭하면 버튼이 포커스를 가져갑니다(인터랙티브 자손이라 label 동작이 발동하지 않습니다).\n\n이 동작을 `<label>`로 구현하기로 한 근거: [inputbase-focus-delegation.md](https://github.com/developer-choi/monorepo-playground/blob/master/docs/decisions/inputbase-focus-delegation.md)',
       },
     },
   },
