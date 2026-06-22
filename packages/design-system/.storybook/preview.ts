@@ -6,6 +6,11 @@ import './storybook.scss';
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: ['디자인 시스템 구축기', 'Components', '*'],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

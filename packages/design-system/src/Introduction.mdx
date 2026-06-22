@@ -1,0 +1,39 @@
+import {Meta} from '@storybook/addon-docs/blocks';
+
+<Meta title="디자인 시스템 구축기" />
+
+# 디자인 시스템 구축기
+
+페이지마다 파편화된 컴포넌트를 표준화 → 추상화 → headless → 모노레포 순으로 키워온 과정입니다. 각 단계는 앞 단계가 남긴 한계를 푸는 방식으로 이어집니다.
+
+## Step 1. 흩어진 컴포넌트의 표준화
+
+페이지마다 버튼과 모달을 그때그때 새로 만들다 보니, 같은 UI가 여러 벌로 흩어져 있었습니다. 공통 컴포넌트로 묶되, 앞으로 들어올 요구(로딩 상태, 파괴적 동작의 색 구분 등)까지 미리 담을 스펙이 필요했습니다.
+
+표준을 새로 정의하는 대신 Material Design을 참고하기로 하고, MUI 공식 문서의 스펙을 보며 컴포넌트를 직접 만들었습니다. 라이브러리를 설치해 가져다 쓴 게 아니라, 당시 디자인 시스템이 복잡하지 않아 깔린 스타일을 덮어쓰는 비용보다 직접 만드는 편이 저렴했기 때문입니다. 6개월간 공통 컴포넌트 16개를 만들었고, 이후 6개월간 스펙 변경은 없었습니다.
+
+[자세히 보기 →](https://github.com/developer-choi/monorepo-playground/blob/master/packages/design-system/docs/guides/design-system/step1.md)
+
+## Step 2. 확장을 대비한 추상화: MUI 원본 설계 분석
+
+공통 컴포넌트로 묶고 나니, Dialog와 Bottom Sheet처럼 겹치는 부분이 많은데도 따로 만들어 재사용할 수 없는 문제가 드러났습니다. 공식 문서에 적힌 결과만 따라 했을 뿐, 내부 설계를 보지 않은 탓이었습니다.
+
+MUI 원본 코드를 분석해 Dialog가 Modal·Backdrop·FocusTrap·Portal로 쌓인 구조임을 파악하고, 겹치던 Modal을 공통 컴포넌트로 분리했습니다. 무엇을 추상화할지는 "이 컴포넌트가 앞으로도 함께 갈 것인가"를 디자이너와 합의해 정했습니다.
+
+[자세히 보기 →](https://github.com/developer-choi/monorepo-playground/blob/master/packages/design-system/docs/guides/design-system/step2.md)
+
+## Step 3. 직접 만들지 않는다: Radix 기반 headless
+
+표준으로 묶고 구조를 정리해도, 결국 컴포넌트를 우리가 직접 만들어야 한다는 부담은 그대로였습니다. 모달 하나에도 포커스 가두기, 바깥 클릭, Escape, 스크롤 잠금 같은 동작을 직접 챙겨야 했고, 제대로 갖출수록 품이 많이 들었습니다. 특히 iOS·안드로이드·크롬 등 환경마다 간헐적으로 어긋나는 동작을 재현하고 디버깅하는 일이 괴로웠습니다.
+
+그래서 동작은 검증된 라이브러리에 맡기고 시각만 우리가 쥐는 headless로 옮겨, Radix를 도입했습니다. 직접 구현·styled 라이브러리·headless를 비교하면, 디자이너와 함께 프로젝트마다 시각을 바꿔 끼우는 우리 상황에서는 headless가 가장 잘 맞았습니다.
+
+[자세히 보기 →](https://github.com/developer-choi/monorepo-playground/blob/master/packages/design-system/docs/guides/design-system/step3.md)
+
+## Step 4. 하나의 디자인 시스템을 여러 프로젝트에서: 모노레포
+
+디자인 시스템을 쓰는 프로젝트는 여럿이었지만, 공유하는 방법이 `src/components` 폴더를 통째로 복사하는 것이었습니다. 복사본은 따로 놀아, 한 곳을 고쳐도 다른 프로젝트에 반영되지 않았습니다.
+
+멀티레포와 모노레포를 두고 모노레포를 택했습니다. 프로젝트들이 같은 디자인 시스템을 공유하며 서로 많이 닮아 있었기 때문입니다. 공유하는 코드가 많을수록 한 곳을 고쳐 전체에 반영되는 이득이 커집니다. 지금은 Turborepo를 기반으로 모노레포 구조를 학습하고 있습니다.
+
+[자세히 보기 →](https://github.com/developer-choi/monorepo-playground/blob/master/packages/design-system/docs/guides/design-system/step4.md)
