@@ -1,0 +1,52 @@
+{
+  "groups": [
+    {
+      "name": "루트 설정 원본 ↔ 채용과제 템플릿 사본",
+      "files": [
+        "eslint.config.base.mts",
+        "templates/recruitment/eslint/eslint.config.base.mjs",
+        "commitlint.config.cjs",
+        "templates/recruitment/commitlint.config.cjs",
+        ".editorconfig",
+        "templates/recruitment/.editorconfig",
+        ".prettierrc",
+        "templates/recruitment/.prettierrc",
+        ".prettierignore",
+        "templates/recruitment/.prettierignore",
+        "scripts/check-file-level-disable.sh",
+        "templates/recruitment/scripts/check-file-level-disable.sh"
+      ],
+      "note": "루트 원본을 바꾸면 templates/recruitment/의 대응 사본(단일레포 평탄화본)도 같이 최신화한다. 대응 사본은 같은 파일명·역할의 templates/recruitment/ 쪽 파일이다. (현재 check-file-level-disable.sh가 이미 어긋나 있음.)"
+    },
+    {
+      "name": "Stylelint 설정·플러그인 ↔ 문서",
+      "files": [
+        ".stylelintrc.json",
+        "stylelint-plugins/at-use-no-short-alias.mjs",
+        "docs/static-checking/stylelint.md"
+      ],
+      "note": ".stylelintrc.json 규칙이나 커스텀 플러그인 동작(minLength 등)을 바꾸면 stylelint.md의 규칙 표·설명도 갱신한다. 문서-설정 일치는 어떤 도구도 검사하지 않는다."
+    },
+    {
+      "name": "포맷터 설정 ↔ 문서",
+      "files": [".prettierrc", ".prettierignore", ".editorconfig", "docs/formatter.md"],
+      "note": "세 포맷터 설정 중 하나라도 바꾸면 formatter.md의 설정값 표·근거 설명을 함께 갱신한다."
+    },
+    {
+      "name": "정적분석 설정 ↔ static-checking 매핑표",
+      "files": [
+        "eslint.config.base.mts",
+        "tsconfig.base.json",
+        ".stylelintrc.json",
+        "commitlint.config.cjs",
+        "docs/static-checking.md"
+      ],
+      "note": "static-checking.md의 '설정-문서 매핑' 표가 이 설정 파일들을 나열한다. 설정 경로가 바뀌거나 새 설정이 추가되면 표도 갱신한다."
+    },
+    {
+      "name": "commitlint scope-enum ↔ 워크스페이스",
+      "files": ["commitlint.config.cjs", "package.json"],
+      "note": "package.json workspaces에 새 패키지(apps/X·packages/X)를 추가하면 commitlint.config.cjs의 scope-enum에도 넣어야 그 스코프로 커밋이 통과한다. commitlint은 workspaces를 자동으로 읽지 않는다."
+    }
+  ]
+}
