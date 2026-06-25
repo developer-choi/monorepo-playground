@@ -114,16 +114,9 @@ export const InteractiveSlots: Story = {
         <InputBase
           {...args}
           leading={
-            <IconButton
-              icon={<MagnifyingGlassIcon />}
-              label="검색"
-              size="small"
-              onFocus={() => setFocused('leading 버튼')}
-            />
+            <IconButton icon={<MagnifyingGlassIcon />} size="small" onFocus={() => setFocused('leading 버튼')} />
           }
-          trailing={
-            <IconButton icon={<Cross2Icon />} label="지우기" size="small" onFocus={() => setFocused('trailing 버튼')} />
-          }
+          trailing={<IconButton icon={<Cross2Icon />} size="small" onFocus={() => setFocused('trailing 버튼')} />}
         >
           <input placeholder="입력하세요" onFocus={() => setFocused('input')} />
         </InputBase>
