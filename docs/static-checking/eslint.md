@@ -534,6 +534,16 @@ className={cond ? clsx(styles.a, styles.b, className) : clsx(styles.a, styles.b)
 className={clsx(styles.a, styles.b, cond && className)}
 ```
 
+#### 테스트 파일 전용: `aria-*` 금지 (`testFilesConfig`)
+
+`testFilesConfig`(base export, 각 워크스페이스 config 배열에 추가)가 테스트 JSX의 `aria-*` 작성을 `no-restricted-syntax`로 금지합니다. **a11y가 현재 우선순위가 아니라** 테스트에 접근성 계약을 박지 않기 위함입니다. `getByRole`는 허용하며(base 기존 `no-restricted-syntax` 항목도 보존), 불가피하면 `eslint-disable` + 사유로 처리합니다.
+
+```tsx
+render(<Callout aria-label="알림">내용</Callout>); // ❌ 테스트 JSX에 aria-*
+render(<Callout>내용</Callout>);                   // ✅ role로 쿼리
+expect(screen.getByRole('note')).toBeInTheDocument();
+```
+
 #### `custom/filename-export-convention` (커스텀 룰)
 
 `src/` 하위에서 **컴포넌트(PascalCase)·훅(`use*`) export가 정확히 하나인 파일**은 파일명(첫 `.` 이전)에 **kebab-case(하이픈)·snake_case(언더스코어)를 쓸 수 없습니다** — PascalCase(컴포넌트) 또는 camelCase(훅)여야 합니다. 컴포넌트·훅이 0개거나 2개 이상(여러 컴포넌트를 묶은 모듈)이면 검사하지 않습니다.

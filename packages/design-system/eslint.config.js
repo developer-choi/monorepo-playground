@@ -6,7 +6,7 @@ import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import checkFile from 'eslint-plugin-check-file';
 import {defineConfig, globalIgnores} from 'eslint/config';
-import {baseRules, createFilenameExportConventionRule} from '../../eslint.config.base.mts';
+import {baseRules, createFilenameExportConventionRule, testFilesConfig} from '../../eslint.config.base.mts';
 
 export default defineConfig([
   globalIgnores(['dist', '**/*.d.ts']),
@@ -35,6 +35,13 @@ export default defineConfig([
       'check-file/folder-naming-convention': ['error', {'src/**/*': 'KEBAB_CASE'}],
     },
   },
+  testFilesConfig,
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+    },
+  },
   {
     files: ['**/*.stories.{ts,tsx}'],
     rules: {
@@ -45,6 +52,7 @@ export default defineConfig([
         {selector: 'parameter', format: ['camelCase'], leadingUnderscore: 'allow'},
         {selector: 'function', format: ['camelCase', 'PascalCase']},
         {selector: 'typeLike', format: ['PascalCase']},
+        {selector: 'property', filter: {regex: '^aria-', match: true}, format: null},
         {selector: 'property', format: ['camelCase', 'UPPER_CASE']},
         {selector: 'method', format: ['camelCase']},
         {selector: 'import', format: null},

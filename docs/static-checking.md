@@ -34,7 +34,7 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 | 시점       | 스크립트      | 내용                                                   |
 | ---------- | ------------- | ------------------------------------------------------ |
 | pre-commit | `test-staged` | `lint-staged && turbo check-types`                     |
-| pre-push   | `test-all`    | `turbo check-types && turbo lint && npm run stylelint` |
+| pre-push   | `test-all`    | `turbo check-types && turbo lint && npm run stylelint && turbo run test -- --run` |
 
 ESLint·Stylelint는 모두 `--max-warnings 0` 옵션으로 실행하므로, severity가 `'warn'`인 규칙도 실패로 간주되어 커밋·푸시를 차단합니다. 새 규칙을 도입할 때 `'warn'`으로 두지 말고 처음부터 `'error'`로 도입하거나, 점진적 적용이 필요한 경우 [gradual-migration.md](static-checking/gradual-migration.md)의 file-level disable + hook 패턴을 사용합니다.
 
@@ -47,13 +47,19 @@ ESLint·Stylelint는 모두 `--max-warnings 0` 옵션으로 실행하므로, sev
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
     "**/*.scss": "stylelint --fix --max-warnings 0",
-    "apps/examples/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --no-warn-ignored --config apps/examples/eslint.config.mjs",
-    "packages/design-system/**/*.{ts,tsx}": "eslint --fix --max-warnings 0 --no-warn-ignored --config packages/design-system/eslint.config.js"
+    "apps/examples/**/*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0 --no-warn-ignored --config apps/examples/eslint.config.mjs",
+      "vitest related --run --root apps/examples"
+    ],
+    "packages/design-system/**/*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0 --no-warn-ignored --config packages/design-system/eslint.config.js",
+      "vitest related --run --root packages/design-system"
+    ]
   }
 }
 ```
 
-Prettier가 먼저 실행되어 포맷팅을 정리한 뒤, Stylelint가 SCSS를, ESLint가 TypeScript 로직 규칙을 검사합니다. Prettier 설정에 대한 자세한 내용은 [docs/formatter.md](formatter.md)를 참고하세요.
+Prettier가 먼저 실행되어 포맷팅을 정리한 뒤, Stylelint가 SCSS를, ESLint가 TypeScript 로직 규칙을 검사하고, vitest가 변경된 파일과 관련된 테스트만 실행합니다. Prettier 설정에 대한 자세한 내용은 [docs/formatter.md](formatter.md)를 참고하세요.
 
 `--no-warn-ignored`는 eslint config의 `globalIgnores`(예: `**/*.d.ts`)에 해당하는 파일이 staged되어 lint-staged가 명시적으로 넘길 때 발생하는 "File ignored" 경고를 억제합니다. 이 경고는 `--max-warnings 0`에서 커밋을 차단하므로, ignore 대상 파일(타입 선언 등)을 커밋할 수 있게 합니다.
 
