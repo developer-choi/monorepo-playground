@@ -141,6 +141,22 @@ export const baseRules = {
       selector: "ConditionalExpression > CallExpression[callee.name='clsx']",
       message: 'clsx를 삼항으로 감싸지 마세요. 조건은 clsx(a, cond && b) 인자로 표현합니다.',
     },
+    {
+      selector:
+        "Property[key.name='mutationFn'] > ArrowFunctionExpression[body.type='CallExpression'][body.callee.type='Identifier']",
+      message:
+        'mutationFn에 (args) => api(args) 인라인 래핑 금지. API 함수 reference만 박고 인자는 mutateAsync로 전달하세요. 예: mutationFn: postBoardApi',
+    },
+    {
+      selector: "Property[key.name='mutationFn'] > ArrowFunctionExpression[body.type='BlockStatement']",
+      message:
+        'mutationFn 안에 가드·조립 로직(블록 본문) 금지. 검증은 호출부 try 안에서 throw하고, mutationFn은 API 함수 reference만 유지하세요.',
+    },
+    {
+      selector: "Property[key.name='mutationFn'] > FunctionExpression",
+      message:
+        'mutationFn에 function 표현식 금지. API 함수 reference만 박고 인자는 mutateAsync로 전달하세요. 예: mutationFn: postBoardApi',
+    },
   ],
 };
 

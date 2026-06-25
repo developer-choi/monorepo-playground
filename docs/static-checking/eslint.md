@@ -534,6 +534,26 @@ className={cond ? clsx(styles.a, styles.b, className) : clsx(styles.a, styles.b)
 className={clsx(styles.a, styles.b, cond && className)}
 ```
 
+**useMutation `mutationFn` 래핑 금지** (`Property[key.name='mutationFn'] > ...` 3개 셀렉터)
+
+`mutationFn`에는 API 함수 reference만 박고, 인자는 `mutateAsync`로 전달합니다. 인라인 화살표 래핑·블록 본문 가드·`function` 표현식을 금지합니다. 단 instance method는 `this` 바인딩 때문에 멤버식 callee(`x.method(...)`)로 래핑이 불가피하므로 허용합니다 — callee가 식별자일 때만 차단합니다.
+
+```ts
+// ❌ (args) => api(args) 인라인 래핑
+useMutation({mutationFn: (args) => postBoardApi(args)});
+
+// ❌ 블록 본문 가드·조립
+useMutation({mutationFn: (args) => { if (!args.title) { throw new Error(); } return postBoardApi(args); }});
+
+// ✅ reference만
+useMutation({mutationFn: postBoardApi});
+
+// ✅ instance method 예외(멤버식 callee)
+useMutation({mutationFn: ({widget, ...params}) => widget.requestPayment(params)});
+```
+
+> 한계: 멤버식 callee는 `this` 필요 여부를 타입 없이 판별할 수 없어 전부 허용합니다. `this`가 필요 없는데도 `(a) => api.create(a)`로 래핑하면 잡지 못합니다.
+
 #### 테스트 파일 전용: `aria-*` 금지 (`testFilesConfig`)
 
 `testFilesConfig`(base export, 각 워크스페이스 config 배열에 추가)가 테스트 JSX의 `aria-*` 작성을 `no-restricted-syntax`로 금지합니다. **a11y가 현재 우선순위가 아니라** 테스트에 접근성 계약을 박지 않기 위함입니다. `getByRole`는 허용하며(base 기존 `no-restricted-syntax` 항목도 보존), 불가피하면 `eslint-disable` + 사유로 처리합니다.
