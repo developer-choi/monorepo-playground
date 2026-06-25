@@ -8,8 +8,8 @@ export interface RootProps extends Pick<ComponentProps<'table'>, 'className' | '
 
 export function Root({children, className, size = 'medium'}: RootProps) {
   return (
-    <div className={clsx(styles.wrapper, styles.styled)}>
-      <table className={clsx(styles.table, styles[size], className)}>{children}</table>
+    <div className={clsx(styles.wrapper, styles.styled, className)}>
+      <table className={clsx(styles.table, styles[size])}>{children}</table>
     </div>
   );
 }
