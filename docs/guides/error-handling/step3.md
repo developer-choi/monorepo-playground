@@ -50,6 +50,10 @@ if(error.level === 'fatal') {
 }
 ```
 
+다만 'fatal / error / warning' 중 무엇으로 분류할지에 대한 기준은 별도로 세워야 합니다. 기준이 없으면 같은 에러를 사람마다 다르게 분류해, level 값 자체를 신뢰하기 어려워집니다.
+
+실제로 아래 결과물의 `ApiResponseError`는 상태 코드와 무관하게 모두 `'warning'`으로 둡니다. 500과 404가 같은 level이면 경중을 나눈 이점이 약해지므로, 어떤 에러를 어느 level로 볼지는 [채울 내용: 저자가 실제로 적용한 분류 기준]이 필요합니다.
+
 ### 3. 영향 범위의 최소화
 > "Errors should have minimal consequences"
 
@@ -58,6 +62,10 @@ if(error.level === 'fatal') {
 Next.js에서 별도의 에러 처리를 하지 않을 경우, 화면 전체에 다음과 같은 메시지가 노출되는 문제가 있습니다.
 
 > Application error: a client-side exception has occurred (see the browser console for more information)
+
+영향 범위를 좁힐수록 격리 단위는 작아지지만, 그만큼 Error Boundary와 거기 딸린 fallback UI를 더 많이 만들어야 합니다.
+
+경계를 어디까지 쪼갤지는 [Step 4. Client Side 렌더링 에러 처리](step4.md)에서 디자이너와 함께 정합니다. 잘게 나눌수록 관리할 컴포넌트가 늘어나는 비용이 따라옵니다.
 
 ### 4. 에러 발생 위치 원칙
 부제: 에러는 어디서 던져야 하는가?
