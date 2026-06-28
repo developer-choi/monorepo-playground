@@ -23,6 +23,8 @@ module.exports = {
         'setting',
         'best-practice-map',
         'archives',
+        // docs/guides/
+        'guides',
       ],
     ],
     'scope-empty': [2, 'never'],
