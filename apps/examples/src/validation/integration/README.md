@@ -76,6 +76,8 @@ export default function LessonListPage({searchParams}: {searchParams: Record<str
 
 zod는 입력값의 타입에 관계없이 동일한 스키마로 검증할 수 있습니다.
 
+**트레이드오프**: 타입·검증·에러메시지를 스키마 한 곳에 모아 한 번만 고치면 되는 편리함을 얻는 대신, zod 라이브러리가 사용자 브라우저까지 함께 실려 코드 용량이 늘고, 값을 검사할 때마다 검증 코드가 실제로 돌아갑니다.
+
 ---
 
 # 어떻게 활용할 수 있는가?
