@@ -1,19 +1,3 @@
----
-type: decision
-subtype: none
-audience: design-system 팀, 미래의 본인
-audience_knowledge: 1회차 결정(InputBase children 주입 구조) 인지, React ref/forwardRef와 `<label>` 네이티브 위임 규칙에 익숙
-purpose: InputBase 단일 input 케이스에서 padding 클릭 시 내부 input으로 포커스를 위임하는 방식 결정
-key_message: 기본 케이스에서 `<label>`로 감싸기 채택 — JS 0줄 선언적 위임이 `<div>` + `handleClick`보다 기본값 비용이 낮음
-length_target: 현재 분량 유지
-rendering_env: markdown
-placeholder_policy: keep
-refs:
-  related_files:
-    - packages/design-system/src/components/InputBase/InputBase.tsx
-    - packages/design-system/src/components/InputBase/InputBase.module.scss
----
-
 # 방향성 정의 2회차. InputBase 클릭 시 내부 input으로 포커스를 위임하는 방식
 
 ## 목표

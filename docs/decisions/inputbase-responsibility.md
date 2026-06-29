@@ -1,19 +1,3 @@
----
-type: decision
-subtype: none
-audience: design-system 팀, 미래의 본인
-audience_knowledge: React 컴포넌트 합성(children 주입·forwardRef), CSS Module, 입력 폼 컴포넌트 설계에 익숙
-purpose: InputBase의 책임 범위 결정 — 내부 요소를 children으로 주입할지 input을 직접 렌더할지
-key_message: children 주입 채택 — InputBase는 레이아웃(3슬롯)과 상태 스타일만 책임지고 input·textarea 등 실제 요소는 소비자가 렌더, 확장성과 API 단순함 우선
-length_target: 현재 분량 유지
-rendering_env: markdown
-placeholder_policy: keep
-refs:
-  related_files:
-    - packages/design-system/src/components/InputBase/InputBase.tsx
-    - packages/design-system/src/components/TextField/TextField.tsx
----
-
 # InputBase의 책임 범위
 
 ## 목표: 다양한 기능의 입력 폼 요소
