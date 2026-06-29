@@ -12,6 +12,8 @@
 - catch 후 console.error만 찍고 삼키지 않는다. 처리할 수 없으면 catch하지 않는다.
 - re-throw는 더 구체적인 에러로 변환할 때만 한다.
 
+**트레이드오프**: Interceptor로 한곳에서 가로채는 길을 포기한 대가로, 비동기 호출마다 `try/catch`에서 `useHandleClientSideError`를 직접 불러야 함. 호출처를 새로 추가할 때 이 호출을 빠뜨리면 그곳의 에러만 처리되지 않음.
+
 ## 공통: 에러 정보 추출
 
 구체적 에러가 공통 에러보다 우선순위 높다. ApiResponseError 인스턴스 → status 코드로 분기 → 기본 메시지.
