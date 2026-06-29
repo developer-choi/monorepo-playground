@@ -87,6 +87,8 @@ ky의 `beforeError`/`afterResponse` 훅 안에서 HTTPError → ApiResponseError
 현재 방식: ky 내부(훅)를 건드리지 않고, 각 메소드에서 `try/catch`로 잡아서 변환.
 ky의 내부 파이프라인에 의존하지 않으므로 안정적.
 
+**트레이드오프**: 변환 로직을 ky 훅 한곳에 모으는 길을 포기한 대가로, 각 메소드가 `try/catch`로 직접 감싸 변환을 호출. 메소드를 새로 추가할 때 이 래핑을 빠뜨리면 그 메소드만 변환이 누락됨.
+
 ### 7. KyApiClient — HTTPError를 handleError에서 래핑
 
 ky는 4xx/5xx에서 `HTTPError`를 throw함. 편의 메서드의 handleError에서 이를 catch하여 `ApiResponseError`로 래핑. fetch 자체가 4xx/5xx에서 throw하지 않으므로, 구현체 간 에러 동작을 정규화하는 역할.
