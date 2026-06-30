@@ -7,6 +7,7 @@ import type * as ESTree from 'estree';
 
 export const baseRules = {
   '@typescript-eslint/no-explicit-any': 'error',
+  '@typescript-eslint/no-require-imports': 'error',
   '@typescript-eslint/ban-ts-comment': 'error',
   '@typescript-eslint/no-unused-vars': [
     'error',
@@ -156,6 +157,14 @@ export const baseRules = {
       selector: "Property[key.name='mutationFn'] > FunctionExpression",
       message:
         'mutationFn에 function 표현식 금지. API 함수 reference만 박고 인자는 mutateAsync로 전달하세요. 예: mutationFn: postBoardApi',
+    },
+    {
+      selector: "MemberExpression[object.name='module'][property.name='exports']",
+      message: 'CJS module.exports 금지. ESM export로 바꾸세요. (의도적 CJS는 .cjs 확장자로 분리)',
+    },
+    {
+      selector: "AssignmentExpression[left.object.name='exports']",
+      message: 'CJS exports.X 금지. ESM named export로 바꾸세요. (의도적 CJS는 .cjs 확장자로 분리)',
     },
   ],
 };
