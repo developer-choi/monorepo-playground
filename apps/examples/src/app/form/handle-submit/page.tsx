@@ -6,7 +6,7 @@ import SubmitButtonDemo from './SubmitButtonDemo';
 import ErrorScrollDemo from './ErrorScrollDemo';
 import styles from './page.module.scss';
 
-export default function ErrorFeedbackPage() {
+export default function HandleSubmitPage() {
   return (
     <div className={styles.page}>
       <div className={styles.intro}>

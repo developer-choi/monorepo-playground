@@ -38,7 +38,7 @@ const ITEMS: LinkCardItem[] = [
   },
   {
     title: '에러 피드백',
-    href: '/form/error-feedback',
+    href: '/form/handle-submit',
     description:
       '유효성검증 시점, 제출 버튼 활성화, 에러 필드로의 포커스 이동 등 에러를 언제·어디서·어떻게 보여줄지 다룹니다.',
     keywords: ['Validation', 'Error Handling', 'UX'],
