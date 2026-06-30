@@ -38,6 +38,22 @@ ESLint는 `--max-warnings 0` 옵션으로 실행합니다 (워크스페이스별
 
 ### 수동 추가 (`eslint.config.base.mts`)
 
+#### CJS 금지 (`@typescript-eslint/no-require-imports` + `no-restricted-syntax`)
+
+프로젝트는 전부 ESM이므로 CJS 문법을 차단합니다. `require()`는 전용 룰 `@typescript-eslint/no-require-imports`로(호출식과 `import x = require()` TS 문법 모두 잡음), `module.exports`·`exports.X`는 `no-restricted-syntax` 셀렉터로 금지합니다. 의도적으로 CJS가 필요한 설정 파일(예: `commitlint.config.cjs`)은 `.cjs` 확장자로 분리하면 워크스페이스 lint 대상에서 빠져 걸리지 않습니다.
+
+```typescript
+// ❌
+const fs = require('node:fs');
+module.exports = {foo};
+exports.bar = bar;
+
+// ✅
+import fs from 'node:fs';
+export {foo};
+export const bar = bar;
+```
+
 #### `@typescript-eslint/no-floating-promises` (off)
 
 Promise를 await, return, `.then()` 없이 버리면(floating) 에러가 조용히 삼켜질 수 있습니다. 이 규칙을 켜면 의도적으로 결과를 무시하는 호출에 `void` 키워드를 강제하므로 **비활성화**했습니다. await 누락은 코드리뷰로 잡습니다. `return promise`에서 await를 강제하는 것은 이 룰이 아니라 `return-await` 룰입니다.
