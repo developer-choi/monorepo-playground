@@ -5,8 +5,8 @@
       "files": [
         "eslint.config.base.mts",
         "templates/recruitment/eslint/eslint.config.base.mjs",
-        "commitlint.config.cjs",
-        "templates/recruitment/commitlint.config.cjs",
+        "commitlint.config.mjs",
+        "templates/recruitment/commitlint.config.mjs",
         ".editorconfig",
         "templates/recruitment/.editorconfig",
         ".prettierrc",
@@ -38,15 +38,15 @@
         "eslint.config.base.mts",
         "tsconfig.base.json",
         ".stylelintrc.json",
-        "commitlint.config.cjs",
+        "commitlint.config.mjs",
         "docs/static-checking.md"
       ],
       "note": "static-checking.md의 '설정-문서 매핑' 표가 이 설정 파일들을 나열한다. 설정 경로가 바뀌거나 새 설정이 추가되면 표도 갱신한다."
     },
     {
       "name": "commitlint scope-enum ↔ 워크스페이스",
-      "files": ["commitlint.config.cjs", "package.json"],
-      "note": "package.json workspaces에 새 패키지(apps/X·packages/X)를 추가하면 commitlint.config.cjs의 scope-enum에도 넣어야 그 스코프로 커밋이 통과한다. commitlint은 workspaces를 자동으로 읽지 않는다."
+      "files": ["commitlint.config.mjs", "package.json"],
+      "note": "package.json workspaces에 새 패키지(apps/X·packages/X)를 추가하면 commitlint.config.mjs의 scope-enum에도 넣어야 그 스코프로 커밋이 통과한다. commitlint은 workspaces를 자동으로 읽지 않는다."
     }
   ]
 }

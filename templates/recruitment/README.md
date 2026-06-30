@@ -20,7 +20,7 @@
 **공통 (프레임워크 무관)** — 루트에 그대로:
 
 - `.prettierrc`, `.prettierignore`, `.editorconfig`, `.gitattributes`
-- `commitlint.config.cjs`
+- `commitlint.config.mjs`
 - `.husky/pre-commit`, `.husky/commit-msg`
 - `scripts/check-file-level-disable.sh`
 
@@ -87,4 +87,4 @@ baseRules는 MP의 인프라·컨벤션을 전제하므로, 과제에 따라 정
 - **공통 컴포넌트 전제 룰** — `no-restricted-syntax`의 `<button>`·`<svg>` 직접 사용 금지, 인라인 스타일 객체 금지는 **공통 Button/Icon 컴포넌트가 있다고 가정**한다. 과제에 그게 없으면 바로 걸린다 → (a) 공통 컴포넌트를 만들고 그 안에서만 `eslint-disable` + 사유 주석, 또는 (b) `eslint.config.base.mjs`의 baseRules에서 해당 셀렉터 제거.
 - **`custom/filename-export-convention`** — 단일 컴포넌트/훅 파일명 casing 검사. 과제에 과하면 base.mjs에서 이 룰과 동반 팩토리(`createFilenameExportConventionRule`)를 제거.
 - **stylelint 계열** — `scripts/check-file-level-disable.sh`, lint-staged의 scss/css 태스크, stylelint deps는 **scss/css를 쓸 때만** 필요. Tailwind 등으로 scss를 안 쓰면 제거 가능.
-- **`subject-korean`** — 한글 커밋 메시지 강제. 평가자와 공유하는 레포라 영어 커밋을 허용해야 하면 `commitlint.config.cjs`에서 제거.
+- **`subject-korean`** — 한글 커밋 메시지 강제. 평가자와 공유하는 레포라 영어 커밋을 허용해야 하면 `commitlint.config.mjs`에서 제거.

@@ -52,4 +52,4 @@
 
 ### 채용과제 템플릿
 
-`eslint.config.base.mts`, `tsconfig.base.json`, `.stylelintrc.json`, `commitlint.config.cjs` 변경 시 `templates/recruitment/`의 산출물을 함께 최신화한다.
+`eslint.config.base.mts`, `tsconfig.base.json`, `.stylelintrc.json`, `commitlint.config.mjs` 변경 시 `templates/recruitment/`의 산출물을 함께 최신화한다.

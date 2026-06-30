@@ -23,7 +23,7 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 - **tsconfig**: `tsconfig.base.json`을 루트에 생성하고, 각 워크스페이스의 tsconfig이 `extends`로 상속합니다.
 - **ESLint**: `eslint.config.base.mts`에 공통 규칙을 export하고, 각 워크스페이스가 import해서 `rules`에 spread합니다.
 - **Stylelint**: `.stylelintrc.json`에 SCSS 검증 규칙을 정의합니다. ESLint가 TypeScript를 검사하듯, Stylelint가 SCSS를 검사합니다.
-- **commitlint**: `commitlint.config.cjs`에서 `@commitlint/config-conventional`을 확장합니다.
+- **commitlint**: `commitlint.config.mjs`에서 `@commitlint/config-conventional`을 확장합니다.
 
 ## 2단계 검증 구조
 
@@ -74,7 +74,7 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 | eslint.config.base.mts, 워크스페이스별 eslint config | docs/static-checking/eslint.md     |
 | tsconfig.base.json                                   | docs/static-checking/tsconfig.md   |
 | .stylelintrc.json                                    | docs/static-checking/stylelint.md  |
-| commitlint.config.cjs                                 | docs/static-checking/commitlint.md |
+| commitlint.config.mjs                                 | docs/static-checking/commitlint.md |
 
 ## 채용과제 단일레포 템플릿
 

@@ -1,11 +1,11 @@
 /**
  * 단일레포 채용과제용 commitlint 설정.
- * MP commitlint.config.cjs 기반. 모노레포 워크스페이스용 scope-enum/scope-empty는 제거(scope 선택적).
+ * MP commitlint.config.mjs 기반. 모노레포 워크스페이스용 scope-enum/scope-empty는 제거(scope 선택적).
  * 프로젝트 고유 scope를 강제하려면 아래 rules에 scope-enum/scope-empty를 추가한다.
  *
- * [원본] monorepo-playground/commitlint.config.cjs — 원본이 바뀌면 이 파일도 함께 최신화.
+ * [원본] monorepo-playground/commitlint.config.mjs — 원본이 바뀌면 이 파일도 함께 최신화.
  */
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   plugins: [
     {
