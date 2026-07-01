@@ -25,7 +25,9 @@
   &:not(:has(input:disabled, textarea:disabled, select:disabled)) {
     cursor: auto;
 
-    &:has(.content :focus) {
+    // invalid일 때는 focus box-shadow를 얹지 않는다. 얹으면 --shadow-focus가
+    // --shadow-ring-invalid(에러 링)를 specificity·소스순서로 덮어 에러 테두리가 가려진다.
+    &:not(.invalid):has(.content :focus) {
       box-shadow: var(--shadow-focus);
     }
   }
