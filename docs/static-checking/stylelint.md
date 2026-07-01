@@ -26,7 +26,7 @@ Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`
 | `scss/at-function-pattern`            | `^_?[a-z][a-zA-Z0-9]*$` | function 이름 camelCase 강제 (예: `safeMapGet`). `_` prefix는 SCSS private 관례로 허용 |
 | `scss/at-use-no-unnamespaced`         | `true`         | `@use 'foo' as *;` 금지. namespace prefix 강제(`color.$X` 형태)로 변수 출처를 명시 |
 | `scss/at-use-no-redundant-alias`      | `true`         | alias가 default namespace와 같으면 차단 (`@use 'typography' as typography`). 의미 없는 alias 방지 |
-| `monorepo-playground/at-use-no-short-alias` | `true`   | 4글자 미만 alias 차단 (`as t`, `as typ`). custom plugin(`stylelint-plugins/at-use-no-short-alias.mjs`). default namespace 사용 또는 의미 있는 이름 강제 |
+| `monorepo-playground/at-use-no-short-alias` | `true`   | 4글자 미만 alias 차단 (`as t`, `as typ`). custom plugin(`scripts/stylelint-plugins/at-use-no-short-alias.mjs`). default namespace 사용 또는 의미 있는 이름 강제 |
 | `value-keyword-case`                  | `null`         | SCSS map 키를 CSS 키워드로 오인하는 false positive 방지                  |
 
 ## declaration-strict-value

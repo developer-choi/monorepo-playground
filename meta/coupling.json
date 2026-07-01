@@ -22,7 +22,7 @@
       "name": "Stylelint 설정·플러그인 ↔ 문서",
       "files": [
         ".stylelintrc.json",
-        "stylelint-plugins/at-use-no-short-alias.mjs",
+        "scripts/stylelint-plugins/at-use-no-short-alias.mjs",
         "docs/static-checking/stylelint.md"
       ],
       "note": ".stylelintrc.json 규칙이나 커스텀 플러그인 동작(minLength 등)을 바꾸면 stylelint.md의 규칙 표·설명도 갱신한다. 문서-설정 일치는 어떤 도구도 검사하지 않는다."

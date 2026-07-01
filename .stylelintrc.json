@@ -1,6 +1,6 @@
 {
   "extends": ["stylelint-config-standard-scss"],
-  "plugins": ["stylelint-declaration-strict-value", "./stylelint-plugins/at-use-no-short-alias.mjs"],
+  "plugins": ["stylelint-declaration-strict-value", "./scripts/stylelint-plugins/at-use-no-short-alias.mjs"],
   "rules": {
     "at-rule-disallowed-list": ["import"],
     "selector-class-pattern": [
