@@ -2,6 +2,10 @@
   max-width: var(--max-width-wide);
   margin: 0 auto;
   padding: var(--spacing-xl);
+
+  strong {
+    font-weight: bold;
+  }
 }
 
 .intro {
@@ -29,6 +33,11 @@
 }
 
 .sectionTitle {
+  margin-bottom: var(--spacing-sm);
+}
+
+.subSectionTitle {
+  margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-sm);
 }
 

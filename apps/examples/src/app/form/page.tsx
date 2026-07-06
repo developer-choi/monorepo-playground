@@ -37,10 +37,10 @@ const ITEMS: LinkCardItem[] = [
     keywords: ['Validation', 'Trim'],
   },
   {
-    title: '에러 피드백',
+    title: '제출 핸들링',
     href: '/form/handle-submit',
     description:
-      '유효성검증 시점, 제출 버튼 활성화, 에러 필드로의 포커스 이동 등 에러를 언제·어디서·어떻게 보여줄지 다룹니다.',
-    keywords: ['Validation', 'Error Handling', 'UX'],
+      '에러를 언제·어디서·어떻게 보여줄지부터, 제출 후 로딩·성공·실패 생명주기 처리까지 폼 제출 전반을 다룹니다.',
+    keywords: ['Validation', 'Error Handling', 'Mutation', 'UX'],
   },
 ];

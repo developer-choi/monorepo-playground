@@ -62,7 +62,7 @@ const ITEMS: LinkCardItem[] = [
   {
     title: '폼 베스트 프랙티스',
     href: '/form',
-    description: '실무에서 반복되는 폼 핸들링 패턴 — 자동 포커스, trim 유효성검증, 에러 피드백 등을 다룹니다.',
+    description: '실무에서 반복되는 폼 핸들링 패턴 — 자동 포커스, trim 유효성검증, 제출 핸들링 등을 다룹니다.',
     keywords: ['Form', 'Validation', 'UX'],
   },
 ];
