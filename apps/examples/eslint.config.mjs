@@ -34,12 +34,14 @@ const eslintConfig = defineConfig([
       'react-hooks/error-boundaries': 'off',
       '@typescript-eslint/no-deprecated': 'error',
       'custom/src-folder-whitelist': 'error',
+      'custom/app-route-file-whitelist': 'error',
       'check-file/folder-naming-convention': ['error', {'src/**/*': 'NEXT_JS_APP_ROUTER_CASE'}],
     },
     plugins: {
       custom: {
         rules: {
           'src-folder-whitelist': createSrcFolderWhitelistRule(),
+          'app-route-file-whitelist': createAppRouteFileWhitelistRule(),
           'filename-export-convention': createFilenameExportConventionRule(),
         },
       },
@@ -54,6 +56,69 @@ export default eslintConfig;
 const ALLOWED_FOLDERS = ['components', 'hooks', 'assets'];
 const SRC_PREFIX_LENGTH = 5; // '/src/'.length
 const MIN_SEGMENTS_FOR_DEPTH_CHECK = 4;
+
+const APP_PREFIX = '/src/app/';
+const APP_ROUTE_FILE_NAMES = [
+  'page',
+  'layout',
+  'template',
+  'error',
+  'loading',
+  'not-found',
+  'default',
+  'global-error',
+  'route',
+  'sitemap',
+  'robots',
+  'manifest',
+  'icon',
+  'apple-icon',
+  'opengraph-image',
+  'twitter-image',
+];
+
+/**
+ * app↔src 1:1 매칭(ARCHITECTURE.md): src/app/ 라우트 폴더에는 Next.js 라우트 파일만 두고,
+ * 데모·컴포넌트·훅 병치를 차단한다. api/(Route Handler)는 dto 등 보조 모듈을 허용해 제외.
+ * @returns {import('eslint').Rule.RuleModule}
+ */
+function createAppRouteFileWhitelistRule() {
+  return {
+    meta: {
+      type: 'layout',
+      messages: {
+        invalidFile:
+          'src/app/ 라우트 폴더에 "{{ name }}"을 둘 수 없습니다. 컴포넌트·훅은 src/{카테고리}/{주제}/ 하위로 옮기세요 (ARCHITECTURE.md app↔src 1:1). 허용 파일명: {{ allowed }}',
+      },
+    },
+    create(context) {
+      return {
+        Program(node) {
+          const filePath = context.filename.replace(/\\/g, '/');
+          const appIndex = filePath.indexOf(APP_PREFIX);
+          if (appIndex === -1) {
+            return;
+          }
+
+          const segments = filePath.slice(appIndex + APP_PREFIX.length).split('/');
+          if (segments[0] === 'api') {
+            return;
+          }
+
+          const fileName = segments[segments.length - 1];
+          const baseName = fileName.replace(/\..*$/, '');
+          if (!APP_ROUTE_FILE_NAMES.includes(baseName)) {
+            context.report({
+              node,
+              messageId: 'invalidFile',
+              data: {name: fileName, allowed: APP_ROUTE_FILE_NAMES.join(', ')},
+            });
+          }
+        },
+      };
+    },
+  };
+}
 
 /** @returns {import('eslint').Rule.RuleModule} */
 function createSrcFolderWhitelistRule() {
