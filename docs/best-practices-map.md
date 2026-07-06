@@ -90,6 +90,12 @@
 - 상황: zodResolver로 폼 제출 시 스키마 검증. 상수(LIMITS)를 스키마 검증·에러메시지·UI(maxLength)에 공유
 - 코드: apps/examples/docs/patterns/validation/ZodFormFilter.md
 
+### 제출 생명주기 (로딩·성공·실패)
+
+- 기술스택: react-hook-form + @tanstack/react-query
+- 상황: 폼 제출 후 로딩 중 중복 제출, 성공 후 이동/머무름, 서버 거절 표시를 화면에서 다뤄야 할 때
+- 코드: apps/examples/docs/patterns/form/SubmitLifecycle.md
+
 ### 필터 "전체" 처리
 
 - 기술스택: zod + react-hook-form
