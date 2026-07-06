@@ -644,6 +644,17 @@ React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
 
 `src/**/*` 한 패턴으로 깊이 제한 없이 재귀 검사하므로 카테고리(depth 1)뿐 아니라 묶음 서브폴더(`feedback/modal`, depth 2 이하)까지 kebab을 강제합니다. 컴포넌트는 카테고리 폴더 안에 플랫 파일로 두고, 폴더는 관련 컴포넌트를 둘 이상 묶을 때만 만들며 그 묶음 폴더도 kebab으로 둡니다([convention.md](../convention.md)의 폴더 구조 참고).
 
+#### `custom/app-route-file-whitelist` (커스텀 룰) — examples
+
+`src/app/` 라우트 폴더에는 Next.js 라우트 파일(page·layout·route·error 등)만 허용합니다. ARCHITECTURE.md의 **app↔src 1:1 매칭** 규칙을 강제해, 데모 컴포넌트·훅을 라우트 폴더에 병치하는 실수를 차단합니다 (실제로 form 카테고리 데모들이 병치돼 있다가 수동 발견·이동된 사례에서 도입).
+
+`src/app/api/` (Route Handler 구역)는 `dto.ts` 같은 보조 모듈이 필요해 예외입니다.
+
+```
+// ❌  src/app/form/auto-focus/AutoFocusDemo.tsx   (라우트 폴더에 데모 병치)
+// ✅  src/form/auto-focus/components/AutoFocusDemo.tsx  + app에는 page.tsx만
+```
+
 ### `recommendedTypeChecked` 프리셋
 
 `recommendedTypeChecked` 프리셋에 포함된 규칙들입니다. `recommended`에서 업그레이드하면 활성화되며, TypeScript 컴파일러의 타입 정보를 활용합니다.
