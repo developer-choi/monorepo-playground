@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import typography from '@monorepo-playground/design-system/styles/typography';
 import CodeBlock from '@/shared/components/CodeBlock';
-import ValidationModeDemo from './ValidationModeDemo';
-import SubmitButtonDemo from './SubmitButtonDemo';
-import ErrorScrollDemo from './ErrorScrollDemo';
+import ValidationModeDemo from '@/form/handle-submit/components/ValidationModeDemo';
+import SubmitButtonDemo from '@/form/handle-submit/components/SubmitButtonDemo';
+import ErrorScrollDemo from '@/form/handle-submit/components/ErrorScrollDemo';
 import styles from './page.module.scss';
 
 export default function HandleSubmitPage() {

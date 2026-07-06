@@ -2,7 +2,7 @@ import {Callout} from '@monorepo-playground/design-system';
 import clsx from 'clsx';
 import typography from '@monorepo-playground/design-system/styles/typography';
 import CodeBlock from '@/shared/components/CodeBlock';
-import AutoFocusDemo from './AutoFocusDemo';
+import AutoFocusDemo from '@/form/auto-focus/components/AutoFocusDemo';
 import styles from './page.module.scss';
 
 export default function AutoFocusPage() {
