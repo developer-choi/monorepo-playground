@@ -1,0 +1,18 @@
+.page {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.title {
+  margin-bottom: var(--spacing-md);
+}
+
+.description {
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-fg-secondary);
+}
+
+.backLink {
+  color: var(--color-fg-accent);
+}
