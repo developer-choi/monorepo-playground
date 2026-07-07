@@ -42,7 +42,7 @@ export default function ValidationPage() {
       </div>
 
       <div className={styles.sectionBottom}>
-        <h3 className={clsx(typography.h3, styles.sectionTitleTight)}>3. 서버 전송 시 일괄 trim</h3>
+        <h3 className={clsx(typography.h3, styles.sectionTitleTight)}>서버 전송 시 일괄 trim</h3>
         <p className={clsx(typography.body2, styles.descriptionWide)}>
           필드가 하나라면 <code>data.name.trim()</code>으로 충분하지만, 실무 폼은 필드가 수십 개입니다. 하나하나
           trim하는 건 비현실적이므로, 객체를 재귀 순회하며 모든 문자열을 한번에 trim하는 유틸리티 함수를 만들어

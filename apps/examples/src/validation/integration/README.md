@@ -15,7 +15,7 @@ interface LessonRow {
   lessonType: 'online' | 'offline';
 }
 
-// 2. 유효성 검증 — 같은 제약을 다시 작성 (react-hook-form)
+// 2. 유효성 검증: 같은 제약을 다시 작성 (react-hook-form)
 <select {...register('lessonType', {
   required: '수업 유형을 선택해주세요',
   validate: (value) => ['online', 'offline'].includes(value) || '유효하지 않은 수업 유형입니다',
@@ -41,12 +41,12 @@ type Lesson = z.infer<typeof lessonSchema>;
 같은 필드라도, 검증이 필요한 시점마다 입력값의 타입이 다릅니다.
 
 ```typescript
-// 1. 폼 — 입력값이 string
+// 1. 폼: 입력값이 string
 <select {...register('lessonType', {
   validate: (value) => ['online', 'offline'].includes(value) || '유효하지 않은 수업 유형입니다',
 })} />
 
-// 2. URL 쿼리스트링 — 입력값이 string | string[] | undefined
+// 2. URL 쿼리스트링: 입력값이 string | string[] | undefined
 export default function LessonListPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
   const lessonType = ...
 }
@@ -63,12 +63,12 @@ const lessonSchema = z.object({
   }),
 });
 
-// 폼 — 같은 스키마로 검증
+// 폼: 같은 스키마로 검증
 const {register} = useForm<z.infer<typeof lessonSchema>>({
   resolver: zodResolver(lessonSchema),
 });
 
-// URL 쿼리스트링 — 같은 스키마로 검증
+// URL 쿼리스트링: 같은 스키마로 검증
 export default function LessonListPage({searchParams}: {searchParams: Record<string, string | string[] | undefined>}) {
   const {success, data: filter} = lessonSchema.safeParse(searchParams);
 }
@@ -90,18 +90,18 @@ zod는 입력값의 타입에 관계없이 동일한 스키마로 검증할 수 
 
 하나의 도메인(예: 수업)에서 파생되는 타입은 여러 개입니다.
 
-- **목록 API 응답** — 요약 필드만 (pk, 제목, 유형, 정원)
-- **상세 API 응답** — 전체 필드
-- **생성 API 요청** — pk, 내용(description) 없이
-- **수정 API 요청** — 생성 필드 + pk
-- **필터** — 검색에 필요한 필드만 (제목, 유형)
+- **목록 API 응답**: 요약 필드만 (pk, 제목, 유형, 정원)
+- **상세 API 응답**: 전체 필드
+- **생성 API 요청**: pk, 내용(description) 없이
+- **수정 API 요청**: 생성 필드 + pk
+- **필터**: 검색에 필요한 필드만 (제목, 유형)
 
 이 타입들을 각각 따로 선언하면 필드 제약(예: 제목 100자)이 중복되고, 하나를 바꾸면 나머지도 수동으로 맞춰야 합니다.
 
 zod에서는 **전체 필드를 가진 원본 스키마**를 하나 정의하고, `.pick()`과 `.extend()`로 파생할 수 있습니다.
 
 ```typescript
-// 원본 — 전체 필드를 가진 단일 원천(Single Source of Truth)
+// 원본: 전체 필드를 가진 단일 원천(Single Source of Truth)
 const lessonOriginalSchema = z.object({
   pk: z.number().int().positive(),
   title: z.string().min(1).max(100),
@@ -111,7 +111,7 @@ const lessonOriginalSchema = z.object({
   capacity: z.number().int().min(0),
 });
 
-// 목록 — description 제외
+// 목록: description 제외
 export const lessonRowSchema = lessonOriginalSchema.pick({
   pk: true,
   title: true,
@@ -119,10 +119,10 @@ export const lessonRowSchema = lessonOriginalSchema.pick({
   capacity: true,
 });
 
-// 상세 — 전체 필드
+// 상세: 전체 필드
 export const lessonDetailSchema = lessonOriginalSchema;
 
-// 생성 — pk, description 제외
+// 생성: pk, description 제외
 export const createLessonSchema = lessonOriginalSchema.pick({
   title: true,
   lessonType: true,
@@ -144,13 +144,13 @@ export const LESSON_LIMITS = {
   description: {min: 1, max: 5000},
 } as const;
 
-// 스키마 — 검증에 사용
+// 스키마: 검증에 사용
 z.string().min(LESSON_LIMITS.title.min).max(LESSON_LIMITS.title.max)
 
 // 에러메시지
 `제목은 ${LESSON_LIMITS.title.max}자 이내로 입력하세요`
 
-// UI — 입력 길이 제한
+// UI: 입력 길이 제한
 <TextField.Root {...register('title')} maxLength={LESSON_LIMITS.title.max} />
 ```
 
@@ -172,8 +172,8 @@ enum 값에 대한 한글 라벨은 UI 여러 곳에서 필요합니다.
 // 유틸리티
 interface LabelItem<T> { value: T; label: string; }
 interface LabelMap<T extends string> {
-  items: LabelItem<T>[];       // 순회용 — Select, RadioGroup, Checkbox
-  record: Record<T, string>;   // 조회용 — 테이블, 상세 페이지
+  items: LabelItem<T>[];       // 순회용: Select, RadioGroup, Checkbox
+  record: Record<T, string>;   // 조회용: 테이블, 상세 페이지
   values: T[];                 // z.enum() 전달용
 }
 function createLabelMap<T extends string>(items: LabelItem<T>[]): LabelMap<T> { ... }
@@ -184,15 +184,15 @@ export const LESSON_TYPES = createLabelMap([
   {value: 'offline', label: '오프라인'},
 ]);
 
-// 순회 — items
+// 순회: items
 {LESSON_TYPES.items.map(({value, label}) => (
   <Select.Item key={value} value={value}>{label}</Select.Item>
 ))}
 
-// 라벨 조회 — record
+// 라벨 조회: record
 <Badge>{LESSON_TYPES.record[row.lessonType]}</Badge>
 
-// 스키마 — values
+// 스키마: values
 z.enum(LESSON_TYPES.values)
 ```
 
@@ -202,19 +202,19 @@ z.enum(LESSON_TYPES.values)
 
 그런데 `'all'`은 도메인 스키마에 없는 값입니다. API에도 보내지 않습니다 (파라미터 없음 = 전체). 이 "전체" 상태를 폼 데이터에서 어떻게 표현할지는 UI 컴포넌트에 따라 달라집니다.
 
-### Checkbox — "전체" 값이 필요 없음
+### Checkbox: "전체" 값이 필요 없음
 
 Checkbox는 선택된 값을 **배열**로 저장합니다. 전부 체크되어 있는지는 배열로 판단할 수 있으므로, `'all'` 같은 별도의 값이 필요 없습니다.
 
 ```typescript
-// 제출 시 — 전부 선택됐으면 쿼리스트링에서 생략
+// 제출 시: 전부 선택됐으면 쿼리스트링에서 생략
 const isAllTypes = LESSON_TYPES.values.every((t) => data.lessonType.includes(t));
 if (!isAllTypes) {
   data.lessonType.forEach((type) => searchParams.append('lessonType', type));
 }
 ```
 
-### Select — "전체" 값이 필수
+### Select: "전체" 값이 필수
 
 Select는 **단일 값**을 저장합니다. "전체"를 선택한 상태를 데이터에서 계산할 방법이 없으므로, `'all'` 같은 프론트 전용 값을 폼 데이터에 직접 넣어야 합니다.
 
@@ -226,18 +226,18 @@ Select는 **단일 값**을 저장합니다. "전체"를 선택한 상태를 데
   ))}
 </Select.Content>
 
-// 제출 시 — 'all'이면 쿼리스트링에서 생략
+// 제출 시: 'all'이면 쿼리스트링에서 생략
 if (data.category !== 'all') params.set('category', data.category);
 ```
 
 `'all'`은 스키마 enum에 없는 프론트 전용 값이므로, **필터 폼의 타입은 스키마 타입과 분리**해야 합니다.
 
 ```typescript
-// 스키마 타입 — API와 URL에서 사용
+// 스키마 타입: API와 URL에서 사용
 type LessonListFilter = z.infer<typeof lessonListFilterSchema>;
 // { category: 'notice' | 'free' | 'question' | 'info' }
 
-// 필터 폼 타입 — 이 컴포넌트에서만 사용, 'all' 추가
+// 필터 폼 타입: 이 컴포넌트에서만 사용, 'all' 추가
 interface LessonListFilterForm extends Omit<LessonListFilter, 'category'> {
   category: LessonListFilter['category'] | 'all';
 }

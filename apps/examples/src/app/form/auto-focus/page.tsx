@@ -22,11 +22,11 @@ export default function AutoFocusPage() {
       <div className={styles.section}>
         <h3 className={clsx(typography.h3, styles.sectionTitle)}>1. 적용 기준</h3>
         <p className={clsx(typography.body2, styles.descriptionTight)}>
-          <strong>✅ 폼 중심 페이지</strong> — 로그인, 회원가입, 게시글 쓰기, 검색 전용 페이지 등. 다중 필드 폼이어도 첫
+          <strong>✅ 폼 중심 페이지</strong>: 로그인, 회원가입, 게시글 쓰기, 검색 전용 페이지 등. 다중 필드 폼이어도 첫
           필드에만 걸면 충분합니다.
         </p>
         <p className={clsx(typography.body2, styles.descriptionTight)}>
-          <strong>❌ 콘텐츠를 스크롤로 소비하는 페이지</strong> — 검색 결과, 피드, 기사 + 하단 댓글 폼 등. 재진입 시
+          <strong>❌ 콘텐츠를 스크롤로 소비하는 페이지</strong>: 검색 결과, 피드, 기사 + 하단 댓글 폼 등. 재진입 시
           복원된 스크롤을 input 포커스가 가로채 탐색 흐름이 깨집니다.
         </p>
       </div>
@@ -41,7 +41,7 @@ export default function AutoFocusPage() {
 
       <Callout color="warning">
         <div className={styles.calloutBody}>
-          <h4 className={clsx(typography.h4, styles.calloutTitle)}>실험 중 — 탭 복귀 시 재포커스</h4>
+          <h4 className={clsx(typography.h4, styles.calloutTitle)}>실험 중: 탭 복귀 시 재포커스</h4>
           <p>
             다른 탭/앱에 갔다가 돌아왔을 때도 해당 input에 다시 포커스를 주면 더 편할 것 같아 시도해봤습니다. window의{' '}
             <code>focus</code> 이벤트에서 <code>[autofocus]</code> 요소를 재포커스하는 방식이고, 이 페이지 상단 데모에서

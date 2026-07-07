@@ -69,7 +69,7 @@ function RightGoodUsage() {
 
       <div className={styles.inputWrap}>
         <TextField
-          placeholder="타이핑 해도 렉이 걸리지 않아요"
+          placeholder="타이핑해도 렉이 걸리지 않습니다"
           value={text}
           onChange={(event) => setText(event.target.value)}
         />
