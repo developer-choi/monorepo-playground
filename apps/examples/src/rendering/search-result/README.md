@@ -17,14 +17,14 @@
 ### 구체적인 동작 예시
 
 1. 사용자가 'a'를 입력하는 즉시 검색폼에 'a'가 표시되어야 합니다.
-2. 로딩 스피너 없이 'a형 독감', 'AI'와 같은 관련 키워드가 빠르게 리스트업되어야 합니다.
+2. 로딩 스피너 없이 'a형 독감', 'AI'와 같은 관련 키워드가 빠르게 목록에 나타나야 합니다.
 3. 이후 'b'를 추가 입력하여 'ab'가 되는 경우:
    - 새로운 결과를 가져오는 동안 기존 'a'에 대한 검색 결과를 유지합니다.
    - 'ab'에 대한 결과가 준비되면 즉시 화면을 갱신합니다.
 4. 다시 'b'를 지워 'a'만 남은 경우:
    - 'a'의 검색 결과를 빠르게 다시 노출해야 합니다.
 
-### 왜 로딩 스피너를 지양해야 하는가?
+### 로딩 스피너를 지양하는 이유
 
 로딩 스피너나 스켈레톤 UI는 근본적으로 데이터 로딩이 느릴 때 사용자가 체감하는 대기 시간을 줄이기 위한 **차선책**입니다.
 
@@ -150,9 +150,9 @@ const deferredQuery = useDeferredValue(query);
 
 **검색결과 목록은 렌더링 비용이 크지 않은데, 굳이 써야 하나요?**
 
-사용자 디바이스가 좋다면 useDeferredValue도 지연 없이 동작하므로, 안 쓴 것과 동일합니다.
+useDeferredValue가 이득을 주는 건 목록 렌더링이 무거워 입력을 막을 때입니다. 목록이 가볍거나 디바이스가 빠르면 지연 없이 동작해 안 쓴 것과 차이가 없습니다.
 
-정리하면, 디바이스가 좋으면 영향 없고 나쁘면 개선해주므로, 안 써야 할 이유는 약간의 코드 복잡성 증가 외에는 없다고 생각합니다.
+그래서 렌더링이 무거워질 여지가 있으면 넣어두는 편이 낫다고 봅니다.
 
 > - [How is deferring a value different from debouncing and throttling?](https://react.dev/reference/react/useDeferredValue#how-is-deferring-a-value-different-from-debouncing-and-throttling)
 > - useDeferredValue is better suited to optimizing rendering because it is deeply integrated with React itself and adapts to the user’s device.
@@ -171,6 +171,13 @@ const deferredQuery = useDeferredValue(query);
 - **디바운싱**: API 호출 빈도 감소 (네트워크 최적화)
 - **useDeferredValue**: 렌더링 우선순위 조절 (UI 최적화)
 - 서로 다른 문제를 해결하며, 함께 사용 가능
+
+### 상황별 선택 기준
+
+둘 중 하나가 정답인 게 아니라, 무엇을 우선하느냐로 갈립니다.
+
+- **응답 속도가 최우선이고 서버 호출 횟수를 감당할 수 있다면**: 매 입력마다 호출하고 useDeferredValue로 렌더링 우선순위만 조절합니다. 디바운싱을 넣으면 그 지연만큼 느려지므로 넣지 않습니다.
+- **서버 부하를 줄여야 한다면**: 디바운싱으로 호출 횟수를 줄이고, 여기에 useDeferredValue를 함께 써서 렌더링 우선순위까지 챙깁니다. 대신 디바운싱 지연만큼 결과가 늦게 나타납니다.
 
 ### useDeferredValue 핵심 정리
 
