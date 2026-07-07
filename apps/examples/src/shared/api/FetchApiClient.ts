@@ -65,7 +65,9 @@ export default class FetchApiClient extends ApiClient {
   }
 
   private buildUrl(url: string, searchParams?: object): string {
-    const fullUrl = `${this.baseUrl}${url}`;
+    const base = this.baseUrl.replace(/\/+$/, '');
+    const path = url.replace(/^\/+/, '');
+    const fullUrl = base ? `${base}/${path}` : `/${path}`;
 
     if (!searchParams) {
       return fullUrl;

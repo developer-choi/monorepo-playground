@@ -22,6 +22,46 @@ describe('FetchApiClient', () => {
     });
   });
 
+  describe('URL 조합 — 슬래시 정규화', () => {
+    it.each([
+      {baseUrl: 'http://localhost:3000', path: '/api/board', label: '끝X + 앞O'},
+      {baseUrl: 'http://localhost:3000/', path: '/api/board', label: '끝O + 앞O (배포 버그 케이스)'},
+      {baseUrl: 'http://localhost:3000/', path: 'api/board', label: '끝O + 앞X'},
+      {baseUrl: 'http://localhost:3000', path: 'api/board', label: '끝X + 앞X'},
+      {baseUrl: 'http://localhost:3000//', path: '//api/board', label: '중복 슬래시 붕괴'},
+    ])('$label → http://localhost:3000/api/board', async ({baseUrl, path}) => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue(createJsonResponse({})));
+
+      await new FetchApiClient(baseUrl).get(path);
+
+      expect(getFetchCall().url).toBe('http://localhost:3000/api/board');
+    });
+
+    it('프로토콜의 // 는 보존한다', async () => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue(createJsonResponse({})));
+
+      await new FetchApiClient('https://api.example.com/').get('/users/1');
+
+      expect(getFetchCall().url).toBe('https://api.example.com/users/1');
+    });
+
+    it('baseUrl이 비어있으면 상대 경로로 단일 슬래시를 붙인다', async () => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue(createJsonResponse({})));
+
+      await new FetchApiClient('').get('/api/board');
+
+      expect(getFetchCall().url).toBe('/api/board');
+    });
+
+    it('searchParams가 있어도 단일 슬래시로 조인한 뒤 쿼리를 붙인다', async () => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue(createJsonResponse({})));
+
+      await new FetchApiClient('http://localhost:3000/').get('/api/board', {searchParams: {page: 2, limit: 24}});
+
+      expect(getFetchCall().url).toBe('http://localhost:3000/api/board?limit=24&page=2');
+    });
+  });
+
   describe('Body serialization', () => {
     it.each([
       {input: {key: 'value'}, expected: JSON.stringify({key: 'value'}), label: '객체 → JSON 문자열'},
