@@ -15,7 +15,7 @@
     "format:check": "prettier --check .",
     "stylelint": "stylelint \"**/*.{scss,css}\" --max-warnings 0",
     "stylelint:fix": "stylelint \"**/*.{scss,css}\" --fix --max-warnings 0",
-    "prepare": "husky"
+    "prepare": "git config core.hooksPath .githooks"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,mts,json,css,scss,md}": "prettier --write",
@@ -42,7 +42,6 @@
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "eslint-plugin-check-file": "^3.3.1",
-    "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.2",
     "stylelint": "^17.6.0",
