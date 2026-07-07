@@ -24,11 +24,11 @@ export default function FormPage() {
 
 const ITEMS: LinkCardItem[] = [
   {
-    title: '자동 포커스',
-    href: '/form/auto-focus',
+    title: '제출 핸들링',
+    href: '/form/handle-submit',
     description:
-      '폼 중심 페이지에서 첫 폼 요소에 autoFocus를 걸어 입력 단계를 생략하는 패턴과, 탭 복귀 시 재포커스 실험 사례를 다룹니다.',
-    keywords: ['autoFocus', 'UX'],
+      '에러를 언제·어디서·어떻게 보여줄지부터, 제출 후 로딩·성공·실패 생명주기 처리까지 폼 제출 전반을 다룹니다.',
+    keywords: ['Validation', 'Error Handling', 'Mutation', 'UX'],
   },
   {
     title: 'Trim 유효성검증',
@@ -37,10 +37,10 @@ const ITEMS: LinkCardItem[] = [
     keywords: ['Validation', 'Trim'],
   },
   {
-    title: '제출 핸들링',
-    href: '/form/handle-submit',
+    title: '자동 포커스',
+    href: '/form/auto-focus',
     description:
-      '에러를 언제·어디서·어떻게 보여줄지부터, 제출 후 로딩·성공·실패 생명주기 처리까지 폼 제출 전반을 다룹니다.',
-    keywords: ['Validation', 'Error Handling', 'Mutation', 'UX'],
+      '폼 중심 페이지에서 첫 폼 요소에 autoFocus를 걸어 입력 단계를 생략하는 패턴과, 탭 복귀 시 재포커스 실험 사례를 다룹니다.',
+    keywords: ['autoFocus', 'UX'],
   },
 ];
