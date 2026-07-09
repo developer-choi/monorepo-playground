@@ -38,7 +38,7 @@ npm install
 ├── apps/
 │   └── examples/          # Next.js 예제 앱
 ├── docs/
-│   ├── best-practices-map.md  # 베스트프랙티스 인덱스
+│   ├── best-practices/        # 주제별 베스트프랙티스 인덱스 (frontmatter keywords로 탐색)
 │   └── patterns/              # 주제별 패턴 코드 ([ai-only] 주석으로 규칙 설명 포함)
 ├── packages/
 │   └── design-system/     # 공통 UI 컴포넌트

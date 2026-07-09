@@ -8,15 +8,17 @@
 
 - **예제 코드 본체** → `apps/example/`, `packages/design-system/`
 - **코드 직결 가이드** → `docs/patterns/<주제>.md`
-- **인덱스** → `docs/best-practices-map.md`
+- **패턴 인덱스** → `docs/best-practices/<주제>.md` (라우터 파일 없음 — Glob으로 목록을 얻고, 각 파일 상단 frontmatter `keywords`만 먼저 읽어 관련성을 빠르게 판단한다)
 
 ## packages/design-system 작업
 
 `packages/design-system` 내부 코드를 수정·추가할 때는 `docs/convention.md`를 따른다.
 
-## docs/patterns/ 와 docs/best-practices-map.md
+## docs/patterns/ 와 docs/best-practices/
 
 ### 로드 규칙
+
+각 `docs/best-practices/<주제>.md`는 상단에 YAML frontmatter로 `keywords`(그 파일이 다루는 패턴들의 키워드 목록)를 둔다. 탐색 시 파일 전체를 Read하기 전에 frontmatter만 먼저 확인해 관련 없으면 넘어간다 — 파일이 커져도 전체를 열지 않고 걸러낼 수 있다.
 
 패턴 문서는 코드를 직접 포함하거나, 소스 파일 링크로 참조한다. 코드를 직접 포함하면 중복이 생기므로 링크로 분리하는 경우가 있는데, 이때 `[CRITICAL]`로 표기된 링크는 패턴의 실체이므로 반드시 Read한다. 그 외 링크(설계 히스토리 등)는 선택 참조.
 
@@ -24,11 +26,11 @@
 
 ### 문서 수정 시 작성 규칙 역제안
 
-`docs/` 하위 문서(특히 `docs/patterns/`, `docs/tips/`, `docs/best-practices-map.md`) 수정 시:
+`docs/` 하위 문서(특히 `docs/patterns/`, `docs/tips/`, `docs/best-practices/`) 수정 시:
 
 1. 요청된 수정을 수행
 2. 패턴성 판단 (동일 실수·요청이 재발할 가능성)
-3. 패턴성이면, 해당 영역의 작성 규칙(`docs/best-practices-map.md` 상단 / 관련 메타 파일)에 추가할 규칙을 구체적 문안과 함께 역제안
+3. 패턴성이면, 해당 영역의 관련 메타 파일에 추가할 규칙을 구체적 문안과 함께 역제안
 
 ### 코드 복사 금지 (docs/patterns 한정)
 
