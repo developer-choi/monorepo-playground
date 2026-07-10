@@ -166,6 +166,11 @@ export const baseRules = {
       selector: "AssignmentExpression[left.object.name='exports']",
       message: 'CJS exports.X 금지. ESM named export로 바꾸세요. (의도적 CJS는 .cjs 확장자로 분리)',
     },
+    {
+      selector: "CallExpression[callee.object.name='vi'][callee.property.name=/^(mock|doMock)$/][arguments.0.type='Literal']",
+      message:
+        "vi.mock/doMock의 첫 인자로 문자열 경로 금지. import('./x') 형태로 넘기세요. 그래야 factory 반환값이 실제 모듈 타입과 대조되고(잘못된 모킹 차단), IDE 파일 이동 시 경로가 자동 갱신됩니다.",
+    },
   ],
 };
 

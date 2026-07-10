@@ -570,6 +570,28 @@ useMutation({mutationFn: ({widget, ...params}) => widget.requestPayment(params)}
 
 > 한계: 멤버식 callee는 `this` 필요 여부를 타입 없이 판별할 수 없어 전부 허용합니다. `this`가 필요 없는데도 `(a) => api.create(a)`로 래핑하면 잡지 못합니다.
 
+**vi.mock 문자열 인자 금지** (`CallExpression[callee.object.name='vi'][callee.property.name=/^(mock|doMock)$/][arguments.0.type='Literal']`)
+
+`vi.mock`·`vi.doMock`의 첫 인자는 문자열 경로(`'./db'`)가 아니라 `import('./db')`로 넘깁니다. [Vitest 공식 문서](https://vitest.dev/guide/learn/mock-functions.html)도 "Always pass `import('./db.js')` rather than a plain string `'./db.js'`"라고 권장합니다. 문자열 오버로드(`mock(path: string, ...)`)는 모듈 타입을 `unknown`으로 두어 factory 반환값을 검사하지 않지만, `import()` 오버로드(`mock<T>(module: Promise<T>, ...)`)는 `T`가 채워져 factory 반환값을 실제 모듈 모양과 대조합니다.
+
+```ts
+// ❌ 문자열 — factory 반환 타입 검사 없음
+vi.mock('./db', () => ({getUser: 123})); // getUser는 함수인데 숫자여도 통과
+
+// ✅ import() — 잘못된 모킹을 tsc가 차단
+vi.mock(import('./db'), () => ({getUser: vi.fn()}));
+```
+
+무엇이 실제로 갈리는지(검증):
+
+| factory에 넣은 실수 | 문자열 `'./db'` | `import('./db')` |
+| ------------------- | --------------- | ---------------- |
+| 제공한 export를 틀린 타입으로 (`getUser: 123`) | 통과 | **tsc 에러** |
+| 없는 export 추가 (`nope: 1`) | 통과 | 통과 (반환 타입이 `Partial` union이라 excess 검사 느슨) |
+| export 누락 (`{}`) | 통과 | 통과 (`Partial`이라 모두 선택적) |
+
+즉 타입 이득은 "제공한 가짜의 타입이 진짜와 다를 때"로 좁고, 그 외엔 IDE 파일 이동 시 경로 자동 갱신 이점입니다. 모킹한 `getUser`를 쓰는 쪽(호출 인자·반환 사용)의 타입 검사는 정적 `import` 바인딩이 유지하므로 문자열이든 `import()`든 동일하게 적용됩니다.
+
 #### 테스트 파일 전용: `aria-*` 금지 (`testFilesConfig`)
 
 `testFilesConfig`(base export, 각 워크스페이스 config 배열에 추가)가 테스트 JSX의 `aria-*` 작성을 `no-restricted-syntax`로 금지합니다. **a11y가 현재 우선순위가 아니라** 테스트에 접근성 계약을 박지 않기 위함입니다. `getByRole`는 허용하며(base 기존 `no-restricted-syntax` 항목도 보존), 불가피하면 `eslint-disable` + 사유로 처리합니다.
