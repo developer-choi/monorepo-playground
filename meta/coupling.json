@@ -28,6 +28,16 @@
       "note": ".stylelintrc.json 규칙이나 커스텀 플러그인 동작(minLength 등)을 바꾸면 stylelint.md의 규칙 표·설명도 갱신한다. 문서-설정 일치는 어떤 도구도 검사하지 않는다."
     },
     {
+      "name": "ESLint 설정 원본 ↔ 상세 문서",
+      "files": ["eslint.config.base.mts", "docs/static-checking/eslint.md"],
+      "note": "eslint.md는 eslint.config.base.mts의 baseRules 내용(각 규칙과 옵션)을 코드 인용으로 문서화한다. baseRules에 규칙을 추가·삭제하거나 옵션을 바꾸면 eslint.md의 인용 블록·설명도 갱신한다. 존재·경로는 static-checking.md 매핑표가, 규칙 내용은 이 문서가 따라가며 문서-설정 일치는 어떤 도구도 검사하지 않는다."
+    },
+    {
+      "name": "tsconfig 설정 원본 ↔ 상세 문서",
+      "files": ["tsconfig.base.json", "docs/static-checking/tsconfig.md"],
+      "note": "tsconfig.md는 tsconfig.base.json의 compilerOptions 전체를 옵션 표로 문서화한다. tsconfig.base.json의 옵션을 추가·삭제·변경하면 tsconfig.md의 옵션 표·설명도 갱신한다. 문서-설정 일치는 어떤 도구도 검사하지 않는다."
+    },
+    {
       "name": "포맷터 설정 ↔ 문서",
       "files": [".prettierrc", ".prettierignore", ".editorconfig", "docs/formatter.md"],
       "note": "세 포맷터 설정 중 하나라도 바꾸면 formatter.md의 설정값 표·근거 설명을 함께 갱신한다."
@@ -44,9 +54,9 @@
       "note": "static-checking.md의 '설정-문서 매핑' 표가 이 설정 파일들을 나열한다. 설정 경로가 바뀌거나 새 설정이 추가되면 표도 갱신한다."
     },
     {
-      "name": "commitlint scope-enum ↔ 워크스페이스",
-      "files": ["commitlint.config.mjs", "package.json"],
-      "note": "package.json workspaces에 새 패키지(apps/X·packages/X)를 추가하면 commitlint.config.mjs의 scope-enum에도 넣어야 그 스코프로 커밋이 통과한다. commitlint은 workspaces를 자동으로 읽지 않는다."
+      "name": "commitlint scope-enum ↔ 워크스페이스·문서",
+      "files": ["commitlint.config.mjs", "package.json", "docs/static-checking/commitlint.md"],
+      "note": "package.json workspaces에 새 패키지(apps/X·packages/X)를 추가하면 commitlint.config.mjs의 scope-enum에도 넣어야 그 스코프로 커밋이 통과한다(commitlint은 workspaces를 자동으로 읽지 않는다). scope-enum·subject-korean 등 commitlint 규칙을 바꾸면 docs/static-checking/commitlint.md의 규칙 표도 갱신한다. package.json은 workspaces가 바뀔 때만 해당(dep 범프는 무관)."
     },
     {
       "name": "테스트 셋업 원본 ↔ TestSetup.md 가이드",
