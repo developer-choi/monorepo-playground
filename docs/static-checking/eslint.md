@@ -615,6 +615,36 @@ describe.for(algorithms)('정렬 알고리즘 > $name', ({fn}) => {
 
 객체 배열이면 `.each`→`.for` 단어만 바꾸면 됩니다(타이틀 `$속성` 보간 동일). **배열 배열**(`[[a, b], ...]`)이면 `.each`의 `(a, b) =>`를 `.for`에선 `([a, b]) =>`로 구조분해합니다.
 
+**MSW resolver에서 `resetHandlers()` 인자 금지** (`CallExpression[callee.property.name='resetHandlers'][arguments.length>0]` — 전역)
+
+`server.resetHandlers()`·`worker.resetHandlers()`는 **인자 없이** 호출합니다. 인자 없는 `resetHandlers()`는 `.use()`로 추가한 runtime 핸들러만 제거하고 초기(initial) 핸들러는 남기므로, `afterEach(() => server.resetHandlers())`가 테스트 간 격리의 표준 청소가 됩니다. 반면 인자를 넘기면(`resetHandlers(...next)`) initial+runtime을 통째로 밀고 넘긴 핸들러를 **새 initial로 교체**해, 테스트마다 기반 네트워크가 바뀌어 "지금 어떤 핸들러가 유효한지" 예측성이 깨집니다. [MSW 공식 문서](https://mswjs.io/docs/best-practices/network-behavior-overrides)도 "Mutating the initial request handlers is generally not recommended because it harms the predictability of the network."라고 하며, 예외로 "It can be useful, however, in certain situations, like testing different behaviors while developing in the browser."만 인정합니다. `resetHandlers`는 MSW 전용 메서드명이라 충돌 위험이 낮아 전역(`baseRules`)으로 둡니다. 청소는 `resetHandlers()`, 새 핸들러는 `use(...)`로 나눠 씁니다.
+
+```ts
+// ❌ initial까지 밀고 넘긴 핸들러를 새 initial로 교체 — 기반 네트워크가 테스트마다 바뀜
+server.resetHandlers(http.get('/products', () => HttpResponse.json([])));
+
+// ✅ 청소는 인자 없이, 새로 얹기는 use로 분리
+server.resetHandlers();
+server.use(http.get('/products', () => HttpResponse.json([])));
+```
+
+아래 predicate 쿼리 금지 룰은 **목/핸들러 파일에만** 적용합니다(`mockFilesConfig`: `src/mocks/**`·`*.mock.*`, 테스트 파일은 `testFilesConfig`). 전역으로 잡으면 실제 앱 소스에서 오탐하기 때문입니다 — `http.get(url, cb)`는 `node:http`에서 정당하게 쓰입니다.
+
+**MSW predicate에 쿼리 파라미터 금지** (`CallExpression[callee.object.name='http'][...][arguments.0.value=/[?]/]` + TemplateLiteral 변형 — 목/테스트 스코프)
+
+`http.get/post/put/delete/patch/all`의 첫 인자(predicate)에 쿼리스트링(`?...`)을 넣지 않습니다. 쿼리는 리소스 경로가 아니라 요청에 딸린 부가 데이터라, `/products?page=2`·`?page=3`은 같은 리소스 → predicate `/products` 하나로 둘 다 잡힙니다. predicate에 쿼리를 넣으면 MSW가 **런타임 경고 없이 조용히 제거**해서, 개발자는 "2페이지만 잡았다"고 착각하지만 실제로는 `/products` 전체를 잡습니다(사람이 놓치기 쉬운 지점이라 린트가 정확한 게이트). [MSW 공식 문서](https://mswjs.io/docs/http/intercepting-requests/)도 "Query parameters do not describe resource paths but rather additional data sent with the request. As such, they must not be present in the request predicate. Any query parameters accidentally included in the request predicate will automatically be removed and have no effect on the URL matching."라고 명시합니다. 쿼리 값이 필요하면 resolver에서 `new URL(request.url).searchParams.get('page')`로 읽습니다 — 역할 분담: predicate=경로로 "잡을지" 판정, resolver=쿼리 값 보고 "무엇으로 답할지".
+
+```ts
+// ❌ predicate에 쿼리 — MSW가 조용히 제거, /products 전체를 잡음
+http.get('/products?page=2', () => HttpResponse.json([]));
+
+// ✅ predicate는 경로만, 쿼리는 resolver에서 읽음
+http.get('/products', ({request}) => {
+  const page = new URL(request.url).searchParams.get('page');
+  return HttpResponse.json(pageOf(page));
+});
+```
+
 #### 테스트 파일 전용: `aria-*` 금지 (`testFilesConfig`)
 
 `testFilesConfig`(base export, 각 워크스페이스 config 배열에 추가)가 테스트 JSX의 `aria-*` 작성을 `no-restricted-syntax`로 금지합니다. **a11y가 현재 우선순위가 아니라** 테스트에 접근성 계약을 박지 않기 위함입니다. `getByRole`는 허용하며(base 기존 `no-restricted-syntax` 항목도 보존), 불가피하면 `eslint-disable` + 사유로 처리합니다.

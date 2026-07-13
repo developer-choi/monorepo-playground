@@ -11,7 +11,7 @@ import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import checkFile from 'eslint-plugin-check-file';
 import {defineConfig, globalIgnores} from 'eslint/config';
-import {baseRules, createFilenameExportConventionRule, testFilesConfig} from './eslint.config.base.mjs';
+import {baseRules, createFilenameExportConventionRule, mockFilesConfig, testFilesConfig} from './eslint.config.base.mjs';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -41,4 +41,5 @@ export default defineConfig([
     },
   },
   testFilesConfig,
+  mockFilesConfig,
 ]);

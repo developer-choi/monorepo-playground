@@ -5,7 +5,12 @@ import nextTs from 'eslint-config-next/typescript';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import tseslint from 'typescript-eslint';
 import checkFile from 'eslint-plugin-check-file';
-import {baseRules, createFilenameExportConventionRule, testFilesConfig} from '../../eslint.config.base.mts';
+import {
+  baseRules,
+  createFilenameExportConventionRule,
+  mockFilesConfig,
+  testFilesConfig,
+} from '../../eslint.config.base.mts';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -49,6 +54,7 @@ const eslintConfig = defineConfig([
     },
   },
   testFilesConfig,
+  mockFilesConfig,
 ]);
 
 export default eslintConfig;

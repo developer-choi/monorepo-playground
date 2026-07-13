@@ -183,8 +183,34 @@ export const baseRules = {
       message:
         'each 금지 — for를 쓰세요(it.for/test.for/describe.for). each는 배열 인자를 spread하는 Jest 호환용 레거시입니다(it.for/test.for는 Test Context도 제공, Vitest 공식 "Prefer test.for in new code"). Jest 마이그레이션을 안 하므로 신규 코드는 for. 객체 케이스는 .each→.for로 충분합니다.',
     },
+    {
+      selector: "CallExpression[callee.property.name='resetHandlers'][arguments.length>0]",
+      message:
+        'Do not pass handlers to resetHandlers() — it wipes initial handlers and harms predictability. Use resetHandlers() then use(...) instead.',
+    },
   ],
 };
+
+/**
+ * MSW resolver 스코프 룰(목/핸들러·테스트 파일에만 적용, `mockFilesConfig`·`testFilesConfig`에서 spread).
+ * 앱 소스에는 넣지 않는다 — `http.get(url, cb)`는 node:http에서 정당하게 쓰이므로 전역으로 잡으면 오탐.
+ *
+ * [원본] monorepo-playground/eslint.config.base.mts — 원본이 바뀌면 이 파일도 함께 최신화.
+ */
+const mswResolverRules = [
+  {
+    selector:
+      "CallExpression[callee.object.name='http'][callee.property.name=/^(get|post|put|delete|patch|all)$/][arguments.0.value=/[?]/]",
+    message:
+      'MSW predicate(http.get 등 첫 인자)에 쿼리스트링(?) 금지. predicate는 경로만으로 매칭하고 MSW가 쿼리를 조용히 제거하므로(런타임 경고 없음), 쿼리 값은 resolver에서 new URL(request.url).searchParams.get("page")로 읽으세요.',
+  },
+  {
+    selector:
+      "CallExpression[callee.object.name='http'][callee.property.name=/^(get|post|put|delete|patch|all)$/] > TemplateLiteral.arguments TemplateElement[value.raw=/[?]/]",
+    message:
+      'MSW predicate(http.get 등 첫 인자)에 쿼리스트링(?) 금지. predicate는 경로만으로 매칭하고 MSW가 쿼리를 조용히 제거하므로(런타임 경고 없음), 쿼리 값은 resolver에서 new URL(request.url).searchParams.get("page")로 읽으세요.',
+  },
+];
 
 /**
  * 테스트 파일 전용 override(next/vite config 배열에 추가). 테스트 JSX의 `aria-*` 작성 금지 —
@@ -203,7 +229,23 @@ export const testFilesConfig = {
         message:
           '테스트 JSX에 aria-* 속성을 직접 쓰지 않습니다. getByRole로 쿼리하거나, 불가피하면 eslint-disable + 사유 주석.',
       },
+      ...mswResolverRules,
     ],
+  },
+};
+
+/**
+ * MSW 목/핸들러 파일 전용 override(next/vite config 배열에 추가). resolver 스코프 룰(A·B)을
+ * 목·핸들러 파일(`src/mocks/**`, `*.mock.*`)에 적용한다. 테스트 파일은 `testFilesConfig`가 담당하므로
+ * `ignores`로 겹침(no-restricted-syntax last-wins)을 막는다.
+ *
+ * [원본] monorepo-playground/eslint.config.base.mts — 원본이 바뀌면 이 파일도 함께 최신화.
+ */
+export const mockFilesConfig = {
+  files: ['**/mocks/**/*.{ts,tsx}', '**/*.mock.{ts,tsx}'],
+  ignores: ['**/*.test.{ts,tsx}'],
+  rules: {
+    'no-restricted-syntax': ['error', ...baseRules['no-restricted-syntax'], ...mswResolverRules],
   },
 };
 
