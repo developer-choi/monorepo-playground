@@ -13,7 +13,7 @@ const implementations = [
   {name: 'KyApiClient', createClient: () => new KyApiClient(BASE_URL), path: (url: string) => url.replace(/^\//, '')},
 ];
 
-describe.each(implementations)('ApiClient 계약 > $name', ({createClient, path}) => {
+describe.for(implementations)('ApiClient 계약 > $name', ({createClient, path}) => {
   let client: ApiClient;
 
   beforeEach(() => {

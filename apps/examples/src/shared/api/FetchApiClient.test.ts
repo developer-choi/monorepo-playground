@@ -23,7 +23,7 @@ describe('FetchApiClient', () => {
   });
 
   describe('URL 조합 — 슬래시 정규화', () => {
-    it.each([
+    it.for([
       {baseUrl: 'http://localhost:3000', path: '/api/board', label: '끝X + 앞O'},
       {baseUrl: 'http://localhost:3000/', path: '/api/board', label: '끝O + 앞O (배포 버그 케이스)'},
       {baseUrl: 'http://localhost:3000/', path: 'api/board', label: '끝O + 앞X'},
@@ -63,7 +63,7 @@ describe('FetchApiClient', () => {
   });
 
   describe('Body serialization', () => {
-    it.each([
+    it.for([
       {input: {key: 'value'}, expected: JSON.stringify({key: 'value'}), label: '객체 → JSON 문자열'},
       {input: 42, expected: '42', label: 'number → 문자열'},
       {input: 'raw text', expected: 'raw text', label: 'string → 그대로'},
