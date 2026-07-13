@@ -171,6 +171,18 @@ export const baseRules = {
       message:
         "vi.mock/doMock의 첫 인자로 문자열 경로 금지. import('./x') 형태로 넘기세요. 그래야 factory 반환값이 실제 모듈 타입과 대조되고(잘못된 모킹 차단), IDE 파일 이동 시 경로가 자동 갱신됩니다.",
     },
+    {
+      selector:
+        "CallExpression[callee.property.name='each']:matches([callee.object.name=/^(describe|it|test)$/], [callee.object.object.name=/^(describe|it|test)$/])",
+      message:
+        'each 금지 — for를 쓰세요(it.for/test.for/describe.for). each는 배열 인자를 spread하는 Jest 호환용 레거시입니다(it.for/test.for는 Test Context도 제공, Vitest 공식 "Prefer test.for in new code"). Jest 마이그레이션을 안 하므로 신규 코드는 for. 객체 케이스는 .each→.for로 충분합니다.',
+    },
+    {
+      selector:
+        "TaggedTemplateExpression[tag.property.name='each']:matches([tag.object.name=/^(describe|it|test)$/], [tag.object.object.name=/^(describe|it|test)$/])",
+      message:
+        'each 금지 — for를 쓰세요(it.for/test.for/describe.for). each는 배열 인자를 spread하는 Jest 호환용 레거시입니다(it.for/test.for는 Test Context도 제공, Vitest 공식 "Prefer test.for in new code"). Jest 마이그레이션을 안 하므로 신규 코드는 for. 객체 케이스는 .each→.for로 충분합니다.',
+    },
   ],
 };
 

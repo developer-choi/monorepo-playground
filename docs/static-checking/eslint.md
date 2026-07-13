@@ -592,6 +592,29 @@ vi.mock(import('./db'), () => ({getUser: vi.fn()}));
 
 즉 타입 이득은 "제공한 가짜의 타입이 진짜와 다를 때"로 좁고, 그 외엔 IDE 파일 이동 시 경로 자동 갱신 이점입니다. 모킹한 `getUser`를 쓰는 쪽(호출 인자·반환 사용)의 타입 검사는 정적 `import` 바인딩이 유지하므로 문자열이든 `import()`든 동일하게 적용됩니다.
 
+**테스트 파라미터화 `.each` 금지 — `.for` 강제** (`it`·`test`·`describe`; call + tagged template 셀렉터, modifier chain 포함)
+
+같은 로직을 여러 케이스로 돌릴 때 `.each`(`it.each`/`test.each`/`describe.each`) 대신 `.for`(`it.for`/`test.for`/`describe.for`)를 씁니다. `.each`는 (1) 배열 인자를 spread해 넘기고 (2) Test Context에 접근할 수 없으며 (3) Jest 호환용 레거시입니다. `.for`는 Vitest 네이티브 API로 `test.for`/`it.for`는 v2, `describe.for`는 v3에서 신설됐습니다. Jest에서 마이그레이션하지 않으므로 신규 코드에 `.each`를 쓸 이유가 없습니다. [Vitest 공식](https://vitest.dev/guide/learn/writing-tests.html)이 `test.for`에 대해 "It works similarly but spreads array arguments instead of passing them as a single value, and doesn't provide access to the Test Context. It exists mainly for Jest compatibility. **Prefer `test.for` in new code.**"라고 명시합니다.
+
+```ts
+// ❌ it.each — 객체가 단일 인자로 넘어옴, Test Context 없음
+it.each([{input: 42, expected: '42'}])('$input', ({input, expected}) => {
+  expect(serialize(input)).toBe(expected);
+});
+
+// ✅ it.for — 객체 케이스는 콜백·타이틀 그대로, .each만 .for로
+it.for([{input: 42, expected: '42'}])('$input', ({input, expected}) => {
+  expect(serialize(input)).toBe(expected);
+});
+
+// ✅ describe.for — 여러 구현체에 같은 테스트 묶음
+describe.for(algorithms)('정렬 알고리즘 > $name', ({fn}) => {
+  it('오름차순 정렬', () => expect(fn([3, 1, 2])).toEqual([1, 2, 3]));
+});
+```
+
+객체 배열이면 `.each`→`.for` 단어만 바꾸면 됩니다(타이틀 `$속성` 보간 동일). **배열 배열**(`[[a, b], ...]`)이면 `.each`의 `(a, b) =>`를 `.for`에선 `([a, b]) =>`로 구조분해합니다.
+
 #### 테스트 파일 전용: `aria-*` 금지 (`testFilesConfig`)
 
 `testFilesConfig`(base export, 각 워크스페이스 config 배열에 추가)가 테스트 JSX의 `aria-*` 작성을 `no-restricted-syntax`로 금지합니다. **a11y가 현재 우선순위가 아니라** 테스트에 접근성 계약을 박지 않기 위함입니다. `getByRole`는 허용하며(base 기존 `no-restricted-syntax` 항목도 보존), 불가피하면 `eslint-disable` + 사유로 처리합니다.
