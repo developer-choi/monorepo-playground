@@ -47,6 +47,20 @@
       "name": "commitlint scope-enum ↔ 워크스페이스",
       "files": ["commitlint.config.mjs", "package.json"],
       "note": "package.json workspaces에 새 패키지(apps/X·packages/X)를 추가하면 commitlint.config.mjs의 scope-enum에도 넣어야 그 스코프로 커밋이 통과한다. commitlint은 workspaces를 자동으로 읽지 않는다."
+    },
+    {
+      "name": "테스트 셋업 원본 ↔ TestSetup.md 가이드",
+      "files": [
+        "docs/patterns/setup/TestSetup.md",
+        "apps/examples/vitest.config.mts",
+        "apps/examples/vitest.setup.ts",
+        "packages/design-system/vite.config.ts",
+        "packages/design-system/vitest.setup.ts",
+        ".githooks/pre-commit",
+        ".githooks/pre-push",
+        "package.json"
+      ],
+      "note": "라이브 테스트 셋업이 바뀌면 docs/patterns/setup/TestSetup.md의 대응 예시·설명도 갱신한다 — 채용과제 테스트 셋업이 이 문서를 원천으로 따라가므로 어긋나면 셋업이 깨진다(예: vitest.setup.ts의 RTL afterEach(cleanup) 누락 시 컴포넌트 테스트 간 DOM 오염). 트리거: vitest config의 test 블록(restoreMocks·environment·setupFiles 등), vitest.setup.ts(jest-dom 매처·RTL cleanup), pre-commit/pre-push 가드. package.json은 test 스크립트·lint-staged의 vitest related·test-all이 바뀔 때만 해당(dep 범프는 무관). 문서-설정 일치는 어떤 도구도 검사하지 않는다."
     }
   ]
 }
