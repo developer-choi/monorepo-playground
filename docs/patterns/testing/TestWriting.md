@@ -65,23 +65,6 @@ describe('RecentSearches', () => {
 });
 ```
 
-### describe.each — 여러 구현체 동시 테스트
-
-```typescript
-const algorithms = [
-  {name: 'Bubble Sort', fn: bubbleSort},
-  {name: 'Selection Sort', fn: selectionSort},
-  {name: 'Quick Sort', fn: quickSort},
-];
-
-describe.each(algorithms)('정렬 알고리즘 > $name', ({fn}) => {
-  it('배열을 오름차순으로 정렬해야 한다', () => {
-    const {output} = fn({value: [3, 1, 2], order: 'asc'});
-    expect(output).toEqual([1, 2, 3]);
-  });
-});
-```
-
 ## 쿼리
 
 ### getByRole 우선 사용
@@ -117,6 +100,14 @@ expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 // findBy — 비동기로 나타나는 요소를 기다릴 때
 expect(await screen.findByRole('alert')).toBeInTheDocument();
 ```
+
+## Mock
+
+### mock 도입 시 근거·확답 필수
+
+테스트에 mock을 넣을 때(`vi.mock`·`vi.fn`·`server.use`·fake timer·`vi.stubGlobal`/`stubEnv` 등) 왜 그 mock이 정당한지 근거를 제시하고 사용자 확답을 받는다. 근거를 댈 수 없으면 mock 없이 실제 코드로 검증한다 — 순수 로직·상태·라우팅은 대부분 mock이 필요 없다.
+
+끊는 위치(seam)는 가능한 한 바깥에서 — 네트워크는 fetch stub이 아니라 MSW로 서버 경계만 끊는다. mock 정당성 판단 기준과 도메인별 worked example 73개는 KA `techniques/frontend/testing/mocking-cases.md` 참조.
 
 ## 데이터 처리
 
@@ -154,6 +145,9 @@ names.forEach((name) => {
 ### it 설명은 사용자 관점 워딩
 
 구현 용어(URL 파라미터명, 변수명, 메서드명) 대신 사용자가 인식하는 워딩으로 쓴다. 훅 테스트도 예외 없다.
+
+> 출처: https://vitest.dev/guide/learn/testing-in-practice.html
+> "Write test names that describe the behavior, not the implementation. 'returns formatted price for USD' is better than 'calls Intl.NumberFormat with correct options'."
 
 ```typescript
 // before
