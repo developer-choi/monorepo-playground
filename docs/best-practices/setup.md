@@ -1,5 +1,5 @@
 ---
-keywords: [폴더 구조, DDD, 셋업, 프로젝트 초기 세팅, commitlint, prettier, typescript-eslint, stylelint, husky, lint-staged, reset.css, Provider Composition, react-query, overlay-kit, sonner, 컴포넌트 단위테스트, Vitest, React Testing Library, jsdom, Next.js Root Layout, Google Fonts]
+keywords: [폴더 구조, DDD, 셋업, 프로젝트 초기 세팅, commitlint, prettier, typescript-eslint, stylelint, husky, lint-staged, reset.css, Provider Composition, react-query, overlay-kit, sonner, 컴포넌트 단위테스트, Vitest, React Testing Library, jsdom, Next.js Root Layout, Google Fonts, MSW, setupServer, server.listen, msw init, 네트워크 목킹, mock service worker]
 ---
 
 # Best Practices — 셋업
@@ -35,6 +35,12 @@ keywords: [폴더 구조, DDD, 셋업, 프로젝트 초기 세팅, commitlint, p
 - 기술스택: Vitest + React Testing Library + jsdom + vite-tsconfig-paths
 - 상황: 컴포넌트 단위테스트 환경 구축. 패키지 선택, 설정 파일, 컨벤션(명시적 import, 파일 위치)
 - 코드: docs/patterns/setup/TestSetup.md
+
+### MSW 네트워크 목킹 셋업 (테스트)
+
+- 기술스택: MSW + Vitest (test-only, Node)
+- 상황: 컴포넌트 테스트에서 네트워크 요청을 MSW로 목킹. 설치·handlers·setupServer(node.ts)·lifecycle 3종 훅 배선. 브라우저 워커 셋업(msw init·worker.start)은 제외
+- 코드: docs/patterns/setup/MswSetup.md
 
 ### Next.js Root Layout — Google Fonts
 

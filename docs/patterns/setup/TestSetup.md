@@ -35,7 +35,7 @@ export default defineConfig({
 
 **`globals: true`를 쓰지 않는 이유:** `describe`, `it`, `expect`를 명시적으로 import한다. 자동완성도 되고, 어디서 온 함수인지 명확하다.
 
-**`restoreMocks: true`를 쓰는 이유:** `vi.spyOn`/`vi.mock`으로 건 목이 매 테스트 후 자동 복원되어 테스트 간에 새지 않는다. 이게 없으면 개별 테스트마다 `afterEach(() => vi.restoreAllMocks())`를 수동으로 넣어야 하고, 빠뜨리면 목이 leak되어 "혼자선 통과, 같이 돌리면 실패"하는 헷갈리는 실패가 난다. Vitest 공식 [Writing Tests with AI](https://vitest.dev/guide/learn/writing-tests-with-ai.html)의 *Common Pitfalls*가 AI 생성 테스트의 단골 함정으로 지목하며 이 옵션을 권장한다. (MSW 핸들러 리셋 `server.resetHandlers()`는 목이 아니라 별개 메커니즘이라 restoreMocks가 커버하지 않는다 — 그건 setup에서 따로 건다.)
+**`restoreMocks: true`를 쓰는 이유:** `vi.spyOn`/`vi.mock`으로 건 목이 매 테스트 후 자동 복원되어 테스트 간에 새지 않는다. 이게 없으면 개별 테스트마다 `afterEach(() => vi.restoreAllMocks())`를 수동으로 넣어야 하고, 빠뜨리면 목이 leak되어 "혼자선 통과, 같이 돌리면 실패"하는 헷갈리는 실패가 난다. Vitest 공식 [Writing Tests with AI](https://vitest.dev/guide/learn/writing-tests-with-ai.html)의 *Common Pitfalls*가 AI 생성 테스트의 단골 함정으로 지목하며 이 옵션을 권장한다. (MSW 핸들러 리셋 `server.resetHandlers()`는 목이 아니라 별개 메커니즘이라 restoreMocks가 커버하지 않는다 — 그건 [MswSetup](./MswSetup.md)에서 setup 파일에 따로 건다.)
 
 ### vitest.setup.ts
 
