@@ -42,12 +42,9 @@ keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, 
 - 상황: MSW로 가로챈 요청을 테스트에서 검증할 때. 요청 URL·바디 단언(구현 세부)이 아니라 화면 반응을 본다, 요청 유효성은 핸들러 400으로, 예상 못 한 요청은 onUnhandledRequest: 'error', 화면 흔적 없는 단방향 요청만 예외
 - 코드: docs/patterns/testing/MswAvoidRequestAssertions.md
 
-### 쿼리파라미터·요청 바디 값으로 요청 가로채기
+### MSW 심화 기법 (필요할 때 학습)
 
-- 상황: 같은 method+path인데 쿼리파라미터(`?foo=`)나 JSON 요청 바디의 특정 속성(`bar`) 값에 따라 요청을 가려 가로채야 할 때. MSW 기본 매칭(method+path)으로는 안 됨
-- 코드: docs/patterns/testing/MswDeferredTechniques.md
-
-### 코드 수정 없이 목 응답 시나리오 전환
-
-- 상황: 개발·시연 중 소스를 안 고치고 URL 쿼리(`?scenario=error`)로 목 응답을 성공↔에러(500 등)로 런타임 전환하고 싶을 때
+- 상황:
+  - 같은 method+path인데 쿼리파라미터(`?foo=`)나 JSON 요청 바디의 특정 속성(`bar`) 값에 따라 요청을 가려 가로채야 할 때. MSW 기본 매칭(method+path)으로는 안 됨
+  - 개발·시연 중 소스를 안 고치고 URL 쿼리(`?scenario=error`)로 목 응답을 성공↔에러(500 등)로 런타임 전환하고 싶을 때
 - 코드: docs/patterns/testing/MswDeferredTechniques.md
