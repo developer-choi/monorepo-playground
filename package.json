@@ -10,7 +10,7 @@
     "lint": "turbo lint",
     "examples": "turbo build --filter=@monorepo-playground/design-system && turbo dev --filter=examples",
     "design-system": "turbo storybook --filter=@monorepo-playground/design-system",
-    "test-staged": "lint-staged && turbo check-types",
+    "test-staged": "lint-staged --concurrent false && turbo check-types",
     "test-all": "turbo check-types && turbo lint && npm run stylelint && turbo run test -- --run",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

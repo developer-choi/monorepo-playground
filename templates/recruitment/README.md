@@ -69,7 +69,7 @@ npm i -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refre
   "scripts": {
     "lint": "eslint --max-warnings 0",
     "format": "prettier --write .",
-    "test-staged": "lint-staged && tsc --noEmit",
+    "test-staged": "lint-staged --concurrent false && tsc --noEmit",
     "prepare": "husky",
   },
   "lint-staged": {

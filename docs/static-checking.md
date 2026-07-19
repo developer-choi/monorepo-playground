@@ -33,7 +33,7 @@ const msg = `user: ${user.name}`; // undefined면 "user: undefined"
 
 | 시점       | 스크립트      | 내용                                                   |
 | ---------- | ------------- | ------------------------------------------------------ |
-| pre-commit | `test-staged` | `lint-staged && turbo check-types`                     |
+| pre-commit | `test-staged` | `lint-staged --concurrent false && turbo check-types`  |
 | pre-push   | `test-all`    | `turbo check-types && turbo lint && npm run stylelint && turbo run test -- --run` |
 
 ESLint·Stylelint는 모두 `--max-warnings 0` 옵션으로 실행하므로, severity가 `'warn'`인 규칙도 실패로 간주되어 커밋·푸시를 차단합니다. 새 규칙을 도입할 때 `'warn'`으로 두지 말고 처음부터 `'error'`로 도입하거나, 점진적 적용이 필요한 경우 [gradual-migration.md](static-checking/gradual-migration.md)의 file-level disable + hook 패턴을 사용합니다.
