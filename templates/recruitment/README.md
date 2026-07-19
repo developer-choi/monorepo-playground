@@ -88,3 +88,4 @@ baseRules는 MP의 인프라·컨벤션을 전제하므로, 과제에 따라 정
 - **`custom/filename-export-convention`** — 단일 컴포넌트/훅 파일명 casing 검사. 과제에 과하면 base.mjs에서 이 룰과 동반 팩토리(`createFilenameExportConventionRule`)를 제거.
 - **stylelint 계열** — `scripts/check-file-level-disable.sh`, lint-staged의 scss/css 태스크, stylelint deps는 **scss/css를 쓸 때만** 필요. Tailwind 등으로 scss를 안 쓰면 제거 가능.
 - **`subject-korean`** — 한글 커밋 메시지 강제. 평가자와 공유하는 레포라 영어 커밋을 허용해야 하면 `commitlint.config.mjs`에서 제거.
+- **`scope-empty`(scope 필수)** — scope 강제가 과제 범위에 과하면 `commitlint.config.mjs`에서 `scope-empty`를 제거. 유지한다면 프로젝트 scope-enum을 정해 함께 추가한다(config 헤더 주석의 예시 참고).
