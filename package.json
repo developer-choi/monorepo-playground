@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow npm",
     "build": "turbo build",
     "start": "turbo start",
     "lint": "turbo lint",

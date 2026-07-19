@@ -26,7 +26,7 @@ AI 에이전트의 작업 계획 파일(`plan/`)과 로컬 설정(`.claude/`)이
 // package.json
 {
   "scripts": {
-    "preinstall": "npx only-allow pnpm", // pnpm 프로젝트 예시
+    "preinstall": "npx only-allow npm", // MP 실제값. 인자는 그 프로젝트의 패키지매니저 (pnpm 프로젝트면 pnpm)
   },
 }
 ```
