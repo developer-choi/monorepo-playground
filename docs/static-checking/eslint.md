@@ -284,6 +284,18 @@ Storybook의 `**/*.stories.{ts,tsx}` 파일은 Story export(`export const BasicU
 const SlowList = memo(function SlowList({text}: {text: string}) { ... });
 ```
 
+따옴표가 **필수**인 이름(하이픈·공백 등이 들어가 식별자로 쓸 수 없는 이름)은 `requiresQuotes` modifier + `format: null`로 검사에서 면제합니다. `'Content-Type'` 같은 HTTP 표준 헤더는 우리가 이름을 정할 수 없는데, 예외가 없으면 헤더 리터럴마다 eslint-disable을 달아야 합니다(채용과제에서 실제 발생).
+
+```typescript
+// ✅ 통과 — 따옴표가 필수라 식별자로 쓸 수 없는 이름
+const headers = {'Content-Type': 'application/json'};
+
+// ❌ 여전히 위반 — 따옴표 없이 쓸 수 있는데 snake_case를 택한 경우
+const dto = {post_title: 'a'};
+```
+
+선택자 목록은 [typescript-eslint 공식 예시](https://typescript-eslint.io/rules/naming-convention/)를 그대로 따릅니다("use the `requiresQuotes` modifier to match any property name that _requires_ quoting, and use `format: null` to ignore the name"). 이 예외는 **이름을 우리가 못 정하는 경우**만 열어주므로, 서버 DTO의 snake_case(`post_title` 등)는 따옴표 없이 쓸 수 있어 그대로 걸리고 파일 단위 eslint-disable로 계속 처리합니다.
+
 #### `curly` (all)
 
 if/else/for/while 등 제어문에 중괄호를 반드시 사용합니다. 한 줄이라도 중괄호 없이 쓰면 나중에 줄을 추가할 때 실수할 수 있습니다.

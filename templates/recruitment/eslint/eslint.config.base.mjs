@@ -43,6 +43,20 @@ export const baseRules = {
     {selector: 'method', format: ['camelCase']},
     {selector: 'import', format: null},
     {selector: 'variable', modifiers: ['destructured'], format: null},
+    {
+      selector: [
+        'classProperty',
+        'objectLiteralProperty',
+        'typeProperty',
+        'classMethod',
+        'objectLiteralMethod',
+        'typeMethod',
+        'accessor',
+        'enumMember',
+      ],
+      format: null,
+      modifiers: ['requiresQuotes'],
+    },
   ],
   'custom/filename-export-convention': 'error',
   'no-magic-numbers': [

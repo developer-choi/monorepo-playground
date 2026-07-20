@@ -28,7 +28,6 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention -- TypeScript path alias 컨벤션
       '@': path.resolve(dirname, './src'),
     },
   },
