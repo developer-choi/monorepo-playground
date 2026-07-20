@@ -51,7 +51,7 @@ export default function BoardFilter() {
 
   return (
     <Card className={styles.filterCard}>
-      <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formCol}>
           <Controller
             control={control}

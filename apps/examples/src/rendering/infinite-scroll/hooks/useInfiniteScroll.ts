@@ -32,7 +32,7 @@ export function useInfiniteScroll({
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0]!.isIntersecting) {
-          void fetchNextPage();
+          fetchNextPage();
         }
       },
       {rootMargin: `0px 0px ${offset}px 0px`},

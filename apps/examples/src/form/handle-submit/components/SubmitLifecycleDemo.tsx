@@ -123,7 +123,9 @@ function useSubmitLifecycleForm(variant: SuccessVariant): SubmitLifecycleForm {
 
   return {
     form: {
-      onSubmit: (event: FormEvent) => void onSubmit(event),
+      onSubmit: (event: FormEvent) => {
+        onSubmit(event);
+      },
       loading: isPending,
     },
     inputProps: {

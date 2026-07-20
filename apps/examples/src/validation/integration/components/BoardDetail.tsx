@@ -86,7 +86,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
               loading={isMutationSettling(deleteMutation)}
               size="medium"
               variant="outlined"
-              onClick={() => void handleDeleteClick()}
+              onClick={handleDeleteClick}
             >
               삭제
             </Button>

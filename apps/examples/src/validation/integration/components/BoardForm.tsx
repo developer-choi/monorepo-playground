@@ -81,7 +81,7 @@ export default function BoardForm({board}: BoardFormProps) {
     <div className={styles.page}>
       <h2 className={clsx(typography.h2, styles.formTitle)}>{isEdit ? '글 수정' : '새 글 작성'}</h2>
       <Card>
-        <form onSubmit={(event) => void handleSubmit(onSubmit)(event)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.formCol}>
             <TextField
               {...register('postTitle')}
