@@ -5,18 +5,33 @@
       "files": [
         "eslint.config.base.mts",
         "templates/recruitment/eslint/eslint.config.base.mjs",
+        "apps/examples/eslint.config.mjs",
+        "templates/recruitment/eslint/eslint.config.next.mjs",
+        "packages/design-system/eslint.config.js",
+        "templates/recruitment/eslint/eslint.config.vite.mjs",
         "commitlint.config.mjs",
         "templates/recruitment/commitlint.config.mjs",
+        ".stylelintrc.json",
+        "templates/recruitment/.stylelintrc.json",
         ".editorconfig",
         "templates/recruitment/.editorconfig",
         ".prettierrc",
         "templates/recruitment/.prettierrc",
         ".prettierignore",
         "templates/recruitment/.prettierignore",
+        ".gitattributes",
+        "templates/recruitment/.gitattributes",
+        ".husky/pre-commit",
+        "templates/recruitment/.husky/pre-commit",
+        ".husky/commit-msg",
+        "templates/recruitment/.husky/commit-msg",
         "scripts/check-file-level-disable.sh",
-        "templates/recruitment/scripts/check-file-level-disable.sh"
+        "templates/recruitment/scripts/check-file-level-disable.sh",
+        "tsconfig.base.json",
+        "package.json",
+        "templates/recruitment/README.md"
       ],
-      "note": "루트 원본을 바꾸면 templates/recruitment/의 대응 사본(단일레포 평탄화본)도 같이 최신화한다. 대응 사본은 같은 파일명·역할의 templates/recruitment/ 쪽 파일이다. (현재 check-file-level-disable.sh가 이미 어긋나 있음.)"
+      "note": "루트 원본을 바꾸면 templates/recruitment/의 대응 사본(단일레포 평탄화본)도 같이 최신화한다. 대응 사본은 같은 파일명·역할의 templates/recruitment/ 쪽 파일이다. 파일 단위 대응이 없는 셋은 README.md가 사본 역할을 한다: tsconfig.base.json의 안전망 옵션과 package.json의 scripts·lint-staged는 templates/recruitment/README.md 「병합 스니펫」 절에 복사돼 있다(package.json은 그 두 키가 바뀔 때만 해당 — dep 범프는 무관). eslint는 원본이 모노레포 전용분(워크스페이스 경로 룰·예제앱 전용 플러그인)을 포함하므로 룰 단위 대응이며, 평탄화 사본은 byte 일치가 아니라 의미 대응으로 본다."
     },
     {
       "name": "Stylelint 설정·플러그인 ↔ 문서",

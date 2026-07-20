@@ -21,6 +21,7 @@
 
 - `.prettierrc`, `.prettierignore`, `.editorconfig`, `.gitattributes`
 - `commitlint.config.mjs`
+- `.stylelintrc.json` (scss/css를 쓸 때만 — 「뺄·disable 룰」의 stylelint 항목 참고)
 - `.husky/pre-commit`, `.husky/commit-msg`
 - `scripts/check-file-level-disable.sh`
 
@@ -38,7 +39,7 @@
 ```sh
 # 공통
 npm i -D eslint typescript-eslint eslint-plugin-check-file prettier \
-         stylelint stylelint-config-standard-scss \
+         stylelint stylelint-config-standard-scss stylelint-declaration-strict-value \
          @commitlint/cli @commitlint/config-conventional husky lint-staged
 
 # Next (create-next-app이 보통 이미 설치)
@@ -86,6 +87,7 @@ baseRules는 MP의 인프라·컨벤션을 전제하므로, 과제에 따라 정
 
 - **공통 컴포넌트 전제 룰** — `no-restricted-syntax`의 `<button>`·`<svg>` 직접 사용 금지, 인라인 스타일 객체 금지는 **공통 Button/Icon 컴포넌트가 있다고 가정**한다. 과제에 그게 없으면 바로 걸린다 → (a) 공통 컴포넌트를 만들고 그 안에서만 `eslint-disable` + 사유 주석, 또는 (b) `eslint.config.base.mjs`의 baseRules에서 해당 셀렉터 제거.
 - **`custom/filename-export-convention`** — 단일 컴포넌트/훅 파일명 casing 검사. 과제에 과하면 base.mjs에서 이 룰과 동반 팩토리(`createFilenameExportConventionRule`)를 제거.
-- **stylelint 계열** — `scripts/check-file-level-disable.sh`, lint-staged의 scss/css 태스크, stylelint deps는 **scss/css를 쓸 때만** 필요. Tailwind 등으로 scss를 안 쓰면 제거 가능.
+- **stylelint 계열** — `.stylelintrc.json`, `scripts/check-file-level-disable.sh`, lint-staged의 scss/css 태스크, stylelint deps는 **scss/css를 쓸 때만** 필요. Tailwind 등으로 scss를 안 쓰면 제거 가능.
+- **`scale-unlimited/declaration-strict-value`(raw 값 금지)** — 색·간격·크기에 리터럴 대신 `var(--...)` 토큰을 강제한다. **디자인 토큰 체계를 안 만들 과제면 첫 스타일부터 걸리므로** `.stylelintrc.json`에서 이 룰과 `plugins`의 `stylelint-declaration-strict-value`를 함께 제거(설치 deps에서도 제외). 토큰을 세울 과제면 유지한다. 같은 이유로 `declaration-property-value-disallowed-list`(SCSS 변수 raw 값 금지)도 함께 판단한다.
 - **`subject-korean`** — 한글 커밋 메시지 강제. 평가자와 공유하는 레포라 영어 커밋을 허용해야 하면 `commitlint.config.mjs`에서 제거.
 - **`scope-empty`(scope 필수)** — scope 강제가 과제 범위에 과하면 `commitlint.config.mjs`에서 `scope-empty`를 제거. 유지한다면 프로젝트 scope-enum을 정해 함께 추가한다(config 헤더 주석의 예시 참고).

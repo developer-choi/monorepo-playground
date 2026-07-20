@@ -64,4 +64,6 @@
 
 ### 채용과제 템플릿
 
-`eslint.config.base.mts`, `tsconfig.base.json`, `.stylelintrc.json`, `commitlint.config.mjs` 변경 시 `templates/recruitment/`의 산출물을 함께 최신화한다.
+정적 분석·포매터·커밋훅 설정을 바꾸면 `templates/recruitment/`의 대응 사본도 함께 최신화한다. 대응 관계는 `meta/coupling.json`의 「루트 설정 원본 ↔ 채용과제 템플릿 사본」 묶음에 있다(여기에 나열하지 않는다 — 이중 관리가 되어 어긋난다).
+
+사본은 단일레포용 평탄화본이라 **byte 일치가 아니라 의미 대응**이 기준이다. 모노레포 전용분(워크스페이스 경로, turbo·docs 무시 항목, MP 자체 제작 stylelint 플러그인 등)은 사본에서 빠지는 것이 정상이다.

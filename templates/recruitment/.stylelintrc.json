@@ -1,0 +1,83 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "plugins": ["stylelint-declaration-strict-value"],
+  "rules": {
+    "at-rule-disallowed-list": ["import"],
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]*$",
+      {"message": "클래스명은 camelCase만 허용합니다 (예: buttonPrimary)"}
+    ],
+    "selector-pseudo-class-no-unknown": [true, {"ignorePseudoClasses": ["global"]}],
+    "scss/at-mixin-pattern": [
+      "^_?[a-z][a-zA-Z0-9]*$",
+      {"message": "mixin 이름은 camelCase만 허용합니다 (예: flexCenter). _ prefix는 SCSS private 관례로 허용"}
+    ],
+    "scss/dollar-variable-pattern": [
+      "^_?[a-z][a-zA-Z0-9]*$",
+      {"message": "변수 이름은 camelCase만 허용합니다 (예: $colorPrimary). _ prefix는 SCSS private 관례로 허용"}
+    ],
+    "scss/at-function-pattern": [
+      "^_?[a-z][a-zA-Z0-9]*$",
+      {"message": "function 이름은 camelCase만 허용합니다 (예: safeMapGet). _ prefix는 SCSS private 관례로 허용"}
+    ],
+    "scss/at-use-no-unnamespaced": true,
+    "scss/at-use-no-redundant-alias": true,
+    "value-keyword-case": null,
+    "declaration-property-value-disallowed-list": [
+      {"/^\\$/": ["/px/", "/^#/", "/rgb/", "/hsl/"]},
+      {
+        "message": "SCSS 변수에 raw 값(px·색) 금지 — 토큰이 있으면 var(--...)을, 컴포넌트 전용 일회성이면 stylelint-disable + 사유를 단다"
+      }
+    ],
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "/color$/",
+        "background",
+        "outline",
+        "box-shadow",
+        "text-shadow",
+        "font-size",
+        "line-height",
+        "padding",
+        "padding-top",
+        "padding-right",
+        "padding-bottom",
+        "padding-left",
+        "margin",
+        "margin-top",
+        "margin-right",
+        "margin-bottom",
+        "margin-left",
+        "width",
+        "height",
+        "min-width",
+        "min-height",
+        "max-width",
+        "max-height",
+        "z-index",
+        "gap",
+        "row-gap",
+        "column-gap"
+      ],
+      {
+        "ignoreValues": [
+          "0",
+          "auto",
+          "inherit",
+          "initial",
+          "unset",
+          "normal",
+          "none",
+          "transparent",
+          "currentColor",
+          "/^var\\(/",
+          "100%",
+          "/^calc\\(/"
+        ],
+        "ignoreFunctions": false,
+        "expandShorthand": true,
+        "recurseLonghand": true
+      }
+    ]
+  }
+}

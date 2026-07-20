@@ -235,7 +235,7 @@ export const testFilesConfig = {
 };
 
 /**
- * MSW 목/핸들러 파일 전용 override(next/vite config 배열에 추가). resolver 스코프 룰(A·B)을
+ * MSW 목/핸들러 파일 전용 override(next/vite config 배열에 추가). resolver 스코프 룰(predicate 쿼리 금지)을
  * 목·핸들러 파일(`src/mocks/**`, `*.mock.*`)에 적용한다. 테스트 파일은 `testFilesConfig`가 담당하므로
  * `ignores`로 겹침(no-restricted-syntax last-wins)을 막는다.
  *

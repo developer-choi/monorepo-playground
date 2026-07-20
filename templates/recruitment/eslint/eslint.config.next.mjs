@@ -38,6 +38,7 @@ const eslintConfig = defineConfig([
     },
     rules: {
       ...baseRules,
+      'react-hooks/error-boundaries': 'off',
       '@typescript-eslint/no-deprecated': 'error',
       'check-file/folder-naming-convention': ['error', {'src/**/*': 'NEXT_JS_APP_ROUTER_CASE'}],
     },

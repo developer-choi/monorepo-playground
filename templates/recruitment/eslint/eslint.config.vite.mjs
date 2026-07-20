@@ -14,7 +14,7 @@ import {defineConfig, globalIgnores} from 'eslint/config';
 import {baseRules, createFilenameExportConventionRule, mockFilesConfig, testFilesConfig} from './eslint.config.base.mjs';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', '**/*.d.ts']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -42,4 +42,10 @@ export default defineConfig([
   },
   testFilesConfig,
   mockFilesConfig,
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+    },
+  },
 ]);
