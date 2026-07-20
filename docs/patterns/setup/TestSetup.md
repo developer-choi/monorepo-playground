@@ -17,7 +17,7 @@ npm install -D vitest jsdom @vitejs/plugin-react vite-tsconfig-paths @testing-li
 ### vitest.config.mts
 
 ```ts
-import {defineConfig} from 'vitest/config';
+import {configDefaults, defineConfig} from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -27,11 +27,14 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     restoreMocks: true,
+    exclude: [...configDefaults.exclude, 'e2e/**'],
   },
 });
 ```
 
 **`vite-tsconfig-paths`를 쓰는 이유:** tsconfig.json의 `paths`와 vitest의 `resolve.alias`를 각각 관리하면, 한쪽만 바꿨을 때 "빌드는 되는데 테스트는 깨지는" 상황이 온다. 플러그인으로 단일 원천 유지.
+
+**`exclude`로 E2E 폴더를 빼는 이유:** vitest의 기본 수집 범위는 `**/*.{test,spec}.*`라 Playwright E2E 스펙(`e2e/`)까지 물어간다. 그러면 브라우저에서 돌아야 할 `test()`를 jsdom에서 실행하다 `Playwright Test did not expect test() to be called here`로 터진다. 러너가 둘인 레포에서만 필요한 줄이므로, E2E를 안 쓰면 빼도 된다. `configDefaults.exclude`를 펼쳐 넣지 않고 `exclude`를 통째로 덮으면 `node_modules` 제외가 사라진다.
 
 **`globals: true`를 쓰지 않는 이유:** `describe`, `it`, `expect`를 명시적으로 import한다. 자동완성도 되고, 어디서 온 함수인지 명확하다.
 
