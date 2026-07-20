@@ -628,6 +628,22 @@ server.resetHandlers();
 server.use(http.get('/products', () => HttpResponse.json([])));
 ```
 
+**Playwright `networkidle` 금지** (`Property[key.name='waitUntil'][value.value='networkidle']` + `CallExpression[callee.property.name='waitForLoadState'][arguments.0.value='networkidle']` — 전역)
+
+E2E에서 "네트워크가 잠잠해질 때까지" 기다리는 `networkidle`을 쓰지 않습니다. Playwright 공식이 이 값에 **DISCOURAGED**를 붙이고 "Don't use this method for testing, rely on web assertions to assess readiness instead."라고 명시합니다([`page.goto`의 `waitUntil`](https://playwright.dev/docs/api/class-page#page-goto), [`page.waitForLoadState`의 `state`](https://playwright.dev/docs/api/class-page#page-wait-for-load-state) 양쪽 동일). 대신 검사문(assertion)이 조건을 만족할 때까지 스스로 재시도합니다 — [공식 Best Practices](https://playwright.dev/docs/best-practices)의 "By using web first assertions Playwright will wait until the expected condition is met.", "If the alert message takes half a second to appear, assertions such as `toBeVisible()` will wait and retry if needed." 타입스크립트로는 못 잡습니다(`'networkidle'`은 `WaitUntilState`·`LoadState`의 정당한 멤버라 컴파일이 통과) — 린트가 유일한 게이트입니다. 두 진입점이 모두 Playwright 전용 이름이라 충돌 위험이 낮아 전역(`baseRules`)으로 둡니다.
+
+```ts
+// ❌ 네트워크가 잠잠해지길 기다림 — 폴링·keep-alive가 있으면 타임아웃까지 매달림
+await page.goto('/products', {waitUntil: 'networkidle'});
+await page.waitForLoadState('networkidle');
+
+// ✅ 기다리지 말고, 보여야 할 것이 보이는지 검사한다 (자동 재시도)
+await page.goto('/products');
+await expect(page.getByRole('listitem').first()).toBeVisible();
+```
+
+기본값 아닌 나머지 두 값(`domcontentloaded`·`commit`)은 공식이 금지하지 않아 **지금은 막지 않습니다**. 정당한 쓰임이 있고, 아직 이 레포에서 필요해진 사례가 없어 메시지를 제대로 쓸 근거가 없기 때문입니다. 실제로 이 옵션들을 만지고 싶어지는 상황이 생기면 그때 제약 방식을 정합니다 — 검토 재료는 `backlog` 레포 `projects/monorepo-playground/inactive/lint/playwright-goto-waituntil-restriction.md`에 있습니다.
+
 아래 predicate 쿼리 금지 룰은 **목/핸들러 파일에만** 적용합니다(`mockFilesConfig`: `src/mocks/**`·`*.mock.*`, 테스트 파일은 `testFilesConfig`). 전역으로 잡으면 실제 앱 소스에서 오탐하기 때문입니다 — `http.get(url, cb)`는 `node:http`에서 정당하게 쓰입니다.
 
 **MSW predicate에 쿼리 파라미터 금지** (`CallExpression[callee.object.name='http'][...][arguments.0.value=/[?]/]` + TemplateLiteral 변형 — 목/테스트 스코프)

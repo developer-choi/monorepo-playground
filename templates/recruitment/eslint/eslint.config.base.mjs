@@ -189,6 +189,17 @@ export const baseRules = {
       message:
         'Do not pass handlers to resetHandlers() — it wipes initial handlers and harms predictability. Use resetHandlers() then use(...) instead.',
     },
+    {
+      selector: "Property[key.name='waitUntil'][value.value='networkidle']",
+      message:
+        "Playwright의 networkidle 금지 — 공식이 DISCOURAGED로 표시하며 \"Don't use this method for testing, rely on web assertions to assess readiness instead\"라고 명시합니다. 로드 상태를 기다리지 말고 expect(...).toBeVisible() 등 자동 재시도하는 검사문에 맡기세요.",
+    },
+    {
+      selector:
+        "CallExpression[callee.property.name='waitForLoadState'][arguments.0.value='networkidle']",
+      message:
+        "Playwright의 networkidle 금지 — 공식이 DISCOURAGED로 표시하며 \"Don't use this method for testing, rely on web assertions to assess readiness instead\"라고 명시합니다. 로드 상태를 기다리지 말고 expect(...).toBeVisible() 등 자동 재시도하는 검사문에 맡기세요.",
+    },
   ],
 };
 
