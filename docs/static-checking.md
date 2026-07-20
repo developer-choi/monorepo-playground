@@ -78,7 +78,13 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 
 ## 채용과제 단일레포 템플릿
 
-위 설정들을 단일레포 채용과제용으로 평탄화한 복사본이 [`templates/recruitment/`](../templates/recruitment/)에 있다. `/workflow` PR1이 이 복사본을 가져다 셋업하며, 원본(ESLint·tsconfig·Stylelint·commitlint) 변경 시 복사본도 함께 갱신한다.
+위 설정들을 단일레포 채용과제용으로 평탄화한 복사본이 [`templates/recruitment/`](../templates/recruitment/)에 있다. `/workflow` PR1이 이 복사본을 가져다 셋업한다. 원본과 복사본의 대응 관계는 `meta/coupling.json`의 「루트 설정 원본 ↔ 채용과제 템플릿 사본」 묶음이 관리하며, 원본을 편집하면 hook이 짝꿍 파일을 알린다.
+
+복사본은 평탄화본이라 **byte 일치가 아니라 의미 대응**이 기준이다. 모노레포 전용분(워크스페이스 경로 룰, turbo·docs 무시 항목, MP 자체 제작 stylelint 플러그인 등)은 복사본에서 빠지는 것이 정상이다.
+
+### 동기화를 스크립트로 검사하지 않는 이유
+
+파일 비교로 드리프트를 자동 검출하는 방안을 2026-07-20에 검토하고 기각했다. 자동 비교가 성립하는 건 완전 일치를 요구하는 5개(`.editorconfig`·`.prettierrc`·`.gitattributes`·husky 훅 2개)뿐인데, 이들은 드리프트가 난 적이 없다. 반대로 실제 드리프트는 전부 비교 불가능한 쪽에서 났다 — `.stylelintrc.json` 파일 통째 누락, eslint 룰 개별 누락, README 병합 스니펫 미갱신. 구조가 다른 평탄화본이라 룰 키 추출 비교도 의도적 생략과 실수를 구분하지 못해 오탐만 쌓인다. 검출력이 사고 지점과 어긋나므로 `meta/coupling.json` + 편집 시점 hook 알림 수준으로 유지한다.
 
 ## 점진적 마이그레이션
 
