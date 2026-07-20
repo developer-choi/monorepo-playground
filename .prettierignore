@@ -3,6 +3,8 @@ dist
 .next
 build
 coverage
+playwright-report
+test-results
 package-lock.json
 .yarn
 turbo
