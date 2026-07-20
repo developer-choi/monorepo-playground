@@ -259,12 +259,14 @@ const mswResolverRules = [
 /**
  * 테스트 파일 전용 override(next/vite config 배열에 추가). 테스트 JSX의 `aria-*` 작성 금지 —
  * a11y가 현재 우선순위가 아니라서. `getByRole`는 허용, base 기존 `no-restricted-syntax` 항목은 보존.
+ * `no-floating-promises`는 전역 off를 여기서만 되살린다(await 누락 차단).
  *
  * [원본] monorepo-playground/eslint.config.base.mts — 원본이 바뀌면 이 파일도 함께 최신화.
  */
 export const testFilesConfig = {
-  files: ['**/*.test.{ts,tsx}'],
+  files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
   rules: {
+    '@typescript-eslint/no-floating-promises': 'error',
     'no-restricted-syntax': [
       'error',
       ...baseRules['no-restricted-syntax'].slice(1),

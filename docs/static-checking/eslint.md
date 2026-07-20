@@ -5,7 +5,7 @@
 ```js
 // eslint.config.base.mts
 export const baseRules = {
-  '@typescript-eslint/no-floating-promises': 'off',
+  '@typescript-eslint/no-floating-promises': 'off', // 테스트 파일은 testFilesConfig가 error로 override
   '@typescript-eslint/return-await': ['error', 'in-try-catch'],
   '@typescript-eslint/no-misused-promises': ['error', {checksVoidReturn: {attributes: false}}],
   '@typescript-eslint/switch-exhaustiveness-check': 'error',
@@ -54,13 +54,29 @@ export {foo};
 export const bar = bar;
 ```
 
-#### `@typescript-eslint/no-floating-promises` (off)
+#### `@typescript-eslint/no-floating-promises` (앱 소스 off, 테스트 파일 error)
 
-Promise를 await, return, `.then()` 없이 버리면(floating) 에러가 조용히 삼켜질 수 있습니다. 이 규칙을 켜면 의도적으로 결과를 무시하는 호출에 `void` 키워드를 강제하므로 **비활성화**했습니다. await 누락은 코드리뷰로 잡습니다. `return promise`에서 await를 강제하는 것은 이 룰이 아니라 `return-await` 룰입니다.
+Promise를 await, return, `.then()` 없이 버리면(floating) 에러가 조용히 삼켜질 수 있습니다. 앱 소스에서는 의도적으로 결과를 무시하는 호출에 `void` 키워드를 강제하므로 **비활성화**합니다 — `void`를 코드에 쓰지 않는다는 방침이라, 이 룰을 켜면 그 방침과 충돌합니다. 앱 소스의 await 누락은 코드리뷰로 잡습니다. `return promise`에서 await를 강제하는 것은 이 룰이 아니라 `return-await` 룰입니다.
 
 ```typescript
-// 아래 코드가 린트에 걸리지 않음 — 리뷰어가 주의
+// 앱 소스 — 린트에 걸리지 않음, 리뷰어가 주의
 fetchData(); // Promise를 어디에도 안 넘기고 버림
+```
+
+**테스트 파일(`*.test.*`·`*.spec.*`)에서는 `error`로 되살립니다**(`testFilesConfig`). 테스트에서 `await`를 빠뜨리면 동작이 반영되기 전에 다음 검사가 돌아 조용히 잘못된 결과가 나오는데, 이건 리뷰로 잡기 어려운 부류입니다. 반면 테스트 코드는 Promise를 의도적으로 버리는 일이 없어 `void` 강제가 발생하지 않습니다 — 도입 시점의 테스트 파일 19개에서 위반이 0건이었고, 기존 코드를 한 줄도 고치지 않았습니다.
+
+Playwright 공식 [Best Practices](https://playwright.dev/docs/best-practices)의 "Lint your tests"도 같은 룰을 지목합니다.
+
+> Use [`@typescript-eslint/no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises/) [ESLint](https://eslint.org) rule to make sure there are no missing awaits before the asynchronous calls to the Playwright API.
+
+```typescript
+// ❌ await 누락 — 클릭이 반영되기 전에 다음 줄이 실행됨
+user.click(screen.getByRole('button'));
+screen.findByRole('alert'); // findBy*는 Promise 반환 — 아무것도 기다리지 않음
+
+// ✅
+await user.click(screen.getByRole('button'));
+expect(await screen.findByRole('alert')).toBeInTheDocument();
 ```
 
 #### `@typescript-eslint/return-await` (in-try-catch)
@@ -664,6 +680,8 @@ http.get('/products', ({request}) => {
 #### 테스트 파일 전용: `aria-*` 금지 (`testFilesConfig`)
 
 `testFilesConfig`(base export, 각 워크스페이스 config 배열에 추가)가 테스트 JSX의 `aria-*` 작성을 `no-restricted-syntax`로 금지합니다. **a11y가 현재 우선순위가 아니라** 테스트에 접근성 계약을 박지 않기 위함입니다. `getByRole`는 허용하며(base 기존 `no-restricted-syntax` 항목도 보존), 불가피하면 `eslint-disable` + 사유로 처리합니다.
+
+적용 대상은 `**/*.test.{ts,tsx}`와 `**/*.spec.{ts,tsx}`입니다. `.spec`은 Playwright E2E 스펙 확장자로, 스펙이 생기기 전에 넣어둬 첫 스펙부터 걸리게 합니다. 이 블록은 위 [`no-floating-promises`](#typescript-eslintno-floating-promises-앱-소스-off-테스트-파일-error)를 `error`로 되살리는 자리이기도 합니다.
 
 ```tsx
 render(<Callout aria-label="알림">내용</Callout>); // ❌ 테스트 JSX에 aria-*
