@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
+import ErrorNotice from '@/shared/components/ErrorNotice';
 import {getErrorInfo} from '@/shared/error/handler/info';
 import {useReportPageError} from '@/shared/error/handler/useReportPageError';
 
@@ -13,5 +13,5 @@ export default function ErrorPage({error, reset}: ErrorPageProps) {
   useReportPageError(error);
 
   const {title, content} = getErrorInfo(error);
-  return <ErrorPageTemplate content={content} title={title} onAction={reset} />;
+  return <ErrorNotice content={content} title={title} onAction={reset} />;
 }

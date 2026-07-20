@@ -1,7 +1,7 @@
 import {type ReactNode} from 'react';
 import {notFound, redirect} from 'next/navigation';
 import InvalidAccessError from '@/shared/error/class/InvalidAccessError';
-import ErrorPageTemplate from '@/shared/components/ErrorPageTemplate';
+import ErrorNotice from '@/shared/components/ErrorNotice';
 import {getErrorInfo} from '@/shared/error/handler/info';
 import ApiResponseError from '@/shared/error/class/ApiResponseError';
 import {captureException} from '@sentry/nextjs';
@@ -22,7 +22,7 @@ export function handleServerSideError(error: unknown): ReactNode {
 
     if (error.status < HTTP_STATUS_INTERNAL_SERVER_ERROR) {
       const {title, content} = getErrorInfo(error);
-      return <ErrorPageTemplate content={content} title={title} />;
+      return <ErrorNotice content={content} title={title} />;
     }
   }
 

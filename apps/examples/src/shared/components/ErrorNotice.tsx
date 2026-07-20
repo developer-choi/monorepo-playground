@@ -1,17 +1,17 @@
 import clsx from 'clsx';
 import {Button} from '@monorepo-playground/design-system';
 import typography from '@monorepo-playground/design-system/styles/typography';
-import styles from './ErrorPageTemplate.module.scss';
+import styles from './ErrorNotice.module.scss';
 
-interface ErrorPageTemplateProps {
+interface ErrorNoticeProps {
   title: string;
   content: string;
   onAction?: () => void;
 }
 
-export default function ErrorPageTemplate({title, content, onAction}: ErrorPageTemplateProps) {
+export default function ErrorNotice({title, content, onAction}: ErrorNoticeProps) {
   return (
-    <div className={styles.page}>
+    <div className={styles.container}>
       <div className={styles.body}>
         <h2 className={clsx(typography.h2, styles.title)}>{title}</h2>
         <p className={clsx(typography.body1, styles.content)}>{content}</p>
