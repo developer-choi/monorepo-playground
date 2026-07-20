@@ -102,6 +102,7 @@ export default class FetchApiClient extends ApiClient {
     body?: unknown;
     headers?: HeadersInit;
   }): Promise<never> {
+    // eslint-disable-next-line no-restricted-syntax -- 이미 throw 하는 중에 에러 본문을 부가정보로 읽는 것뿐이라 실패를 삼키지 않는다. 본문이 JSON이 아니면 errorData만 null이고 ApiResponseError는 그대로 던져진다.
     const errorData: unknown = await params.response.json().catch(() => null);
     throw new ApiResponseError({
       method: params.method,

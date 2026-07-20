@@ -199,6 +199,17 @@ export const baseRules = {
       message:
         'Playwright의 networkidle 금지 — 공식이 DISCOURAGED로 표시하며 "Don\'t use this method for testing, rely on web assertions to assess readiness instead"라고 명시합니다. 로드 상태를 기다리지 말고 expect(...).toBeVisible() 등 자동 재시도하는 검사문에 맡기세요.',
     },
+    {
+      selector:
+        "CallExpression[callee.property.name='catch'] > ArrowFunctionExpression:matches([body.type='Literal'][body.value=null], [body.type='Identifier'][body.name='undefined'])",
+      message:
+        '에러를 null·undefined로 뭉개는 catch 금지. 404·500·네트워크 오류가 한 결과로 합쳐져 장애가 "없음"으로 위장됩니다. 실패 종류를 구분해 처리하세요(예: 404만 null 반환, 나머지는 throw 전파). 이미 throw 중에 에러 본문을 파싱하는 등 정당한 경우만 eslint-disable + 사유 주석.',
+    },
+    {
+      selector: 'CatchClause[body.body.length=0]',
+      message:
+        '빈 catch 금지. 에러를 통째로 삼키면 실패가 흔적 없이 사라집니다. 처리하거나 재던지세요. 무시가 의도라면 eslint-disable + 사유 주석.',
+    },
   ],
 };
 
