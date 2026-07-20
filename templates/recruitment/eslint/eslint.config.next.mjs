@@ -12,7 +12,13 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import tseslint from 'typescript-eslint';
 import checkFile from 'eslint-plugin-check-file';
-import {baseRules, createFilenameExportConventionRule, mockFilesConfig, testFilesConfig} from './eslint.config.base.mjs';
+import {
+  baseRules,
+  createFilenameExportConventionRule,
+  mockFilesConfig,
+  sharedBoundaryConfig,
+  testFilesConfig,
+} from './eslint.config.base.mjs';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -51,6 +57,7 @@ const eslintConfig = defineConfig([
       'check-file': checkFile,
     },
   },
+  sharedBoundaryConfig,
   testFilesConfig,
   mockFilesConfig,
 ]);

@@ -730,6 +730,22 @@ React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
 // ✅  src/form/auto-focus/components/AutoFocusDemo.tsx  + app에는 page.tsx만
 ```
 
+### 채용과제 템플릿 전용 규칙
+
+`templates/recruitment/eslint/eslint.config.base.mjs`에만 있고 MP 원본에는 없는 규칙입니다. MP는 모노레포라 `src/shared` 규약이 없어 이 경계가 성립하지 않습니다.
+
+#### `import/no-restricted-paths` — shared 도메인 경계
+
+`src/shared`는 도메인 무관이라는 불변식을 강제합니다. shared 파일이 `src` 내부에서 shared 외(도메인·app)를 import하면 에러입니다.
+
+```js
+zones: [{target: './src/shared', from: './src', except: ['./shared']}]
+```
+
+`except`가 `from` 기준 상대경로라 도메인 폴더가 늘어도 설정은 그대로입니다. 도입 계기는 채용과제(2026-07-14)에서 공용 컴포넌트 `src/shared/components/StatusBadge.tsx`가 `import type {UiStatus} from '@/reservation/schema'`로 도메인 타입을 끌어쓰고 예약 전용 라벨까지 하드코딩했는데 tsc·eslint가 전부 통과하고 리뷰어가 수동 발견한 사고입니다.
+
+`settings`의 `import/resolver`(eslint-import-resolver-typescript)는 필수입니다. 이 룰은 import 문자열이 아니라 **해석된 실경로**로 판정하므로, resolver가 없으면 `.tsx`를 못 찾아 alias(`@/...`)뿐 아니라 상대경로까지 전부 미해석으로 빠지고 룰이 조용히 0건이 됩니다(2026-07-20 실측: settings 제거 시 위반 2건이 exit 0).
+
 ### `recommendedTypeChecked` 프리셋
 
 `recommendedTypeChecked` 프리셋에 포함된 규칙들입니다. `recommended`에서 업그레이드하면 활성화되며, TypeScript 컴파일러의 타입 정보를 활용합니다.

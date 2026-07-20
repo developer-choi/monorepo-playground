@@ -5,6 +5,7 @@
  *
  * [원본] monorepo-playground/eslint.config.base.mts — 원본이 바뀌면 이 파일도 함께 최신화.
  */
+import importPlugin from 'eslint-plugin-import';
 
 export const baseRules = {
   '@typescript-eslint/no-explicit-any': 'error',
@@ -189,6 +190,38 @@ export const baseRules = {
         'Do not pass handlers to resetHandlers() — it wipes initial handlers and harms predictability. Use resetHandlers() then use(...) instead.',
     },
   ],
+};
+
+/**
+ * `src/shared`는 도메인 무관이라는 불변식을 강제한다(next/vite config 배열에 추가).
+ * shared 파일이 src 내부에서 shared 외(도메인·app)를 import하면 에러. `except`가 `from` 기준 상대경로라
+ * 도메인이 늘어도 설정은 그대로다.
+ *
+ * `import/resolver` 설정은 필수다 — 없으면 resolver가 `.tsx`를 못 찾아 alias·상대경로 전부 미해석으로
+ * 빠지고 룰이 조용히 0건이 된다(MP 템플릿에서 2026-07-20 실측: settings 제거 시 위반 2건이 exit 0).
+ *
+ * MP 원본(`eslint.config.base.mts`)에는 없는 템플릿 전용 룰이다 — MP는 모노레포라 `src/shared` 규약이
+ * 없고, 이 경계는 단일레포 채용과제에서만 성립한다. 사유는 docs/static-checking/eslint.md 참고.
+ */
+export const sharedBoundaryConfig = {
+  files: ['**/*.{ts,tsx}'],
+  plugins: {import: importPlugin},
+  settings: {'import/resolver': {typescript: {alwaysTryTypes: true, project: './tsconfig.json'}}},
+  rules: {
+    'import/no-restricted-paths': [
+      'error',
+      {
+        zones: [
+          {
+            target: './src/shared',
+            from: './src',
+            except: ['./shared'],
+            message: 'shared는 도메인 무관 — src 내부는 shared끼리만 import 가능',
+          },
+        ],
+      },
+    ],
+  },
 };
 
 /**

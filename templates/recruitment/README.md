@@ -39,6 +39,7 @@
 ```sh
 # 공통
 npm i -D eslint typescript-eslint eslint-plugin-check-file prettier \
+         eslint-plugin-import eslint-import-resolver-typescript \
          stylelint stylelint-config-standard-scss stylelint-declaration-strict-value \
          @commitlint/cli @commitlint/config-conventional husky lint-staged
 
@@ -89,5 +90,6 @@ baseRules는 MP의 인프라·컨벤션을 전제하므로, 과제에 따라 정
 - **`custom/filename-export-convention`** — 단일 컴포넌트/훅 파일명 casing 검사. 과제에 과하면 base.mjs에서 이 룰과 동반 팩토리(`createFilenameExportConventionRule`)를 제거.
 - **stylelint 계열** — `.stylelintrc.json`, `scripts/check-file-level-disable.sh`, lint-staged의 scss/css 태스크, stylelint deps는 **scss/css를 쓸 때만** 필요. Tailwind 등으로 scss를 안 쓰면 제거 가능.
 - **`scale-unlimited/declaration-strict-value`(raw 값 금지)** — 색·간격·크기에 리터럴 대신 `var(--...)` 토큰을 강제한다. **디자인 토큰 체계를 안 만들 과제면 첫 스타일부터 걸리므로** `.stylelintrc.json`에서 이 룰과 `plugins`의 `stylelint-declaration-strict-value`를 함께 제거(설치 deps에서도 제외). 토큰을 세울 과제면 유지한다. 같은 이유로 `declaration-property-value-disallowed-list`(SCSS 변수 raw 값 금지)도 함께 판단한다.
+- **`import/no-restricted-paths`(shared 도메인 경계)** — `src/shared`가 도메인 폴더를 import하면 에러. `src/shared` 규약을 안 쓰는 과제면 룰이 아예 안 걸리므로 그대로 둬도 되고, deps를 줄이려면 base.mjs의 `sharedBoundaryConfig`와 두 config의 참조, `eslint-plugin-import`·`eslint-import-resolver-typescript`를 함께 제거. **`settings`의 `import/resolver`는 빼지 말 것** — 빼면 경로 해석이 안 돼 룰이 조용히 무력화된다.
 - **`subject-korean`** — 한글 커밋 메시지 강제. 평가자와 공유하는 레포라 영어 커밋을 허용해야 하면 `commitlint.config.mjs`에서 제거.
 - **`scope-empty`(scope 필수)** — scope 강제가 과제 범위에 과하면 `commitlint.config.mjs`에서 `scope-empty`를 제거. 유지한다면 프로젝트 scope-enum을 정해 함께 추가한다(config 헤더 주석의 예시 참고).
