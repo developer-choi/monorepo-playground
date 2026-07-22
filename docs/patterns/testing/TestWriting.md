@@ -69,7 +69,7 @@ describe('RecentSearches', () => {
 
 ### getByRole 우선 사용
 
-`getByRole` 외 쿼리 사용 시 사용자에게 보고한다. 워딩은 언제든 바뀔 수 있으므로 문자열에 의존하는 쿼리를 지양한다.
+`getByRole` 외 쿼리 사용 시 사용자에게 보고한다. 워딩은 언제든 바뀔 수 있으므로 문자열에 의존하는 쿼리를 지양한다. Playwright E2E 테스트의 `page.getByRole()` 로케이터에도 동일하게 적용한다 — `getByText`·`getByLabel`·`getByTestId` 등을 써야 하면 임의로 작성하지 않고 사용자에게 보고한다.
 
 ```tsx
 // before (컴포넌트)
