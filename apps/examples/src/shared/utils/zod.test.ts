@@ -8,37 +8,45 @@ const testSchema = z.object({
   count: z.number(),
 });
 
-// npm test src/shared/utils/zod.test.ts
 describe('safeParsePartial()', () => {
-  describe('valid fields', () => {
-    it('should return all fields when all values are valid', () => {
+  describe('General cases', () => {
+    it('모든 값이 유효하면 전부 담아 반환한다', () => {
       const result = safeParsePartial(testSchema, {name: 'foo', type: 'online', count: 1});
+
       expect(result).toEqual({name: 'foo', type: 'online', count: 1});
     });
 
-    it('should return only the valid fields when some values are invalid', () => {
+    it('스키마가 값을 변환하면 변환된 값을 담는다', () => {
+      const coercingSchema = z.object({count: z.coerce.number()});
+
+      const result = safeParsePartial(coercingSchema, {count: '3'});
+
+      expect(result).toEqual({count: 3});
+    });
+  });
+
+  describe('Edge cases', () => {
+    it('일부 값이 유효하지 않으면 유효한 값만 담는다', () => {
       const result = safeParsePartial(testSchema, {name: 'foo', type: 'invalid-enum'});
+
       expect(result).toEqual({name: 'foo'});
     });
-  });
 
-  describe('unknown fields', () => {
-    it('should exclude keys that are not in the schema', () => {
+    it('스키마에 없는 키는 담지 않는다', () => {
       const result = safeParsePartial(testSchema, {name: 'foo', unknown: 'bar'});
+
       expect(result).toEqual({name: 'foo'});
     });
-  });
 
-  describe('undefined fields', () => {
-    it('should exclude keys with undefined values', () => {
+    it('값이 undefined인 키는 담지 않는다', () => {
       const result = safeParsePartial(testSchema, {name: 'foo', type: undefined});
+
       expect(result).toEqual({name: 'foo'});
     });
-  });
 
-  describe('empty result', () => {
-    it('should return an empty object when no values are valid', () => {
+    it('유효한 값이 하나도 없으면 빈 객체를 반환한다', () => {
       const result = safeParsePartial(testSchema, {type: 'invalid-enum', count: 'not-a-number'});
+
       expect(result).toEqual({});
     });
   });
