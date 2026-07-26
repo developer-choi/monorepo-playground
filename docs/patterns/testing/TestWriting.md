@@ -107,7 +107,20 @@ expect(await screen.findByRole('alert')).toBeInTheDocument();
 
 테스트에 mock을 넣을 때(`vi.mock`·`vi.fn`·`server.use`·fake timer·`vi.stubGlobal`/`stubEnv` 등) 왜 그 mock이 정당한지 근거를 제시하고 사용자 확답을 받는다. 근거를 댈 수 없으면 mock 없이 실제 코드로 검증한다 — 순수 로직·상태·라우팅은 대부분 mock이 필요 없다.
 
-끊는 위치(seam)는 가능한 한 바깥에서 — 네트워크는 fetch stub이 아니라 MSW로 서버 경계만 끊는다. mock 정당성 판단 기준과 도메인별 worked example 73개는 KA `techniques/frontend/testing/mocking-cases.md` 참조.
+정당한 근거는 **진짜를 쓰면 느림 / 불안정(flaky) / 통제 못 할 부작용** 셋 중 하나에 걸리는 경우다. 셋 다 아니면(즉시 값이 나오고, 언제 불러도 같고, 부작용 없는 대상) mock하지 않는다 — 얻는 것 없이 확신만 잃고, 그 대상의 버그가 통과한다.
+
+### mock 범위는 이유를 없앨 만큼만
+
+mock은 확신을 편의와 바꾸는 거래이고, **범위와 확신은 반비례**한다. mock한 대상 안쪽은 실행되지 않으므로 그 안의 버그는 프로덕션에서 처음 드러난다.
+
+끊는 위치(seam)는 이유가 사라지는 가장 바깥 지점으로 잡는다.
+
+- 네트워크 요청 — 이유는 실서버가 느리고 불안정한 것. 서버만 가짜면 이유가 사라지므로 **MSW로 네트워크에서 끊는다**. 요청 함수를 통째로 `vi.mock`하면 URL·body 조립 코드가 통째로 실행되지 않아 `{ text }`를 `{ content }`로 보내는 오류도 테스트가 통과한다. `fetch` 스텁은 조립까지는 실행되지만 결과를 아무도 보지 않아 URL 오타를 못 잡는다. MSW는 핸들러가 주소·본문을 보므로 어긋나면 그대로 실패한다.
+- 결제 SDK 등 부작용 — 이유는 진짜 청구가 일어나는 것. 부르지 않아야 사라지므로 모듈째 교체한다.
+
+mock 정당성 판단 기준과 도메인별 worked example 73개는 KA `techniques/frontend/testing/mocking-cases.md` 참조.
+
+> 근거·예제 전개(채용담당자용 긴 글): [guides/testing/how-to-mock.md](../../guides/testing/how-to-mock.md). AI는 위 요약으로 판단하고, 이 링크는 열지 않는다.
 
 ## 데이터 처리
 

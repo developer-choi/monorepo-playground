@@ -1,5 +1,5 @@
 ---
-keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, React Testing Library, describe, it, getByRole, mock, MSW, 응답 타입, HttpResponse, 핸들러 제네릭, 요청 단언, request assertion, onUnhandledRequest, 반응 테스트, custom request predicate, dynamic mock scenarios, 심화 기법, 핸들러 구조화, structuring handlers, server.use, resetHandlers, 런타임 오버라이드, 도메인별 분할, higher-order resolver, AI 생성 테스트, AI-generated tests, 테스트 리뷰, toBeDefined, toMatchObject, 무의미 검증, 구현 결합, 미실행, vitest run, 엣지케이스 누락, 커버리지, use case coverage]
+keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, React Testing Library, describe, it, getByRole, mock, MSW, 응답 타입, HttpResponse, 핸들러 제네릭, 요청 단언, request assertion, onUnhandledRequest, 반응 테스트, custom request predicate, dynamic mock scenarios, 심화 기법, 핸들러 구조화, structuring handlers, server.use, resetHandlers, 런타임 오버라이드, 도메인별 분할, higher-order resolver, AI 생성 테스트, AI-generated tests, 테스트 리뷰, toBeDefined, toMatchObject, 무의미 검증, 구현 결합, 미실행, vitest run, 엣지케이스 누락, 커버리지, use case coverage, E2E, integration, unit, 레벨 선택, 테스트 피라미드, 테스트 트로피, icecream cone, 모킹 범위, vi.mock, fetch 스텁, flaky, 부작용, 확신]
 ---
 
 # Best Practices — 테스팅
@@ -8,7 +8,7 @@ keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, 
 
 ### 테스트 대상·레벨 판단
 
-- 상황: 테스트 대상·레벨 선정. Yes 디폴트, 면제 화이트리스트, 구현 세부사항 금지, Integration 우선
+- 상황: 테스트 대상·레벨 선정. Yes 디폴트, 면제 화이트리스트, 구현 세부사항 금지, Integration 우선. 레벨은 같은 확신이면 낮은 쪽(E2E는 아래 레벨로 못 얻는 것만, icecream cone 오답)
 - 코드: docs/patterns/testing/WhatToTest.md
 
 ### 작성하지 않는 테스트 (안티패턴)
@@ -19,7 +19,7 @@ keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, 
 ### 테스트 코드 작성 패턴
 
 - 기술스택: Vitest + React Testing Library
-- 상황: 테스트 구조(describe/it 네이밍), 쿼리(getByRole 우선, 접두사 용도), Mock(도입 시 근거·확답 필수, seam 위치), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문), 네이밍(사용자 관점 it 워딩), 검증 범위(mock 인덱스 접근 금지, 라이브러리 기본 동작 재검증 금지)
+- 상황: 테스트 구조(describe/it 네이밍), 쿼리(getByRole 우선, 접두사 용도), Mock(도입 시 근거·확답 필수 — 느림·불안정·부작용 셋 중 하나일 때만, 범위는 그 이유를 없앨 만큼만, 네트워크는 `vi.mock`·fetch 스텁이 아니라 MSW), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문), 네이밍(사용자 관점 it 워딩), 검증 범위(mock 인덱스 접근 금지, 라이브러리 기본 동작 재검증 금지)
 - 코드: docs/patterns/testing/TestWriting.md
 
 ### AI가 생성한 테스트 리뷰
