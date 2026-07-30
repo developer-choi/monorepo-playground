@@ -69,6 +69,7 @@ npm i -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refre
 ```jsonc
 {
   "scripts": {
+    "preinstall": "npx only-allow npm",
     "lint": "eslint --max-warnings 0",
     "format": "prettier --write .",
     "test-staged": "lint-staged --concurrent false && tsc --noEmit",
