@@ -28,7 +28,7 @@ interface LessonRow {
 // 타입, 유효성 검증, 에러메시지를 하나의 스키마에 통합
 const lessonSchema = z.object({
   lessonType: z.enum(['online', 'offline'], {
-    errorMap: () => ({message: '수업 유형을 선택해주세요'}),
+    error: '수업 유형을 선택해주세요',
   }),
 });
 
@@ -59,7 +59,7 @@ export default function LessonListPage({ searchParams }: { searchParams: Record<
 ```typescript
 const lessonSchema = z.object({
   lessonType: z.enum(['online', 'offline'], {
-    errorMap: () => ({message: '수업 유형을 선택해주세요'}),
+    error: '수업 유형을 선택해주세요',
   }),
 });
 
