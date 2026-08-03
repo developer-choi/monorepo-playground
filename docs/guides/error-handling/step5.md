@@ -73,7 +73,7 @@ Server Side의 에러 객체를 Client Side로 유지시킬 수 있는 방향은
 ### 왜 Vercel은 이렇게 설계했을까요?
 > to avoid leaking potentially sensitive details included in the error to the client.
 
-에러 객체에 속성을 추가하는 것은 좋은 방법입니다. ([Step 3. 에러 처리 원칙 세우기](docs/error/step3.md))
+에러 객체에 속성을 추가하는 것은 좋은 방법입니다. ([Step 3. 에러 처리 원칙 세우기](./step3.md))
 
 하지만, 개발자의 실수로 민감한 정보를 에러 객체에 저장하는 것도 충분히 가능합니다.
 
