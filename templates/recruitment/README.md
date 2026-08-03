@@ -23,6 +23,7 @@
 - `commitlint.config.mjs`
 - `.stylelintrc.json` (scss/css를 쓸 때만 — 「뺄·disable 룰」의 stylelint 항목 참고)
 - `.husky/pre-commit`, `.husky/commit-msg`
+  - 루트 원본은 husky를 걷고 `.githooks/`에 훅을 두지만(워크트리에서 훅이 조용히 스킵되던 문제 때문), **과제 레포는 husky를 그대로 쓴다.** 평가자가 클론했을 때 훅 세팅이 `package.json`에 보이는 편이 낫고, 과제 레포는 워크트리를 안 써서 그 문제도 안 생긴다. 짝이 안 맞는 게 아니라 의도된 차이다.
 - `scripts/check-file-level-disable.sh`
 
 **ESLint (프레임워크별)** — `eslint/`에서 **반드시 2개를 함께** 가져온다:
