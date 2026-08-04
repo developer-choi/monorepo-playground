@@ -776,7 +776,31 @@ fetchV2();
 
 #### `react-hooks/error-boundaries` (off) — examples
 
-React 19의 ErrorBoundary 관련 린트 규칙을 비활성화합니다.
+`try` 블록 안에서 JSX를 만드는 코드를 잡는 규칙입니다. JSX는 만들어질 때 실행되지 않고 React가 나중에 렌더할 때 실행되므로, 그 컴포넌트가 렌더 중 던진 에러는 이미 `try`를 빠져나온 뒤라 `catch`가 받지 못합니다.
+
+출처: https://github.com/facebook/react/blob/main/compiler/packages/babel-plugin-react-compiler/src/Validation/ValidateNoJSXInTryStatement.ts
+
+> React does not immediately render components when JSX is rendered, so any errors from this component will not be caught by the try/catch. To catch errors in rendering a given component, wrap that component in an error boundary.
+
+**비활성화 이유는 코드 모양입니다.** 서버 컴포넌트에서 데이터를 받아 렌더하는 페이지가 이 규칙에 걸립니다 — `try`가 지키려는 건 위쪽의 데이터 요청인데 `return`이 `try` 안에 있어 JSX까지 딸려 들어가기 때문입니다.
+
+```tsx
+// src/app/validation/integration/[id]/page.tsx — 규칙을 켜면 return 줄이 걸린다
+try {
+  const board = await getBoardApi(parseNumericId(id));
+  return <BoardDetail board={board} />;
+} catch (error) {
+  return handleServerSideError(error);
+}
+```
+
+규칙을 켜려면 JSX를 `try` 밖으로 빼야 하는데(`let board;` 선언 + `try` 뒤에서 `return`), 이 모양을 쓰지 않기로 했습니다. 데이터 요청을 감싸는 SSR 페이지 외에는 `try`로 렌더링을 감싸는 코드를 작성하지 않으므로, 규칙이 잡아줄 대상이 사실상 이 형태뿐입니다.
+
+플러그인 옵션으로 이 형태만 예외 처리할 수는 없습니다. 규칙 `schema`가 열린 객체지만 React 컴파일러 공통 옵션 자루이고, `ErrorCategory.ErrorBoundaries`에 대해 severity만 정할 뿐 패턴별 예외를 받지 않습니다.
+
+`packages/design-system`은 이 override가 없어 규칙이 켜져 있습니다(`reactHooks.configs.flat.recommended`의 기본값 `error`).
+
+2026-02-19 `4668a6c9`에서 처음 `off`로 내려뒀는데, 그 시점 앱에는 `try`가 한 줄도 없었고 커밋 본문도 비어 있어 최초 근거는 복원하지 못했습니다. 위 설명은 2026-08-04에 다시 판단한 내용입니다.
 
 #### `check-file/folder-naming-convention` — 워크스페이스별
 
