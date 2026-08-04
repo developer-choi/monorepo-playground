@@ -7,21 +7,15 @@ export function safeParsePartial<T extends z.ZodObject<z.ZodRawShape>>(
   const result: Record<string, unknown> = {};
 
   for (const key of Object.keys(schema.shape)) {
-    const value = data[key];
-
-    if (value === undefined) {
-      continue;
-    }
-
     const fieldSchema = schema.shape[key];
 
     if (!fieldSchema) {
       continue;
     }
 
-    const fieldResult = z.safeParse(fieldSchema, value);
+    const fieldResult = z.safeParse(fieldSchema, data[key]);
 
-    if (fieldResult.success) {
+    if (fieldResult.success && fieldResult.data !== undefined) {
       result[key] = fieldResult.data;
     }
   }

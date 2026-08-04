@@ -44,6 +44,22 @@ describe('safeParsePartial()', () => {
       expect(result).toEqual({name: 'foo'});
     });
 
+    it('기본값이 선언된 필드는 값이 없으면 기본값을 담는다', () => {
+      const defaultedSchema = z.object({count: z.number().default(1)});
+
+      const result = safeParsePartial(defaultedSchema, {});
+
+      expect(result).toEqual({count: 1});
+    });
+
+    it('optional 필드는 값이 없으면 키를 만들지 않는다', () => {
+      const optionalSchema = z.object({count: z.number().optional()});
+
+      const result = safeParsePartial(optionalSchema, {});
+
+      expect(Object.keys(result)).toEqual([]);
+    });
+
     it('유효한 값이 하나도 없으면 빈 객체를 반환한다', () => {
       const result = safeParsePartial(testSchema, {type: 'invalid-enum', count: 'not-a-number'});
 

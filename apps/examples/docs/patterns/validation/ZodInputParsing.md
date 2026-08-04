@@ -8,6 +8,8 @@ URL에서 오는 입력(searchParams, 경로 파라미터)을 Zod로 안전하�
 
 `safeParsePartial`은 스키마의 각 필드를 개별로 검증하여 성공한 필드만 결과에 포함한다.
 
+값이 없을 때 어떻게 할지는 스키마 선언이 정한다. `.default()`가 붙어 있으면 기본값이 들어가고, 필수 필드면 검증에 실패해 빠지고, `.optional()`이면 키가 생기지 않는다. 검증 전에 `undefined`를 미리 걸러내면 이 선언이 무시되므로, 검증한 뒤 결과가 빈 값인 것만 제외한다.
+
 ```ts
 // apps/examples/src/shared/utils/zod.ts
 export function safeParsePartial<T extends z.ZodObject<z.ZodRawShape>>(
@@ -17,24 +19,17 @@ export function safeParsePartial<T extends z.ZodObject<z.ZodRawShape>>(
   const result: Record<string, unknown> = {};
 
   for (const key of Object.keys(schema.shape)) {
-    const value = data[key];
-
-    if (value === undefined) {
-      continue; // 키가 없으면 기본값으로 위임
-    }
-
     const fieldSchema = schema.shape[key];
 
     if (!fieldSchema) {
       continue;
     }
 
-    const fieldResult = z.safeParse(fieldSchema, value);
+    const fieldResult = z.safeParse(fieldSchema, data[key]);
 
-    if (fieldResult.success) {
-      result[key] = fieldResult.data; // 성공한 필드만 포함
+    if (fieldResult.success && fieldResult.data !== undefined) {
+      result[key] = fieldResult.data;
     }
-    // 실패한 필드는 무시 — 나머지 필드에 영향 없음
   }
 
   return result as Partial<z.infer<T>>;
@@ -139,4 +134,4 @@ const pagination = safeParsePartial(paginationParamsSchema, query);
 // "1" → 1, "abc" → 필드 제외(safeParsePartial과 조합), 없음 → 기본값
 ```
 
-`z.coerce`는 `safeParsePartial`과 조합할 때 특히 유용하다. 변환 실패 시 해당 필드만 제외되고 기본값이 적용된다.
+`z.coerce`는 `safeParsePartial`과 조합할 때 특히 유용하다. 변환에 실패하면 해당 필드만 제외된다 — 기본값은 값이 아예 없을 때만 적용되고, 잘못된 값을 대신 메우지는 않는다.
