@@ -300,6 +300,12 @@ export const testFilesConfig = {
         message:
           '테스트 JSX에 aria-* 속성을 직접 쓰지 않습니다. getByRole로 쿼리하거나, 불가피하면 eslint-disable + 사유 주석.',
       },
+      {
+        selector:
+          "CallExpression[callee.name='expect'] MemberExpression[object.property.name='mock'][property.name=/^(calls|lastCall|results|settledResults|instances|invocationCallOrder)$/]",
+        message:
+          'expect() 안에서 목 내부(mock.calls 등)를 파헤치지 않습니다. 인자 검증은 toHaveBeenCalledWith + expect.objectContaining(한 겹)으로, DOM 이벤트면 클릭한 엘리먼트를 변수로 잡아 대조하세요. 꼭 꺼내야 하면 이름 붙인 헬퍼 함수로 분리합니다.',
+      },
       ...mswResolverRules,
     ],
   },

@@ -725,6 +725,29 @@ render(<Callout>내용</Callout>);                   // ✅ role로 쿼리
 expect(screen.getByRole('note')).toBeInTheDocument();
 ```
 
+#### 테스트 파일 전용: `expect()` 안에서 목 내부 파헤치기 금지 (`testFilesConfig`)
+
+`expect(...)` 안에서 `mock.calls`·`mock.lastCall`·`mock.results`·`mock.settledResults`·`mock.instances`·`mock.invocationCallOrder`에 접근하는 코드를 `no-restricted-syntax`로 금지합니다.
+
+죄목은 목 접근 자체가 아니라 **단언이 안 읽히는 것**입니다. `expect(onChange.mock.calls[0][0].target.value)`는 파헤치는 경로가 문장을 삼켜 "무엇을 기대하는가"가 안 보입니다. 다른 게이트는 이 모양을 못 잡습니다 — [`no-unsafe-assignment`](#typescript-eslintno-unsafe-assignment)은 `any` 누수만 볼 뿐이고(2026-08-04 서브에이전트 실측: lint 0건 통과), tsc의 `noUncheckedIndexedAccess`가 한 번 걸지만 `!` 하나로 뚫리며 `no-non-null-assertion`은 이 레포에 없습니다.
+
+경계는 "**단언 안에서** 파헤치는가"입니다. 목에서 값을 꺼내는 것 자체는 정당한 용도가 있어(꺼낸 인자로 메서드 호출, 목이 받은 콜백을 꺼내 직접 실행 — 매처는 "인자가 이 모양인가"만 답할 수 있어 대체 불가) `expect()` 밖에서 이름 붙여 꺼내는 건 허용합니다. 테스트 파일 전체 금지(넓은 안)를 검토했으나, 그 정당한 용도를 막고 disable 주석 말고는 출구가 없어 기각했습니다.
+
+```tsx
+// ❌ 단언 안에서 파헤침 — 경로가 문장을 삼킴
+expect(onChange.mock.calls[0][0].target.value).toBe('agree');
+
+// ✅ 인자 검증은 toHaveBeenCalledWith + 한 겹 objectContaining
+expect(onChange).toHaveBeenCalledWith(expect.objectContaining({target: checkbox}));
+
+// ✅ 꼭 꺼내야 하면 expect() 밖에서 이름 붙여 분리
+function getFetchCall() {
+  const [url, options] = vi.mocked(fetch).mock.lastCall!;
+  return {url: url as string, ...(options as RequestInit)};
+}
+expect(getFetchCall().url).toBe('/api/board');
+```
+
 #### `custom/filename-export-convention` (커스텀 룰)
 
 `src/` 하위에서 **컴포넌트(PascalCase)·훅(`use*`) export가 정확히 하나인 파일**은 파일명(첫 `.` 이전)에 **kebab-case(하이픈)·snake_case(언더스코어)를 쓸 수 없습니다** — PascalCase(컴포넌트) 또는 camelCase(훅)여야 합니다. 컴포넌트·훅이 0개거나 2개 이상(여러 컴포넌트를 묶은 모듈)이면 검사하지 않습니다.
