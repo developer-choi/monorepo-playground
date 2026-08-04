@@ -49,10 +49,4 @@ export default defineConfig([
   sharedBoundaryConfig,
   testFilesConfig,
   mockFilesConfig,
-  {
-    files: ['**/*.test.{ts,tsx}'],
-    rules: {
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-    },
-  },
 ]);

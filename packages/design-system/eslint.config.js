@@ -43,12 +43,6 @@ export default defineConfig([
   testFilesConfig,
   mockFilesConfig,
   {
-    files: ['**/*.test.{ts,tsx}'],
-    rules: {
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-    },
-  },
-  {
     files: ['**/*.stories.{ts,tsx}'],
     rules: {
       '@typescript-eslint/naming-convention': [

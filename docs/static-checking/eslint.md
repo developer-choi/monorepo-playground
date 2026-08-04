@@ -857,6 +857,30 @@ const raw: unknown = JSON.parse(response);
 const data = schema.parse(raw); // 검증 후 사용
 ```
 
+테스트에서 `expect.objectContaining`을 **자기 자신 안에 중첩하면** 이 룰에 걸립니다. vitest의 타입 정의가 반환을 `any`로 고정하고 있어(`objectContaining: <T = any>(expected: DeeplyAllowMatchers<T>) => any`), 안쪽 호출의 `any`가 바깥 객체 리터럴의 속성 자리에 대입되기 때문입니다. 제네릭 인자를 줘도 반환 타입에는 `T`가 쓰이지 않아 해소되지 않습니다. upstream은 이 이슈를 `not planned`로 닫았습니다(<https://github.com/vitest-dev/vitest/issues/1855>).
+
+겹을 하나로 줄이면 됩니다. 한 겹이면 `any`는 맨 바깥에만 남고, 받는 쪽인 `toHaveBeenCalledWith: <E extends any[]>(...args: E) => void`도 `any`라 룰이 물지 않습니다.
+
+```tsx
+// ❌ 중첩 — 안쪽 any가 target 속성에 대입된다
+expect(onChange).toHaveBeenCalledWith(
+  expect.objectContaining({target: expect.objectContaining({value: 'apple'})}),
+);
+
+// ✅ 한 겹 — 클릭한 엘리먼트를 변수로 잡아 직접 대조한다
+const appleRadio = screen.getByRole('radio', {name: '사과'});
+await user.click(appleRadio);
+
+expect(appleRadio).toHaveAttribute('value', 'apple');
+expect(onChange).toHaveBeenCalledWith(expect.objectContaining({target: appleRadio}));
+```
+
+값 확인에 `toHaveValue`는 못 씁니다 — jest-dom이 `input[type=radio]`와 `input[type=checkbox]`를 대상에서 제외합니다(<https://github.com/testing-library/jest-dom#tohavevalue>).
+
+> It accepts `<input>`, `<select>` and `<textarea>` elements with the exception of `<input type="checkbox">` and `<input type="radio">`
+
+2026-08-04 이전에는 이 한 줄 때문에 `packages/design-system`과 vite 템플릿에서 **테스트 파일 전체**에 이 룰을 `off`로 내려두고 있었습니다. 위 형태로 바꾸면서 두 off 블록을 모두 걷어냈습니다.
+
 #### `@typescript-eslint/no-unsafe-call`
 
 `any` 타입 값을 함수처럼 호출하는 것을 방지합니다.

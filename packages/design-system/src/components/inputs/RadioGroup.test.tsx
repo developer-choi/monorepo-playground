@@ -18,11 +18,11 @@ describe('RadioGroup', () => {
         </RadioGroup>,
       );
 
-      await user.click(screen.getByRole('radio', {name: '사과'}));
+      const appleRadio = screen.getByRole('radio', {name: '사과'});
+      await user.click(appleRadio);
 
-      expect(groupOnChange).toHaveBeenCalledWith(
-        expect.objectContaining({target: expect.objectContaining({value: 'apple'})}),
-      );
+      expect(appleRadio).toHaveAttribute('value', 'apple');
+      expect(groupOnChange).toHaveBeenCalledWith(expect.objectContaining({target: appleRadio}));
     });
 
     it('그룹 value와 일치하는 라디오가 checked로 표시된다', () => {
