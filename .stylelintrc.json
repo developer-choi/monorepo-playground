@@ -23,7 +23,7 @@
     "scss/at-use-no-unnamespaced": true,
     "scss/at-use-no-redundant-alias": true,
     "monorepo-playground/at-use-no-short-alias": true,
-    "value-keyword-case": null,
+    "value-keyword-case": ["lower", {"ignoreKeywords": ["/^[a-z][a-zA-Z0-9]*[A-Z]/"]}],
     "declaration-property-value-disallowed-list": [
       {"/^\\$/": ["/px/", "/^#/", "/rgb/", "/hsl/"]},
       {

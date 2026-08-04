@@ -27,7 +27,21 @@ Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`
 | `scss/at-use-no-unnamespaced`         | `true`         | `@use 'foo' as *;` 금지. namespace prefix 강제(`color.$X` 형태)로 변수 출처를 명시 |
 | `scss/at-use-no-redundant-alias`      | `true`         | alias가 default namespace와 같으면 차단 (`@use 'typography' as typography`). 의미 없는 alias 방지 |
 | `monorepo-playground/at-use-no-short-alias` | `true`   | 4글자 미만 alias 차단 (`as t`, `as typ`). custom plugin(`scripts/stylelint-plugins/at-use-no-short-alias.mjs`). default namespace 사용 또는 의미 있는 이름 강제 |
-| `value-keyword-case`                  | `null`         | SCSS map 키를 CSS 키워드로 오인하는 false positive 방지                  |
+| `value-keyword-case`                  | `lower` + `ignoreKeywords` | 기본값 `lower`를 유지하되 camelCase 식별자만 예외 (아래 참고)             |
+
+### `value-keyword-case`의 camelCase 예외
+
+```json
+"value-keyword-case": ["lower", {"ignoreKeywords": ["/^[a-z][a-zA-Z0-9]*[A-Z]/"]}]
+```
+
+stylelint이 SCSS map 키를 CSS 키워드 값으로 오인해 소문자화를 요구합니다. `$zIndexes`의 `mobileBottomNav`, `$typography`의 `lineHeight`가 `mobilebottomnav`·`lineheight`로 바뀌어야 한다고 잡힙니다. 공식 문서가 이 상황에 `ignoreKeywords`를 쓰라고 안내합니다.
+
+출처: https://stylelint.io/user-guide/rules/value-keyword-case/
+
+> Keyword values which are paired with non-properties (e.g. `$vars` and custom properties), and do not conform to the primary option, can be ignored using the `ignoreKeywords: []` secondary option.
+
+키를 하나씩 나열하는 대신 camelCase 패턴 하나로 받아, map에 키가 늘어나도 설정을 건드리지 않게 했습니다. 규칙 자체는 살아 있어 `display: BLOCK` 같은 실제 위반은 그대로 잡힙니다. CSS 표준 키워드 중 camelCase인 `currentColor`도 통과합니다.
 
 ## declaration-strict-value
 
