@@ -1,8 +1,6 @@
 import {describe, it, expect} from 'vitest';
 import {isObject, mapObjectLeaves, trimObject, cleanObject} from './object';
 
-const MAGIC_NUMBER = 123;
-
 describe('isObject()', () => {
   describe('General cases', () => {
     it('일반 객체, 배열, Date 등 object 타입이면 true를 반환한다', () => {
@@ -44,14 +42,15 @@ describe('mapObjectLeaves()', () => {
           },
         },
       );
-      expect(result).toEqual({first: 'hello', nested: {inner: 'world'}});
+      expect(result).toStrictEqual({first: 'hello', nested: {inner: 'world'}});
     });
   });
 
   describe('Error cases', () => {
     it('다른 타입으로 변환하면 에러를 던진다', () => {
+      const numberValue = 123;
       expect(() => {
-        mapObjectLeaves({first: 'hello'}, {callback: () => MAGIC_NUMBER});
+        mapObjectLeaves({first: 'hello'}, {callback: () => numberValue});
       }).toThrow('The converted value types is different than before.');
     });
 
@@ -66,7 +65,7 @@ describe('mapObjectLeaves()', () => {
 describe('trimObject()', () => {
   describe('General cases', () => {
     it('중첩 객체와 배열 내부의 문자열을 모두 trim한다', () => {
-      expect(trimObject({key1: ' 1 ', key2: [' 2 '], key3: {subKey: ' 3 '}})).toEqual({
+      expect(trimObject({key1: ' 1 ', key2: [' 2 '], key3: {subKey: ' 3 '}})).toStrictEqual({
         key1: '1',
         key2: ['2'],
         key3: {subKey: '3'},
@@ -74,7 +73,7 @@ describe('trimObject()', () => {
     });
 
     it('문자열이 아닌 값은 그대로 유지한다', () => {
-      expect(trimObject({num: 1, nil: null, und: undefined, bool: true})).toEqual({
+      expect(trimObject({num: 1, nil: null, und: undefined, bool: true})).toStrictEqual({
         num: 1,
         nil: null,
         und: undefined,
@@ -85,15 +84,22 @@ describe('trimObject()', () => {
 
   describe('General cases — ignoreKeyList', () => {
     it('ignoreKeyList에 포함된 키는 trim하지 않는다', () => {
-      expect(trimObject({keep: ' keep ', trim: ' trim '}, {ignoreKeyList: ['keep']})).toEqual({
+      expect(trimObject({keep: ' keep ', trim: ' trim '}, {ignoreKeyList: ['keep']})).toStrictEqual({
         keep: ' keep ',
         trim: 'trim',
       });
     });
 
     it('중첩 키 경로로도 제외할 수 있다', () => {
-      expect(trimObject({outer: {inner: ' keep '}, plain: ' trim '}, {ignoreKeyList: ['outer.inner']})).toEqual({
+      expect(trimObject({outer: {inner: ' keep '}, plain: ' trim '}, {ignoreKeyList: ['outer.inner']})).toStrictEqual({
         outer: {inner: ' keep '},
+        plain: 'trim',
+      });
+    });
+
+    it('제외한 키의 값이 배열이면 그 안의 문자열도 trim하지 않는다', () => {
+      expect(trimObject({tags: [' keep '], plain: ' trim '}, {ignoreKeyList: ['tags']})).toStrictEqual({
+        tags: [' keep '],
         plain: 'trim',
       });
     });
@@ -103,7 +109,7 @@ describe('trimObject()', () => {
 describe('cleanObject()', () => {
   describe('General cases', () => {
     it('문자열을 trim하고, null과 빈 문자열을 undefined로 변환한다', () => {
-      expect(cleanObject({name: '  홍길동  ', address: null, memo: '', blank: '   '})).toEqual({
+      expect(cleanObject({name: '  홍길동  ', address: null, memo: '', blank: '   '})).toStrictEqual({
         name: '홍길동',
         address: undefined,
         memo: undefined,
@@ -112,30 +118,31 @@ describe('cleanObject()', () => {
     });
 
     it('중첩 객체와 배열에도 동일하게 적용된다', () => {
-      expect(cleanObject({detail: {phone: '  010  ', memo: ''}, tags: [' a ', null]})).toEqual({
+      expect(cleanObject({detail: {phone: '  010  ', memo: ''}, tags: [' a ', null]})).toStrictEqual({
         detail: {phone: '010', memo: undefined},
         tags: ['a', undefined],
       });
     });
 
     it('배열 안에 객체가 있어도 재귀적으로 적용된다', () => {
-      expect(cleanObject({addresses: [{city: '  Seoul  ', zip: null}]})).toEqual({
+      expect(cleanObject({addresses: [{city: '  Seoul  ', zip: null}]})).toStrictEqual({
         addresses: [{city: 'Seoul', zip: undefined}],
       });
     });
 
     it('숫자, boolean 등은 그대로 유지한다', () => {
-      expect(cleanObject({num: 0, bool: false, big: MAGIC_NUMBER})).toEqual({
+      const keptNumber = 123;
+      expect(cleanObject({num: 0, bool: false, big: keptNumber})).toStrictEqual({
         num: 0,
         bool: false,
-        big: MAGIC_NUMBER,
+        big: keptNumber,
       });
     });
   });
 
   describe('General cases — ignoreKeyList', () => {
     it('ignoreKeyList에 포함된 키는 변환하지 않는다', () => {
-      expect(cleanObject({password: '  secret  ', name: '  홍길동  '}, {ignoreKeyList: ['password']})).toEqual({
+      expect(cleanObject({password: '  secret  ', name: '  홍길동  '}, {ignoreKeyList: ['password']})).toStrictEqual({
         password: '  secret  ',
         name: '홍길동',
       });
