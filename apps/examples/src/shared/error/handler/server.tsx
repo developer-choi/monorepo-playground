@@ -5,6 +5,7 @@ import ErrorNotice from '@/shared/components/ErrorNotice';
 import {getErrorInfo} from '@/shared/error/handler/info';
 import ApiResponseError from '@/shared/error/class/ApiResponseError';
 import {captureException} from '@sentry/nextjs';
+import {HTTP_STATUS} from '@/shared/api/httpStatus';
 
 export function handleServerSideError(error: unknown): ReactNode {
   if (error instanceof InvalidAccessError) {
@@ -16,11 +17,11 @@ export function handleServerSideError(error: unknown): ReactNode {
   }
 
   if (error instanceof ApiResponseError) {
-    if (error.status === HTTP_STATUS_NOT_FOUND) {
+    if (error.status === HTTP_STATUS.NOT_FOUND) {
       notFound();
     }
 
-    if (error.status < HTTP_STATUS_INTERNAL_SERVER_ERROR) {
+    if (error.status < HTTP_STATUS.SERVER_ERROR) {
       const {title, content} = getErrorInfo(error);
       return <ErrorNotice content={content} title={title} />;
     }
@@ -30,6 +31,3 @@ export function handleServerSideError(error: unknown): ReactNode {
   captureException(error);
   throw error;
 }
-
-const HTTP_STATUS_NOT_FOUND = 404;
-const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
