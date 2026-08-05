@@ -740,12 +740,10 @@ expect(onChange.mock.calls[0][0].target.value).toBe('agree');
 // ✅ 인자 검증은 toHaveBeenCalledWith + 한 겹 objectContaining
 expect(onChange).toHaveBeenCalledWith(expect.objectContaining({target: checkbox}));
 
-// ✅ 꼭 꺼내야 하면 expect() 밖에서 이름 붙여 분리
-function getFetchCall() {
-  const [url, options] = vi.mocked(fetch).mock.lastCall!;
-  return {url: url as string, ...(options as RequestInit)};
-}
-expect(getFetchCall().url).toBe('/api/board');
+// ✅ 꼭 꺼내야 하면 expect() 밖에서 이름 붙여 분리 (목이 받은 콜백을 직접 실행해야 할 때)
+const [{onRetry}] = openToast.mock.lastCall!;
+onRetry();
+expect(await screen.findByRole('status')).toHaveTextContent('다시 불러왔습니다');
 ```
 
 #### `custom/filename-export-convention` (커스텀 룰)
