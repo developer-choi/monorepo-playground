@@ -2,6 +2,11 @@ import {configDefaults, defineConfig} from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import {loadEnv} from 'vite';
+import {fileURLToPath} from 'node:url';
+import {dirname} from 'node:path';
+
+// lint-staged는 레포 루트에서 vitest를 부르므로 process.cwd()로 읽으면 env 파일을 못 찾는다.
+const projectDir = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(({mode}) => ({
   plugins: [tsconfigPaths(), react()],
@@ -13,6 +18,6 @@ export default defineConfig(({mode}) => ({
     restoreMocks: true,
     // 앱과 동일한 env(.env.local의 NEXT_PUBLIC_API_URL)를 테스트 process.env에 주입.
     // 싱글턴 api가 절대 baseUrl을 갖게 해 MSW가 Node에서 요청을 가로챌 수 있다.
-    env: loadEnv(mode, process.cwd(), 'NEXT_PUBLIC_'),
+    env: loadEnv(mode, projectDir, 'NEXT_PUBLIC_'),
   },
 }));

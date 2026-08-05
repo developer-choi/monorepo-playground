@@ -36,6 +36,14 @@ export default defineConfig({
 
 **`exclude`로 E2E 폴더를 빼는 이유:** vitest의 기본 수집 범위는 `**/*.{test,spec}.*`라 Playwright E2E 스펙(`e2e/`)까지 물어간다. 그러면 브라우저에서 돌아야 할 `test()`를 jsdom에서 실행하다 `Playwright Test did not expect test() to be called here`로 터진다. 러너가 둘인 레포에서만 필요한 줄이므로, E2E를 안 쓰면 빼도 된다. `configDefaults.exclude`를 펼쳐 넣지 않고 `exclude`를 통째로 덮으면 `node_modules` 제외가 사라진다.
 
+**env 파일을 `process.cwd()`로 읽지 않는 이유:** 앱과 같은 환경변수를 테스트에 주입하려고 `loadEnv`를 쓸 때, 기준 경로를 `process.cwd()`로 두면 실행 위치에 따라 결과가 갈린다. `npm test`는 앱 폴더에서 돌지만 lint-staged는 레포 루트에서 `vitest related --run --root apps/examples`로 부르기 때문에, 루트에는 `.env*`가 없어 값이 통째로 비게 된다. 설정 파일 자신의 위치를 기준으로 삼는다.
+
+```ts
+const projectDir = dirname(fileURLToPath(import.meta.url));
+// ...
+env: loadEnv(mode, projectDir, 'NEXT_PUBLIC_'),
+```
+
 **`globals: true`를 쓰지 않는 이유:** `describe`, `it`, `expect`를 명시적으로 import한다. 자동완성도 되고, 어디서 온 함수인지 명확하다.
 
 **`restoreMocks: true`를 쓰는 이유:** `vi.spyOn`/`vi.mock`으로 건 목이 매 테스트 후 자동 복원되어 테스트 간에 새지 않는다. 이게 없으면 개별 테스트마다 `afterEach(() => vi.restoreAllMocks())`를 수동으로 넣어야 하고, 빠뜨리면 목이 leak되어 "혼자선 통과, 같이 돌리면 실패"하는 헷갈리는 실패가 난다. Vitest 공식 [Writing Tests with AI](https://vitest.dev/guide/learn/writing-tests-with-ai.html)의 *Common Pitfalls*가 AI 생성 테스트의 단골 함정으로 지목하며 이 옵션을 권장한다. (MSW 핸들러 리셋 `server.resetHandlers()`는 목이 아니라 별개 메커니즘이라 restoreMocks가 커버하지 않는다 — 그건 [MswSetup](./MswSetup.md)에서 setup 파일에 따로 건다.)
