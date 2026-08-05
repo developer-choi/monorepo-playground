@@ -20,7 +20,7 @@ function mapLeaves(value: object, {callback, option}: MapLeavesParams): unknown 
     if (Array.isArray(node)) {
       return (node as (object | LeafValue)[]).map((element) => traverse(element, parentKey));
     } else if (node === null || typeof node !== 'object') {
-      if (parentKey && option && option.ignoreKeyList.includes(parentKey)) {
+      if (parentKey !== undefined && option && option.ignoreKeyList.includes(parentKey)) {
         return node;
       } else {
         return callback({key: parentKey, value: node});

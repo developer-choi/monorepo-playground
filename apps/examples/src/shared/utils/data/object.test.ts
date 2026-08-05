@@ -103,6 +103,13 @@ describe('trimObject()', () => {
         plain: 'trim',
       });
     });
+
+    it('빈 문자열 키도 제외할 수 있다', () => {
+      expect(trimObject({'': ' keep ', plain: ' trim '}, {ignoreKeyList: ['']})).toStrictEqual({
+        '': ' keep ',
+        plain: 'trim',
+      });
+    });
   });
 });
 
