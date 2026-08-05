@@ -4,7 +4,7 @@ type Primitive = string | number | boolean | null | undefined;
 type QueryParams = Record<string, Primitive | ReadonlyArray<Primitive>>;
 
 export interface BuildUrlOptions {
-  skipNullish?: boolean;
+  skipNull?: boolean;
   skipEmptyString?: boolean;
 }
 
@@ -16,12 +16,24 @@ export function buildUrlWithQuery({
   pathname: string;
   params: QueryParams;
 } & Partial<BuildUrlOptions>): string {
-  const {skipNullish, skipEmptyString} = {...DEFAULT_OPTIONS, ...options};
+  const {skipNull, skipEmptyString} = {...DEFAULT_OPTIONS, ...options};
 
-  return queryString.stringifyUrl({url: pathname, query: params}, {skipNull: skipNullish, skipEmptyString});
+  return queryString.stringifyUrl({url: pathname, query: params}, {skipNull, skipEmptyString});
 }
 
 const DEFAULT_OPTIONS: BuildUrlOptions = {
   skipEmptyString: true,
-  skipNullish: true,
+  skipNull: true,
 };
+
+export function joinUrl(prefixUrl: string, path: string): string {
+  if (!prefixUrl) {
+    return path;
+  }
+
+  return `${prefixUrl.replace(/\/+$/, '')}/${stripLeadingSlash(path)}`;
+}
+
+export function stripLeadingSlash(path: string): string {
+  return path.replace(/^\/+/, '');
+}
