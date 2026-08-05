@@ -30,7 +30,7 @@ export async function getBoardListApi(
 }
 
 export async function getBoardApi(id: number) {
-  const raw = await api.get<ServerBoardDetail>(`api/board/${id}`);
+  const raw = await api.get<ServerBoardDetail>(`/api/board/${id}`);
   return validateApiResponse(boardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
@@ -40,12 +40,12 @@ export async function postBoardApi(body: CreateBoardApiRequest) {
 }
 
 export async function patchBoardApi({id, ...body}: UpdateBoardApiRequest) {
-  const raw = await api.patch<ServerBoardDetail>(`api/board/${id}`, {body: toSnakeCaseKeys(body)});
+  const raw = await api.patch<ServerBoardDetail>(`/api/board/${id}`, {body: toSnakeCaseKeys(body)});
   return validateApiResponse(boardDetailSchema, {...toCamelCaseKeys(raw), tagList: raw.tag_list ?? []});
 }
 
 export function deleteBoardApi(id: number) {
-  return api.delete(`api/board/${id}`);
+  return api.delete(`/api/board/${id}`);
 }
 
 type BoardType = (typeof BOARD_TYPES.values)[number];

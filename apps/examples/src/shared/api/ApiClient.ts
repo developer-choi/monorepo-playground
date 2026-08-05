@@ -10,10 +10,10 @@ export interface BodyOption {
 }
 
 export default abstract class ApiClient {
-  protected readonly baseUrl: string;
+  protected readonly prefixUrl: string;
 
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
+  constructor(prefixUrl: string) {
+    this.prefixUrl = prefixUrl;
   }
 
   abstract get<T>(url: string, options?: BaseOptions): Promise<T>;

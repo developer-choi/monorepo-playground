@@ -2,6 +2,7 @@ import queryString, {type StringifiableRecord} from 'query-string';
 import ApiClient, {type BaseOptions, type HttpMethod} from './ApiClient';
 import ApiResponseError from '@/shared/error/class/ApiResponseError';
 import ApiRequestError from '@/shared/error/class/ApiRequestError';
+import {joinUrl} from '@/shared/utils/url';
 
 export type FetchOptions = BaseOptions & Omit<RequestInit, 'method' | 'headers' | 'body'>;
 
@@ -65,9 +66,7 @@ export default class FetchApiClient extends ApiClient {
   }
 
   private buildUrl(url: string, searchParams?: object): string {
-    const base = this.baseUrl.replace(/\/+$/, '');
-    const path = url.replace(/^\/+/, '');
-    const fullUrl = base ? `${base}/${path}` : `/${path}`;
+    const fullUrl = joinUrl(this.prefixUrl, url);
 
     if (!searchParams) {
       return fullUrl;
@@ -79,7 +78,7 @@ export default class FetchApiClient extends ApiClient {
   private buildHeaders(headers?: HeadersInit, body?: unknown): Headers {
     const merged = new Headers(headers);
 
-    if (body !== null && body !== undefined && typeof body === 'object' && !merged.has('Content-Type')) {
+    if (body !== undefined && !merged.has('Content-Type')) {
       merged.set('Content-Type', 'application/json');
     }
 
@@ -87,13 +86,7 @@ export default class FetchApiClient extends ApiClient {
   }
 
   private buildBody(body?: unknown): BodyInit | undefined {
-    if (body === null || body === undefined) {
-      return undefined;
-    }
-    if (typeof body === 'object') {
-      return JSON.stringify(body);
-    }
-    return String(body as string | number | boolean);
+    return body === undefined ? undefined : JSON.stringify(body);
   }
 
   private async toResponseError(params: {

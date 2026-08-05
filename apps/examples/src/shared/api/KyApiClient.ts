@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import ApiClient, {type BaseOptions, type HttpMethod} from './ApiClient';
 import ApiResponseError from '@/shared/error/class/ApiResponseError';
 import ApiRequestError from '@/shared/error/class/ApiRequestError';
+import {joinUrl, stripLeadingSlash} from '@/shared/utils/url';
 
 export type KyOptions = BaseOptions &
   Omit<KyInternalOptions, 'method' | 'headers' | 'body' | 'json' | 'prefixUrl' | 'searchParams'>;
@@ -10,10 +11,10 @@ export type KyOptions = BaseOptions &
 export default class KyApiClient extends ApiClient {
   private readonly client: typeof ky;
 
-  constructor(baseUrl: string) {
-    super(baseUrl);
+  constructor(prefixUrl: string) {
+    super(prefixUrl);
     this.client = ky.create({
-      prefixUrl: baseUrl,
+      prefixUrl,
     });
   }
 
@@ -21,7 +22,7 @@ export default class KyApiClient extends ApiClient {
     const {searchParams, ...rest} = options ?? {};
     try {
       return await this.client
-        .get(url, {...rest, searchParams: searchParams ? queryString.stringify(searchParams) : undefined})
+        .get(this.toPath(url), {...rest, searchParams: searchParams ? queryString.stringify(searchParams) : undefined})
         .json<T>();
     } catch (error) {
       return this.handleError({error, method: 'GET', url, headers: options?.headers});
@@ -32,7 +33,7 @@ export default class KyApiClient extends ApiClient {
     const {body, searchParams, ...kyOptions} = options;
     try {
       return await this.client
-        .post(url, {
+        .post(this.toPath(url), {
           ...kyOptions,
           searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
           json: body,
@@ -47,7 +48,7 @@ export default class KyApiClient extends ApiClient {
     const {body, searchParams, ...kyOptions} = options;
     try {
       return await this.client
-        .put(url, {
+        .put(this.toPath(url), {
           ...kyOptions,
           searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
           json: body,
@@ -62,7 +63,7 @@ export default class KyApiClient extends ApiClient {
     const {body, searchParams, ...kyOptions} = options;
     try {
       return await this.client
-        .patch(url, {
+        .patch(this.toPath(url), {
           ...kyOptions,
           searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
           json: body,
@@ -77,11 +78,18 @@ export default class KyApiClient extends ApiClient {
     const {searchParams, ...rest} = options ?? {};
     try {
       return await this.client
-        .delete(url, {...rest, searchParams: searchParams ? queryString.stringify(searchParams) : undefined})
+        .delete(this.toPath(url), {
+          ...rest,
+          searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
+        })
         .json<T>();
     } catch (error) {
       return this.handleError({error, method: 'DELETE', url, headers: options?.headers});
     }
+  }
+
+  private toPath(url: string): string {
+    return this.prefixUrl ? stripLeadingSlash(url) : url;
   }
 
   private async handleError(params: {
@@ -107,7 +115,7 @@ export default class KyApiClient extends ApiClient {
     throw new ApiRequestError(
       {
         method: params.method,
-        url: `${this.baseUrl.replace(/\/$/, '')}/${params.url}`,
+        url: joinUrl(this.prefixUrl, params.url),
         body: params.body,
         headers: params.headers,
       },
