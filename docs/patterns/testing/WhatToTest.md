@@ -41,8 +41,10 @@ skip 여부는 아래 4문항을 **순서대로** 적용해 가른다. vibe("안
 
 ## 구현 세부사항은 테스트하지 않는다
 
-- X: internal state, lifecycle, 내부 메서드·헬퍼, 자식 컴포넌트 존재 여부
+- X: internal state, lifecycle, 내부 메서드·헬퍼, 자식 컴포넌트 존재 여부, 내부 호출 순서
 - O: user interactions, prop / context / subscription 변화
+
+**리트머스**: 내부를 바꿔도 함수가 올바른 결과를 반환하는데 이 테스트가 깨진다면 구현에 과결합된 것이다.
 
 ## 시각은 유닛이 아니라 Chromatic
 

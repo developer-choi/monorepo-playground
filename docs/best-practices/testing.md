@@ -1,5 +1,5 @@
 ---
-keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, React Testing Library, describe, it, getByRole, mock, MSW, 응답 타입, HttpResponse, 핸들러 제네릭, 요청 단언, request assertion, onUnhandledRequest, 반응 테스트, custom request predicate, dynamic mock scenarios, 심화 기법, 핸들러 구조화, structuring handlers, server.use, resetHandlers, 런타임 오버라이드, 도메인별 분할, higher-order resolver, AI 생성 테스트, AI-generated tests, 테스트 리뷰, toBeDefined, toMatchObject, 무의미 검증, 구현 결합, 미실행, vitest run, 엣지케이스 누락, 커버리지, use case coverage, E2E, integration, unit, 레벨 선택, 테스트 피라미드, 테스트 트로피, icecream cone, 모킹 범위, vi.mock, fetch 스텁, flaky, 부작용, 확신]
+keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, React Testing Library, describe, it, getByRole, mock, MSW, 응답 타입, HttpResponse, 핸들러 제네릭, 요청 단언, request assertion, onUnhandledRequest, 반응 테스트, custom request predicate, dynamic mock scenarios, 심화 기법, 핸들러 구조화, structuring handlers, server.use, resetHandlers, 런타임 오버라이드, 도메인별 분할, higher-order resolver, AI 생성 테스트, AI-generated tests, 테스트 리뷰, 엣지케이스 누락, toBeDefined, toMatchObject, 약한 단언, 구현 결합, 내부 호출 순서, 커버리지, use case coverage, E2E, integration, unit, 레벨 선택, 테스트 피라미드, 테스트 트로피, icecream cone, 모킹 범위, vi.mock, fetch 스텁, flaky, 부작용, 확신]
 ---
 
 # Best Practices — 테스팅
@@ -8,7 +8,7 @@ keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, 
 
 ### 테스트 대상·레벨 판단
 
-- 상황: 테스트 대상·레벨 선정. Yes 디폴트, 면제 화이트리스트, 구현 세부사항 금지, Integration 우선. 레벨은 같은 확신이면 낮은 쪽(E2E는 아래 레벨로 못 얻는 것만, icecream cone 오답)
+- 상황: 테스트 대상·레벨 선정. Yes 디폴트, 면제 화이트리스트, 구현 세부사항 금지(내부 호출 순서 포함 — 내부를 바꿔도 결과가 맞는데 깨지면 과결합), Integration 우선. 레벨은 같은 확신이면 낮은 쪽(E2E는 아래 레벨로 못 얻는 것만, icecream cone 오답)
 - 코드: docs/patterns/testing/WhatToTest.md
 
 ### 작성하지 않는 테스트 (안티패턴)
@@ -19,12 +19,12 @@ keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, 
 ### 테스트 코드 작성 패턴
 
 - 기술스택: Vitest + React Testing Library
-- 상황: 테스트 구조(describe/it 네이밍), 쿼리(getByRole 우선, 접두사 용도), Mock(도입 시 근거·확답 필수 — 느림·불안정·부작용 셋 중 하나일 때만, 범위는 그 이유를 없앨 만큼만, 네트워크는 `vi.mock`·fetch 스텁이 아니라 MSW), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문), 네이밍(사용자 관점 it 워딩), 검증 범위(mock 인덱스 접근 금지, 라이브러리 기본 동작 재검증 금지)
+- 상황: 테스트 구조(describe/it 네이밍), 쿼리(getByRole 우선, 접두사 용도), Mock(도입 시 근거·확답 필수 — 느림·불안정·부작용 셋 중 하나일 때만, 범위는 그 이유를 없앨 만큼만, 네트워크는 `vi.mock`·fetch 스텁이 아니라 MSW), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문), 네이밍(사용자 관점 it 워딩), 검증 범위(거의 뭐든 통과하는 단언 금지 — `toBeDefined` 대신 실제 속성 단언, mock 인덱스 접근 금지, 라이브러리 기본 동작 재검증 금지)
 - 코드: docs/patterns/testing/TestWriting.md
 
 ### AI가 생성한 테스트 리뷰
 
-- 상황: AI 어시스턴트가 작성한 테스트를 커밋 전 리뷰할 때. 4축 점검 — 의미 있는 검증(`toBeDefined` 무의미 vs `toMatchObject`), 동작 vs 구현(리팩터마다 깨지면 과결합), 실제 실행(`vitest run`), 엣지케이스 누락(빈 입력·null·네트워크 실패). before/after 벤치 fixture·채점 기준 동봉
+- 상황: AI 어시스턴트가 작성한 테스트를 커밋 전 리뷰할 때. AI는 정상 경로만 덮는 쏠림이 있으므로 엣지케이스(빈 입력·null·undefined·네트워크 실패·빈 리스트)가 **테스트에** 있는지 본다
 - 코드: docs/patterns/testing/ReviewingAiTests.md
 
 ### MSW 핸들러에 응답 타입 붙이기

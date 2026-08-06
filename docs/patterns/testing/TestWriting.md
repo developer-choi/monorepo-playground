@@ -196,6 +196,22 @@ it('Esc를 누르면 onCancel이 호출된다', ...);
 
 ## 검증 범위
 
+### 거의 뭐든 통과하는 단언으로 끝내지 않는다
+
+값이 존재하는지만 보는 단언은 테스트를 초록으로 만들지만 아무것도 보장하지 않는다 — 함수가 엉뚱한 객체를 돌려줘도 통과하므로 거짓 자신감만 남는다. 반환값의 실제 속성을 단언한다.
+
+```typescript
+// before — undefined만 아니면 통과
+const filter = parseSearchParams('?page=2&searchText=니트');
+expect(filter).toBeDefined();
+
+// after — 실제 속성을 검증
+const filter = parseSearchParams('?page=2&searchText=니트');
+expect(filter).toMatchObject({page: 2, searchText: '니트'});
+```
+
+호출만 하고 아무 단언도 두지 않는 스모크 테스트도 같은 이유로 쓰지 않는다 — [TestsWeAvoid.md](./TestsWeAvoid.md) 「크래시 없이 렌더된다」 참조.
+
 ### mock 호출 인덱스 접근 금지
 
 `mock.calls[0]![0]` 같은 인덱스 접근은 호출 횟수·인자 순서에 결합된다. `toHaveBeenCalledWith`로 인자를 직접 매칭한다.
