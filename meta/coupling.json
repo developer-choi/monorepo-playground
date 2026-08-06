@@ -50,6 +50,20 @@
       "note": ".stylelintrc.json 규칙이나 커스텀 플러그인 동작(minLength 등)을 바꾸면 stylelint.md의 규칙 표·설명도 갱신한다. 문서-설정 일치는 어떤 도구도 검사하지 않는다."
     },
     {
+      "name": "린트 규칙 변경 절차 ↔ 린트 설정·문서",
+      "files": [
+        "docs/static-checking/rule-change-leftovers.md",
+        "eslint.config.base.mts",
+        "apps/examples/eslint.config.mjs",
+        "packages/design-system/eslint.config.js",
+        ".stylelintrc.json",
+        "docs/static-checking/eslint.md",
+        "docs/static-checking/stylelint.md",
+        "docs/static-checking/gradual-migration.md"
+      ],
+      "note": "린트 규칙을 끄거나 완화하면 그 규칙 때문에 존재하던 코드·주석·문서가 잔재로 남는데, 켜는 방향과 달리 아무것도 실패하지 않아 조용히 남는다(no-floating-promises를 끄고 void 5곳이 3개월 반 남은 사고 c95b7dc4→933a2cc7). 설정을 고치기 전에 rule-change-leftovers.md의 절차를 본다: 끄려는 규칙의 회피 문법을 금지 규칙으로 바꿔 달기, 워크스페이스 lint 직접 실행(루트 turbo는 base 설정을 캐시 입력으로 안 잡는다), 파일 통째 억제를 떼서 세기(ESLint는 범위 과잉을 검사하지 않는다), 막을 것·열 것 프로브 실측. 반대로 절차 문서를 고치면 그 근거가 되는 설정·문서가 여전히 맞는지 본다."
+    },
+    {
       "name": "ESLint 설정 원본 ↔ 상세 문서",
       "files": ["eslint.config.base.mts", "docs/static-checking/eslint.md"],
       "note": "eslint.md는 eslint.config.base.mts의 baseRules 내용(각 규칙과 옵션)을 코드 인용으로 문서화한다. baseRules에 규칙을 추가·삭제하거나 옵션을 바꾸면 eslint.md의 인용 블록·설명도 갱신한다. 존재·경로는 static-checking.md 매핑표가, 규칙 내용은 이 문서가 따라가며 문서-설정 일치는 어떤 도구도 검사하지 않는다."

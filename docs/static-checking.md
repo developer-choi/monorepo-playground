@@ -89,3 +89,7 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 ## 점진적 마이그레이션
 
 기존 코드베이스에 새 린트 규칙을 도입할 때의 전략은 [gradual-migration.md](static-checking/gradual-migration.md)를 참고.
+
+## 규칙을 끄거나 완화할 때
+
+이미 있는 규칙을 끄거나 예외를 여는 변경은 [rule-change-leftovers.md](static-checking/rule-change-leftovers.md)를 참고.
