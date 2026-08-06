@@ -2,7 +2,7 @@
  * TP(test-playground)에서 검증한 공통 ESLint 규칙.
  * 각 워크스페이스의 eslint config에서 import해서 사용.
  */
-import type {Rule} from 'eslint';
+import type {Rule, Scope, SourceCode} from 'eslint';
 import type * as ESTree from 'estree';
 
 export const baseRules = {
@@ -253,8 +253,13 @@ const mswResolverRules = [
  */
 export const testFilesConfig = {
   files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
+  // 워크스페이스 config의 `custom` 네임스페이스를 여기서 다시 정의하면 ESLint가 plugin 재정의로 막으므로 별도 이름을 쓴다.
+  plugins: {
+    'custom-test': {rules: {'no-uniform-table-column': createNoUniformTableColumnRule()}},
+  },
   rules: {
     '@typescript-eslint/no-floating-promises': 'error',
+    'custom-test/no-uniform-table-column': 'error',
     'no-restricted-syntax': [
       'error',
       ...baseRules['no-restricted-syntax'].slice(1),
@@ -425,4 +430,211 @@ export function createFilenameExportConventionRule(): Rule.RuleModule {
       };
     },
   };
+}
+
+const TABLE_CALLER_NAMES = new Set(['it', 'test', 'describe']);
+const TABLE_METHOD_NAMES = new Set(['for', 'each']);
+const TYPE_ASSERTION_TYPES = new Set([
+  'TSAsExpression',
+  'TSSatisfiesExpression',
+  'TSTypeAssertion',
+  'TSNonNullExpression',
+]);
+/** 호출·생성 표현식은 소스 텍스트가 같아도 행마다 결과가 달라질 수 있으므로 "같은 값"으로 보지 않는다(오탐 방지). */
+const VOLATILE_VALUE_TYPES = new Set([
+  'CallExpression',
+  'NewExpression',
+  'TaggedTemplateExpression',
+  'AwaitExpression',
+]);
+const MIN_TABLE_ROWS = 2;
+
+/** estree 타입에 없는 TS 어서션 노드(`[...] as const` 등)를 벗겨 실제 표현식을 얻는다. */
+function unwrapTypeAssertion(node: ESTree.Expression): ESTree.Expression {
+  const candidate = node as unknown as {type: string; expression: ESTree.Expression};
+  return TYPE_ASSERTION_TYPES.has(candidate.type) ? unwrapTypeAssertion(candidate.expression) : node;
+}
+
+/** 스코프 체인을 거슬러 올라가며 이름이 같은 변수를 찾는다. */
+function findVariable(scope: Scope.Scope, name: string): Scope.Variable | null {
+  for (let current: Scope.Scope | null = scope; current; current = current.upper) {
+    const found = current.variables.find((variable) => variable.name === name);
+    if (found) {
+      return found;
+    }
+  }
+  return null;
+}
+
+/** 계산된 키·문자열이 아닌 키는 열 이름을 정할 수 없으므로 null. */
+function getPropertyKeyName(property: ESTree.Property): string | null {
+  if (property.computed) {
+    return null;
+  }
+  if (property.key.type === 'Identifier') {
+    return property.key.name;
+  }
+  return property.key.type === 'Literal' ? String(property.key.value) : null;
+}
+
+function findPropertyValue(row: ESTree.ObjectExpression, columnName: string): ESTree.Expression | null {
+  for (const property of row.properties) {
+    if (property.type === 'Property' && getPropertyKeyName(property) === columnName) {
+      return property.value.type === 'ObjectPattern' ||
+        property.value.type === 'ArrayPattern' ||
+        property.value.type === 'AssignmentPattern' ||
+        property.value.type === 'RestElement'
+        ? null
+        : property.value;
+    }
+  }
+  return null;
+}
+
+/** 값 노드 목록이 "행마다 안 변하는 열"인지 판정. 비교할 수 없는 값이 섞이면 false. */
+function isUniformColumn(values: (ESTree.Node | null)[], sourceCode: SourceCode): boolean {
+  const texts = new Set<string>();
+  for (const value of values) {
+    if (!value || VOLATILE_VALUE_TYPES.has(value.type)) {
+      return false;
+    }
+    texts.add(sourceCode.getText(value));
+  }
+  return texts.size === 1;
+}
+
+/**
+ * it.for/test.for/describe.for 표에서 **모든 행이 같은 값인 열**을 금지하는 커스텀 룰.
+ *
+ * 표의 열은 "케이스를 가르는 축"으로 읽히므로, 행마다 안 변하는 값은 표 밖 상수로 빼야 한다.
+ * 호출 자리에 직접 쓴 배열과 같은 파일의 `const` 배열까지 검사하고, 값이 함수 호출이면 비교에서 뺀다
+ * (텍스트가 같아도 실제 값이 다를 수 있어서).
+ *
+ * @returns 룰 모듈
+ */
+export function createNoUniformTableColumnRule(): Rule.RuleModule {
+  return {
+    meta: {
+      type: 'suggestion',
+      schema: [],
+      messages: {
+        uniformColumn:
+          '표의 "{{ column }}" 열이 모든 행에서 {{ value }}로 같습니다. 행마다 달라지는 값만 표에 두고, 고정 값은 표 밖 상수로 빼세요.',
+        uniformRows:
+          '표의 모든 행이 {{ value }}로 같습니다. 케이스가 갈리지 않으므로 표를 없애고 일반 it()으로 쓰세요.',
+      },
+    },
+    create(context: Rule.RuleContext): Rule.RuleListener {
+      const {sourceCode} = context;
+
+      /** 인자로 넘어온 표(배열 리터럴 또는 같은 파일의 const 배열)를 찾는다. */
+      function resolveTableArray(argument: ESTree.Expression): ESTree.ArrayExpression | null {
+        const unwrapped = unwrapTypeAssertion(argument);
+        if (unwrapped.type === 'ArrayExpression') {
+          return unwrapped;
+        }
+        if (unwrapped.type !== 'Identifier') {
+          return null;
+        }
+
+        const definition = findVariable(sourceCode.getScope(unwrapped), unwrapped.name)?.defs[0];
+        if (definition?.type !== 'Variable' || definition.parent.kind !== 'const' || !definition.node.init) {
+          return null;
+        }
+
+        const init = unwrapTypeAssertion(definition.node.init);
+        return init.type === 'ArrayExpression' ? init : null;
+      }
+
+      function reportObjectColumns(rows: ESTree.ObjectExpression[]): void {
+        for (const property of rows[0].properties) {
+          if (property.type !== 'Property') {
+            continue;
+          }
+          const column = getPropertyKeyName(property);
+          if (column === null) {
+            continue;
+          }
+
+          const values = rows.map((row) => findPropertyValue(row, column));
+          if (isUniformColumn(values, sourceCode)) {
+            context.report({
+              node: property,
+              messageId: 'uniformColumn',
+              data: {column, value: sourceCode.getText(property.value)},
+            });
+          }
+        }
+      }
+
+      function reportArrayColumns(rows: ESTree.ArrayExpression[]): void {
+        const width = rows[0].elements.length;
+        if (rows.some((row) => row.elements.length !== width)) {
+          return;
+        }
+
+        for (let index = 0; index < width; index++) {
+          const values = rows.map((row) => {
+            const element = row.elements[index];
+            return element?.type === 'SpreadElement' ? null : element;
+          });
+          const first = values[0];
+          if (first && isUniformColumn(values, sourceCode)) {
+            context.report({
+              node: first,
+              messageId: 'uniformColumn',
+              data: {column: `${index + 1}번째`, value: sourceCode.getText(first)},
+            });
+          }
+        }
+      }
+
+      return {
+        CallExpression(node: ESTree.CallExpression): void {
+          if (!isTableCall(node.callee) || node.arguments[0]?.type === 'SpreadElement') {
+            return;
+          }
+
+          const argument = node.arguments[0];
+          const table = argument ? resolveTableArray(argument) : null;
+          const rows = table?.elements ?? [];
+          if (rows.length < MIN_TABLE_ROWS || rows.some((row) => !row || row.type === 'SpreadElement')) {
+            return;
+          }
+
+          if (rows.every((row) => row?.type === 'ObjectExpression')) {
+            reportObjectColumns(rows as ESTree.ObjectExpression[]);
+          } else if (rows.every((row) => row?.type === 'ArrayExpression')) {
+            reportArrayColumns(rows as ESTree.ArrayExpression[]);
+          } else if (isUniformColumn(rows, sourceCode)) {
+            context.report({
+              node: rows[0] as ESTree.Node,
+              messageId: 'uniformRows',
+              data: {value: sourceCode.getText(rows[0] as ESTree.Node)},
+            });
+          }
+        },
+      };
+    },
+  };
+}
+
+/** `it.for`·`test.each`·`describe.skip.for`처럼 표를 받는 호출인지 판정. */
+function isTableCall(callee: ESTree.Expression | ESTree.Super): boolean {
+  if (callee.type !== 'MemberExpression' || callee.computed || callee.property.type !== 'Identifier') {
+    return false;
+  }
+  if (!TABLE_METHOD_NAMES.has(callee.property.name)) {
+    return false;
+  }
+
+  const {object} = callee;
+  if (object.type === 'Identifier') {
+    return TABLE_CALLER_NAMES.has(object.name);
+  }
+  return (
+    object.type === 'MemberExpression' &&
+    object.object.type === 'Identifier' &&
+    TABLE_CALLER_NAMES.has(object.object.name)
+  );
 }

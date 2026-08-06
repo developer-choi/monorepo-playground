@@ -746,6 +746,39 @@ onRetry();
 expect(await screen.findByRole('status')).toHaveTextContent('다시 불러왔습니다');
 ```
 
+#### 테스트 파일 전용: `custom-test/no-uniform-table-column` (커스텀 룰)
+
+`it.for`·`test.for`·`describe.for`(및 `.each`)에 넘기는 표에서 **모든 행이 같은 값인 열**을 금지합니다.
+
+표의 열은 "케이스를 가르는 축"으로 읽힙니다. 행마다 안 변하는 값이 섞여 있으면 읽는 사람이 매 행을 눈으로 대조해야 그게 축이 아님을 알게 되므로, 고정 값은 표 밖 상수로 뺍니다. 행끼리 비교해야 판정되는 규칙이라 `no-restricted-syntax` 셀렉터로는 표현할 수 없어 AST 룰로 구현합니다.
+
+검사 범위와 판정 기준:
+
+- 호출 자리에 직접 쓴 배열 리터럴(`as const` 포함)과 **같은 파일의 `const` 배열**까지 따라갑니다. 다른 파일에서 import한 표는 검사하지 않습니다.
+- 행이 객체면 키별로, 배열이면 자리별로 묶고, 행 자체가 값이면 표 전체를 비교합니다.
+- "같은 값"은 **소스 텍스트**로 판정합니다. 그래서 `HTTP_STATUS.OK`처럼 상수 참조도 잡히고, 반대로 `200`과 `HTTP_STATUS.OK`처럼 텍스트만 다른 같은 값은 놓칩니다. 값을 실제로 계산하려면 코드를 실행해야 하므로 거기까지 가지 않습니다.
+- 값이 **함수 호출·`new`**면 비교에서 제외합니다. 텍스트가 같아도 행마다 다른 값을 만들 수 있어(`makeClient()`) 오탐이 되기 때문입니다.
+
+```ts
+// ❌ status가 세 행 모두 같음 — 케이스를 가르지 않는 열
+it.for([
+  {method: 'post', status: HTTP_STATUS.OK},
+  {method: 'put', status: HTTP_STATUS.OK},
+  {method: 'patch', status: HTTP_STATUS.OK},
+])('$method 요청 후 JSON을 반환한다', async ({method, status}) => { ... });
+
+// ✅ 고정 값은 표 밖으로
+it.for(['post', 'put', 'patch'] as const)('$method 요청 후 JSON을 반환한다', async (method) => {
+  // status는 HTTP_STATUS.OK 상수를 그대로 참조
+});
+
+// ✅ 두 열 다 행마다 달라지면 통과
+it.for([
+  {method: 'post', status: HTTP_STATUS.CREATED},
+  {method: 'put', status: HTTP_STATUS.OK},
+])('$method 요청 후 JSON을 반환한다', async ({method, status}) => { ... });
+```
+
 #### `custom/filename-export-convention` (커스텀 룰)
 
 `src/` 하위에서 **컴포넌트(PascalCase)·훅(`use*`) export가 정확히 하나인 파일**은 파일명(첫 `.` 이전)에 **kebab-case(하이픈)·snake_case(언더스코어)를 쓸 수 없습니다** — PascalCase(컴포넌트) 또는 camelCase(훅)여야 합니다. 컴포넌트·훅이 0개거나 2개 이상(여러 컴포넌트를 묶은 모듈)이면 검사하지 않습니다.
