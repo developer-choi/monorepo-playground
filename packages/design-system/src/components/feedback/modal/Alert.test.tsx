@@ -12,4 +12,13 @@ describe('Alert', () => {
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('Edge cases', () => {
+    it('Esc를 누르면 onClose가 호출된다', async () => {
+      const onClose = vi.fn();
+      render(<Alert content="내용" open={true} title="알림" onClose={onClose} />);
+      await userEvent.keyboard('{Escape}');
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
 });

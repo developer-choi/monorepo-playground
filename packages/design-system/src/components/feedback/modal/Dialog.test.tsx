@@ -5,9 +5,12 @@ import userEvent from '@testing-library/user-event';
 import * as Dialog from './Dialog';
 import {itMergesClassNameToRoot} from '@/test-utils/test-class-name';
 
-function renderDialog(props: Omit<ComponentProps<typeof Dialog.Root>, 'open' | 'children'>) {
+function renderDialog({
+  open = true,
+  ...props
+}: Omit<ComponentProps<typeof Dialog.Root>, 'open' | 'children'> & {open?: boolean}) {
   render(
-    <Dialog.Root open={true} {...props}>
+    <Dialog.Root open={open} {...props}>
       <Dialog.Title>테스트 다이얼로그</Dialog.Title>
     </Dialog.Root>,
   );
@@ -35,6 +38,11 @@ describe('Dialog', () => {
   });
 
   describe('Boundary cases', () => {
+    it('open=false면 dialog가 렌더되지 않는다', () => {
+      renderDialog({onClose: vi.fn(), open: false});
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
     it('disableEscapeKeyDown이면 Esc로 닫히지 않는다', async () => {
       const onClose = vi.fn();
       renderDialog({onClose, disableEscapeKeyDown: true});
