@@ -17,7 +17,9 @@ export const paginationParamsSchema = z.object({
     .number()
     .int()
     .min(PAGINATION_LIMITS.limit.min, `항목 수는 ${PAGINATION_LIMITS.limit.min} 이상이어야 합니다`)
-    .max(PAGINATION_LIMITS.limit.max, `항목 수는 최대 ${PAGINATION_LIMITS.limit.max}개입니다`)
+    // 상한을 넘기면 거부하지 않고 상한까지 깎는다. 거부하면 safeParsePartial이 필드를 통째로
+    // 빼서 기본값으로 되돌아가고, 크게 요청할수록 적게 받는 역전이 생긴다.
+    .transform((value) => Math.min(PAGINATION_LIMITS.limit.max, value))
     .default(PAGINATION_LIMITS.defaultLimit),
 });
 

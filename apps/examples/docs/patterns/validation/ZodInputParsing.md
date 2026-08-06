@@ -121,10 +121,12 @@ export const paginationParamsSchema = z.object({
     .number()
     .int()
     .min(PAGINATION_LIMITS.limit.min, `항목 수는 ${PAGINATION_LIMITS.limit.min} 이상이어야 합니다`)
-    .max(PAGINATION_LIMITS.limit.max, `항목 수는 최대 ${PAGINATION_LIMITS.limit.max}개입니다`)
+    .transform((value) => Math.min(PAGINATION_LIMITS.limit.max, value)) // 상한 초과는 거부 대신 깎기
     .default(PAGINATION_LIMITS.defaultLimit), // 키 없을 때 기본값 10
 });
 ```
+
+상한을 `.max()`로 거부하면 `safeParsePartial`이 그 필드를 통째로 빼고, 서버는 limit이 안 온 것으로 보아 기본값을 쓴다. 그래서 `limit=250`이 `limit=150`보다 **적은** 개수를 받는 역전이 생긴다. 상한은 거부가 아니라 `transform`으로 깎아야 "많이 요청할수록 많이(상한까지) 받는다"가 지켜진다.
 
 **사용처**
 
