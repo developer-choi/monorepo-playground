@@ -18,14 +18,7 @@ export function Root({
   children,
 }: PropsWithChildren<RootProps>) {
   return (
-    <RadixDialog.Root
-      open={open}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) {
-          onClose();
-        }
-      }}
-    >
+    <RadixDialog.Root open={open} onOpenChange={onClose}>
       <RadixDialog.Portal>
         <RadixDialog.Overlay className={clsx(styles.overlay, styles.styled)} />
         <RadixDialog.Content
