@@ -101,6 +101,35 @@ expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 expect(await screen.findByRole('alert')).toBeInTheDocument();
 ```
 
+## 조작
+
+### 사용자가 할 수 없는 조작을 흉내내지 않는다
+
+userEvent는 브라우저가 막는 조작을 테스트에서도 막는다. 그 검사를 옵션으로 끄고 통과시키면, 실제로는 일어날 수 없는 경로를 검증하게 된다.
+
+```tsx
+// ❌ 모달이 열리면 body에 pointer-events: none이 걸린다.
+//    검사를 꺼야만 통과한다 = 사용자가 못 하는 클릭이다.
+await userEvent.setup({pointerEventsCheck: 0}).click(document.body);
+
+// ✅ 모달이 열렸을 때 실제로 누를 수 있는 바깥 면은 overlay다.
+//    radix는 overlay에 pointer-events: auto를 주고, dialog 바로 앞에 렌더한다.
+const overlay = screen.getByRole('dialog').previousElementSibling as Element;
+await userEvent.click(overlay);
+```
+
+검사에 막히면 조작 **대상**을 바꾼다. 검사를 끄지 않는다. 꺼야만 통과하는 조작이면 그 조작이 사용자 시나리오에 없다는 신호다.
+
+`pointerEventsCheck`를 성능 때문에 낮추는 것은 별개다 — 공식 문서도 이 검사가 비싸다는 이유로 단계를 제공한다. 문제는 **테스트를 통과시키려고** 끄는 경우다.
+
+출처: https://testing-library.com/docs/user-event/intro/
+
+> It adds visibility and interactability checks along the way and manipulates the DOM just like a user interaction in the browser would. It factors in that the browser e.g. wouldn't let a user click a hidden element or type in a disabled text box.
+
+출처: https://testing-library.com/docs/user-event/options/
+
+> The pointer API includes a check if an element has or inherits `pointer-events: none`. This check is known to be expensive and very expensive when checking deeply nested nodes.
+
 ## Mock
 
 ### mock 도입 시 근거·확답 필수
@@ -139,7 +168,9 @@ await user.type(screen.getByRole('searchbox'), `${keyword}{enter}`);
 expect(mockReplace).toHaveBeenCalledWith(`/search?searchText=${encodeURIComponent(keyword)}`);
 ```
 
-### 반복 assertion → 데이터 기반 반복문
+### 같은 검증이 대상만 바꿔 반복되면 데이터로 돌린다
+
+단언 줄이든 `it`·`describe` 블록이든, 검증 내용이 같고 **대상만 다르면** 데이터 배열로 돌린다. 블록 단위 반복은 눈에 덜 띄어서 그냥 늘어놓기 쉽다 — 대상이 셋을 넘어가면 어느 줄이 어느 대상인지 읽는 쪽이 대조해야 한다.
 
 ```typescript
 // before
@@ -152,6 +183,44 @@ names.forEach((name) => {
   expect(screen.getByRole('button', {name})).toBeInTheDocument();
 });
 ```
+
+블록도 마찬가지다. 아래 예시의 `itMergesClassNameToRoot`는 className 병합을 검증하는 공용 테스트 함수다([test-class-name.ts](../../../packages/design-system/src/test-utils/test-class-name.ts) — 루트 element를 잡는 방법만 호출부가 넘긴다).
+
+```tsx
+// before — 같은 검증이 대상만 바꿔 세 번
+describe('Dialog.Header', () => {
+  itMergesClassNameToRoot((className) => {
+    render(<Dialog.Header className={className}>본문</Dialog.Header>);
+    return screen.getByText('본문');
+  });
+});
+describe('Dialog.Content', () => {
+  /* 위와 동일, 대상만 다름 */
+});
+describe('Dialog.Footer', () => {
+  /* 위와 동일, 대상만 다름 */
+});
+
+// after
+[
+  {name: 'Dialog.Header', wrapper: Dialog.Header},
+  {name: 'Dialog.Content', wrapper: Dialog.Content},
+  {name: 'Dialog.Footer', wrapper: Dialog.Footer},
+].forEach((testCase) => {
+  describe(testCase.name, () => {
+    itMergesClassNameToRoot((className) => {
+      render(<testCase.wrapper className={className}>본문</testCase.wrapper>);
+      return screen.getByText('본문');
+    });
+  });
+});
+```
+
+`describe.for`가 아니라 배열 + `forEach`인 이유: `.for`의 `$name`은 문자열 값에 따옴표를 붙여 테스트 이름에 그대로 드러나고, `%s`는 `.for`가 인자를 펼치지 않아 객체가 통째로 찍힌다.
+
+컴포넌트를 데이터로 넘길 때 이름을 대문자로 받으면 `naming-convention`에 걸린다. 점이 들어간 JSX 이름(`<testCase.wrapper>`)은 대소문자와 무관하게 값 참조라 그대로 쓸 수 있다.
+
+**경계** — 검증 내용이 대상마다 다르면 묶지 않는다. 시각 prop 조합을 표로 도는 것도 아니다([TestsWeAvoid.md](./TestsWeAvoid.md) 「prop 조합을 전부 테스트한다」).
 
 ## 네이밍
 

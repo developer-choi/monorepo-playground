@@ -1,17 +1,20 @@
 import {type ComponentProps} from 'react';
 import {describe, it, expect, vi} from 'vitest';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as Dialog from './Dialog';
+import {itMergesClassNameToRoot} from '@/test-utils/test-class-name';
 
-function renderDialog(props: Partial<ComponentProps<typeof Dialog.Root>> = {}) {
-  const onClose = props.onClose ?? vi.fn();
+function renderDialog(props: Omit<ComponentProps<typeof Dialog.Root>, 'open' | 'children'>) {
   render(
-    <Dialog.Root open={true} onClose={onClose} {...props}>
+    <Dialog.Root open={true} {...props}>
       <Dialog.Title>테스트 다이얼로그</Dialog.Title>
     </Dialog.Root>,
   );
-  return {onClose: props.onClose ?? onClose};
+}
+
+function getOverlay() {
+  return screen.getByRole('dialog').previousElementSibling as Element;
 }
 
 describe('Dialog', () => {
@@ -26,7 +29,7 @@ describe('Dialog', () => {
     it('바깥(backdrop)을 클릭하면 onClose가 호출된다', async () => {
       const onClose = vi.fn();
       renderDialog({onClose});
-      await userEvent.setup({pointerEventsCheck: 0}).click(document.body);
+      await userEvent.click(getOverlay());
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
@@ -42,8 +45,21 @@ describe('Dialog', () => {
     it('disableBackdropClick이면 바깥 클릭으로 닫히지 않는다', async () => {
       const onClose = vi.fn();
       renderDialog({onClose, disableBackdropClick: true});
-      await userEvent.setup({pointerEventsCheck: 0}).click(document.body);
+      await userEvent.click(getOverlay());
       expect(onClose).not.toHaveBeenCalled();
+    });
+  });
+});
+
+[
+  {name: 'Dialog.Header', wrapper: Dialog.Header},
+  {name: 'Dialog.Content', wrapper: Dialog.Content},
+  {name: 'Dialog.Footer', wrapper: Dialog.Footer},
+].forEach((testCase) => {
+  describe(testCase.name, () => {
+    itMergesClassNameToRoot((className) => {
+      render(<testCase.wrapper className={className}>본문</testCase.wrapper>);
+      return screen.getByText('본문');
     });
   });
 });
