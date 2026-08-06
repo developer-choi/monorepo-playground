@@ -12,7 +12,7 @@
 2. 아래 **복사 파일**을 프로젝트 루트에 둔다.
 3. 아래 **설치 deps**에서 없는 것만 설치한다.
 4. **병합 스니펫**(tsconfig / package.json)을 기존 파일에 합친다(통째로 덮지 말 것).
-5. `npm run prepare`로 husky를 활성화한다.
+5. `npm run prepare`로 git 훅을 등록한다(`npm install`이 자동으로 부르므로 보통 이미 끝나 있다).
 6. **뺄·disable 룰** 절을 보고 과제 범위에 안 맞는 룰을 정리한다.
 
 ## 복사 파일 (빠짐없이)
@@ -22,9 +22,11 @@
 - `.prettierrc`, `.prettierignore`, `.editorconfig`, `.gitattributes`
 - `commitlint.config.mjs`
 - `.stylelintrc.json` (scss/css를 쓸 때만 — 「뺄·disable 룰」의 stylelint 항목 참고)
-- `.husky/pre-commit`, `.husky/commit-msg`
-  - 루트 원본은 husky를 걷고 `.githooks/`에 훅을 두지만(워크트리에서 훅이 조용히 스킵되던 문제 때문), **과제 레포는 husky를 그대로 쓴다.** 평가자가 클론했을 때 훅 세팅이 `package.json`에 보이는 편이 낫고, 과제 레포는 워크트리를 안 써서 그 문제도 안 생긴다. 짝이 안 맞는 게 아니라 의도된 차이다.
-- `scripts/check-file-level-disable.sh`
+- `.githooks/pre-commit`, `.githooks/commit-msg`
+- `scripts/check-file-level-disable.sh`, `scripts/install-git-hooks.mjs`
+  - 훅 배선은 루트 원본과 같다 — husky를 쓰지 않고 git 설정 훅(2.54+)으로 등록한다. husky가 가리키는 `.husky/_`는 gitignore된 로컬 산출물이라 새 워크트리에 안 딸려오고, 그러면 git이 **경고 없이 커밋을 통과시킨다.** 설정은 `.git/config`에 들어가고 이 파일은 워크트리끼리 공유되므로 이 구멍이 생기지 않는다.
+  - 다른 점은 **배포 경로 하나**다. 루트는 AC `sync:environment`가 등록하지만, 과제 레포는 받는 쪽에 그게 없으므로 `install-git-hooks.mjs`를 레포 안에 두고 `prepare`가 부른다 — 평가자는 `npm install`만 하면 되고 훅 세팅도 `package.json`에 보인다.
+  - 평가자의 git이 2.54 미만이면 스크립트가 경고만 찍고 넘어간다. 평가자는 커밋을 하지 않아 훅이 없어도 잃는 것이 없고, `npm install`을 실패시키는 쪽이 손해가 크다.
 
 **ESLint (프레임워크별)** — `eslint/`에서 **반드시 2개를 함께** 가져온다:
 
@@ -42,7 +44,7 @@
 npm i -D eslint typescript-eslint eslint-plugin-check-file prettier \
          eslint-plugin-import eslint-import-resolver-typescript \
          stylelint stylelint-config-standard-scss stylelint-declaration-strict-value \
-         @commitlint/cli @commitlint/config-conventional husky lint-staged
+         @commitlint/cli @commitlint/config-conventional lint-staged
 
 # Next (create-next-app이 보통 이미 설치)
 npm i -D eslint-config-next
@@ -74,7 +76,7 @@ npm i -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refre
     "lint": "eslint --max-warnings 0",
     "format": "prettier --write .",
     "test-staged": "lint-staged --concurrent false && tsc --noEmit",
-    "prepare": "husky",
+    "prepare": "node scripts/install-git-hooks.mjs",
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,cjs,json,css,scss,md}": "prettier --write",
