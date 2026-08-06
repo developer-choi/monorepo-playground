@@ -47,23 +47,3 @@
 `docs/patterns/`·`docs/best-practices/` 문서가 라이브러리·표준의 동작을 사실로 진술하면, 근거가 되는 공식문서 URL과 그 페이지의 근거 영어 원문을 함께 단다(형식: `출처: <URL>` 다음 줄에 원문 인용). 1차 소스(공식문서·소스코드)를 직접 확인한 뒤 인용한다 — 시장 통념·기억·서브에이전트 표면 인용으로 대체하지 않는다. 버전에 따라 갈리는 동작(예: API 도입 버전)은 해당 버전 문서를 근거로 명시한다.
 
 `docs/guides/`(사람용·외부 공개 글)에는 적용하지 않는다.
-
-## 설정 파일 변경 시 문서 동기화
-
-### 정적 분석
-
-정적 분석 설정 변경 시 `docs/static-checking.md`의 설정-문서 매핑 테이블을 보고 해당 문서를 최신화한다.
-
-### Stylelint
-
-`.stylelintrc.json` 변경 시 `docs/static-checking/stylelint.md`를 함께 최신화한다.
-
-### 포매터
-
-`.prettierrc`, `.prettierignore`, `.editorconfig` 변경 시 `docs/formatter.md`를 함께 최신화한다.
-
-### 채용과제 템플릿
-
-정적 분석·포매터·커밋훅 설정을 바꾸면 `templates/recruitment/`의 대응 사본도 함께 최신화한다. 대응 관계는 `meta/coupling.json`의 「루트 설정 원본 ↔ 채용과제 템플릿 사본」 묶음에 있다(여기에 나열하지 않는다 — 이중 관리가 되어 어긋난다).
-
-사본은 단일레포용 평탄화본이라 **byte 일치가 아니라 의미 대응**이 기준이다. 모노레포 전용분(워크스페이스 경로, turbo·docs 무시 항목, MP 자체 제작 stylelint 플러그인 등)은 사본에서 빠지는 것이 정상이다.
