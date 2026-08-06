@@ -21,7 +21,8 @@ export default meta;
 type Story = StoryObj<typeof Alert>;
 
 function AlertStory(args: ComponentProps<typeof Alert>) {
-  const [open, setOpen] = useState(false);
+  // 시각 회귀 스냅샷은 스토리의 첫 화면만 찍는다. 닫힌 채로 두면 모달 모양이 한 번도 안 찍힌다.
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="storyLayout">
