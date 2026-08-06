@@ -22,7 +22,6 @@ export default {
         // project-level
         'setting',
         'best-practice-map',
-        'archives',
         // docs/guides/
         'guides',
       ],
