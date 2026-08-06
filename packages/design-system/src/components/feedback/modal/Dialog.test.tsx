@@ -63,10 +63,10 @@ describe('Dialog', () => {
   {name: 'Dialog.Header', wrapper: Dialog.Header},
   {name: 'Dialog.Content', wrapper: Dialog.Content},
   {name: 'Dialog.Footer', wrapper: Dialog.Footer},
-].forEach((testCase) => {
-  describe(testCase.name, () => {
+].forEach(({name, wrapper: Wrapper}) => {
+  describe(name, () => {
     itMergesClassNameToRoot((className) => {
-      render(<testCase.wrapper className={className}>본문</testCase.wrapper>);
+      render(<Wrapper className={className}>본문</Wrapper>);
       return screen.getByText('본문');
     });
   });

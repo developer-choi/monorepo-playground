@@ -206,10 +206,10 @@ describe('Dialog.Footer', () => {
   {name: 'Dialog.Header', wrapper: Dialog.Header},
   {name: 'Dialog.Content', wrapper: Dialog.Content},
   {name: 'Dialog.Footer', wrapper: Dialog.Footer},
-].forEach((testCase) => {
-  describe(testCase.name, () => {
+].forEach(({name, wrapper: Wrapper}) => {
+  describe(name, () => {
     itMergesClassNameToRoot((className) => {
-      render(<testCase.wrapper className={className}>본문</testCase.wrapper>);
+      render(<Wrapper className={className}>본문</Wrapper>);
       return screen.getByText('본문');
     });
   });
@@ -218,7 +218,7 @@ describe('Dialog.Footer', () => {
 
 `describe.for`가 아니라 배열 + `forEach`인 이유: `.for`의 `$name`은 문자열 값에 따옴표를 붙여 테스트 이름에 그대로 드러나고, `%s`는 `.for`가 인자를 펼치지 않아 객체가 통째로 찍힌다.
 
-컴포넌트를 데이터로 넘길 때 이름을 대문자로 받으면 `naming-convention`에 걸린다. 점이 들어간 JSX 이름(`<testCase.wrapper>`)은 대소문자와 무관하게 값 참조라 그대로 쓸 수 있다.
+컴포넌트를 데이터로 넘길 때는 이름을 바꿔 받아(`{wrapper: Wrapper}`) 대문자로 쓴다. `naming-convention`이 함수 타입에 PascalCase를 허용하므로 억제 주석이 필요 없다([eslint.md](../../static-checking/eslint.md#typescript-eslintnaming-convention)). 표의 열이 `ElementType`처럼 컴포넌트와 태그 문자열의 합집합이면 이 예외에 안 걸리므로, 그때는 열 타입을 컴포넌트로 좁힌다.
 
 **경계** — 검증 내용이 대상마다 다르면 묶지 않는다. 시각 prop 조합을 표로 도는 것도 아니다([TestsWeAvoid.md](./TestsWeAvoid.md) 「prop 조합을 전부 테스트한다」).
 

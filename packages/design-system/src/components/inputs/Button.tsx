@@ -50,7 +50,7 @@ export default function Button({
   );
 
   // asChild이면 Slot.Root가 자식 엘리먼트에 아래 props(className·onClick·ref 등)를 병합한다.
-  // eslint-disable-next-line @typescript-eslint/naming-convention -- JSX에서 컴포넌트로 렌더하려면 대문자 식별자가 필요
+  // eslint-disable-next-line @typescript-eslint/naming-convention -- ElementType은 컴포넌트|태그 문자열 합집합이라 함수 예외에 안 걸린다. JSX에서 <Comp>로 쓰려면 대문자가 강제다
   const Comp: ElementType = asChild ? Slot.Root : 'button';
 
   return (
