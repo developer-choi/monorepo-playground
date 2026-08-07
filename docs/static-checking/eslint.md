@@ -507,19 +507,6 @@ const STATUS = {ACTIVE: 'active', INACTIVE: 'inactive'} as const;
 type Status = (typeof STATUS)[keyof typeof STATUS];
 ```
 
-**`<button>` 직접 사용 금지** (`JSXOpeningElement[name.name='button']`)
-
-`<button>`을 직접 사용하면 스타일/접근성 처리가 파편화됩니다. 공통 Button 컴포넌트를 사용하세요. Button 컴포넌트 내부 구현처럼 불가피한 경우 `eslint-disable` + 사유 주석을 남깁니다.
-
-```tsx
-// ❌
-<button onClick={handleClick}>저장</button>;
-
-// ✅
-import {Button} from '@monorepo-playground/design-system';
-<Button onClick={handleClick}>저장</Button>;
-```
-
 **인라인 스타일 객체 리터럴 금지** (`JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression`)
 
 인라인 스타일 객체 리터럴(`style={{...}}`)은 CSS Modules로 분리합니다. 변수 참조(`style={someVar}`)는 허용합니다. 동적 값, CSS 변수 주입, 스켈레톤은 예외로 허용하며, 이 외의 경우 `eslint-disable` + 사유 주석으로 처리합니다.

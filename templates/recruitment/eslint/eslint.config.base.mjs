@@ -128,10 +128,6 @@ export const baseRules = {
       message: 'enum 대신 as const 객체를 사용하세요.',
     },
     {
-      selector: "JSXOpeningElement[name.name='button']",
-      message: '<button> 직접 사용 금지. 공통 Button 컴포넌트를 사용하세요.',
-    },
-    {
       selector: "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
       message:
         '인라인 스타일 객체 리터럴 금지. CSS Modules를 사용하세요. 변수 참조는 허용. 예외: 동적 값·CSS 변수 주입·스켈레톤. — eslint-disable + 사유 주석으로 처리.',

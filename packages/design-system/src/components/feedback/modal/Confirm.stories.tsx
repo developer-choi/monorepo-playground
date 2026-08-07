@@ -29,7 +29,6 @@ function ConfirmStory(args: ComponentProps<typeof Confirm>) {
 
   return (
     <div className="storyLayout">
-      {/* eslint-disable-next-line no-restricted-syntax -- Storybook 데모용 트리거. Confirm 자체는 DS Button을 내부에서 사용 */}
       <button onClick={() => setOpen(true)}>Confirm 열기</button>
       <Confirm
         {...args}
