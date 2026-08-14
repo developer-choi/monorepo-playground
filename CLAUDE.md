@@ -8,7 +8,7 @@
 
 - **예제 코드 본체** → `apps/example/`, `packages/design-system/`
 - **코드 직결 가이드** → `docs/patterns/<주제>.md`
-- **패턴 인덱스** → `docs/best-practices/<주제>.md` (라우터 파일 없음 — Glob으로 목록을 얻고, 각 파일 상단 frontmatter `keywords`만 먼저 읽어 관련성을 빠르게 판단한다)
+- **패턴 인덱스** → `docs/best-practices/<주제>.md` (라우터 파일 없음 — Glob으로 목록을 얻는다)
 
 ## packages/design-system 작업
 
