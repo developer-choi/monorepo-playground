@@ -6,9 +6,9 @@
 
 ### 소주제 (MP 안에서 어디로)
 
-- **예제 코드 본체** → `apps/example/`, `packages/design-system/`
+- **예제 코드 본체** → `apps/examples/`, `packages/design-system/`
 - **코드 직결 가이드** → `docs/patterns/<주제>.md`
-- **패턴 인덱스** → `docs/best-practices/<주제>.md` (라우터 파일 없음 — Glob으로 목록을 얻는다)
+- **패턴 인덱스** → `docs/best-practices/<주제>.md` (라우터 파일 없음)
 
 ## packages/design-system 작업
 
@@ -18,11 +18,9 @@
 
 ### 로드 규칙
 
-각 `docs/best-practices/<주제>.md`는 상단에 YAML frontmatter로 `keywords`(그 파일이 다루는 패턴들의 키워드 목록)를 둔다. 탐색 시 파일 전체를 Read하기 전에 frontmatter만 먼저 확인해 관련 없으면 넘어간다 — 파일이 커져도 전체를 열지 않고 걸러낼 수 있다.
+각 `docs/best-practices/<주제>.md`는 상단에 YAML frontmatter로 `keywords`(그 파일이 다루는 패턴들의 키워드 목록)를 둔다. 탐색 시 파일 전체를 Read하기 전에 frontmatter만 먼저 확인해 관련 없으면 넘어간다.
 
 패턴 문서는 코드를 직접 포함하거나, 소스 파일 링크로 참조한다. 코드를 직접 포함하면 중복이 생기므로 링크로 분리하는 경우가 있는데, 이때 `[CRITICAL]`로 표기된 링크는 패턴의 실체이므로 반드시 Read한다. 그 외 링크(설계 히스토리 등)는 선택 참조.
-
-각 패턴은 해당 주제만큼의 코드를 담고 있으며, 단독으로 완성된 구현이 아니다. 실제 구현 시에는 관련 패턴을 조합해야 한다. 예: URL `[id]` 검증은 에러 처리 이원화와 함께 사용해야 검증 실패 시 에러 페이지 흐름이 완성된다.
 
 ### 인덱스 엔트리 양식
 
@@ -30,11 +28,10 @@
 
 ### 문서 수정 시 작성 규칙 역제안
 
-`docs/` 하위 문서(특히 `docs/patterns/`, `docs/tips/`, `docs/best-practices/`) 수정 시:
+`docs/` 하위 문서(특히 `docs/patterns/`, `docs/best-practices/`) 수정 시:
 
-1. 요청된 수정을 수행
-2. 패턴성 판단 (동일 실수·요청이 재발할 가능성)
-3. 패턴성이면, 해당 영역의 관련 메타 파일에 추가할 규칙을 구체적 문안과 함께 역제안
+1. 패턴성 판단 (동일 실수·요청이 재발할 가능성)
+2. 패턴성이면, 해당 영역의 관련 메타 파일에 추가할 규칙을 구체적 문안과 함께 역제안
 
 ### 코드 복사 금지 (docs/patterns 한정)
 
