@@ -1,5 +1,5 @@
 ---
-keywords: [폴더 구조, DDD, 셋업, 프로젝트 초기 세팅, commitlint, prettier, typescript-eslint, stylelint, husky, lint-staged, reset.css, Provider Composition, react-query, overlay-kit, sonner, 컴포넌트 단위테스트, Vitest, React Testing Library, jsdom, Next.js Root Layout, Google Fonts, MSW, setupServer, server.listen, msw init, 네트워크 목킹, mock service worker]
+keywords: [폴더 구조, DDD, 셋업, 프로젝트 초기 세팅, commitlint, prettier, typescript-eslint, stylelint, git 설정 훅, lint-staged, reset.css, Provider Composition, react-query, overlay-kit, sonner, 컴포넌트 단위테스트, Vitest, React Testing Library, jsdom, Next.js Root Layout, Google Fonts, MSW, setupServer, server.listen, msw init, 네트워크 목킹, mock service worker]
 ---
 
 # Best Practices — 셋업
@@ -15,7 +15,7 @@ keywords: [폴더 구조, DDD, 셋업, 프로젝트 초기 세팅, commitlint, p
 
 ### 프로젝트 초기 세팅
 
-- 기술스택: commitlint + prettier + typescript-eslint + stylelint + husky + lint-staged
+- 기술스택: commitlint + prettier + typescript-eslint + stylelint + git 설정 훅 + lint-staged
 - 상황: 채용과제·사이드 프로젝트 초기 세팅
 - 코드: docs/patterns/setup/ProjectSetup.md
 

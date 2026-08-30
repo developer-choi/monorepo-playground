@@ -6,7 +6,7 @@
 
 ## 정적 분석·포맷·커밋 훅 — 템플릿 복사
 
-ESLint·tsconfig·Prettier·EditorConfig·gitattributes·commitlint·husky·lint-staged는 루트 [`templates/recruitment/`](../../../templates/recruitment/)를 복사해 셋업한다. 복사할 파일, 설치 deps, 병합 스니펫(tsconfig·package.json), 과제 범위상 뺄 룰은 [`templates/recruitment/README.md`](../../../templates/recruitment/README.md)를 따른다.
+ESLint·tsconfig·Prettier·EditorConfig·gitattributes·commitlint·git 설정 훅·lint-staged는 루트 [`templates/recruitment/`](../../../templates/recruitment/)를 복사해 셋업한다. 복사할 파일, 설치 deps, 병합 스니펫(tsconfig·package.json), 과제 범위상 뺄 룰은 [`templates/recruitment/README.md`](../../../templates/recruitment/README.md)를 따른다.
 
 각 룰의 도입 사유는 `docs/static-checking/{eslint,tsconfig,commitlint}.md`·`docs/formatter.md`를 참조한다.
 

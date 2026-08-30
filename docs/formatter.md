@@ -44,7 +44,7 @@ CRLF/LF 혼용으로 에디터 커밋 모달에서 코드 변경 없이 줄바�
 
 ## pre-commit 파이프라인
 
-`test-staged` 스크립트(`lint-staged --concurrent false && turbo check-types`)가 husky pre-commit 훅에서 실행됩니다.
+`test-staged` 스크립트(`lint-staged --concurrent false && turbo check-types`)가 pre-commit 훅(`.githooks/pre-commit`)에서 실행됩니다.
 
 ### lint-staged 단계
 
