@@ -319,3 +319,11 @@ function TodoListPage({ title }) {
 > - Storing other objects that aren't necessary to calculate the JSX.
 
 - ref에 담을 것의 예인데 타임아웃 id가 첫 줄에 있습니다. 이 글이 든 자동저장 타이머와 같은 예입니다.
+
+---
+
+## 다음 단계
+
+걷어내고 남은 4개의 상태는 어느 컴포넌트가 들고 있어야 할까요?
+
+[이 상태를 어느 컴포넌트가 소유해야 할까요?](./step2.md)
