@@ -17,4 +17,4 @@ import 순서와 전체 Provider 구성은 `docs/patterns/setup/ProviderComposit
 
 ## 코드
 
-[CRITICAL] `packages/design-system/src/styles/reset.css` — 이 파일을 그대로 복사한다.
+[CRITICAL] `packages/design-system/src/styles/reset.css` — 이 파일을 원본으로 삼되, 과제 요구사항·시안에 없는 요소(table·폼·dialog 등)의 리셋 규칙은 빼고 가져온다. 뺀 규칙과 그 이유는 커밋 메시지에 남긴다.
