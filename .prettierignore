@@ -5,7 +5,7 @@ build
 coverage
 playwright-report
 test-results
-package-lock.json
+yarn.lock
 .yarn
 turbo
 .turbo
