@@ -6,7 +6,7 @@
 
 ```bash
 # 모노레포 루트에서
-npm run examples
+yarn examples
 ```
 
 ## 예제 목록
