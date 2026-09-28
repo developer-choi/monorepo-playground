@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "preinstall": "npx only-allow npm",
+    "preinstall": "npx only-allow yarn",
     "build": "turbo build",
     "start": "turbo start",
     "lint": "turbo lint",
@@ -12,7 +12,7 @@
     "examples:start": "turbo build --filter=examples && turbo start --filter=examples",
     "design-system": "turbo storybook --filter=@monorepo-playground/design-system",
     "test-staged": "lint-staged --concurrent false && turbo check-types",
-    "test-all": "turbo check-types && turbo lint && npm run stylelint && turbo run test -- --run",
+    "test-all": "turbo check-types && turbo lint && yarn stylelint && turbo run test -- --run",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "stylelint": "stylelint \"**/*.{scss,css}\" --max-warnings 0",
@@ -38,7 +38,7 @@
     "apps/*",
     "packages/*"
   ],
-  "packageManager": "npm@11.6.2",
+  "packageManager": "yarn@4.10.3",
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",

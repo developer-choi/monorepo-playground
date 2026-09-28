@@ -36,7 +36,7 @@ export default defineConfig({
    * 변경이 없으면 캐시가 맞아 재실행이 빠르다.
    */
   webServer: {
-    command: 'npm run examples:start',
+    command: 'yarn examples:start',
     cwd: '../..',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
