@@ -36,11 +36,11 @@
 
 ### 바꾼 뒤 — 워크스페이스 lint를 직접 돌린다
 
-루트 `npm run lint`(turbo)는 `eslint.config.base.mts`를 캐시 입력으로 잡지 않아, 설정을 고쳐도 캐시 적중이 떠서 차이가 안 보일 수 있습니다.
+루트 `yarn lint`(turbo)는 `eslint.config.base.mts`를 캐시 입력으로 잡지 않아, 설정을 고쳐도 캐시 적중이 떠서 차이가 안 보일 수 있습니다.
 
 ```
-npm run lint -w examples
-npm run lint -w @monorepo-playground/design-system
+yarn workspace examples lint
+yarn workspace @monorepo-playground/design-system lint
 ```
 
 ### 파일 통째 억제는 손으로 떼서 센다

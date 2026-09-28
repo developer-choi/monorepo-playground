@@ -24,7 +24,8 @@ React/Next.js best practice를 모노레포 예제 패키지 형태로 정리하
 ## 시작하기
 
 ```bash
-npm install
+corepack enable
+yarn install
 ```
 
 각 앱의 실행 방법은 해당 README를 참고해주세요.

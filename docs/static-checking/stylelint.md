@@ -8,7 +8,7 @@ ESLint가 TypeScript 코드를 검사하듯, Stylelint는 SCSS 파일의 문법 
 
 ## 경고도 차단
 
-Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`/`stylelint:fix` 스크립트, lint-staged 모두). severity가 `warning`인 규칙도 실패로 간주됩니다. `test-all`(pre-push)에 `npm run stylelint`가 포함되어 있어, lint-staged 범위를 벗어난 SCSS 변경도 푸시 시점에 전체 검사됩니다.
+Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`/`stylelint:fix` 스크립트, lint-staged 모두). severity가 `warning`인 규칙도 실패로 간주됩니다. `test-all`(pre-push)에 `yarn stylelint`가 포함되어 있어, lint-staged 범위를 벗어난 SCSS 변경도 푸시 시점에 전체 검사됩니다.
 
 ## 검사 대상 제외
 
