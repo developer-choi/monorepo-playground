@@ -1,7 +1,6 @@
 {
   "name": "monorepo-playground",
   "version": "1.0.0",
-  "type": "module",
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow yarn",
