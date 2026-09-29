@@ -76,7 +76,12 @@ fg / bg 안에서 의미 단어로 파생한다.
 
 SCSS 변수(`$name`)가 아니라 CSS 사용자 정의 속성(`--name`)으로 정의한다. 런타임에 테마 교체·다크모드 토글이 가능해야 하기 때문. SCSS 변수는 컴파일 타임 치환이라 런타임 변경 불가.
 
-CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 `:root`에 선언된 토큰을 어디서나 `var(--...)`로 참조할 수 있다.
+CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 테마 클래스에 선언된 토큰을 그 아래 어디서나 `var(--...)`로 참조할 수 있다.
+
+토큰은 `design-tokens.module.scss`의 `.theme` 클래스에 선언하고, 패키지는 빌드 때 해시된 그 클래스명을 `themeClassName`으로 export한다. 쓰는 쪽은 `<body>`에 `themeClassName`과 자기 module class를 함께 붙이고, 자기 클래스에서 토큰을 덮어쓴다. 두 클래스는 우선순위가 같으므로 디자인 시스템 CSS 뒤에 불러온 쪽이 이긴다. Radix Themes가 `.radix-themes`로 테마를 덮어쓰게 하는 것과 같은 방식이다. 쓰는 쪽 안내는 [README](../../README.md)의 「테마 바꾸기」에 있다.
+
+출처: https://www.radix-ui.com/themes/docs/theme/color
+> Make sure that your CSS is applied after the Radix Themes styles so that it takes precedence.
 
 대신 CSS 변수는 빌드 시점 검증을 받지 못한다. `var(--color-fg-primaryy)`처럼 이름을 잘못 적어도 컴파일 단계에서 걸리지 않고, 런타임에 값이 비어 조용히 깨진다.
 
