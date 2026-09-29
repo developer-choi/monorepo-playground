@@ -1,3 +1,5 @@
+import {themeClassName} from '@monorepo-playground/design-system';
+import clsx from 'clsx';
 import type {Metadata} from 'next';
 import {Noto_Sans} from 'next/font/google';
 import {PropsWithChildren} from 'react';
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={notoSans.className}>
+      <body className={clsx(themeClassName, notoSans.className)}>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

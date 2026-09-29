@@ -1,8 +1,10 @@
 import type {Preview} from '@storybook/react-vite';
 import '@/styles/reset.css';
 import '@/styles/global.css';
-import '@/styles/design-tokens.css';
+import {themeClassName} from '@/styles/theme';
 import './storybook.scss';
+
+document.body.classList.add(themeClassName);
 
 const preview: Preview = {
   parameters: {

@@ -22,7 +22,13 @@ export default defineConfig({
     dts({
       tsconfigPath: './tsconfig.app.json',
       entryRoot: 'src',
-      include: ['src/vite-env.d.ts', 'src/index.ts', 'src/components/**/*.ts', 'src/components/**/*.tsx'],
+      include: [
+        'src/vite-env.d.ts',
+        'src/index.ts',
+        'src/styles/theme.ts',
+        'src/components/**/*.ts',
+        'src/components/**/*.tsx',
+      ],
       exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx'],
     }),
   ],
