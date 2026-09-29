@@ -44,7 +44,7 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     rollupOptions: {
-      external: [/^react($|\/)/, /^react-dom($|\/)/, 'clsx', /^radix-ui($|\/)/],
+      external: [/^react($|\/)/, /^react-dom($|\/)/, 'clsx', /^radix-ui($|\/)/, /^@radix-ui\/react-icons($|\/)/],
       output: {
         format: 'es',
         preserveModules: true,
