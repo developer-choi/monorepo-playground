@@ -5,6 +5,25 @@
 - [컴포넌트 라이브 데모](https://design-system-eta-six.vercel.app/): 부품을 직접 눌러보며 동작을 확인할 수 있습니다.
 - [디자인 시스템 구축기](docs/guides/design-system/step1.md): 표준화부터 모노레포까지 발전 과정을 4단계로 정리했습니다.
 
+## 설치
+
+```bash
+npm install @developer-choi/design-system
+```
+
+React 19가 필요합니다.
+
+## 버전
+
+1.0 전까지는 아래 규칙으로 올립니다.
+
+- **patch** (`0.1.0` → `0.1.1`): 버그 수정. 쓰는 쪽 코드를 고칠 필요가 없습니다.
+- **minor** (`0.1.0` → `0.2.0`): 기능 추가, 또는 쓰는 쪽 코드를 고쳐야 하는 변경(props·토큰 이름 변경 등). 고쳐야 하는 변경이 있으면 아래 「변경 기록」에 무엇을 어떻게 바꾸면 되는지 적습니다.
+
+### 변경 기록
+
+- `0.1.0`: 첫 공개 배포
+
 ## 테마 바꾸기
 
 색·여백 같은 토큰은 `themeClassName`이 붙은 요소 아래에서만 적용됩니다. [Radix Themes](https://www.radix-ui.com/themes/docs/theme/color)가 `.radix-themes` 아래에 토큰을 두고 덮어쓰게 하는 것과 같은 방식입니다.
