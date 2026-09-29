@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect} from 'react';
-import {TextField} from '@monorepo-playground/design-system';
+import {TextField} from '@developer-choi/design-system';
 import styles from './AutoFocusDemo.module.scss';
 
 export default function AutoFocusDemo() {

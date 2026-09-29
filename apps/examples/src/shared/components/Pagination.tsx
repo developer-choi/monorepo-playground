@@ -2,8 +2,8 @@
 
 import {ChevronLeftIcon, ChevronRightIcon} from '@radix-ui/react-icons';
 import clsx from 'clsx';
-import {Button} from '@monorepo-playground/design-system';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import {Button} from '@developer-choi/design-system';
+import typography from '@developer-choi/design-system/styles/typography';
 import styles from './Pagination.module.scss';
 
 interface PaginationProps {

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import CodeBlock from '@/shared/components/CodeBlock';
 import ValidationModeDemo from '@/form/handle-submit/components/ValidationModeDemo';
 import SubmitButtonDemo from '@/form/handle-submit/components/SubmitButtonDemo';

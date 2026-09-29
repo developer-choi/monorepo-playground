@@ -5,7 +5,7 @@ import {useForm} from 'react-hook-form';
 import {useMutation} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
-import {Button, Callout, Card, TextField, type TextFieldProps} from '@monorepo-playground/design-system';
+import {Button, Callout, Card, TextField, type TextFieldProps} from '@developer-choi/design-system';
 import styles from './SubmitLifecycleDemo.module.scss';
 
 type SuccessVariant = 'navigate' | 'stay';

@@ -14,8 +14,8 @@
 
 ```tsx
 // app/layout.tsx
-import '@monorepo-playground/design-system/style.css';
-import {themeClassName} from '@monorepo-playground/design-system';
+import '@developer-choi/design-system/style.css';
+import {themeClassName} from '@developer-choi/design-system';
 import styles from './layout.module.css';
 
 <body className={clsx(themeClassName, styles.theme)}>...</body>;

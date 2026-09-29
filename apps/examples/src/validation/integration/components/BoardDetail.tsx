@@ -3,8 +3,8 @@
 import {useMutation} from '@tanstack/react-query';
 import clsx from 'clsx';
 import {overlay} from 'overlay-kit';
-import {Badge, Button, Card, Confirm} from '@monorepo-playground/design-system';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import {Badge, Button, Card, Confirm} from '@developer-choi/design-system';
+import typography from '@developer-choi/design-system/styles/typography';
 import {useRouter} from 'next/navigation';
 import {deleteBoardApi} from '@/validation/integration/api';
 import {isMutationSettling} from '@/shared/query/mutation';

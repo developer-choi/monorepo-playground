@@ -2,9 +2,9 @@
 
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Badge, Button, Callout, Card, TextField} from '@monorepo-playground/design-system';
+import {Badge, Button, Callout, Card, TextField} from '@developer-choi/design-system';
 import clsx from 'clsx';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import styles from './example.module.scss';
 
 interface FormValues {

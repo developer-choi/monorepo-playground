@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import ExampleHeader from '@/shared/components/ExampleHeader';
 import LinkCardGrid, {type LinkCardItem} from '@/shared/components/LinkCardGrid';
 import styles from './page.module.scss';
