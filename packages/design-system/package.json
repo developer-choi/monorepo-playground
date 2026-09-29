@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/developer-choi/monorepo-playground",
+    "url": "git+https://github.com/developer-choi/monorepo-playground.git",
     "directory": "packages/design-system"
   },
   "publishConfig": {
