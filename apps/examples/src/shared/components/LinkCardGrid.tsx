@@ -1,7 +1,7 @@
-import {Badge, Card} from '@monorepo-playground/design-system';
+import {Badge, Card} from '@developer-choi/design-system';
 import clsx from 'clsx';
 import Link from 'next/link';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import styles from './LinkCardGrid.module.scss';
 
 export interface LinkCardItem {

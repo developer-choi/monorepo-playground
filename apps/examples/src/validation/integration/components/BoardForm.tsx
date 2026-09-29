@@ -16,10 +16,10 @@ import {
   Select,
   TextArea,
   TextField,
-} from '@monorepo-playground/design-system';
+} from '@developer-choi/design-system';
 import clsx from 'clsx';
 import {Cross2Icon} from '@radix-ui/react-icons';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import {useRouter} from 'next/navigation';
 import {postBoardApi, patchBoardApi} from '@/validation/integration/api';
 import {isMutationSettling} from '@/shared/query/mutation';

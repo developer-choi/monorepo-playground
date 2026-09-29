@@ -40,7 +40,7 @@
 
 ```
 yarn workspace examples lint
-yarn workspace @monorepo-playground/design-system lint
+yarn workspace @developer-choi/design-system lint
 ```
 
 ### 파일 통째 억제는 손으로 떼서 센다

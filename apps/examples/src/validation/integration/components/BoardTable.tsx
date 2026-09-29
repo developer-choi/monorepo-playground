@@ -1,9 +1,9 @@
 'use client';
 
-import {Badge, Table} from '@monorepo-playground/design-system';
+import {Badge, Table} from '@developer-choi/design-system';
 import clsx from 'clsx';
 import {useRouter} from 'next/navigation';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import {BoardListApiResponse, BOARD_TYPES, BOARD_CATEGORIES} from '@/validation/integration/schema';
 import Pagination from '@/shared/components/Pagination';
 import styles from './BoardTable.module.scss';

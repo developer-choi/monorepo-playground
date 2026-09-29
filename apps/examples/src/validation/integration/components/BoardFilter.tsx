@@ -1,7 +1,7 @@
 'use client';
 
 import {useForm, Controller} from 'react-hook-form';
-import {Button, Card, Checkbox, Label, Select, TextField} from '@monorepo-playground/design-system';
+import {Button, Card, Checkbox, Label, Select, TextField} from '@developer-choi/design-system';
 import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
 import {useRouter, useSearchParams} from 'next/navigation';
 import queryString from 'query-string';

@@ -466,7 +466,7 @@ import {Button} from './components/Button';
 import {Button} from '@/components/Button';
 
 // ✅ 패키지 entry는 alias로 통과 — packages/design-system/src/index.ts는 패키지의 public API라 예외
-import {Button} from '@monorepo-playground/design-system';
+import {Button} from '@developer-choi/design-system';
 ```
 
 패키지 entry(예: `packages/design-system/src/index.ts`)는 외부 사용자가 `import {X} from '@scope/pkg'`로 접근하는 진입점이라 alias를 통해 통과합니다. 내부 디렉토리별 barrel만 금지합니다.

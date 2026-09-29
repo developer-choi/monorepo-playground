@@ -1,7 +1,7 @@
 import {GitHubLogoIcon} from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import Link from 'next/link';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import LinkCardGrid, {type LinkCardItem} from '@/shared/components/LinkCardGrid';
 import styles from './page.module.scss';
 

@@ -3,11 +3,11 @@
 import {memo, useDeferredValue, useState} from 'react';
 import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {ErrorBoundary, FallbackProps} from 'react-error-boundary';
-import {Button, Callout, Card, TextField} from '@monorepo-playground/design-system';
+import {Button, Callout, Card, TextField} from '@developer-choi/design-system';
 import {MagnifyingGlassIcon} from '@radix-ui/react-icons';
 import {escapeRegExp} from 'es-toolkit';
 import clsx from 'clsx';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import typography from '@developer-choi/design-system/styles/typography';
 import styles from './page.module.scss';
 
 export default function SearchPage() {

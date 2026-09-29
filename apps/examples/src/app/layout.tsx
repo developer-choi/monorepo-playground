@@ -1,4 +1,4 @@
-import {themeClassName} from '@monorepo-playground/design-system';
+import {themeClassName} from '@developer-choi/design-system';
 import clsx from 'clsx';
 import type {Metadata} from 'next';
 import {Noto_Sans} from 'next/font/google';

@@ -1,7 +1,7 @@
 import {z} from 'zod';
 import clsx from 'clsx';
-import {Badge, Callout, Table} from '@monorepo-playground/design-system';
-import typography from '@monorepo-playground/design-system/styles/typography';
+import {Badge, Callout, Table} from '@developer-choi/design-system';
+import typography from '@developer-choi/design-system/styles/typography';
 import Code from '@/shared/components/Code';
 import CodeBlock from '@/shared/components/CodeBlock';
 import {safeParsePartial} from '@/shared/utils/zod';
