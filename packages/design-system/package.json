@@ -1,6 +1,14 @@
 {
   "name": "@developer-choi/design-system",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developer-choi/monorepo-playground",
+    "directory": "packages/design-system"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css",
@@ -21,10 +29,12 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/vite.svg"
   ],
   "scripts": {
     "build": "vite build",
+    "prepack": "yarn build",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc -b --noEmit",
     "test": "vitest",
