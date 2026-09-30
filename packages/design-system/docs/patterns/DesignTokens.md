@@ -92,7 +92,7 @@ CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 �
 ### 순서: 먼저 토큰화 시도
 
 1. **공통화·재사용 가능한 의미가 있으면 토큰(CSS 변수)으로** — 컬러·spacing 스케일·font-size·radius, 다른 컴포넌트도 쓸 만한 shadow 등.
-2. **시도해 봤더니 그 컴포넌트 한 곳에서만 의미 있는 값**이면 그 파일의 SCSS 로컬 변수로 — Dialog `max-width: 600px`, Drawer `width: 280px`, Dialog만의 box-shadow 3-stop 조합 등.
+2. **시도해 봤더니 그 컴포넌트 한 곳에서만 의미 있는 값**이면 그 파일의 SCSS 로컬 변수로 — Dialog `max-width: 328px`, Drawer `width: 280px`, Dialog만의 box-shadow 3-stop 조합 등.
 
 판단 기준은 **명명**으로 드러난다.
 
