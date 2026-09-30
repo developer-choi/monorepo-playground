@@ -55,6 +55,7 @@
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-full: 20px;
 
   /* === Font sizes === */
@@ -76,6 +77,11 @@
   --spacing-3xl: 48px;
   --spacing-page-x: 24px;
   --spacing-grid-gap: 12px;
+
+  /* === Control height (버튼·입력칸이 같은 높이를 쓴다) === */
+  --control-height-sm: 24px;
+  --control-height-md: 36px;
+  --control-height-lg: 42px;
 
   /* === Shadow === */
   --shadow-focus: 0 0 0 3px rgb(26 26 26 / 25%);
