@@ -24,7 +24,7 @@ export default meta;
 type Story = StoryObj<typeof Confirm>;
 
 function ConfirmStory(args: ComponentProps<typeof Confirm>) {
-  // 시각 회귀 스냅샷은 스토리의 첫 화면만 찍는다. 닫힌 채로 두면 destructive 색이 한 번도 안 찍힌다.
+  // 시각 회귀 스냅샷은 스토리의 첫 화면만 찍는다. 닫힌 채로 두면 모달 모양이 한 번도 안 찍힌다.
   const [open, setOpen] = useState(true);
 
   return (

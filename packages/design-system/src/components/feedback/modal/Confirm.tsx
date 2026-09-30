@@ -1,8 +1,6 @@
 import {type ReactNode} from 'react';
-import clsx from 'clsx';
 import * as Dialog from './Dialog';
 import Button from '@/components/inputs/Button';
-import styles from './Confirm.module.scss';
 
 export interface ConfirmProps {
   open: boolean;
@@ -14,7 +12,6 @@ export interface ConfirmProps {
   confirmText?: string;
   /** 취소 버튼 라벨. 기본값 '취소' */
   cancelText?: string;
-  /** true이면 확인 버튼을 파괴적(빨강)으로, 제목을 destructive 색으로 표시한다. */
   destructive?: boolean;
 }
 
@@ -36,14 +33,14 @@ export default function Confirm({
   return (
     <Dialog.Root open={open} onClose={onCancel}>
       <Dialog.Header>
-        <Dialog.Title className={clsx(destructive && [styles.criticalTitle, styles.styled])}>{title}</Dialog.Title>
+        <Dialog.Title>{title}</Dialog.Title>
       </Dialog.Header>
       <Dialog.Content>{content}</Dialog.Content>
       <Dialog.Footer>
-        <Button color="secondary" variant="outlined" onClick={onCancel}>
+        <Button color="secondary" size="large" onClick={onCancel}>
           {cancelText}
         </Button>
-        <Button color={destructive ? 'destructive' : 'primary'} onClick={onConfirm}>
+        <Button color={destructive ? 'destructive' : 'primary'} size="large" onClick={onConfirm}>
           {confirmText}
         </Button>
       </Dialog.Footer>

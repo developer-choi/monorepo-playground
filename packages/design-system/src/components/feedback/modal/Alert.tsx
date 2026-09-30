@@ -23,7 +23,9 @@ export default function Alert({open, onClose, title, content, confirmText = '확
       </Dialog.Header>
       <Dialog.Content>{content}</Dialog.Content>
       <Dialog.Footer>
-        <Button onClick={onClose}>{confirmText}</Button>
+        <Button size="large" onClick={onClose}>
+          {confirmText}
+        </Button>
       </Dialog.Footer>
     </Dialog.Root>
   );
