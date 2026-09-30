@@ -2,7 +2,6 @@
   margin-bottom: var(--spacing-lg);
 }
 
-// 단일 입력이 아닌 필드(라디오 그룹·태그)에서 DS TextField와 같은 Label-컨트롤 수직 리듬을 맞춘다.
 .field {
   display: flex;
   flex-direction: column;
