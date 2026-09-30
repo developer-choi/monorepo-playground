@@ -18,7 +18,7 @@ src/components/
 ├── feedback/        # Callout, Spinner
 │   ├── modal/       # 관련 컴포넌트 묶음은 카테고리 안 kebab 서브폴더로 (Dialog, Alert, Confirm)
 │   └── ...
-├── data-display/    # Badge, Caption, Table
+├── data-display/    # Badge, Caption, Chip, Table
 └── surfaces/        # Card
 ```
 

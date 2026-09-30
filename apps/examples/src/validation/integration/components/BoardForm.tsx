@@ -5,11 +5,10 @@ import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
 import {
-  Badge,
   Button,
   Caption,
   Card,
-  IconButton,
+  Chip,
   Label,
   Radio,
   RadioGroup,
@@ -18,7 +17,6 @@ import {
   TextField,
 } from '@developer-choi/design-system';
 import clsx from 'clsx';
-import {Cross2Icon} from '@radix-ui/react-icons';
 import typography from '@developer-choi/design-system/styles/typography';
 import {useRouter} from 'next/navigation';
 import {postBoardApi, patchBoardApi} from '@/validation/integration/api';
@@ -195,19 +193,15 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
           추가
         </Button>
       </div>
-      <div className={styles.tagList}>
+      <ul className={styles.tagList}>
         {value.map((tag) => (
-          <Badge key={tag} variant="soft">
-            {tag}
-            <IconButton
-              className={styles.tagRemove}
-              icon={<Cross2Icon />}
-              size="small"
-              onClick={() => onChange(value.filter((item) => item !== tag))}
-            />
-          </Badge>
+          <li key={tag}>
+            <Chip removeLabel={`${tag} 지우기`} onRemove={() => onChange(value.filter((item) => item !== tag))}>
+              {tag}
+            </Chip>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
