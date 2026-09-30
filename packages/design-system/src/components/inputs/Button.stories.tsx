@@ -15,7 +15,7 @@ const meta: Meta<typeof Button> = {
     children: {control: 'text'},
     size: {control: 'select', options: ['small', 'medium', 'large']},
     variant: {control: 'select', options: ['contained', 'outlined']},
-    color: {control: 'select', options: ['primary', 'secondary', 'destructive']},
+    color: {control: 'select', options: ['primary', 'secondary', 'destructive', 'surface']},
     loading: {control: 'boolean'},
     disabled: {control: 'boolean'},
     onClick: {action: 'clicked'},
@@ -81,6 +81,27 @@ export const Matrix: Story = {
           </div>
         )),
       )}
+    </div>
+  ),
+};
+
+export const Surface: Story = {
+  argTypes: {
+    variant: {table: {disable: true}},
+    color: {table: {disable: true}},
+    size: {table: {disable: true}},
+  },
+  render: () => (
+    <div className="storyStack">
+      {['storyCanvasSecondary', 'storyCanvasPrimary'].map((canvas) => (
+        <div key={canvas} className={`storyRow ${canvas}`}>
+          {SIZES.map((size) => (
+            <Button key={size} color="surface" size={size}>
+              surface/{size}
+            </Button>
+          ))}
+        </div>
+      ))}
     </div>
   ),
 };

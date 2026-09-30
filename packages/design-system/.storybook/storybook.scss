@@ -48,6 +48,29 @@ input {
   }
 }
 
+.storyStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.storyRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.storyCanvasPrimary {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-primary);
+}
+
+.storyCanvasSecondary {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-secondary);
+}
+
 .buttonGroup {
   display: flex;
   gap: var(--spacing-sm);

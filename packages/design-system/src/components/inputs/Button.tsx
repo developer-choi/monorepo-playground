@@ -11,7 +11,7 @@ type UsedProps = 'style' | 'className' | 'onClick' | 'disabled' | 'children' | '
 export interface ButtonProps extends Pick<ComponentProps<'button'>, UsedProps> {
   size?: 'small' | 'medium' | 'large';
   variant?: 'contained' | 'outlined';
-  color?: 'primary' | 'secondary' | 'destructive';
+  color?: 'primary' | 'secondary' | 'destructive' | 'surface';
   loading?: boolean;
   /**
    * true이면 <button> 대신 자식 엘리먼트에 버튼 스타일·동작을 병합한다.
