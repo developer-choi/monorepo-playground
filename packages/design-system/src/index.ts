@@ -39,5 +39,8 @@ export {default as TextArea} from '@/components/inputs/TextArea';
 export type {TextAreaProps} from '@/components/inputs/TextArea';
 export {default as TextField} from '@/components/inputs/TextField';
 export type {TextFieldProps} from '@/components/inputs/TextField';
+export {default as Toaster} from '@/components/feedback/Toaster';
+export {toast} from '@/components/feedback/toast';
+export type {ToastOptions} from '@/components/feedback/toast';
 export {default as PasswordField} from '@/components/inputs/PasswordField';
 export type {PasswordFieldProps} from '@/components/inputs/PasswordField';

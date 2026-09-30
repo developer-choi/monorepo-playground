@@ -1,0 +1,109 @@
+@use '@/styles/typography.module' as typography;
+
+/* stylelint-disable-next-line declaration-property-value-disallowed-list -- Toast 전용 일회성 (DesignTokens.md: 공통화 불가 → 로컬 SCSS 변수) */
+$toastWidth: 356px;
+
+.viewport {
+  position: fixed;
+
+  /* portal 없이 그려져서, 없으면 body 끝으로 portal되는 모달 백드롭 아래에 깔린다. */
+  z-index: var(--z-toast);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.viewport.styled {
+  max-width: calc(#{$toastWidth} + 2 * var(--spacing-lg));
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+}
+
+.toast {
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: anywhere;
+}
+
+.toast.styled {
+  row-gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-accent);
+  color: var(--color-on-accent);
+  box-shadow: var(--shadow-hover);
+
+  &[data-state='open'] {
+    animation: slide-in 150ms ease-out;
+  }
+
+  &[data-state='closed'] {
+    animation: fade-out 150ms ease-in;
+  }
+
+  &[data-swipe='move'] {
+    transform: translateY(var(--radix-toast-swipe-move-y));
+  }
+
+  &[data-swipe='cancel'] {
+    transform: translateY(0);
+    transition: transform 150ms ease-out;
+  }
+
+  &[data-swipe='end'] {
+    animation: swipe-out 150ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[data-state],
+    &[data-swipe] {
+      animation: none;
+      transition: none;
+    }
+  }
+}
+
+.title.styled {
+  @include typography.body2;
+
+  font-weight: 500;
+}
+
+.description.styled {
+  @include typography.body3;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes swipe-out {
+  from {
+    transform: translateY(var(--radix-toast-swipe-end-y));
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
