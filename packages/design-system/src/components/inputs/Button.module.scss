@@ -25,7 +25,6 @@
   }
 }
 
-// 세로 패딩은 두지 않고 고정 height + 가운데 정렬로 잡는다(radix와 동일).
 .button.styled.small {
   @include typography.body3;
 

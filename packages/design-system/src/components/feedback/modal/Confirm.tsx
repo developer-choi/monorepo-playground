@@ -8,18 +8,11 @@ export interface ConfirmProps {
   onCancel: () => void;
   title: string;
   content: ReactNode;
-  /** 확인 버튼 라벨. 기본값 '확인' */
   confirmText?: string;
-  /** 취소 버튼 라벨. 기본값 '취소' */
   cancelText?: string;
   destructive?: boolean;
 }
 
-/**
- * 취소·확인 2버튼 확인 모달. 결과값(확인/취소)을 받아야 할 때 사용한다.
- * controlled(open/onConfirm/onCancel)이며, 소비자는 overlay.openAsync<boolean>로
- * close(true)/close(false)를 연결해 결과를 await한다.
- */
 export default function Confirm({
   open,
   onConfirm,

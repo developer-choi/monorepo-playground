@@ -13,10 +13,6 @@ export interface ButtonProps extends Pick<ComponentProps<'button'>, UsedProps> {
   variant?: 'contained' | 'outlined';
   color?: 'primary' | 'secondary' | 'destructive' | 'surface';
   loading?: boolean;
-  /**
-   * true이면 <button> 대신 자식 엘리먼트에 버튼 스타일·동작을 병합한다.
-   * 버튼 형태의 링크(<Link>)를 만들 때 사용한다. 자식은 단일 엘리먼트여야 한다.
-   */
   asChild?: boolean;
 }
 
@@ -48,7 +44,6 @@ export default function Button({
     [loading, onClick],
   );
 
-  // asChild이면 Slot.Root가 자식 엘리먼트에 아래 props(className·onClick·ref 등)를 병합한다.
   // eslint-disable-next-line @typescript-eslint/naming-convention -- ElementType은 컴포넌트|태그 문자열 합집합이라 함수 예외에 안 걸린다. JSX에서 <Comp>로 쓰려면 대문자가 강제다
   const Comp: ElementType = asChild ? Slot.Root : 'button';
 
