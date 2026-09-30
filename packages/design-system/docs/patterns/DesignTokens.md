@@ -51,6 +51,14 @@
 }
 ```
 
+브랜드 컬러처럼 쓰는 쪽이 덮어쓰는 색의 hover·눌림 색은 토큰을 따로 두지 않고 컴포넌트 안에서 계산한다. 쓰는 쪽은 `--color-primary` 하나만 덮으면 hover·눌림 색이 따라온다.
+
+```scss
+.primaryButton:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 88%, black);
+}
+```
+
 > 이 "상태 박힘 금지"는 **컬러에 한정**한다. spacing·font·radius·shadow는 상태별로 분기될 일이 거의 없어 동일 원칙을 강제하지 않는다.
 
 ### 파생 단어
@@ -72,6 +80,15 @@ fg / bg 안에서 의미 단어로 파생한다.
 > Use primary roles for the most prominent components across the UI, such as the FAB, high-emphasis buttons, and active states.
 > Primary: High-emphasis fills, texts, and icons against surface
 > On primary: Text and icons against primary
+
+`--color-primary-soft`는 브랜드의 옅은 바탕(선택 칩·옅은 강조)이다. 기본값은 `--color-primary`를 10% 섞은 색이라 브랜드만 덮어도 따라온다. 정보 알림 바탕 `--color-bg-info-soft`와 값이 같더라도 따로 둔다 — 브랜드 옅은 색이 필요한 곳이 정보용 이름을 빌려 쓰지 않게 하기 위해서다.
+
+어두운 바탕(토스트 등)은 브랜드가 아니라 `--color-bg-inverse`로 칠하고, 그 위 글자·아이콘은 `--color-on-inverse`를 쓴다. 브랜드가 검정인 테마에서는 둘이 같은 색이라 브랜드 토큰으로 칠해도 드러나지 않지만, 브랜드를 파랑으로 덮는 순간 어두워야 할 바탕이 파랗게 나온다. 이름은 Material Design 3의 inverse 역할을 따른다.
+
+출처: https://m3.material.io/styles/color/roles
+> Inverse roles are applied selectively to components to achieve colors that are the reverse of those in the surrounding UI, creating a contrasting effect.
+> Inverse surface: Background fills for elements which contrast against surface
+> Inverse on surface: Text and icons against inverse surface
 
 `on-X` (예: `--color-on-primary`)는 X 배경 위에 올라갈 텍스트 색 관용 패턴. 별도 카테고리.
 

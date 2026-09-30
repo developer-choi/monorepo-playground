@@ -4,6 +4,7 @@
   --color-fg-muted: #999;
   --color-fg-subtle: #e5e5e5;
   --color-primary: #1a1a1a;
+  --color-primary-soft: color-mix(in srgb, var(--color-primary) 10%, #fff);
   --color-fg-destructive: #d32f2f;
   --color-fg-success: #2e7d32;
   --color-fg-info: #1971c2;
@@ -17,8 +18,10 @@
   --color-bg-success-soft: #ebfbee;
   --color-bg-warning-soft: #fff4e6;
   --color-bg-danger-soft: #fff5f5;
+  --color-bg-inverse: #1a1a1a;
   --color-on-primary: #fff;
   --color-on-destructive: #fff;
+  --color-on-inverse: #fff;
   --color-overlay-backdrop: rgb(0 0 0 / 50%);
   --color-code-bg: #f3f4f6;
   --color-code-block-bg: #24292e;
