@@ -106,7 +106,7 @@ SCSS 변수(`$name`)가 아니라 CSS 사용자 정의 속성(`--name`)으로 �
 
 CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 테마 클래스에 선언된 토큰을 그 아래 어디서나 `var(--...)`로 참조할 수 있다.
 
-토큰은 `design-tokens.module.scss`의 `.theme` 클래스에 선언하고, 패키지는 빌드 때 해시된 그 클래스명을 `themeClassName`으로 export한다. 쓰는 쪽은 `<body>`에 `themeClassName`과 자기 module class를 함께 붙이고, 자기 클래스에서 토큰을 덮어쓴다. 두 클래스는 우선순위가 같으므로 디자인 시스템 CSS 뒤에 불러온 쪽이 이긴다. Radix Themes가 `.radix-themes`로 테마를 덮어쓰게 하는 것과 같은 방식이다. 쓰는 쪽 안내는 [README](../../README.md)의 「테마 바꾸기」에 있다.
+토큰은 `design-tokens.module.scss`의 `.theme` 클래스에 선언하고, 패키지는 빌드 때 해시된 그 클래스명을 `themeClassName`으로 export한다. 쓰는 쪽은 `<body>`에 `themeClassName`과 자기 module class를 함께 붙이고, 자기 클래스에서 토큰을 덮어쓴다. 두 클래스는 우선순위가 같으므로 디자인 시스템 CSS 뒤에 불러온 쪽이 이긴다. Radix Themes가 `.radix-themes`로 테마를 덮어쓰게 하는 것과 같은 방식이다. 쓰는 쪽 안내는 README [테마 바꾸기](../../README.md#테마-바꾸기)에 있다.
 
 출처: https://www.radix-ui.com/themes/docs/theme/color
 > Make sure that your CSS is applied after the Radix Themes styles so that it takes precedence.
