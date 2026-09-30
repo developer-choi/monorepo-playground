@@ -35,8 +35,8 @@ const ITEMS: LinkCardItem[] = [
     title: '무한스크롤 게시판',
     href: '/rendering/infinite-scroll',
     description:
-      '@tanstack/react-virtual 기반 virtual list와 무한스크롤을 결합하여 대량 데이터를 효율적으로 렌더링하는 방법을 다룹니다.',
-    keywords: ['Virtual List', 'Infinite Scroll', '@tanstack/react-virtual'],
+      '@tanstack/react-virtual로 화면 근처의 행만 DOM에 두는 virtual list와 무한스크롤을 결합하여 대량 데이터를 효율적으로 렌더링하는 방법을 다룹니다.',
+    keywords: ['Virtual List', 'Infinite Scroll', '@tanstack/react-virtual', 'useWindowVirtualizer'],
   },
   {
     title: '검색결과 목록 UX',
