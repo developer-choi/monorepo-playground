@@ -46,5 +46,5 @@ keywords: [컴포넌트 설계, atomic, 프레젠테이션 컴포넌트, 접근�
 ### 디자인 토큰 출처·운영
 
 - 기술스택: CSS
-- 상황: packages/design-system 내부에서 색·여백·폰트·radius·shadow 값을 토큰화할 때. fg/bg 명명 정책으로 통일, 회색조 톤은 blog 레퍼런스에서 출발
+- 상황: packages/design-system 내부에서 색·여백·폰트·radius·shadow 값을 토큰화할 때. fg/bg/primary 분류 명명 정책으로 통일, 회색조 톤은 blog 레퍼런스에서 출발
 - 코드: packages/design-system/docs/patterns/DesignTokens.md

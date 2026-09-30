@@ -14,14 +14,20 @@
 
 ## 컬러 명명 원칙
 
-### 대상 단어는 fg / bg 두 개만
+### 최상위 분류는 fg / bg / primary 세 개
 
-색 토큰의 "대상"(어디에 들어가는지)을 가리키는 단어는 **fg**와 **bg**만 사용한다. text / border / surface / icon 같은 단어는 쓰지 않는다.
+색 토큰은 먼저 아래 세 분류 중 하나에 속한다. 셋은 같은 층의 분류다.
 
 - **fg** (foreground) — 전경. 텍스트·아이콘·**보더**(보더도 윤곽 그리는 전경 역할).
 - **bg** (background) — 배경. 표면(카드·모달·시트), 페이지 배경.
+- **primary** — 브랜드 컬러. 브랜드 컬러는 배경용·글자용으로 나뉘지 않으므로 fg / bg 아래에 두지 않는다.
 
-대상 단어를 늘리면(text/border/surface/icon...) 같은 톤의 색이 카테고리별로 흩어져 테마 교체 시 일괄성이 깨진다. fg/bg 두 개로 묶어두면 같은 톤 색이 하나의 토큰 아래 모인다.
+text / border / surface / icon 같은 분류를 늘리면 같은 톤의 색이 카테고리별로 흩어져 테마 교체 시 일괄성이 깨진다. 세 분류로 묶어두면 같은 톤 색이 하나의 토큰 아래 모인다.
+
+Material Design 3도 색을 역할 묶음으로 나누고, 브랜드(primary)를 바탕(surface)과 같은 층의 묶음으로 둔다.
+
+출처: https://m3.material.io/styles/color/roles
+> There are 26 standard color roles organized into six groups: primary, secondary, tertiary, error, surface, and outline
 
 ### 상태가 아니라 시각 단계·역할
 
@@ -51,7 +57,7 @@
 }
 ```
 
-브랜드 컬러처럼 쓰는 쪽이 덮어쓰는 색의 hover·눌림 색은 토큰을 따로 두지 않고 컴포넌트 안에서 계산한다. 쓰는 쪽은 `--color-primary` 하나만 덮으면 hover·눌림 색이 따라온다.
+브랜드 컬러처럼 쓰는 쪽이 덮어쓰는 색에 hover·눌림 색을 넣을 때는 토큰을 따로 두지 않고 컴포넌트 안에서 계산한다. 그래야 쓰는 쪽이 `--color-primary` 하나만 덮어도 hover·눌림 색이 따라온다.
 
 ```scss
 .primaryButton:hover {
@@ -63,7 +69,7 @@
 
 ### 파생 단어
 
-fg / bg 안에서 의미 단어로 파생한다.
+각 분류 안에서 의미 단어로 파생한다. fg / bg는 아래 단계로 파생한다.
 
 | suffix | 의미 |
 |---|---|
@@ -74,14 +80,14 @@ fg / bg 안에서 의미 단어로 파생한다.
 | `destructive` | 돌이킬 수 없는 위험·삭제 액션 |
 | `success` | 성공·완료 상태 (긍정 피드백) |
 
-브랜드 컬러는 fg / bg로 나누지 않고 `--color-primary` 하나로 둔다 (focus 인디케이터, 강조 보더, primary 액션 배경 등). 브랜드 컬러는 배경용·글자용이 따로 없기 때문이다. 이름은 Material Design 3의 `primary`·`on-primary`를 따른다.
+primary 분류는 브랜드 컬러 `--color-primary`(focus 인디케이터, 강조 보더, primary 액션 배경 등)와 그 옅은 파생 `--color-primary-soft`로 이루어진다. 이름은 Material Design 3의 `primary`·`on-primary`를 따른다.
 
 출처: https://m3.material.io/styles/color/roles
 > Use primary roles for the most prominent components across the UI, such as the FAB, high-emphasis buttons, and active states.
 > Primary: High-emphasis fills, texts, and icons against surface
 > On primary: Text and icons against primary
 
-`--color-primary-soft`는 브랜드의 옅은 바탕(선택 칩·옅은 강조)이다. 기본값은 `--color-primary`를 10% 섞은 색이라 브랜드만 덮어도 따라온다. 정보 알림 바탕 `--color-bg-info-soft`와 값이 같더라도 따로 둔다 — 브랜드 옅은 색이 필요한 곳이 정보용 이름을 빌려 쓰지 않게 하기 위해서다.
+`--color-primary-soft`는 브랜드의 옅은 바탕(선택 칩·옅은 강조)이다. 기본값은 바탕색(`--color-bg-default`)에 `--color-primary`를 10% 섞은 색이라, 브랜드나 바탕을 덮으면 따라온다. 정보 알림 바탕 `--color-bg-info-soft`와 값이 같더라도 따로 둔다 — 브랜드 옅은 색이 필요한 곳이 정보용 이름을 빌려 쓰지 않게 하기 위해서다.
 
 어두운 바탕(토스트 등)은 브랜드가 아니라 `--color-bg-inverse`로 칠하고, 그 위 글자·아이콘은 `--color-on-inverse`를 쓴다. 브랜드가 검정인 테마에서는 둘이 같은 색이라 브랜드 토큰으로 칠해도 드러나지 않지만, 브랜드를 파랑으로 덮는 순간 어두워야 할 바탕이 파랗게 나온다. 이름은 Material Design 3의 inverse 역할을 따른다.
 
