@@ -8,13 +8,13 @@ $fieldMinWidth: 200px;
 .formCol {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-form-gap);
 }
 
 .fieldRow {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-form-gap);
 }
 
 .field {
