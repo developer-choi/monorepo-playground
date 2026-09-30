@@ -2,6 +2,28 @@
 
 버전마다 쓰는 쪽이 알아야 할 변경을 적습니다. 올리는 규칙은 [README 「버전」](README.md#버전)에 있습니다.
 
+## 0.4.0
+
+색 토큰 이름을 브랜드 컬러 기준으로 다시 지었습니다. **옛 이름은 없어졌으니, 덮어쓰거나 `var()`로 쓰던 곳을 아래 표대로 바꿔 주세요.** 값은 그대로입니다.
+
+### Changed
+
+| 옛 이름                                  | 새 이름                                     |
+| ---------------------------------------- | ------------------------------------------- |
+| `--color-bg-accent`, `--color-fg-accent` | `--color-primary` (브랜드 컬러 하나로 합침) |
+| `--color-on-accent`                      | `--color-on-primary`                        |
+| `--color-bg-primary`                     | `--color-bg-default`                        |
+| `--color-bg-secondary`                   | `--color-bg-subtle`                         |
+| `--color-bg-tertiary`                    | `--color-bg-muted`                          |
+| `--color-fg-primary`                     | `--color-fg-default`                        |
+
+- 토스트는 브랜드 색이 아니라 어두운 바탕(`--color-bg-inverse`)으로 칠합니다. 브랜드를 다른 색으로 덮어도 토스트는 어둡게 남습니다.
+
+### Added
+
+- 토큰 `--color-bg-inverse`·`--color-on-inverse`: 어두운 바탕과 그 위 글자·아이콘
+- 토큰 `--color-primary-soft`: 브랜드의 옅은 바탕. 기본값은 `--color-primary`를 10% 섞은 색이라 브랜드만 덮어도 따라옵니다.
+
 ## 0.3.0
 
 화면 아래에 잠깐 떴다 사라지는 토스트를 더했습니다. 고쳐야 하는 것은 없습니다.
