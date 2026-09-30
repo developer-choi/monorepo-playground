@@ -1,7 +1,7 @@
 @use '@/styles/typography.module' as typography;
 
 /* stylelint-disable-next-line declaration-property-value-disallowed-list -- Dialog 전용 일회성 (DesignTokens.md: 공통화 불가 → 로컬 SCSS 변수) */
-$dialogMaxWidth: 600px;
+$dialogMaxWidth: 328px;
 /* stylelint-disable-next-line declaration-property-value-disallowed-list -- Dialog 전용 3-stop 그림자 (공통화 불가) */
 $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%));
 
@@ -23,22 +23,39 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  max-height: calc(100vh - 64px);
+  max-height: calc(100vh - 48px);
   max-width: $dialogMaxWidth;
-  width: calc(100% - 64px);
+  width: calc(100% - 48px);
 }
 
 .paper.styled {
   background-color: var(--color-bg-primary);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-lg);
   box-shadow: $paperShadow;
 }
 
 .content.styled {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+}
+
+.header {
+  display: flex;
+
+  /* flex 자식은 min-width가 auto라 공백 없는 긴 제목이 판을 넘치고 옆 요소를 찌그러뜨린다. */
+  > h2 {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  > :not(h2) {
+    flex-shrink: 0;
+  }
 }
 
 .header.styled {
+  align-items: center;
+  justify-content: space-between;
+  column-gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
 
   // h2 자체 마진을 두지 않고 .header의 margin-bottom 하나로 타이틀→내용 간격을 잡는다.
@@ -49,8 +66,9 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 
 :where(.header.styled) {
   h2 {
-    @include typography.h3;
+    @include typography.h4;
 
+    font-weight: bold;
     color: var(--color-fg-primary);
   }
 }
@@ -58,7 +76,7 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 .body.styled {
   @include typography.body2;
 
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   color: var(--color-fg-secondary);
 }
 
@@ -67,6 +85,9 @@ $paperShadow: (0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14
 }
 
 .footer.styled {
-  justify-content: flex-end;
   gap: var(--spacing-sm);
+
+  > * {
+    flex: 1 1 0;
+  }
 }
