@@ -39,15 +39,15 @@
 **올바른 방식**
 
 ```css
---color-bg-secondary: #f5f5f5;   /* hover, 카드, 강조 박스 등 공유 */
---color-fg-accent: #1a1a1a;      /* focus 보더, 액센트 텍스트 등 공유 */
+--color-bg-subtle: #f5f5f5;   /* hover, 카드, 강조 박스 등 공유 */
+--color-primary: #1a1a1a;     /* focus 보더, 액센트 텍스트 등 공유 */
 ```
 
 호버 상태는 컴포넌트가 적절한 토큰을 골라 쓴다.
 
 ```scss
 .menuItem:hover {
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-bg-subtle);
 }
 ```
 
@@ -59,16 +59,21 @@ fg / bg 안에서 의미 단어로 파생한다.
 
 | suffix | 의미 |
 |---|---|
-| `primary` | 메인 (텍스트의 가장 진한 색, 배경의 흰색 등) |
-| `secondary` | 보조 단계 |
-| `tertiary` | 더 옅은 배경 (선택 상태·info 박스 등 공유) |
-| `muted` | 흐릿한 (placeholder, disabled 텍스트 등) |
-| `subtle` | 가장 약함 (가는 보더, 디바이더 등) |
-| `accent` | 강조 (focus 인디케이터, 강조 보더, primary 액션 배경 등) |
+| `default` | 기본 (텍스트의 가장 진한 색, 배경의 흰색 등) |
+| `secondary` | 보조 단계 (fg) |
+| `subtle` | 약한 단계 (bg: hover·카드 배경, fg: 가는 보더·디바이더) |
+| `muted` | 흐릿한 단계 (bg: 선택 상태·info 박스, fg: placeholder·disabled 텍스트) |
 | `destructive` | 돌이킬 수 없는 위험·삭제 액션 |
 | `success` | 성공·완료 상태 (긍정 피드백) |
 
-`on-X` (예: `--color-on-accent`)는 X 배경 위에 올라갈 텍스트 색 관용 패턴. 별도 카테고리.
+브랜드 컬러는 fg / bg로 나누지 않고 `--color-primary` 하나로 둔다 (focus 인디케이터, 강조 보더, primary 액션 배경 등). 브랜드 컬러는 배경용·글자용이 따로 없기 때문이다. 이름은 Material Design 3의 `primary`·`on-primary`를 따른다.
+
+출처: https://m3.material.io/styles/color/roles
+> Use primary roles for the most prominent components across the UI, such as the FAB, high-emphasis buttons, and active states.
+> Primary: High-emphasis fills, texts, and icons against surface
+> On primary: Text and icons against primary
+
+`on-X` (예: `--color-on-primary`)는 X 배경 위에 올라갈 텍스트 색 관용 패턴. 별도 카테고리.
 
 도메인 특수 토큰(코드 블록·인용구)은 파생 단어 규칙 밖이라 그대로 둔다 (`--color-code-block-bg` 등).
 
@@ -83,7 +88,7 @@ CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 �
 출처: https://www.radix-ui.com/themes/docs/theme/color
 > Make sure that your CSS is applied after the Radix Themes styles so that it takes precedence.
 
-대신 CSS 변수는 빌드 시점 검증을 받지 못한다. `var(--color-fg-primaryy)`처럼 이름을 잘못 적어도 컴파일 단계에서 걸리지 않고, 런타임에 값이 비어 조용히 깨진다.
+대신 CSS 변수는 빌드 시점 검증을 받지 못한다. `var(--color-fg-defualt)`처럼 이름을 잘못 적어도 컴파일 단계에서 걸리지 않고, 런타임에 값이 비어 조용히 깨진다.
 
 정의되지 않은 변수를 컴파일 에러로 잡아주는 SCSS 변수의 안전성을 런타임 교체 능력과 맞바꾼 셈이다. 런타임 테마 교체가 이 시스템의 목표라 이 검증 손실은 감수한다.
 
@@ -96,7 +101,7 @@ CSS 변수는 cascade로 상속되므로 `@use` 같은 명시적 import 없이 �
 
 판단 기준은 **명명**으로 드러난다.
 
-- 의미 단어로 명명 가능 (`md`, `lg`, `accent`, `subtle`) → 토큰
+- 의미 단어로 명명 가능 (`md`, `lg`, `primary`, `subtle`) → 토큰
 - 컴포넌트명/특정 사이즈가 박혀야만 식별 가능 (`paperShadow`, `dialogMaxWidth`) → SCSS 로컬
 
 ### 금지: 공통화 불가능한 값을 토큰 파일에 두기

@@ -15,7 +15,7 @@
   height: var(--control-height-md);
   padding-inline: var(--spacing-md);
   border-radius: var(--radius-md);
-  background: var(--color-bg-primary);
+  background: var(--color-bg-default);
   box-shadow: var(--shadow-ring-rest);
 
   &:not(:has(input:disabled, textarea:disabled, select:disabled)).invalid {
@@ -86,7 +86,7 @@
   border: none;
   padding: 0;
   background: transparent;
-  color: var(--color-fg-primary);
+  color: var(--color-fg-default);
   outline: none;
   box-shadow: none;
 
@@ -101,7 +101,7 @@
 
 .content.styled > input {
   /* 자동완성 시 브라우저 기본 배경을 덮어 흰 배경을 유지 (input 높이만큼 inset fill). https://stackoverflow.com/a/14205976 */
-  --shadow-autofill: inset 0 0 0 var(--control-height-md) var(--color-bg-primary);
+  --shadow-autofill: inset 0 0 0 var(--control-height-md) var(--color-bg-default);
 
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -118,5 +118,5 @@
 .suffix.styled {
   @include typography.body2;
 
-  color: var(--color-fg-primary);
+  color: var(--color-fg-default);
 }

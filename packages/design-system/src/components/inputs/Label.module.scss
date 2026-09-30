@@ -9,7 +9,7 @@
   @include typography.body2;
 
   gap: var(--spacing-xs);
-  color: var(--color-fg-primary);
+  color: var(--color-fg-default);
 
   &.invalid {
     color: var(--color-fg-destructive);

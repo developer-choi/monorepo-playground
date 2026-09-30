@@ -43,8 +43,7 @@ import styles from './layout.module.css';
 ```css
 /* layout.module.css */
 .theme {
-  --color-bg-accent: #1971c2;
-  --color-fg-accent: #1971c2;
+  --color-primary: #1971c2;
 }
 ```
 

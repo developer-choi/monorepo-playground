@@ -59,21 +59,21 @@
 }
 
 .button.styled.primary.contained {
-  background-color: var(--color-bg-accent);
-  border-color: var(--color-bg-accent);
-  color: var(--color-on-accent);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
 .button.styled.primary.outlined {
   background-color: transparent;
-  border-color: var(--color-fg-accent);
-  color: var(--color-fg-accent);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .button.styled.secondary.contained {
-  background-color: var(--color-bg-tertiary);
-  border-color: var(--color-bg-tertiary);
-  color: var(--color-fg-primary);
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-bg-muted);
+  color: var(--color-fg-default);
 }
 
 .button.styled.secondary.outlined {
@@ -96,15 +96,15 @@
 
 .button.styled.surface.contained,
 .button.styled.surface.outlined {
-  background-color: var(--color-bg-primary);
-  border-color: var(--color-bg-primary);
-  color: var(--color-fg-primary);
+  background-color: var(--color-bg-default);
+  border-color: var(--color-bg-default);
+  color: var(--color-fg-default);
 }
 
 .button.styled.surface:not(:disabled, .loading):hover,
 .button.styled.surface:not(:disabled, .loading):active {
-  background-color: var(--color-bg-tertiary);
-  border-color: var(--color-bg-tertiary);
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-bg-muted);
 }
 
 .children {

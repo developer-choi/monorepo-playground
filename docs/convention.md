@@ -47,7 +47,7 @@ src/components/
 }
 
 .paper.styled {
-  background-color: var(--color-bg-primary);
+  background-color: var(--color-bg-default);
   box-shadow: var(--shadow-dialog);
   // ... 시각
 }
@@ -60,7 +60,7 @@ src/components/
 단, 이 레포의 headless는 박스 모델이 무너지지 않을 최소 구조(display, position, overflow, 크기 제약)까지는 포함한다.
 
 - 다이얼로그의 `max-width: 328px` → **마크업** (없으면 뷰포트에 무한히 늘어남 — 구조)
-- 다이얼로그의 `background-color: var(--color-bg-primary)` → **시각** (룩)
+- 다이얼로그의 `background-color: var(--color-bg-default)` → **시각** (룩)
 - 슬롯 사이 `gap`, 타이포 믹스인 → **시각** (간격·글꼴은 미관이지 구조가 아니다)
 - 타이포 믹스인은 TSX에서 `typography.bodyN` 클래스를 직접 붙이지 않고 `.X.styled` 안에서 `@include`한다 — headless 상태에 글꼴이 새지 않게.
 
