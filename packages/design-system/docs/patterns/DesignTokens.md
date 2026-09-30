@@ -89,7 +89,7 @@ primary 분류는 브랜드 컬러 `--color-primary`(focus 인디케이터, 강�
 
 `--color-primary-soft`는 브랜드의 옅은 바탕(선택 칩·옅은 강조)이다. 기본값은 바탕색(`--color-bg-default`)에 `--color-primary`를 10% 섞은 색이라, 브랜드나 바탕을 덮으면 따라온다. 정보 알림 바탕 `--color-bg-info-soft`와 값이 같더라도 따로 둔다 — 브랜드 옅은 색이 필요한 곳이 정보용 이름을 빌려 쓰지 않게 하기 위해서다.
 
-어두운 바탕(토스트 등)은 브랜드가 아니라 `--color-bg-inverse`로 칠하고, 그 위 글자·아이콘은 `--color-on-inverse`를 쓴다. 브랜드가 검정인 테마에서는 둘이 같은 색이라 브랜드 토큰으로 칠해도 드러나지 않지만, 브랜드를 파랑으로 덮는 순간 어두워야 할 바탕이 파랗게 나온다. 이름은 Material Design 3의 inverse 역할을 따른다.
+주변과 반대로 어두워야 하는 바탕(말풍선 등)은 `--color-bg-inverse`로 칠하고, 그 위 글자·아이콘은 `--color-on-inverse`를 쓴다. 브랜드 토큰으로 칠하면 브랜드가 검정인 테마에서는 드러나지 않지만, 쓰는 쪽이 브랜드를 파랑으로 덮는 순간 어두워야 할 바탕이 파랗게 나온다. 브랜드 색으로 보여야 하는 토스트는 `--color-primary`로 칠한다. 이름은 Material Design 3의 inverse 역할을 따른다.
 
 출처: https://m3.material.io/styles/color/roles
 > Inverse roles are applied selectively to components to achieve colors that are the reverse of those in the surrounding UI, creating a contrasting effect.
