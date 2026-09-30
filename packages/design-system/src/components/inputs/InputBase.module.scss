@@ -12,9 +12,9 @@
 
 .inputBase.styled {
   gap: var(--spacing-sm);
-  height: var(--spacing-2xl);
+  height: var(--control-height-md);
   padding-inline: var(--spacing-md);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-md);
   background: var(--color-bg-primary);
   box-shadow: var(--shadow-ring-rest);
 
@@ -81,7 +81,7 @@
 
 .content.styled > input,
 .content.styled > textarea {
-  @include typography.body1;
+  @include typography.body2;
 
   border: none;
   padding: 0;
@@ -101,7 +101,7 @@
 
 .content.styled > input {
   /* 자동완성 시 브라우저 기본 배경을 덮어 흰 배경을 유지 (input 높이만큼 inset fill). https://stackoverflow.com/a/14205976 */
-  --shadow-autofill: inset 0 0 0 var(--spacing-2xl) var(--color-bg-primary);
+  --shadow-autofill: inset 0 0 0 var(--control-height-md) var(--color-bg-primary);
 
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -116,7 +116,7 @@
 }
 
 .suffix.styled {
-  @include typography.body1;
+  @include typography.body2;
 
   color: var(--color-fg-primary);
 }
