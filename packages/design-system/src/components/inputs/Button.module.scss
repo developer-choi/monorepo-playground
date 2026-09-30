@@ -95,6 +95,19 @@
   color: var(--color-fg-destructive);
 }
 
+.button.styled.surface.contained,
+.button.styled.surface.outlined {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-bg-primary);
+  color: var(--color-fg-primary);
+}
+
+.button.styled.surface:not(:disabled, .loading):hover,
+.button.styled.surface:not(:disabled, .loading):active {
+  background-color: var(--color-bg-tertiary);
+  border-color: var(--color-bg-tertiary);
+}
+
 .children {
   display: inline-flex;
   align-items: center;
