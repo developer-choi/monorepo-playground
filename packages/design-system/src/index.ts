@@ -15,6 +15,8 @@ export {default as Card} from '@/components/surfaces/Card';
 export type {CardProps} from '@/components/surfaces/Card';
 export {default as Checkbox} from '@/components/inputs/Checkbox';
 export type {CheckboxProps} from '@/components/inputs/Checkbox';
+export {default as Chip} from '@/components/data-display/Chip';
+export type {ChipProps} from '@/components/data-display/Chip';
 export {default as IconButton} from '@/components/inputs/IconButton';
 export type {IconButtonProps} from '@/components/inputs/IconButton';
 export {default as InputBase} from '@/components/inputs/InputBase';
