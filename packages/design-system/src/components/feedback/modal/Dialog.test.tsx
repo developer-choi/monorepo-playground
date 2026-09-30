@@ -3,6 +3,7 @@ import {describe, it, expect, vi} from 'vitest';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as Dialog from './Dialog';
+import IconButton from '@/components/inputs/IconButton';
 import {itMergesClassNameToRoot} from '@/test-utils/test-class-name';
 
 function renderDialog({
@@ -33,6 +34,20 @@ describe('Dialog', () => {
       const onClose = vi.fn();
       renderDialog({onClose});
       await userEvent.click(getOverlay());
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('asChild로 IconButton을 넣은 Dialog.Close를 누르면 onClose가 호출된다', async () => {
+      const onClose = vi.fn();
+      render(
+        <Dialog.Root open onClose={onClose}>
+          <Dialog.Title>테스트 다이얼로그</Dialog.Title>
+          <Dialog.Close asChild>
+            <IconButton icon="닫기" />
+          </Dialog.Close>
+        </Dialog.Root>,
+      );
+      await userEvent.click(screen.getByRole('button', {name: '닫기'}));
       expect(onClose).toHaveBeenCalledTimes(1);
     });
   });

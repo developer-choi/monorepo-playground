@@ -59,3 +59,7 @@ export function Footer({children, className}: WrapperProps) {
 export function Title(props: ComponentProps<typeof RadixDialog.Title>) {
   return <RadixDialog.Title {...props} />;
 }
+
+export function Close(props: ComponentProps<typeof RadixDialog.Close>) {
+  return <RadixDialog.Close {...props} />;
+}

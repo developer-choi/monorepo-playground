@@ -1,7 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
 import {useState} from 'react';
+import {Cross2Icon} from '@radix-ui/react-icons';
 import * as Dialog from './Dialog';
 import Button from '@/components/inputs/Button';
+import IconButton from '@/components/inputs/IconButton';
 
 const meta: Meta<typeof Dialog.Root> = {
   title: 'Components/feedback/modal/Dialog',
@@ -61,10 +63,12 @@ function FormDialogContent({title, descriptions, onClose}: FormDialogContentProp
       </Dialog.Content>
 
       <Dialog.Footer>
-        <Button color="secondary" variant="outlined" onClick={onClose}>
+        <Button color="secondary" size="large" onClick={onClose}>
           취소
         </Button>
-        <Button onClick={onClose}>저장</Button>
+        <Button size="large" onClick={onClose}>
+          저장
+        </Button>
       </Dialog.Footer>
     </>
   );
@@ -90,15 +94,20 @@ function BasicUsageStory(args: Dialog.RootProps) {
       >
         <Dialog.Header>
           <Dialog.Title>Dialog 제목</Dialog.Title>
+          <Dialog.Close asChild>
+            <IconButton aria-label="닫기" icon={<Cross2Icon />} />
+          </Dialog.Close>
         </Dialog.Header>
 
-        <Dialog.Content>ESC 키 또는 배경을 클릭하여 닫을 수 있습니다.</Dialog.Content>
+        <Dialog.Content>ESC 키, 배경 클릭, 우상단 ×로 닫을 수 있습니다.</Dialog.Content>
 
         <Dialog.Footer>
-          <Button color="secondary" variant="outlined" onClick={() => setOpen(false)}>
+          <Button color="secondary" size="large" onClick={() => setOpen(false)}>
             취소
           </Button>
-          <Button onClick={() => setOpen(false)}>확인</Button>
+          <Button size="large" onClick={() => setOpen(false)}>
+            확인
+          </Button>
         </Dialog.Footer>
       </Dialog.Root>
     </div>
