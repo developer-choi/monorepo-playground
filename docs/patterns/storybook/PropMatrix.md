@@ -18,7 +18,7 @@ Chromatic은 **스냅샷 단위로 과금**하고, **스토리 1개가 스냅샷
 ```tsx
 const VARIANTS = ['contained', 'outlined'] as const;
 const COLORS = ['primary', 'secondary', 'destructive'] as const;
-const SIZES = ['small', 'medium', 'large', 'xLarge'] as const;
+const SIZES = ['small', 'medium', 'large'] as const;
 
 export const Matrix: Story = {
   // 매트릭스 스토리는 args를 쓰지 않으므로 Controls 행을 숨긴다(ControlsPanel.md).

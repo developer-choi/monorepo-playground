@@ -142,10 +142,10 @@ export default function BoardForm({board}: BoardFormProps) {
             </div>
 
             <div className={styles.actions}>
-              <Button color="secondary" size="xLarge" type="button" variant="outlined" onClick={() => router.back()}>
+              <Button color="secondary" size="large" type="button" variant="outlined" onClick={() => router.back()}>
                 취소
               </Button>
-              <Button loading={isPending} size="xLarge" type="submit">
+              <Button loading={isPending} size="large" type="submit">
                 저장
               </Button>
             </div>
@@ -191,7 +191,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
             }
           }}
         />
-        <Button size="large" type="button" variant="outlined" onClick={addTag}>
+        <Button type="button" variant="outlined" onClick={addTag}>
           추가
         </Button>
       </div>
