@@ -29,6 +29,8 @@ export {default as RadioGroup} from '@/components/inputs/RadioGroup';
 export type {RadioGroupProps} from '@/components/inputs/RadioGroup';
 export {default as Select} from '@/components/inputs/Select';
 export type {SelectOption, SelectProps} from '@/components/inputs/Select';
+export {default as Spinner} from '@/components/feedback/Spinner';
+export type {SpinnerProps} from '@/components/feedback/Spinner';
 export * as Table from '@/components/data-display/Table';
 export * as Dialog from '@/components/feedback/modal/Dialog';
 export {default as Alert} from '@/components/feedback/modal/Alert';

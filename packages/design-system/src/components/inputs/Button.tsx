@@ -3,7 +3,7 @@
 import {type ComponentProps, type ElementType, type MouseEvent, useCallback} from 'react';
 import clsx from 'clsx';
 import {Slot} from 'radix-ui';
-import {Spinner} from '@/components/feedback/Spinner';
+import Spinner from '@/components/feedback/Spinner';
 import styles from './Button.module.scss';
 
 type UsedProps = 'style' | 'className' | 'onClick' | 'disabled' | 'children' | 'type' | 'ref';

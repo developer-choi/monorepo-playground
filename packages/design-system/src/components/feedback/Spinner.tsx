@@ -10,7 +10,12 @@ export interface SpinnerProps extends Omit<ComponentProps<'svg'>, 'children'> {
   strokeWidth?: number;
 }
 
-export function Spinner({size = DEFAULT_SIZE, strokeWidth = DEFAULT_STROKE_WIDTH, className, ...rest}: SpinnerProps) {
+export default function Spinner({
+  size = DEFAULT_SIZE,
+  strokeWidth = DEFAULT_STROKE_WIDTH,
+  className,
+  ...rest
+}: SpinnerProps) {
   return (
     // eslint-disable-next-line no-restricted-syntax -- Spinner 컴포넌트 자체가 SVG로 회전 효과를 그리는 게 본질
     <svg

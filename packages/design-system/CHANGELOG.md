@@ -9,6 +9,7 @@
 ### Added
 
 - `IconButton`의 `asChild`: 자식 엘리먼트(링크 등)를 아이콘 버튼 모양으로 렌더하고 `icon`을 그 안에 넣습니다. 페이지 이동을 `router.push` 버튼 대신 링크로 둘 때 씁니다. `<IconButton asChild aria-label="다음 달" icon={<ChevronRightIcon />}><Link href="…" /></IconButton>`
+- `Spinner`: 패키지에서 import할 수 있습니다. 데이터를 기다리는 자리의 로딩 표시처럼 `Button` 밖에서 씁니다. 색은 `currentColor`라 부모의 `color`를 따릅니다. `<Spinner size={32} />`
 
 ### Changed
 
