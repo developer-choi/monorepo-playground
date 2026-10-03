@@ -72,7 +72,8 @@
           "currentColor",
           "/^var\\(/",
           "100%",
-          "/^calc\\(/"
+          "/^calc\\(/",
+          "/^map\\.get\\(/"
         ],
         "ignoreFunctions": false,
         "expandShorthand": true,

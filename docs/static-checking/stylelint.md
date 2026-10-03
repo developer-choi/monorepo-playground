@@ -45,7 +45,7 @@ stylelint이 SCSS map 키를 CSS 키워드 값으로 오인해 소문자화를 �
 
 ## declaration-strict-value
 
-하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·여백뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`), 간격 속성(`gap`, `row-gap`, `column-gap`), 레이어 속성(`z-index`)도 대상에 포함하여, `max-width: 480px`이나 `z-index: 1300` 같은 매직넘버를 차단합니다. 토큰화된 z-index map(예: `$zIndexes`)이나 CSS 변수만 통과합니다.
+하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·여백뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`), 간격 속성(`gap`, `row-gap`, `column-gap`), 레이어 속성(`z-index`)도 대상에 포함하여, `max-width: 480px`이나 `z-index: 1300` 같은 매직넘버를 차단합니다. CSS 변수(`var()`)와 SCSS map에서 꺼낸 값(`map.get($zIndexes, modal)`)만 통과합니다.
 
 ### 주요 설정 포인트
 
@@ -57,6 +57,7 @@ stylelint이 SCSS map 키를 CSS 키워드 값으로 오인해 소문자화를 �
 | 속성 목록에 border 계열 미포함        | —       | `/color$/`가 분해된 `border-color`를 잡으므로 중복 검사 방지        |
 | `ignoreValues`에 `100%`               | 문자열  | 구조적 레이아웃 값(`width: 100%`)은 디자인 토큰이 아니므로 허용     |
 | `ignoreValues`에 `/^calc\(/`          | regex   | `calc()` 표현식은 의도적 계산이므로 허용                            |
+| `ignoreValues`에 `/^map\.get\(/`      | regex   | `ignoreFunctions: false`가 `map.get()`도 차단하므로 허용. z-index는 SCSS map(`$zIndexes`)에서 꺼내 쓴다 |
 
 ### 도입 히스토리
 
