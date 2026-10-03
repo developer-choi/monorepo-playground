@@ -145,3 +145,13 @@ $paperShadow: (
 ```
 
 shadow 형태(ring vs depth) 자체가 여러 컴포넌트에서 공유될 가능성이 있으면 토큰화한다 (예: `--shadow-focus`는 input·button focus 링, `--shadow-hover`는 카드·타일의 호버 elevation depth).
+
+## z-index는 CSS 변수가 아니라 SCSS 맵
+
+z-index는 토큰(CSS 변수)으로 두지 않고 `src/styles/design-system.module.scss`의 `$zIndexes` 맵에 둔다. 맵에는 디자인 시스템 부품의 층만 둔다(`modal` 400, `toast` 500).
+
+- **런타임에 바꿀 값이 아니다.** CSS 변수로 두는 이유(테마 교체)가 층 순서에는 없다. 반대로 SCSS 맵은 없는 키를 꺼내면 컴파일 에러가 나서, CSS 변수가 잃는 빌드 시점 검증을 되찾는다.
+- **층은 쓰는 앱마다 다르다.** sticky 헤더·드롭다운처럼 앱이 만드는 층은 디자인 시스템이 알 수 없다. 앱은 패키지가 내보내는 맵(`@developer-choi/design-system/styles/design-system`)을 `map.merge`로 자기 맵에 합쳐 쓴다. 예: `apps/examples/src/shared/styles/_z-index.scss`
+- **100 단위로 띄운다.** 앱이 디자인 시스템 층 사이·아래에 자기 층을 끼울 자리를 남긴다. 디자인 시스템은 이 간격을 유지한다.
+
+stylelint `declaration-strict-value`는 `z-index`에 숫자를 막고 `map.get()`으로 꺼낸 값은 통과시킨다([stylelint.md](../../../../docs/static-checking/stylelint.md)).
