@@ -53,8 +53,8 @@ ESLint는 "아무것도 안 막은 억제"만 알려줍니다. 파일 맨 위 `/
 
 ```ts
 /* 임시 프로브 — 측정 후 삭제 */
-const Value = 1; // 막히길 기대
-const DoSomethingWeird = (num: number) => num + 1; // 통과하길 기대
+const max_count = 1; // 막히길 기대
+const MaxCount = 1; // 통과하길 기대
 ```
 
 말로 맞다고 본 것이 실제로는 다른 경우가 있습니다 — 함수 타입 예외를 넣고도 `ElementType`(컴포넌트와 태그 문자열의 합집합)은 계속 막힌다는 것을 프로브로야 알았습니다.

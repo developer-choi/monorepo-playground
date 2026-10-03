@@ -33,8 +33,7 @@ export const baseRules = {
   '@typescript-eslint/naming-convention': [
     'error',
     {selector: 'default', format: ['camelCase']},
-    {selector: 'variable', format: ['camelCase', 'UPPER_CASE']},
-    {selector: 'variable', types: ['function'], format: ['camelCase', 'PascalCase', 'UPPER_CASE']},
+    {selector: 'variable', format: ['camelCase', 'PascalCase', 'UPPER_CASE']},
     {selector: 'parameter', format: ['camelCase'], leadingUnderscore: 'allow'},
     {selector: 'parameter', types: ['function'], format: ['camelCase', 'PascalCase'], leadingUnderscore: 'allow'},
     {selector: 'function', format: ['camelCase', 'PascalCase']},

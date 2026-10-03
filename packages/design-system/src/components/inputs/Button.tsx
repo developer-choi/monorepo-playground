@@ -45,7 +45,6 @@ export default function Button({
     [loading, onClick],
   );
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention -- ElementType은 컴포넌트|태그 문자열 합집합이라 함수 예외에 안 걸린다. JSX에서 <Comp>로 쓰려면 대문자가 강제다
   const Comp: ElementType = asChild ? Slot.Root : 'button';
 
   return (

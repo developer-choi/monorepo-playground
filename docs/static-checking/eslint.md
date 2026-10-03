@@ -259,11 +259,11 @@ const value = unsafeFunction();
 
 #### `@typescript-eslint/naming-convention`
 
-식별자 네이밍 컨벤션을 강제합니다. 변수/함수는 camelCase(함수 타입 변수는 PascalCase도 허용), 타입/클래스는 PascalCase, 상수는 UPPER_CASE를 사용합니다.
+식별자 네이밍 컨벤션을 강제합니다. 변수는 camelCase·PascalCase·UPPER_CASE, 함수는 camelCase·PascalCase, 타입/클래스는 PascalCase를 사용합니다. snake_case 같은 그 밖의 형식을 막습니다.
 
 ```typescript
 // ❌
-const MyVariable = 1;
+const my_variable = 1;
 type user_type = {name: string};
 
 // ✅
@@ -271,40 +271,27 @@ const myVariable = 1;
 type UserType = {name: string};
 ```
 
-값에 붙는 PascalCase는 차단하고, **함수 타입이면 PascalCase를 허용**합니다. JSX는 컴포넌트를 대문자로만 렌더할 수 있는데, 그 자리에 들어가는 값은 언제나 함수이기 때문입니다.
+변수에는 PascalCase를 허용합니다. JSX에서 대문자로 렌더할 값을 변수에 담는 일(`memo`로 감싼 컴포넌트, `asChild`로 고른 `Slot.Root | 'button'`)이 PascalCase 값 변수(`const MaxCount = 10`)를 실수로 쓰는 일보다 잦아서, 막으면 억제 주석이 더 많이 생기기 때문입니다.
 
 ```tsx
-// ❌ 값·객체에 PascalCase — 계속 차단
-const Value = 1;
-const UserSchema = z.object({name: z.string()}); // 스키마는 함수가 아니다
-const Button = 'button'; // 태그 이름을 대문자 변수에 담아 <Button>으로 쓰는 회피
-
-// ✅ 함수 타입이면 허용 — 억제 주석이 필요 없다
+// ✅ 억제 주석 없이 통과
 const SlowList = memo(function SlowList({text}: {text: string}) { ... });
+const Comp: ElementType = asChild ? Slot.Root : 'button';
 ```
 
-기준이 **함수인가**이므로 컴포넌트가 아닌 함수도 PascalCase가 됩니다(`const DoSomethingWeird = (num: number) => num + 1`). 규칙은 호출 시그니처만 볼 뿐 컴포넌트 여부는 판별하지 못합니다. 화살표 컴포넌트(`const Foo = () => <div />`)는 이 룰이 아니라 [`react/function-component-definition`](#reactfunction-component-definition)이 막습니다.
-
-`ElementType`처럼 **컴포넌트와 태그 문자열의 합집합**인 타입은 이 예외에 걸리지 않아 line-level eslint-disable이 필요합니다. `function`은 "`Function | null | undefined`에 대입 가능한 타입"이라서, 문자열이 섞이면 조건이 깨지기 때문입니다.
+예전에는 변수 PascalCase를 막고 함수 타입(`types: ['function']`)만 열었습니다. 그러면 `ElementType`처럼 컴포넌트와 태그 문자열의 합집합인 값이 예외에 안 걸려 억제 주석이 필요했습니다. `function`은 "`Function | null | undefined`에 대입 가능한 타입"이라 문자열이 섞이면 조건이 깨집니다.
 
 > 출처: https://typescript-eslint.io/rules/naming-convention/
 >
 > "`function` matches any type assignable to `Function | null | undefined`"
 
-```tsx
-// eslint-disable-next-line @typescript-eslint/naming-convention -- ElementType은 컴포넌트|태그 문자열 합집합이라 함수 예외에 안 걸린다. JSX에서 <Comp>로 쓰려면 대문자가 강제다
-const Comp: ElementType = asChild ? Slot.Root : 'button';
-```
-
-Next.js 라우트 핸들러(`GET`, `POST` 등)와 구조 분해 변수(외부 API 키 이름 그대로 사용)도 예외입니다. 다만 구조 분해 예외는 **이름을 그대로 받을 때만** 적용되고, 이름을 바꿔 받으면 해당하지 않습니다 — 그런 경우는 위 함수 타입 예외로 통과합니다.
+Next.js 라우트 핸들러(`GET`, `POST` 등)와 구조 분해 변수(외부 API 키 이름 그대로 사용)도 예외입니다. 다만 구조 분해 예외는 **이름을 그대로 받을 때만** 적용되고, 이름을 바꿔 받으면 해당하지 않습니다 — 그런 경우는 일반 변수 규칙으로 판정합니다.
 
 > 출처: https://typescript-eslint.io/rules/naming-convention/
 >
 > "`destructured` - matches a variable declared via an object destructuring pattern (`const {x, z = 2}`). Note that this does not match renamed destructured properties (`const {x: y, a: b = 2}`)."
 
 객체 property는 camelCase/UPPER_CASE만 허용하며, 서버 DTO 등 snake_case가 필요한 파일은 파일 단위 eslint-disable로 처리합니다.
-
-Storybook의 `**/*.stories.{ts,tsx}` 파일은 Story export(`export const BasicUsage: Story = {...}`)가 Storybook 사이드바 표시 컨벤션상 PascalCase여야 하므로, 워크스페이스 eslint config에서 file-pattern override로 variable PascalCase를 다시 허용합니다. Story는 객체라 위 함수 타입 예외로는 통과하지 않습니다.
 
 따옴표가 **필수**인 이름(하이픈·공백 등이 들어가 식별자로 쓸 수 없는 이름)은 `requiresQuotes` modifier + `format: null`로 검사에서 면제합니다. `'Content-Type'` 같은 HTTP 표준 헤더는 우리가 이름을 정할 수 없는데, 예외가 없으면 헤더 리터럴마다 eslint-disable을 달아야 합니다(채용과제에서 실제 발생).
 
