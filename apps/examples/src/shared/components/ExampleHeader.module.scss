@@ -1,9 +1,11 @@
+@use 'sass:map';
 @use '@developer-choi/design-system/styles/typography';
+@use '@/shared/styles/z-index';
 
 .header {
   position: sticky;
   top: 0;
-  z-index: var(--z-pc-sticky-header);
+  z-index: map.get(z-index.$zIndexes, stickyHeader);
   display: flex;
   align-items: center;
   gap: var(--spacing-md);

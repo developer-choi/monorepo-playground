@@ -1,0 +1,10 @@
+@use 'sass:map';
+@use '@developer-choi/design-system/styles/design-system';
+
+// 디자인 시스템 층(모달 400·토스트 500)에 예제 앱 층을 끼운다. 100 단위 사이에 넣는다.
+$zIndexes: map.merge(
+  design-system.$zIndexes,
+  (
+    stickyHeader: 100,
+  )
+);

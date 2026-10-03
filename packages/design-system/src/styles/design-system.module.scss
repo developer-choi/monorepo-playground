@@ -1,7 +1,6 @@
 // https://docs.google.com/document/d/1PuIedTgshX2lHkh9YgIW6sv9W7aiyuA_aTxdPlQ6Vm0/edit
+// 디자인 시스템 부품의 층. 100 단위로 띄워, 쓰는 앱이 map.merge로 자기 층(헤더·드롭다운 등)을 사이에 끼운다.
 $zIndexes: (
-  mobileBottomNav: 10,
-  pcStickyHeader: 10,
-  modal: 30,
-  errorPageTemplate: 90,
+  modal: 400,
+  toast: 500,
 );
