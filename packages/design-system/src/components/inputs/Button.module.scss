@@ -48,7 +48,7 @@
 }
 
 .button.styled.large {
-  @include typography.body1;
+  @include typography.body2;
 
   --button-gap: var(--spacing-grid-gap);
 
@@ -56,6 +56,17 @@
   border-radius: var(--radius-md);
   padding-left: var(--spacing-md);
   padding-right: var(--spacing-md);
+}
+
+.button.styled.xLarge {
+  @include typography.body1;
+
+  --button-gap: var(--spacing-grid-gap);
+
+  height: var(--control-height-xl);
+  border-radius: var(--radius-md);
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
 }
 
 .button.styled.primary.contained {
