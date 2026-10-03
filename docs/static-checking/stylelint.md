@@ -35,7 +35,7 @@ Stylelint는 `--max-warnings 0` 옵션으로 실행합니다 (루트 `stylelint`
 "value-keyword-case": ["lower", {"ignoreKeywords": ["/^[a-z][a-zA-Z0-9]*[A-Z]/"]}]
 ```
 
-stylelint이 SCSS map 키를 CSS 키워드 값으로 오인해 소문자화를 요구합니다. `$zIndexes`의 `mobileBottomNav`, `$typography`의 `lineHeight`가 `mobilebottomnav`·`lineheight`로 바뀌어야 한다고 잡힙니다. 공식 문서가 이 상황에 `ignoreKeywords`를 쓰라고 안내합니다.
+stylelint이 SCSS map 키를 CSS 키워드 값으로 오인해 소문자화를 요구합니다. `$zIndexes`의 `stickyHeader`, `$typography`의 `lineHeight`가 `stickyheader`·`lineheight`로 바뀌어야 한다고 잡힙니다. 공식 문서가 이 상황에 `ignoreKeywords`를 쓰라고 안내합니다.
 
 출처: https://stylelint.io/user-guide/rules/value-keyword-case/
 
@@ -45,7 +45,7 @@ stylelint이 SCSS map 키를 CSS 키워드 값으로 오인해 소문자화를 �
 
 ## declaration-strict-value
 
-하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·여백뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`), 간격 속성(`gap`, `row-gap`, `column-gap`), 레이어 속성(`z-index`)도 대상에 포함하여, `max-width: 480px`이나 `z-index: 1300` 같은 매직넘버를 차단합니다. 토큰화된 z-index map(예: `$zIndexes`)이나 CSS 변수만 통과합니다.
+하드코딩된 색상·수치를 변수 사용으로 강제하는 플러그인입니다. 색상·여백뿐 아니라 사이징 속성(`width`, `height`, `min-width`, `min-height`, `max-width`, `max-height`), 간격 속성(`gap`, `row-gap`, `column-gap`), 레이어 속성(`z-index`)도 대상에 포함하여, `max-width: 480px`이나 `z-index: 1300` 같은 매직넘버를 차단합니다. CSS 변수(`var()`)는 통과하고, `z-index`는 없는 키면 에러를 내는 함수(`safeMapGet`·`zIndex`)로 SCSS map에서 꺼낸 값만 통과합니다.
 
 ### 주요 설정 포인트
 
@@ -57,6 +57,7 @@ stylelint이 SCSS map 키를 CSS 키워드 값으로 오인해 소문자화를 �
 | 속성 목록에 border 계열 미포함        | —       | `/color$/`가 분해된 `border-color`를 잡으므로 중복 검사 방지        |
 | `ignoreValues`에 `100%`               | 문자열  | 구조적 레이아웃 값(`width: 100%`)은 디자인 토큰이 아니므로 허용     |
 | `ignoreValues`에 `/^calc\(/`          | regex   | `calc()` 표현식은 의도적 계산이므로 허용                            |
+| `ignoreValues`의 `z-index` 키에 `/^[\w-]+\.(safeMapGet\|zIndex)\(/` | regex | z-index는 SCSS map(`$zIndexes`)에서 꺼내 쓴다. `map.get()`은 없는 키면 `null`을 돌려줘 선언이 조용히 빠지므로 막고, 없는 키에 `@error`를 내는 함수만 허용한다. 다른 속성에는 허용하지 않는다(`""` 키가 모든 속성 공통) |
 
 ### 도입 히스토리
 

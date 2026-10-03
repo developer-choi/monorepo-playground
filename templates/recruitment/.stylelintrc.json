@@ -60,20 +60,23 @@
         "column-gap"
       ],
       {
-        "ignoreValues": [
-          "0",
-          "auto",
-          "inherit",
-          "initial",
-          "unset",
-          "normal",
-          "none",
-          "transparent",
-          "currentColor",
-          "/^var\\(/",
-          "100%",
-          "/^calc\\(/"
-        ],
+        "ignoreValues": {
+          "": [
+            "0",
+            "auto",
+            "inherit",
+            "initial",
+            "unset",
+            "normal",
+            "none",
+            "transparent",
+            "currentColor",
+            "/^var\\(/",
+            "100%",
+            "/^calc\\(/"
+          ],
+          "z-index": ["/^[\\w-]+\\.(safeMapGet|zIndex)\\(/"]
+        },
         "ignoreFunctions": false,
         "expandShorthand": true,
         "recurseLonghand": true
