@@ -3,7 +3,7 @@ import Button from './Button';
 
 const VARIANTS = ['contained', 'outlined'] as const;
 const COLORS = ['primary', 'secondary', 'destructive'] as const;
-const SIZES = ['small', 'medium', 'large'] as const;
+const SIZES = ['small', 'medium', 'large', 'xLarge'] as const;
 
 const meta: Meta<typeof Button> = {
   title: 'Components/inputs/Button',
@@ -13,7 +13,7 @@ const meta: Meta<typeof Button> = {
   },
   argTypes: {
     children: {control: 'text'},
-    size: {control: 'select', options: ['small', 'medium', 'large']},
+    size: {control: 'select', options: ['small', 'medium', 'large', 'xLarge']},
     variant: {control: 'select', options: ['contained', 'outlined']},
     color: {control: 'select', options: ['primary', 'secondary', 'destructive', 'surface']},
     loading: {control: 'boolean'},

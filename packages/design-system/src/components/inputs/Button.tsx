@@ -9,7 +9,7 @@ import styles from './Button.module.scss';
 type UsedProps = 'style' | 'className' | 'onClick' | 'disabled' | 'children' | 'type' | 'ref';
 
 export interface ButtonProps extends Pick<ComponentProps<'button'>, UsedProps> {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'xLarge';
   variant?: 'contained' | 'outlined';
   color?: 'primary' | 'secondary' | 'destructive' | 'surface';
   loading?: boolean;
@@ -17,6 +17,7 @@ export interface ButtonProps extends Pick<ComponentProps<'button'>, UsedProps> {
 }
 
 const SPINNER_SIZE_BY_BUTTON_SIZE: Record<NonNullable<ButtonProps['size']>, number> = {
+  xLarge: 28,
   large: 24,
   medium: 20,
   small: 16,
