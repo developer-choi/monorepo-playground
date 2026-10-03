@@ -2,6 +2,18 @@
 
 버전마다 쓰는 쪽이 알아야 할 변경을 적습니다. 올리는 규칙은 [README 「버전」](README.md#버전)에 있습니다.
 
+## 0.7.0
+
+`IconButton`에 `asChild`가 생겼습니다. `IconButtonProps`를 `interface … extends`로 확장하던 곳만 `type … = IconButtonProps & {…}`로 바꿔 주세요.
+
+### Added
+
+- `IconButton`의 `asChild`: 자식 엘리먼트(링크 등)를 아이콘 버튼 모양으로 렌더하고 `icon`을 그 안에 넣습니다. 페이지 이동을 `router.push` 버튼 대신 링크로 둘 때 씁니다. `<IconButton asChild aria-label="다음 달" icon={<ChevronRightIcon />}><Link href="…" /></IconButton>`
+
+### Changed
+
+- `IconButtonProps`가 interface에서 type으로 바뀌었습니다. `children`은 `asChild`일 때만 받고 그때는 필수라서, 둘이 어긋나면 타입 에러가 납니다.
+
 ## 0.6.0
 
 `Confirm`·`Alert`의 버튼 props가 바뀌었습니다. **쓰던 곳을 아래 「Removed」 표대로 바꿔 주세요.**
