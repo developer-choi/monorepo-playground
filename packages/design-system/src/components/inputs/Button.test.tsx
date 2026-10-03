@@ -35,9 +35,6 @@ describe('Button', () => {
     });
   });
 
-  // asChild를 지원하는 컴포넌트가 Button뿐이라 여기 둔다. 늘어나면 className 병합
-  // (test-utils/test-class-name.ts)처럼 공용 검증으로 뺀다 — 그때는 Slot을 만든
-  // radix-ui가 이 검증을 어떻게 하고 있는지부터 확인한다.
   describe('Boundary cases', () => {
     it('asChild면 button이 아니라 자식 엘리먼트로 렌더된다', () => {
       renderButtonAsLink();

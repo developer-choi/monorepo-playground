@@ -12,6 +12,8 @@ const meta: Meta<typeof IconButton> = {
     size: {control: 'inline-radio', options: ['small', 'medium', 'large']},
     disabled: {control: 'boolean'},
     icon: {control: false},
+    asChild: {table: {disable: true}},
+    children: {table: {disable: true}},
   },
   args: {
     icon: <MagnifyingGlassIcon />,
@@ -38,4 +40,12 @@ export const Disabled: Story = {
 
 export const Close: Story = {
   args: {icon: <Cross2Icon />},
+};
+
+export const AsLink: Story = {
+  args: {
+    asChild: true,
+    'aria-label': '검색 페이지로',
+    children: <a href="#search" />,
+  },
 };
