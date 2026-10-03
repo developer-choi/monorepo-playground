@@ -1,3 +1,5 @@
+@use '@/styles/util';
+@use '@/styles/design-system.module' as designSystem;
 @use '@/styles/typography.module' as typography;
 
 /* stylelint-disable-next-line declaration-property-value-disallowed-list -- Toast 전용 일회성 (DesignTokens.md: 공통화 불가 → 로컬 SCSS 변수) */
@@ -5,9 +7,7 @@ $toastWidth: 356px;
 
 .viewport {
   position: fixed;
-
-  /* portal 없이 그려져서, 없으면 body 끝으로 portal되는 모달 백드롭 아래에 깔린다. */
-  z-index: var(--z-toast);
+  z-index: util.safeMapGet(designSystem.$zIndexes, toast);
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);

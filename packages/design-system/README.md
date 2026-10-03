@@ -48,3 +48,41 @@ import styles from './layout.module.css';
 ```
 
 덮어쓸 수 있는 토큰 목록은 [design-tokens.module.scss](src/styles/design-tokens.module.scss)에 있습니다.
+
+## z-index
+
+모달·토스트의 층은 SCSS 맵 `$zIndexes`(모달 400, 토스트 500)로 정합니다. 앱의 sticky 헤더·드롭다운처럼 자기 층이 필요하면 이 맵에 합쳐 씁니다. 100 단위 사이에 끼우면 됩니다.
+
+```scss
+// _z-index.scss
+@use 'sass:map';
+@use '@developer-choi/design-system/styles/design-system';
+
+$zIndexes: map.merge(
+  design-system.$zIndexes,
+  (
+    stickyHeader: 100,
+  )
+);
+
+// map.get은 없는 키면 null이라 선언이 조용히 빠진다. 꺼낼 때는 이 함수를 쓴다.
+@function zIndex($key) {
+  @if not map.has-key($zIndexes, $key) {
+    @error 'z-index "#{$key}" not found';
+  }
+
+  @return map.get($zIndexes, $key);
+}
+```
+
+```scss
+// Header.module.scss
+@use 'z-index';
+
+.header {
+  position: sticky;
+  z-index: z-index.zIndex(stickyHeader);
+}
+```
+
+이유는 [DesignTokens.md](docs/patterns/DesignTokens.md#z-index는-css-변수가-아니라-scss-맵)에 있습니다.

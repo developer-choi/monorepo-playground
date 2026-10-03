@@ -26,6 +26,10 @@
       "types": "./dist/styles/typography.d.ts",
       "sass": "./dist/styles/typography.module.scss",
       "default": "./dist/styles/typography.module.scss"
+    },
+    "./styles/design-system": {
+      "sass": "./dist/styles/design-system.module.scss",
+      "default": "./dist/styles/design-system.module.scss"
     }
   },
   "files": [

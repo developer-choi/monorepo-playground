@@ -1,0 +1,18 @@
+@use 'sass:map';
+@use '@developer-choi/design-system/styles/design-system';
+
+$zIndexes: map.merge(
+  design-system.$zIndexes,
+  (
+    stickyHeader: 100,
+  )
+);
+
+// map.get은 없는 키면 null을 돌려줘 z-index 선언이 조용히 빠진다. 빌드에서 잡는다.
+@function zIndex($key) {
+  @if not map.has-key($zIndexes, $key) {
+    @error 'z-index "#{$key}" not found';
+  }
+
+  @return map.get($zIndexes, $key);
+}

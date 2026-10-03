@@ -13,11 +13,14 @@ export default defineConfig({
   plugins: [
     react(),
     preserveDirectives(),
-    // typography.module.scss는 믹스인 라이브러리라 import 그래프에 없어 lib 빌드가 자동으로 dist에 옮기지 않는다.
-    // 소비자가 @use(sass)/CSS Module import(JS)로 가져갈 수 있도록 원본 scss와 타입선언(.d.ts)을 dist/styles로 복사한다.
-    // exports의 ./styles/typography가 이 산출물(default=scss, types=d.ts)을 가리킨다.
+    // typography.module.scss(믹스인)·design-system.module.scss(z-index 맵)는 import 그래프에 없어 lib 빌드가 자동으로 dist에 옮기지 않는다.
+    // typography는 소비자가 @use(sass)/CSS Module import(JS)로 가져가므로 원본 scss와 타입선언(.d.ts)을, design-system은 @use로만 쓰므로 scss만 dist/styles로 복사한다.
+    // exports의 ./styles/typography·./styles/design-system이 이 산출물을 가리킨다.
     viteStaticCopy({
-      targets: [{src: 'src/styles/typography.{module.scss,d.ts}', dest: 'styles', rename: {stripBase: true}}],
+      targets: [
+        {src: 'src/styles/typography.{module.scss,d.ts}', dest: 'styles', rename: {stripBase: true}},
+        {src: 'src/styles/design-system.module.scss', dest: 'styles', rename: {stripBase: true}},
+      ],
     }),
     dts({
       tsconfigPath: './tsconfig.app.json',
