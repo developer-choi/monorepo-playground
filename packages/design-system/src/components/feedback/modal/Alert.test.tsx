@@ -11,6 +11,11 @@ describe('Alert', () => {
       await userEvent.click(screen.getByRole('button', {name: '확인'}));
       expect(onClose).toHaveBeenCalledTimes(1);
     });
+
+    it('confirmProps.children이 버튼 문구가 된다', () => {
+      render(<Alert confirmProps={{children: '닫기'}} content="내용" open={true} title="알림" onClose={vi.fn()} />);
+      expect(screen.getByRole('button', {name: '닫기'})).toBeInTheDocument();
+    });
   });
 
   describe('Edge cases', () => {

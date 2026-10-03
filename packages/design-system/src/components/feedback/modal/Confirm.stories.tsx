@@ -11,9 +11,8 @@ const meta: Meta<typeof Confirm> = {
   argTypes: {
     title: {control: 'text'},
     content: {control: 'text'},
-    confirmText: {control: 'text'},
-    cancelText: {control: 'text'},
-    destructive: {control: 'boolean'},
+    confirmProps: {control: 'object'},
+    cancelProps: {control: 'object'},
     onConfirm: {action: 'confirmed'},
     onCancel: {action: 'cancelled'},
     open: {control: false},
@@ -58,8 +57,16 @@ export const Destructive: Story = {
   args: {
     title: '게시글 삭제',
     content: '정말 이 게시글을 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
-    confirmText: '삭제',
-    destructive: true,
+    confirmProps: {children: '삭제', color: 'destructive'},
+  },
+  render: (args) => <ConfirmStory {...args} />,
+};
+
+export const Loading: Story = {
+  args: {
+    title: '게시글 삭제',
+    content: '삭제하는 동안에는 Esc·바깥 클릭·취소로 닫히지 않습니다.',
+    confirmProps: {children: '삭제', color: 'destructive', loading: true},
   },
   render: (args) => <ConfirmStory {...args} />,
 };

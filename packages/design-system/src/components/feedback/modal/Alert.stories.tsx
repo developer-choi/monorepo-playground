@@ -11,7 +11,7 @@ const meta: Meta<typeof Alert> = {
   argTypes: {
     title: {control: 'text'},
     content: {control: 'text'},
-    confirmText: {control: 'text'},
+    confirmProps: {control: 'object'},
     onClose: {action: 'closed'},
     open: {control: false},
   },
@@ -43,7 +43,6 @@ export const Default: Story = {
   args: {
     title: '저장 완료',
     content: '변경사항이 저장되었습니다.',
-    confirmText: '확인',
   },
   render: (args) => <AlertStory {...args} />,
 };

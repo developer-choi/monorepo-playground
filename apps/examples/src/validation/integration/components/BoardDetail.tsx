@@ -36,8 +36,7 @@ export default function BoardDetail({board}: BoardDetailProps) {
   const handleDeleteClick = async () => {
     const confirmed = await overlay.openAsync<boolean>(({isOpen, close}) => (
       <Confirm
-        destructive
-        confirmText="삭제"
+        confirmProps={{children: '삭제', color: 'destructive'}}
         content="정말 이 게시글을 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다."
         open={isOpen}
         title="게시글 삭제"
