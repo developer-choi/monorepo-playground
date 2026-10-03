@@ -48,7 +48,7 @@
 }
 
 .button.styled.large {
-  @include typography.body1;
+  @include typography.body2;
 
   --button-gap: var(--spacing-grid-gap);
 
