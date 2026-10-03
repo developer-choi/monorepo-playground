@@ -2,6 +2,28 @@
 
 버전마다 쓰는 쪽이 알아야 할 변경을 적습니다. 올리는 규칙은 [README 「버전」](README.md#버전)에 있습니다.
 
+## 0.5.0
+
+토큰 셋이 없어졌습니다. **쓰던 곳을 아래 표대로 바꿔 주세요.**
+
+| 없어진 토큰            | 바꿀 것                                                                                                                                       |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--spacing-page-x`     | `--spacing-page-x-mobile` (값이 24px → 12px로 다릅니다)                                                                                       |
+| `--z-pc-sticky-header` | 앱의 z-index 맵에 직접 둡니다. [README 「z-index」](README.md#z-index)                                                                        |
+| `--z-toast`            | 토스트 층은 디자인 시스템이 정합니다. 앱에서 쓰려면 `@developer-choi/design-system/styles/design-system`의 `$zIndexes`에서 `toast`를 꺼냅니다 |
+
+### Changed
+
+- 버튼 `size="large"` 글자가 16px → 14px입니다. 높이 42px는 같습니다. 16px 글자가 필요하면 `xLarge`를 씁니다.
+- `IconButton` 평소 색이 `--color-fg-muted`(#999) → `--color-fg-secondary`(#666)입니다. hover 색은 같습니다.
+- 모달 본문과 버튼 사이가 16px → 24px입니다.
+- 모달 백드롭·창에 z-index(400)가 생겼습니다. 앱의 sticky 헤더가 백드롭 위로 올라오지 않습니다. 토스트는 500입니다.
+
+### Added
+
+- 버튼 `size="xLarge"`: 높이 48px, 글자 16px. 토큰 `--control-height-xl`(48px)
+- z-index 맵 `$zIndexes`(`modal` 400, `toast` 500)를 `@developer-choi/design-system/styles/design-system`으로 내보냅니다.
+
 ## 0.4.2
 
 고쳐야 하는 것은 없습니다.
