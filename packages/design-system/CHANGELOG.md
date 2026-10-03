@@ -2,6 +2,24 @@
 
 버전마다 쓰는 쪽이 알아야 할 변경을 적습니다. 올리는 규칙은 [README 「버전」](README.md#버전)에 있습니다.
 
+## 0.6.0
+
+`Confirm`·`Alert`의 버튼 props가 바뀌었습니다. **쓰던 곳을 아래 「Removed」 표대로 바꿔 주세요.**
+
+### Removed
+
+| 없어진 prop               | 바꿀 것                                 |
+| ------------------------- | --------------------------------------- |
+| `Confirm`의 `confirmText` | `confirmProps={{children: '삭제'}}`     |
+| `Confirm`의 `cancelText`  | `cancelProps={{children: '닫기'}}`      |
+| `Confirm`의 `destructive` | `confirmProps={{color: 'destructive'}}` |
+| `Alert`의 `confirmText`   | `confirmProps={{children: '닫기'}}`     |
+
+### Added
+
+- `Confirm`의 `confirmProps`·`cancelProps`, `Alert`의 `confirmProps`: `Button` props(`onClick` 제외)를 받아 기본값(확인 `primary`·취소 `secondary`, 둘 다 `large`)에 덮어씁니다. 클릭은 지금처럼 `onConfirm`·`onCancel`(`Alert`는 `onClose`)로 받습니다.
+- `confirmProps.loading`이 켜진 동안 `Confirm`은 Esc·바깥 클릭으로 닫히지 않고 [취소]가 비활성입니다.
+
 ## 0.5.0
 
 토큰 셋이 없어졌습니다. **쓰던 곳을 아래 「Removed」 표대로 바꿔 주세요.**
