@@ -31,6 +31,8 @@ try {
 ```
 
 - 2xx가 아니면 `ApiResponseError`, 요청 자체가 실패하면(네트워크 오류 등) `ApiRequestError`를 던집니다. 둘 다 `BaseError`를 상속하고 `level`(`fatal`·`error`·`warning`·`low`)을 가집니다.
+- 응답 본문은 JSON으로 읽습니다. 본문이 비면(204 등) `undefined`를 돌려주므로, 본문 없는 API는 결과를 쓰지 않거나 `api.delete<void>(…)`처럼 부릅니다. `T`는 검증 없는 단언이라 응답 모양을 보장하려면 zod 같은 스키마로 검증합니다.
+- 요청 본문은 JSON으로 보냅니다. `FormData`(파일 업로드)만 예외로 그대로 보냅니다. `URLSearchParams`·`Map`처럼 JSON으로 바꿀 수 없는 값은 `{}`가 되니 일반 객체로 넘깁니다.
 - 에러를 `instanceof`로 구분하므로, 에러 클래스는 반드시 이 패키지에서 import합니다. 같은 이름의 클래스를 앱에 복사해 두면 `instanceof`가 실패합니다.
 
 ### 요청마다 prefixUrl·헤더 바꾸기

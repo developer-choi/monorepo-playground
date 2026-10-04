@@ -10,3 +10,5 @@
 
 - `@developer-choi/utils/api`: `ApiClient`(추상 클래스), `FetchApiClient`, `BaseError`, `ApiRequestError`, `ApiResponseError`, `HTTP_STATUS`, `joinUrl`
 - `FetchApiClient` 생성자 2번째 인자 `resolveRequestContext`: 요청마다 불러 받은 `prefixUrl`·`headers`로 생성자 값을 덮습니다. 서버 렌더링 중 받은 요청의 쿠키·host를 실어 보낼 때 씁니다. 같은 헤더 키는 호출부 값이 이깁니다.
+- 응답 본문이 비면(204·205, 본문 없는 200·201) `undefined`를 돌려줍니다. 반환 타입은 호출부의 `T`를 따릅니다.
+- 요청 본문이 `FormData`면 JSON으로 바꾸지 않고 그대로 보내며, `Content-Type`은 브라우저가 multipart boundary와 함께 정하게 둡니다.

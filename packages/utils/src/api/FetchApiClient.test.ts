@@ -77,3 +77,43 @@ describe('FetchApiClient.get()', () => {
     );
   });
 });
+
+describe('FetchApiClient 응답 본문', () => {
+  describe('Edge cases', () => {
+    it.for([
+      {label: '204', status: 204},
+      {label: '205', status: 205},
+      {label: '본문이 빈 200', status: 200},
+      {label: '본문이 빈 201', status: 201},
+    ])('$label 응답이면 undefined를 돌려줘야 한다', async ({status}) => {
+      server.use(http.delete(`${CONSTRUCTOR_ORIGIN}${PATH}`, () => new HttpResponse(null, {status})));
+      const client = new FetchApiClient(CONSTRUCTOR_ORIGIN);
+
+      await expect(client.delete(PATH)).resolves.toBeUndefined();
+    });
+  });
+});
+
+describe('FetchApiClient 요청 본문', () => {
+  describe('Edge cases', () => {
+    it('FormData는 JSON으로 바꾸지 않고 multipart로 보내야 한다', async () => {
+      server.use(
+        http.post(`${CONSTRUCTOR_ORIGIN}${PATH}`, async ({request}) => {
+          const form = await request.formData();
+          return HttpResponse.json({
+            contentType: request.headers.get('Content-Type')?.split(';')[0],
+            name: form.get('name'),
+          });
+        }),
+      );
+      const client = new FetchApiClient(CONSTRUCTOR_ORIGIN);
+      const form = new FormData();
+      form.append('name', 'file.txt');
+
+      await expect(client.post(PATH, {body: form})).resolves.toEqual({
+        contentType: 'multipart/form-data',
+        name: 'file.txt',
+      });
+    });
+  });
+});
