@@ -88,10 +88,10 @@ router.push(qs ? `/lesson?${qs}` : '/lesson');
 
 - 클라이언트 싱글턴: `apps/examples/src/shared/api/client.ts`
 - API 함수 (GET + searchParams, 수동 매핑): `apps/examples/src/shared/board/api.ts`
-- ApiClient 추상 클래스: `apps/examples/src/shared/api/ApiClient.ts`
-- FetchApiClient 구현체: `apps/examples/src/shared/api/FetchApiClient.ts`
-- ApiResponseError: `apps/examples/src/shared/error/class/ApiResponseError.ts`
-- ApiRequestError: `apps/examples/src/shared/error/class/ApiRequestError.ts`
+- ApiClient 추상 클래스: `packages/utils/src/api/ApiClient.ts`
+- FetchApiClient 구현체: `packages/utils/src/api/FetchApiClient.ts`
+- ApiResponseError: `packages/utils/src/api/error/ApiResponseError.ts`
+- ApiRequestError: `packages/utils/src/api/error/ApiRequestError.ts`
 
 ## 참고
 

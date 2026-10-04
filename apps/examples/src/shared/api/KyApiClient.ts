@@ -1,9 +1,14 @@
 import ky, {type Options as KyInternalOptions, HTTPError} from 'ky';
 import queryString from 'query-string';
-import ApiClient, {type BaseOptions, type HttpMethod} from './ApiClient';
-import ApiResponseError from '@/shared/error/class/ApiResponseError';
-import ApiRequestError from '@/shared/error/class/ApiRequestError';
-import {joinUrl, stripLeadingSlash} from '@/shared/utils/url';
+import {
+  ApiClient,
+  ApiRequestError,
+  ApiResponseError,
+  joinUrl,
+  type BaseOptions,
+  type HttpMethod,
+} from '@developer-choi/utils/api';
+import {stripLeadingSlash} from '@/shared/utils/url';
 
 export type KyOptions = BaseOptions &
   Omit<KyInternalOptions, 'method' | 'headers' | 'body' | 'json' | 'prefixUrl' | 'searchParams'>;

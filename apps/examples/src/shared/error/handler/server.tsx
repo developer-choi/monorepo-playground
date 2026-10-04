@@ -3,9 +3,8 @@ import {notFound, redirect} from 'next/navigation';
 import InvalidAccessError from '@/shared/error/class/InvalidAccessError';
 import ErrorNotice from '@/shared/components/ErrorNotice';
 import {getErrorInfo} from '@/shared/error/handler/info';
-import ApiResponseError from '@/shared/error/class/ApiResponseError';
+import {ApiResponseError, HTTP_STATUS} from '@developer-choi/utils/api';
 import {captureException} from '@sentry/nextjs';
-import {HTTP_STATUS} from '@/shared/api/httpStatus';
 
 export function handleServerSideError(error: unknown): ReactNode {
   if (error instanceof InvalidAccessError) {

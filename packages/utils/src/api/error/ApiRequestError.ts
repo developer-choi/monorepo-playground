@@ -1,5 +1,5 @@
-import BaseError, {type BaseErrorOption} from './BaseError';
-import {type HttpMethod} from '@/shared/api/ApiClient';
+import BaseError, {type BaseErrorOption} from './BaseError.js';
+import type {HttpMethod} from '../http.js';
 
 /**
  * API 호출 자체가 실패한 경우 (네트워크 에러, DNS 실패 등). 서버 응답 없음.

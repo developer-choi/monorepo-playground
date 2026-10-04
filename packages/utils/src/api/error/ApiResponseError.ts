@@ -1,5 +1,5 @@
-import BaseError, {type BaseErrorOption} from './BaseError';
-import {type HttpMethod} from '@/shared/api/ApiClient';
+import BaseError, {type BaseErrorOption} from './BaseError.js';
+import type {HttpMethod} from '../http.js';
 
 /**
  * API 호출은 성공했지만 2xx가 아닌 경우 (response.ok === false).

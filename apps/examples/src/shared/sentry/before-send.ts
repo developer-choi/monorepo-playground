@@ -1,5 +1,5 @@
 import type {ErrorEvent, EventHint, SeverityLevel} from '@sentry/core';
-import BaseError from '@/shared/error/class/BaseError';
+import {BaseError} from '@developer-choi/utils/api';
 
 export const beforeSend = (event: ErrorEvent, hint: EventHint): ErrorEvent | null => {
   if (isSkipSentry(hint)) {

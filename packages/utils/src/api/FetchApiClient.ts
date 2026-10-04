@@ -1,12 +1,29 @@
 import queryString, {type StringifiableRecord} from 'query-string';
-import ApiClient, {type BaseOptions, type HttpMethod} from './ApiClient';
-import ApiResponseError from '@/shared/error/class/ApiResponseError';
-import ApiRequestError from '@/shared/error/class/ApiRequestError';
-import {joinUrl} from '@/shared/utils/url';
+import ApiClient, {type BaseOptions} from './ApiClient.js';
+import type {HttpMethod} from './http.js';
+import ApiRequestError from './error/ApiRequestError.js';
+import ApiResponseError from './error/ApiResponseError.js';
+import {joinUrl} from './url.js';
 
 export type FetchOptions = BaseOptions & Omit<RequestInit, 'method' | 'headers' | 'body'>;
 
+/**
+ * 요청마다 생성자의 prefixUrl·헤더를 덮어쓸 값. 서버 렌더링 중 받은 요청의 쿠키·host를 실어 보낼 때 쓴다.
+ * 여기 담긴 헤더는 ApiRequestError·ApiResponseError의 headers에 남기지 않는다 — 에러가 모니터링 도구로 넘어가므로.
+ */
+export interface RequestContext {
+  prefixUrl: string;
+  headers?: HeadersInit;
+}
+
 export default class FetchApiClient extends ApiClient {
+  private readonly resolveRequestContext?: () => Promise<RequestContext>;
+
+  constructor(prefixUrl: string, resolveRequestContext?: () => Promise<RequestContext>) {
+    super(prefixUrl);
+    this.resolveRequestContext = resolveRequestContext;
+  }
+
   async get<T>(url: string, options?: FetchOptions) {
     const response = await this.request(url, {method: 'GET', body: undefined, ...options});
     if (!response.ok) {
@@ -49,8 +66,9 @@ export default class FetchApiClient extends ApiClient {
 
   private async request(url: string, options: FetchOptions & {method: HttpMethod; body: unknown}) {
     const {searchParams, headers: rawHeaders, body: rawBody, method, ...fetchOptions} = options;
-    const requestUrl = this.buildUrl(url, searchParams);
-    const headers = this.buildHeaders(rawHeaders, rawBody);
+    const context = await this.resolveRequestContext?.();
+    const requestUrl = this.buildUrl(joinUrl(context?.prefixUrl ?? this.prefixUrl, url), searchParams);
+    const headers = this.buildHeaders([context?.headers, rawHeaders], rawBody);
     const body = this.buildBody(rawBody);
 
     try {
@@ -65,9 +83,7 @@ export default class FetchApiClient extends ApiClient {
     }
   }
 
-  private buildUrl(url: string, searchParams?: object): string {
-    const fullUrl = joinUrl(this.prefixUrl, url);
-
+  private buildUrl(fullUrl: string, searchParams?: object): string {
     if (!searchParams) {
       return fullUrl;
     }
@@ -75,8 +91,12 @@ export default class FetchApiClient extends ApiClient {
     return queryString.stringifyUrl({url: fullUrl, query: searchParams as StringifiableRecord});
   }
 
-  private buildHeaders(headers?: HeadersInit, body?: unknown): Headers {
-    const merged = new Headers(headers);
+  private buildHeaders(headersList: (HeadersInit | undefined)[], body?: unknown): Headers {
+    const merged = new Headers();
+
+    headersList.forEach((headers) => {
+      new Headers(headers).forEach((value, key) => merged.set(key, value));
+    });
 
     if (body !== undefined && !merged.has('Content-Type')) {
       merged.set('Content-Type', 'application/json');

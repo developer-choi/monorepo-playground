@@ -1,12 +1,14 @@
 import {describe, it, expect, beforeEach} from 'vitest';
 import {http, HttpResponse} from 'msw';
-import type ApiClient from './ApiClient';
-import FetchApiClient from './FetchApiClient';
+import {
+  FetchApiClient,
+  HTTP_STATUS,
+  ApiRequestError,
+  ApiResponseError,
+  type ApiClient,
+} from '@developer-choi/utils/api';
 import KyApiClient from './KyApiClient';
-import {HTTP_STATUS} from './httpStatus';
 import {server} from '@/mocks/node';
-import ApiResponseError from '@/shared/error/class/ApiResponseError';
-import ApiRequestError from '@/shared/error/class/ApiRequestError';
 
 const PREFIX_URL = 'https://contract.test';
 const USERS_PATH = 'users';

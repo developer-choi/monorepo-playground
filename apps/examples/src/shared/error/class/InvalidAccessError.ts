@@ -1,4 +1,4 @@
-import BaseError from './BaseError';
+import {BaseError} from '@developer-choi/utils/api';
 
 export interface InvalidAccessErrorOptions {
   redirect: {type: 'NOT_FOUND'} | {type: 'REDIRECT'; url: string};
