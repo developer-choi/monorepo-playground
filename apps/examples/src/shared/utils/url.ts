@@ -26,14 +26,6 @@ const DEFAULT_OPTIONS: BuildUrlOptions = {
   skipNull: true,
 };
 
-export function joinUrl(prefixUrl: string, path: string): string {
-  if (!prefixUrl) {
-    return path;
-  }
-
-  return `${prefixUrl.replace(/\/+$/, '')}/${stripLeadingSlash(path)}`;
-}
-
 export function stripLeadingSlash(path: string): string {
   return path.replace(/^\/+/, '');
 }

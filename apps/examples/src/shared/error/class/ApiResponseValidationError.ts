@@ -1,5 +1,5 @@
 import {ZodError} from 'zod';
-import BaseError from './BaseError';
+import {BaseError} from '@developer-choi/utils/api';
 
 /**
  * 2xx 성공 응답이지만 Zod 스키마와 불일치하는 경우. 서버 측 버그일 가능성이 높음.

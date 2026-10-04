@@ -1,6 +1,4 @@
-import ApiRequestError from '@/shared/error/class/ApiRequestError';
-import ApiResponseError from '@/shared/error/class/ApiResponseError';
-import {HTTP_STATUS} from '@/shared/api/httpStatus';
+import {ApiRequestError, ApiResponseError, HTTP_STATUS} from '@developer-choi/utils/api';
 
 export interface ErrorInfo {
   title: string;

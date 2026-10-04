@@ -7,7 +7,7 @@
     "build": "turbo build",
     "start": "turbo start",
     "lint": "turbo lint",
-    "examples": "turbo build --filter=@developer-choi/design-system && turbo dev --filter=examples",
+    "examples": "turbo build --filter=@developer-choi/design-system --filter=@developer-choi/utils && turbo dev --filter=examples",
     "examples:start": "turbo build --filter=examples && turbo start --filter=examples",
     "design-system": "turbo storybook --filter=@developer-choi/design-system",
     "test-staged": "lint-staged --concurrent false && turbo check-types",
@@ -27,6 +27,10 @@
     "packages/design-system/**/*.{ts,tsx}": [
       "eslint --fix --max-warnings 0 --no-warn-ignored --config packages/design-system/eslint.config.js",
       "vitest related --run --root packages/design-system"
+    ],
+    "packages/utils/**/*.ts": [
+      "eslint --fix --max-warnings 0 --no-warn-ignored --config packages/utils/eslint.config.js",
+      "vitest related --run --root packages/utils"
     ]
   },
   "repository": {

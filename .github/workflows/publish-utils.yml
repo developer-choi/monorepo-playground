@@ -1,0 +1,65 @@
+name: Publish utils
+
+on:
+  push:
+    branches: [master]
+    paths: ['packages/utils/**']
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 배포하지 않고 npm 인증·빌드·배포 파일만 점검한다
+        type: boolean
+        default: false
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency: publish-utils
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/utils
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: npm에 없는 버전인지 확인
+        id: version
+        if: ${{ !inputs.dry-run }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "@developer-choi/utils@$VERSION" version --registry=https://registry.npmjs.org/ | grep -q .; then
+            echo "$VERSION은 이미 배포됐다. 건너뛴다."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "$VERSION을 배포한다."
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # trusted publishing은 npm 11.5.1 이상이 필요하다
+      - if: inputs.dry-run || steps.version.outputs.publish == 'true'
+        run: npm install -g npm@11.9.0
+
+      - if: inputs.dry-run || steps.version.outputs.publish == 'true'
+        run: |
+          corepack enable
+          yarn install --immutable
+
+      - if: steps.version.outputs.publish == 'true'
+        run: npm publish --registry=https://registry.npmjs.org/
+
+      # --dry-run도 업로드 직전까지 OIDC 토큰 교환을 한다. 교환 성공 로그가 없으면 실패로 끝낸다
+      # 이미 배포된 버전이면 dry-run도 거부되므로, 러너 안에서만 버전을 prerelease로 바꾼다
+      - name: 배포하지 않고 점검
+        if: inputs.dry-run
+        run: |
+          npm pkg set version="$(node -p "require('./package.json').version")-dry-run.$GITHUB_RUN_ID"
+          npm publish --dry-run --tag dry-run --loglevel verbose --registry=https://registry.npmjs.org/ 2>&1 | tee "$RUNNER_TEMP/publish.log"
+          grep -q "Successfully retrieved and set token" "$RUNNER_TEMP/publish.log"

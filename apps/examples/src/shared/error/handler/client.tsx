@@ -2,9 +2,8 @@ import {useCallback} from 'react';
 import {captureException} from '@sentry/nextjs';
 import {overlay} from 'overlay-kit';
 import {Alert} from '@developer-choi/design-system';
-import ApiResponseError from '@/shared/error/class/ApiResponseError';
+import {ApiResponseError, HTTP_STATUS} from '@developer-choi/utils/api';
 import {getErrorInfo} from '@/shared/error/handler/info';
-import {HTTP_STATUS} from '@/shared/api/httpStatus';
 
 export function useHandleClientSideError() {
   return useCallback((error: unknown) => {

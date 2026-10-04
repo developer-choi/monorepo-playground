@@ -1,12 +1,14 @@
 import {describe, it, expect, beforeEach} from 'vitest';
 import {http, HttpResponse} from 'msw';
-import type ApiClient from './ApiClient';
-import FetchApiClient from './FetchApiClient';
+import {
+  FetchApiClient,
+  HTTP_STATUS,
+  ApiRequestError,
+  ApiResponseError,
+  type ApiClient,
+} from '@developer-choi/utils/api';
 import KyApiClient from './KyApiClient';
-import {HTTP_STATUS} from './httpStatus';
 import {server} from '@/mocks/node';
-import ApiResponseError from '@/shared/error/class/ApiResponseError';
-import ApiRequestError from '@/shared/error/class/ApiRequestError';
 
 const PREFIX_URL = 'https://contract.test';
 const USERS_PATH = 'users';
@@ -108,6 +110,15 @@ describe.for(implementations)('ApiClient 계약 > $name', ({createClient}) => {
   });
 
   describe('Edge cases', () => {
+    it.for([
+      {label: '204', status: 204},
+      {label: '본문이 빈 200', status: HTTP_STATUS.OK},
+    ])('$label 응답이면 undefined를 반환한다', async ({status}) => {
+      server.use(http.delete(USER_URL, () => new HttpResponse(null, {status})));
+
+      await expect(client.delete(USER_PATH)).resolves.toBeUndefined();
+    });
+
     it('호출자가 Content-Type을 지정하면 덮어쓰지 않는다', async () => {
       const contentType = 'application/vnd.api+json';
       server.use(
