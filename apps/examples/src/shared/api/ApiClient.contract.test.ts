@@ -110,6 +110,15 @@ describe.for(implementations)('ApiClient 계약 > $name', ({createClient}) => {
   });
 
   describe('Edge cases', () => {
+    it.for([
+      {label: '204', status: 204},
+      {label: '본문이 빈 200', status: HTTP_STATUS.OK},
+    ])('$label 응답이면 undefined를 반환한다', async ({status}) => {
+      server.use(http.delete(USER_URL, () => new HttpResponse(null, {status})));
+
+      await expect(client.delete(USER_PATH)).resolves.toBeUndefined();
+    });
+
     it('호출자가 Content-Type을 지정하면 덮어쓰지 않는다', async () => {
       const contentType = 'application/vnd.api+json';
       server.use(

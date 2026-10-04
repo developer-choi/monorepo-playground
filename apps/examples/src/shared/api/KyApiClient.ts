@@ -28,7 +28,8 @@ export default class KyApiClient extends ApiClient {
     try {
       return await this.client
         .get(this.toPath(url), {...rest, searchParams: searchParams ? queryString.stringify(searchParams) : undefined})
-        .json<T>();
+        .json<T | ''>()
+        .then(emptyToUndefined<T>);
     } catch (error) {
       return this.handleError({error, method: 'GET', url, headers: options?.headers});
     }
@@ -43,7 +44,8 @@ export default class KyApiClient extends ApiClient {
           searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
           json: body,
         })
-        .json<T>();
+        .json<T | ''>()
+        .then(emptyToUndefined<T>);
     } catch (error) {
       return this.handleError({error, method: 'POST', url, body, headers: options.headers});
     }
@@ -58,7 +60,8 @@ export default class KyApiClient extends ApiClient {
           searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
           json: body,
         })
-        .json<T>();
+        .json<T | ''>()
+        .then(emptyToUndefined<T>);
     } catch (error) {
       return this.handleError({error, method: 'PUT', url, body, headers: options.headers});
     }
@@ -73,7 +76,8 @@ export default class KyApiClient extends ApiClient {
           searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
           json: body,
         })
-        .json<T>();
+        .json<T | ''>()
+        .then(emptyToUndefined<T>);
     } catch (error) {
       return this.handleError({error, method: 'PATCH', url, body, headers: options.headers});
     }
@@ -87,7 +91,8 @@ export default class KyApiClient extends ApiClient {
           ...rest,
           searchParams: searchParams ? queryString.stringify(searchParams) : undefined,
         })
-        .json<T>();
+        .json<T | ''>()
+        .then(emptyToUndefined<T>);
     } catch (error) {
       return this.handleError({error, method: 'DELETE', url, headers: options?.headers});
     }
@@ -127,4 +132,9 @@ export default class KyApiClient extends ApiClient {
       {cause: params.error},
     );
   }
+}
+
+/** ky의 json()은 204·빈 본문에서 ''를 돌려준다. FetchApiClient와 같게 undefined로 맞춘다 */
+function emptyToUndefined<T>(data: T | ''): T {
+  return (data === '' ? undefined : data) as T;
 }
