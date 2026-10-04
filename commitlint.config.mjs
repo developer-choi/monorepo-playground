@@ -19,6 +19,7 @@ export default {
         'examples',
         // packages/
         'design-system',
+        'utils',
         // project-level
         'setting',
         'best-practice-map',
