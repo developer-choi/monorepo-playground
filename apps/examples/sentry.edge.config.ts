@@ -16,6 +16,7 @@ Sentry.init({
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
   sendDefaultPii: true,
 
+  enabled: process.env.NEXT_PUBLIC_SENTRY_ENABLED === 'true',
   environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT,
   debug: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT === 'development',
   beforeSend,
