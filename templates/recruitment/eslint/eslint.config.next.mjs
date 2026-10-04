@@ -6,7 +6,6 @@
  *
  * 사용: `create-next-app` 스캐폴드 후 이 파일을 `eslint.config.mjs`로, `eslint.config.base.mjs`와 함께 프로젝트 루트에 둔다.
  */
-/* eslint-disable @typescript-eslint/naming-convention -- ESLint rule keys(kebab-case)·plugin namespace 등 외부 컨벤션 다수 */
 import {defineConfig, globalIgnores} from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';

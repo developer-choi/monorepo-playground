@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention -- ESLint rule keys(kebab-case)와 plugin namespace 등 외부 컨벤션 다수 */
 import {defineConfig, globalIgnores} from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
@@ -99,6 +98,7 @@ function createAppRouteFileWhitelistRule() {
     },
     create(context) {
       return {
+        // eslint-disable-next-line @typescript-eslint/naming-convention -- ESLint 규칙 visitor 이름은 ESLint가 정한 노드 타입(Program)이다
         Program(node) {
           const filePath = context.filename.replace(/\\/g, '/');
           const appIndex = filePath.indexOf(APP_PREFIX);
@@ -137,6 +137,7 @@ function createSrcFolderWhitelistRule() {
     },
     create(context) {
       return {
+        // eslint-disable-next-line @typescript-eslint/naming-convention -- ESLint 규칙 visitor 이름은 ESLint가 정한 노드 타입(Program)이다
         Program(node) {
           const filePath = context.filename.replace(/\\/g, '/');
           const srcIndex = filePath.indexOf('/src/');
