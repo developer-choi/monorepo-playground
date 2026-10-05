@@ -19,7 +19,7 @@ keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, 
 ### 테스트 코드 작성 패턴
 
 - 기술스택: Vitest + React Testing Library
-- 상황: 테스트 구조(describe/it 네이밍), 쿼리(getByRole 우선, 접두사 용도), Mock(도입 시 근거·확답 필수 — 느림·불안정·부작용 셋 중 하나일 때만, 범위는 그 이유를 없앨 만큼만, 네트워크는 `vi.mock`·fetch 스텁이 아니라 MSW), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문), 네이밍(사용자 관점 it 워딩), 검증 범위(거의 뭐든 통과하는 단언 금지 — `toBeDefined` 대신 실제 속성 단언, mock 인덱스 접근 금지, 라이브러리 기본 동작 재검증 금지)
+- 상황: 테스트 구조(describe/it 네이밍), 쿼리(getByRole 우선, 접두사 용도), Mock(도입 시 근거·확답 필수 — 느림·불안정·부작용 셋 중 하나일 때만, 범위는 그 이유를 없앨 만큼만, 네트워크는 `vi.mock`·fetch 스텁이 아니라 MSW), 데이터 처리(매직 스트링 → 변수, 반복 assertion → 반복문), 네이밍(사용자 관점 it 워딩, it 이름 하나에 조건·결과 하나), 검증 범위(거의 뭐든 통과하는 단언 금지 — `toBeDefined` 대신 실제 속성 단언, mock 인덱스 접근 금지, 라이브러리 기본 동작 재검증 금지)
 - 코드: docs/patterns/testing/TestWriting.md
 
 ### AI가 생성한 테스트 리뷰
