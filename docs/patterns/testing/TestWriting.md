@@ -220,7 +220,7 @@ describe('Dialog.Footer', () => {
 
 컴포넌트를 데이터로 넘길 때는 표의 키를 소문자로 두고 이름을 바꿔 받아(`{wrapper: Wrapper}`) 대문자로 쓴다. 키를 `{Wrapper}`로 대문자로 두면 함수 타입 예외가 닿지 않는 자리(객체 리터럴 속성)라 막힌다. `naming-convention`이 함수 타입에 PascalCase를 허용하므로 이렇게 받으면 억제 주석이 필요 없다([eslint.md](../../static-checking/eslint.md#typescript-eslintnaming-convention)). 표의 열이 `ElementType`처럼 컴포넌트와 태그 문자열의 합집합이면 이 예외에 안 걸리므로, 그때는 열 타입을 컴포넌트로 좁힌다.
 
-**경계** — 검증 내용이 대상마다 다르면 묶지 않는다. 시각 prop 조합을 표로 도는 것도 아니다([TestsWeAvoid.md](./TestsWeAvoid.md) 「prop 조합을 전부 테스트한다」).
+**경계** — 검증 내용이 대상마다 다르면 묶지 않는다. 시각 prop 조합을 표로 도는 것도 아니다([prop 조합을 전부 테스트한다](./TestsWeAvoid.md#prop-조합을-전부-테스트한다)).
 
 ## 네이밍
 
@@ -314,7 +314,7 @@ const filter = parseSearchParams('?page=2&searchText=니트');
 expect(filter).toMatchObject({page: 2, searchText: '니트'});
 ```
 
-호출만 하고 아무 단언도 두지 않는 스모크 테스트도 같은 이유로 쓰지 않는다 — [TestsWeAvoid.md](./TestsWeAvoid.md) 「크래시 없이 렌더된다」 참조.
+호출만 하고 아무 단언도 두지 않는 스모크 테스트도 같은 이유로 쓰지 않는다 — [크래시 없이 렌더된다](./TestsWeAvoid.md#크래시-없이-렌더된다-스모크) 참조.
 
 ### mock 호출 인덱스 접근 금지
 
