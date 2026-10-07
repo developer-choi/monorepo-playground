@@ -1,5 +1,5 @@
 ---
-keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, Vitest, React Testing Library, describe, it, getByRole, mock, MSW, 응답 타입, HttpResponse, 핸들러 제네릭, 요청 단언, request assertion, onUnhandledRequest, 반응 테스트, custom request predicate, dynamic mock scenarios, 심화 기법, 핸들러 구조화, structuring handlers, server.use, resetHandlers, 런타임 오버라이드, 도메인별 분할, higher-order resolver, AI 생성 테스트, AI-generated tests, 테스트 리뷰, 엣지케이스 누락, toBeDefined, toMatchObject, 약한 단언, 구현 결합, 내부 호출 순서, 커버리지, use case coverage, E2E, integration, unit, 레벨 선택, 테스트 피라미드, 테스트 트로피, icecream cone, 모킹 범위, vi.mock, fetch 스텁, flaky, 부작용, 확신]
+keywords: [테스팅, 테스트 대상, 테스트 레벨, 안티패턴, 패스스루, 받은 값 표시, Vitest, React Testing Library, describe, it, getByRole, mock, MSW, 응답 타입, HttpResponse, 핸들러 제네릭, 요청 단언, request assertion, onUnhandledRequest, 반응 테스트, custom request predicate, dynamic mock scenarios, 심화 기법, 핸들러 구조화, structuring handlers, server.use, resetHandlers, 런타임 오버라이드, 도메인별 분할, higher-order resolver, AI 생성 테스트, AI-generated tests, 테스트 리뷰, 엣지케이스 누락, toBeDefined, toMatchObject, 약한 단언, 구현 결합, 내부 호출 순서, 커버리지, use case coverage, E2E, integration, unit, 레벨 선택, 테스트 피라미드, 테스트 트로피, icecream cone, 모킹 범위, vi.mock, fetch 스텁, flaky, 부작용, 확신]
 ---
 
 # Best Practices — 테스팅
