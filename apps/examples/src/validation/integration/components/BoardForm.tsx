@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {type KeyboardEvent, useState} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
@@ -174,6 +174,15 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
     setInput('');
   };
 
+  const addTagOnEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    event.preventDefault();
+    addTag();
+  };
+
   return (
     <div>
       <div className={styles.tagInputRow}>
@@ -182,12 +191,7 @@ function TagInput({value, onChange}: {value: string[]; onChange: (tags: string[]
           placeholder="태그 입력 후 Enter"
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              event.preventDefault();
-              addTag();
-            }
-          }}
+          onKeyDown={addTagOnEnter}
         />
         <Button type="button" variant="outlined" onClick={addTag}>
           추가

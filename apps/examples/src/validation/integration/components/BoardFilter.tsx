@@ -85,12 +85,9 @@ export default function BoardFilter() {
                       <Checkbox
                         key={value}
                         checked={field.value.includes(value)}
-                        onChange={(event) => {
-                          const next = event.target.checked
-                            ? [...field.value, value]
-                            : field.value.filter((type) => type !== value);
-                          field.onChange(next);
-                        }}
+                        onChange={(event) =>
+                          field.onChange(toggleItem(field.value, {item: value, checked: event.target.checked}))
+                        }
                       >
                         {label}
                       </Checkbox>
@@ -122,12 +119,9 @@ export default function BoardFilter() {
                     <Checkbox
                       key={tag}
                       checked={field.value.includes(tag)}
-                      onChange={(event) => {
-                        const next = event.target.checked
-                          ? [...field.value, tag]
-                          : field.value.filter((item) => item !== tag);
-                        field.onChange(next);
-                      }}
+                      onChange={(event) =>
+                        field.onChange(toggleItem(field.value, {item: tag, checked: event.target.checked}))
+                      }
                     >
                       {tag}
                     </Checkbox>
@@ -161,3 +155,7 @@ const DEFAULT_FILTER: BoardListFilterForm = {
 const DEFAULT_URL = '/validation/integration';
 
 const AVAILABLE_TAGS = ['React', 'Next.js', 'TypeScript', 'TanStack', 'Radix', 'Zod'];
+
+function toggleItem<T>(items: T[], {item, checked}: {item: T; checked: boolean}): T[] {
+  return checked ? [...items, item] : items.filter((existing) => existing !== item);
+}
