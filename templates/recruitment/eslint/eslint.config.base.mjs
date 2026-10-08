@@ -7,6 +7,14 @@
  */
 import importPlugin from 'eslint-plugin-import';
 
+/** 스토리 파일은 이 항목만 빼고 쓰므로(`storyFilesConfig`) 참조로 거를 수 있게 따로 둔다. */
+const jsxBlockBodyHandlerRule = {
+  selector:
+    "JSXAttribute[name.name!='ref'] > JSXExpressionContainer > :matches(ArrowFunctionExpression[body.type='BlockStatement'], FunctionExpression)",
+  message:
+    'JSX 속성 안에 블록 본문 함수({ } 본문) 금지. return부는 컴포넌트 구조를 한눈에 보는 자리입니다. 컴포넌트 본문에 동작을 드러내는 이름의 함수로 빼고 속성엔 이름만 넘기세요(예: const addTagOnEnter = (event) => {...}; onKeyDown={addTagOnEnter}). 인자를 묶는 식 본문 한 줄(onRemove={() => removeTag(tag)})과 ref 콜백은 허용.',
+};
+
 export const baseRules = {
   '@typescript-eslint/no-explicit-any': 'error',
   '@typescript-eslint/no-require-imports': 'error',
@@ -131,6 +139,7 @@ export const baseRules = {
       message:
         '인라인 스타일 객체 리터럴 금지. CSS Modules를 사용하세요. 변수 참조는 허용. 예외: 동적 값·CSS 변수 주입·스켈레톤. — eslint-disable + 사유 주석으로 처리.',
     },
+    jsxBlockBodyHandlerRule,
     {
       selector: "JSXElement > JSXOpeningElement[name.name='svg']",
       message: 'SVG 직접 작성 금지. 아이콘 컴포넌트나 SVG 파일로 분리하세요.',
@@ -320,6 +329,22 @@ export const mockFilesConfig = {
   ignores: ['**/*.test.{ts,tsx}'],
   rules: {
     'no-restricted-syntax': ['error', ...baseRules['no-restricted-syntax'], ...mswResolverRules],
+  },
+};
+
+/**
+ * 스토리 파일 전용 override(next/vite config 배열에 추가). 스토리는 데모용 `args` 배선이라
+ * `() => {setOpen(false); args.onClose();}`에 붙일 동작 이름이 없으므로 JSX 블록 본문 함수 금지만 뺀다.
+ *
+ * [원본] monorepo-playground/eslint.config.base.mts — 원본이 바뀌면 이 파일도 함께 최신화.
+ */
+export const storyFilesConfig = {
+  files: ['**/*.stories.{ts,tsx}'],
+  rules: {
+    'no-restricted-syntax': [
+      'error',
+      ...baseRules['no-restricted-syntax'].slice(1).filter((rule) => rule !== jsxBlockBodyHandlerRule),
+    ],
   },
 };
 

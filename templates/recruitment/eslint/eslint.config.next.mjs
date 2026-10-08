@@ -16,6 +16,7 @@ import {
   createFilenameExportConventionRule,
   mockFilesConfig,
   sharedBoundaryConfig,
+  storyFilesConfig,
   testFilesConfig,
 } from './eslint.config.base.mjs';
 
@@ -59,6 +60,7 @@ const eslintConfig = defineConfig([
   sharedBoundaryConfig,
   testFilesConfig,
   mockFilesConfig,
+  storyFilesConfig,
 ]);
 
 export default eslintConfig;

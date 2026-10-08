@@ -511,6 +511,40 @@ const columnCountStyle: CSSProperties = {'--column-count': 4} as CSSProperties;
 <section style={columnCountStyle}>...</section>;
 ```
 
+**JSX 속성 안 블록 본문 함수 금지** (`JSXAttribute[name.name!='ref'] > JSXExpressionContainer > :matches(ArrowFunctionExpression[body.type='BlockStatement'], FunctionExpression)`)
+
+return부는 컴포넌트 구조를 한눈에 보는 자리라, 속성 안에 핸들러 본문을 펼치면 마크업 사이로 이벤트 처리 로직이 끼어 구조가 안 읽힙니다. `{ }` 본문을 가진 함수(`function` 표현식 포함)는 줄 수와 무관하게 컴포넌트 본문에 동작을 드러내는 이름(`addTagOnEnter`)으로 빼고 속성엔 이름만 넘깁니다. 인자를 묶는 식 본문 한 줄(`() => removeTag(tag)`)과 `ref` 콜백은 허용합니다.
+
+줄 수(예: 3줄 이하 허용)로 가르지 않는 이유: `no-restricted-syntax`의 셀렉터는 노드 위치를 상수와만 비교할 수 있어 끝 줄 − 시작 줄을 셀 수 없고, 그러려면 커스텀 룰을 짜야 합니다. 한 줄 블록은 `() => {alert('x')}` → `() => alert('x')`로 중괄호만 빼면 됩니다.
+
+스토리 파일(`**/*.stories.{ts,tsx}`)은 `storyFilesConfig`(base export, 각 워크스페이스 config 배열에 추가)가 이 항목만 빼고 다시 선언합니다. 스토리의 `() => {setOpen(false); args.onClose();}`는 데모용 `args` 배선이라 붙일 동작 이름이 없습니다.
+
+```tsx
+// ❌ 속성 안에 블록 본문
+<TextField
+  onKeyDown={(event) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    event.preventDefault();
+    addTag();
+  }}
+/>;
+
+// ✅ 동작 이름으로 빼고 이름만 넘김
+const addTagOnEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+  if (event.key !== 'Enter') {
+    return;
+  }
+  event.preventDefault();
+  addTag();
+};
+<TextField onKeyDown={addTagOnEnter} />;
+
+// ✅ 인자를 묶는 식 본문 한 줄 — 린트에 걸리지 않음
+<Chip onRemove={() => removeTag(tag)} />;
+```
+
 **SVG 직접 작성 금지** (`JSXElement > JSXOpeningElement[name.name='svg']`)
 
 SVG를 JSX에 직접 작성하면 번들 크기가 커지고 재사용이 어렵습니다. 아이콘 컴포넌트나 SVG 파일로 분리하세요.

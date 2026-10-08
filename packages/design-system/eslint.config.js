@@ -10,6 +10,7 @@ import {
   baseRules,
   createFilenameExportConventionRule,
   mockFilesConfig,
+  storyFilesConfig,
   testFilesConfig,
 } from '../../eslint.config.base.mts';
 
@@ -42,4 +43,5 @@ export default defineConfig([
   },
   testFilesConfig,
   mockFilesConfig,
+  storyFilesConfig,
 ]);
