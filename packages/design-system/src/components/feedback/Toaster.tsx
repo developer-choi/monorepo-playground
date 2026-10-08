@@ -17,11 +17,7 @@ export default function Toaster() {
           className={clsx(styles.toast, styles.styled)}
           duration={duration}
           open={open}
-          onOpenChange={(nextOpen) => {
-            if (!nextOpen) {
-              closeToast(id);
-            }
-          }}
+          onOpenChange={(nextOpen) => closeToastWhenHidden(id, nextOpen)}
         >
           <RadixToast.Title className={clsx(styles.title, styles.styled)}>{title}</RadixToast.Title>
           {description && (
@@ -37,3 +33,9 @@ export default function Toaster() {
 }
 
 const DEFAULT_DURATION = 1800;
+
+function closeToastWhenHidden(id: number, nextOpen: boolean) {
+  if (!nextOpen) {
+    closeToast(id);
+  }
+}

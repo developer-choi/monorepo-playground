@@ -17,6 +17,18 @@ export function Root({
   disableBackdropClick = false,
   children,
 }: PropsWithChildren<RootProps>) {
+  const keepOpenOnEscapeIfDisabled = (event: Event) => {
+    if (disableEscapeKeyDown) {
+      event.preventDefault();
+    }
+  };
+
+  const keepOpenOnBackdropClickIfDisabled = (event: Event) => {
+    if (disableBackdropClick) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <RadixDialog.Root open={open} onOpenChange={onClose}>
       <RadixDialog.Portal>
@@ -24,16 +36,8 @@ export function Root({
         <RadixDialog.Content
           aria-describedby={undefined}
           className={clsx(styles.paper, styles.styled)}
-          onEscapeKeyDown={(event) => {
-            if (disableEscapeKeyDown) {
-              event.preventDefault();
-            }
-          }}
-          onPointerDownOutside={(event) => {
-            if (disableBackdropClick) {
-              event.preventDefault();
-            }
-          }}
+          onEscapeKeyDown={keepOpenOnEscapeIfDisabled}
+          onPointerDownOutside={keepOpenOnBackdropClickIfDisabled}
         >
           <div className={clsx(styles.content, styles.styled)}>{children}</div>
         </RadixDialog.Content>

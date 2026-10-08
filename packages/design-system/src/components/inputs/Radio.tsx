@@ -1,6 +1,6 @@
 'use client';
 
-import {type ComponentProps, type ReactNode, useContext} from 'react';
+import {type ChangeEvent, type ComponentProps, type ReactNode, useContext} from 'react';
 import clsx from 'clsx';
 import {radioGroupContext} from '@/components/inputs/RadioGroupContext';
 import styles from './Radio.module.scss';
@@ -12,6 +12,11 @@ export interface RadioProps extends Omit<ComponentProps<'input'>, 'type' | 'chil
 export default function Radio({children, className, name, checked, value, disabled, onChange, ...rest}: RadioProps) {
   const group = useContext(radioGroupContext);
 
+  const notifyOwnerAndGroup = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event);
+    group.onChange?.(event);
+  };
+
   return (
     <label className={clsx(styles.option, styles.styled, disabled && styles.disabled, className)}>
       <input
@@ -21,10 +26,7 @@ export default function Radio({children, className, name, checked, value, disabl
         name={name ?? group.name}
         type="radio"
         value={value}
-        onChange={(event) => {
-          onChange?.(event);
-          group.onChange?.(event);
-        }}
+        onChange={notifyOwnerAndGroup}
         {...rest}
       />
       {children && <span className={clsx(styles.label, styles.styled)}>{children}</span>}
