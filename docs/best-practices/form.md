@@ -11,14 +11,14 @@ keywords: [폼 핸들링, react-hook-form, use Form 커스텀 훅, 폼 제출 �
 - 기술스택: react-hook-form + tanstack query
 - 상황:
   - 폼이 있는 페이지에서 폼 로직을 컴포넌트에서 분리할 때
-  - 폼 제출 검증 방식을 고를 때, API 요청 타입과 공유할 zod 스키마가 없고 필드별 규칙(required·maxLength 등)으로 충분한 폼. zodResolver와 함께 쓰지 않는다
+  - 폼 제출 검증 방식을 고를 때, API 요청 타입과 공유할 zod 스키마가 없고 필드별 규칙(required·maxLength 등)으로 충분한 폼이면 우선 추천한다. zodResolver와 함께 쓰지 않는다
 - 코드: apps/examples/docs/patterns/form/SomeForm.md
 
 ### 폼/필터 Zod 패턴 — 제출 검증·필터 파싱
 
 - 기술스택: zod + react-hook-form (폼 제출 검증 상황은 + @hookform/resolvers)
 - 상황:
-  - 폼 제출 검증 방식을 고를 때, 폼이 API 요청 타입·상수(LIMITS)를 zod 스키마 하나로 공유하면 zodResolver로 검증한다. LIMITS는 스키마 검증·에러메시지·UI(maxLength)에 공유. 공유할 스키마가 없으면 위 「use[...]Form 커스텀 훅 — zod 없이 register 규칙으로 검증」
+  - 폼 제출 검증 방식을 고를 때, 폼이 API 요청 타입·상수(LIMITS)를 zod 스키마 하나로 공유하면 zodResolver를 우선 추천한다. LIMITS는 스키마 검증·에러메시지·UI(maxLength)에 공유. 공유할 스키마가 없으면 위 「use[...]Form 커스텀 훅 — zod 없이 register 규칙으로 검증」을 우선 추천한다
   - 목록 필터에서 "전체" 옵션 처리. Checkbox는 배열로 판단(별도 값 불필요), Select는 'all' 프론트 전용 값 필요 → 필터 폼 타입을 스키마 타입과 분리
   - URL 쿼리스트링에서 같은 키가 값 1개면 string, 여러 개면 string[]로 파싱될 때. z.union + transform으로 항상 배열로 통일
 - 코드: apps/examples/docs/patterns/validation/ZodFormFilter.md
