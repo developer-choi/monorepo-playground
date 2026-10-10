@@ -24,6 +24,7 @@ skip 여부는 아래 4문항을 **순서대로** 적용해 가른다. vibe("안
 - integration 영역의 라우트 핸들러 (Next.js `app/**/route.ts`)
 - trivial composition (옵션값만 합성하는 Provider 등)
 - 단순 상수 전용 파일 (`constants.ts` 등; 일관성 검증이 비-trivial하면 작성)
+- 체험·예시 화면용 고정 데이터가 의도한 장면을 담는지 확인하는 테스트 (「세 가지 상태가 다 나온다」 등. 장면이 빠져도 덜 보일 뿐 틀린 값이 보이지 않을 때 한정; 그 데이터를 가공하는 계산 함수는 작성)
 - starter를 그대로 옮기는 chore 커밋
 
 ## 면제 사유로 인정 안 됨
