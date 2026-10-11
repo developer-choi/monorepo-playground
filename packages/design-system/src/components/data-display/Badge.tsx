@@ -6,7 +6,7 @@ type UsedProps = 'className' | 'children';
 
 export interface BadgeProps extends Pick<ComponentProps<'span'>, UsedProps> {
   color?: 'neutral' | 'info' | 'success' | 'warning' | 'danger';
-  variant?: 'soft' | 'outline' | 'surface';
+  variant?: 'soft' | 'outline' | 'surface' | 'solid';
   size?: 'small' | 'medium';
 }
 

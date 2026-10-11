@@ -2,6 +2,18 @@
 
 버전마다 쓰는 쪽이 알아야 할 변경을 적습니다. 올리는 규칙은 [README 「버전」](README.md#버전)에 있습니다.
 
+## 0.8.0
+
+쓰는 쪽 코드를 고칠 필요는 없습니다. 모달 여백이 줄어 화면이 바뀝니다.
+
+### Added
+
+- `Badge`의 `variant="solid"`: 배경을 tone 색으로 채우고 글자를 바탕색으로 보입니다. 옅은 뱃지가 많이 깔린 화면에서 강조할 뱃지에 씁니다. `<Badge color="danger" variant="solid">늦잠</Badge>`
+
+### Changed
+
+- `Dialog` 내용 영역 여백이 24px(`--spacing-lg`)에서 16px(`--spacing-md`)로 줄었습니다. `Dialog`를 쓰는 `Confirm`·`Alert`도 함께 줄어듭니다.
+
 ## 0.7.0
 
 `IconButton`에 `asChild`가 생겼습니다. `IconButtonProps`를 `interface … extends`로 확장하던 곳만 `type … = IconButtonProps & {…}`로 바꿔 주세요.
