@@ -243,7 +243,7 @@ export const baseRules = {
  * 빠지고 룰이 조용히 0건이 된다(MP 템플릿에서 2026-07-20 실측: settings 제거 시 위반 2건이 exit 0).
  *
  * MP 원본(`eslint.config.base.mts`)에는 없는 템플릿 전용 룰이다 — MP는 모노레포라 `src/shared` 규약이
- * 없고, 이 경계는 단일레포 채용과제에서만 성립한다. 사유는 docs/static-checking/eslint.md 참고.
+ * 없고, 이 경계는 단일레포 채용과제에서만 성립한다. 사유는 docs/static-checking/eslint/modules.md 참고.
  */
 export const sharedBoundaryConfig = {
   files: ['**/*.{ts,tsx}'],

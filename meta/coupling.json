@@ -61,6 +61,7 @@
         "packages/design-system/eslint.config.js",
         ".stylelintrc.json",
         "docs/static-checking/eslint.md",
+        "docs/static-checking/eslint/*.md",
         "docs/static-checking/stylelint.md",
         "docs/static-checking/gradual-migration.md"
       ],
@@ -68,8 +69,8 @@
     },
     {
       "name": "ESLint 설정 원본 ↔ 상세 문서",
-      "files": ["eslint.config.base.mts", "docs/static-checking/eslint.md"],
-      "note": "eslint.md는 eslint.config.base.mts의 baseRules 내용(각 규칙과 옵션)을 코드 인용으로 문서화한다. baseRules에 규칙을 추가·삭제하거나 옵션을 바꾸면 eslint.md의 인용 블록·설명도 갱신한다. 존재·경로는 static-checking.md 매핑표가, 규칙 내용은 이 문서가 따라가며 문서-설정 일치는 어떤 도구도 검사하지 않는다."
+      "files": ["eslint.config.base.mts", "docs/static-checking/eslint.md", "docs/static-checking/eslint/*.md"],
+      "note": "eslint/*.md는 eslint.config.base.mts의 baseRules 내용(각 규칙과 옵션)을 주제별 파일로 나눠 코드 인용으로 문서화하고, eslint.md는 규칙→파일 색인 표를 둔다. baseRules에 규칙을 추가·삭제하거나 옵션을 바꾸면 해당 주제 파일의 인용 블록·설명과 eslint.md 색인 표를 함께 갱신한다. 존재·경로는 static-checking.md 매핑표가, 규칙 내용은 이 문서가 따라가며 문서-설정 일치는 어떤 도구도 검사하지 않는다."
     },
     {
       "name": "tsconfig 설정 원본 ↔ 상세 문서",

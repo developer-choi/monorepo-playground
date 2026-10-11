@@ -36,4 +36,4 @@ keywords: [API 통신, ApiClient, ApiResponseError, query-string, es-toolkit, sn
 
 - 기술스택: TanStack Query v5
 - 상황: useMutation의 mutationFn에 무엇을 박을지, 호출 시 필요한 값·가드·조립 로직을 어디에 둘지 결정할 때. instance method(this 바인딩)를 mutationFn으로 쓰는 경우 포함
-- 코드: docs/static-checking/eslint.md (no-restricted-syntax — useMutation `mutationFn` 래핑 금지)
+- 코드: docs/static-checking/eslint/tanstack-query.md (no-restricted-syntax — useMutation `mutationFn` 래핑 금지)

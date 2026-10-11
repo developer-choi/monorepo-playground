@@ -71,7 +71,7 @@ tsc는 파일 단위 실행이 불가능하므로, `test-staged`에서도 전체
 
 | 설정 파일                                            | 문서                               |
 | ---------------------------------------------------- | ---------------------------------- |
-| eslint.config.base.mts, 워크스페이스별 eslint config | docs/static-checking/eslint.md     |
+| eslint.config.base.mts, 워크스페이스별 eslint config | docs/static-checking/eslint.md (색인), docs/static-checking/eslint/*.md (주제별 규칙) |
 | tsconfig.base.json                                   | docs/static-checking/tsconfig.md   |
 | .stylelintrc.json                                    | docs/static-checking/stylelint.md  |
 | commitlint.config.mjs                                 | docs/static-checking/commitlint.md |
