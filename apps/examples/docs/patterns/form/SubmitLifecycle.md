@@ -2,7 +2,7 @@
 
 폼 제출을 제출 → 로딩 → 성공/실패의 한 흐름으로 다룬다. 구간별로 챙길 것:
 
-- **로딩**: 중복 제출 차단 + 버튼 로딩 표시
+- **로딩**: 중복 제출 차단 + 버튼 로딩 표시 (요청 버튼이 둘이면 누른 쪽만 로딩, 다른 쪽은 비활성)
 - **성공**: 페이지를 벗어나는(이동) 케이스와 머무르는 케이스는 로딩 해제 시점이 다르다
 - **실패**: 에러를 인라인으로 표시하고, 재제출 시 초기화
 
@@ -30,6 +30,21 @@ const onSubmit = handleSubmit(async (data) => {
   ...
 });
 ```
+
+### 요청 버튼이 둘이면 누른 쪽만 로딩
+
+[삭제]·[저장]처럼 한 폼에 요청 버튼이 둘이면, 버튼마다 자기 mutation 상태로 `loading`을 주고 다른 버튼은 `disabled`로 막는다. 두 버튼에 같은 `loading`을 주면 어느 요청이 도는지 안 보이고, 다른 버튼을 그대로 두면 요청이 겹친다.
+
+```tsx
+const saving = isMutationSettling(createMutation, updateMutation);
+const deleting = isMutationSettling(deleteMutation);
+
+<Button color="destructive" disabled={saving} loading={deleting} onClick={onDelete}>삭제</Button>
+<Button disabled={deleting} loading={saving} type="submit">저장</Button>
+```
+
+- 제출 핸들러 가드는 `saving || deleting`으로 둔다 — 삭제 중 Enter 제출도 같은 가드에서 끊는다
+- 모달에서 쓰는 모양: 디자인 시스템 [Dialog.stories.tsx](../../../../../packages/design-system/src/components/feedback/modal/Dialog.stories.tsx)의 `RequestButtonPair` 스토리
 
 ### 성공 "이동"은 이동 완료까지 로딩 유지
 

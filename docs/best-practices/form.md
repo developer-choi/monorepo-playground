@@ -1,5 +1,5 @@
 ---
-keywords: [폼 핸들링, react-hook-form, use Form 커스텀 훅, 폼 제출 검증, register 검증, zod 없는 검증, zodResolver, 제출 생명주기, 필터 전체 처리, Checkbox, Select, union transform, 자동 포커스, autoFocus]
+keywords: [폼 핸들링, react-hook-form, use Form 커스텀 훅, 폼 제출 검증, register 검증, zod 없는 검증, zodResolver, 제출 생명주기, 저장·삭제 버튼 로딩, 요청 버튼 둘, 필터 전체 처리, Checkbox, Select, union transform, 자동 포커스, autoFocus]
 ---
 
 # Best Practices — 폼 핸들링
@@ -26,7 +26,9 @@ keywords: [폼 핸들링, react-hook-form, use Form 커스텀 훅, 폼 제출 �
 ### 제출 생명주기 (로딩·성공·실패)
 
 - 기술스택: react-hook-form + @tanstack/react-query
-- 상황: 폼 제출 후 로딩 중 중복 제출, 성공 후 이동/머무름, 서버 거절 표시를 화면에서 다뤄야 할 때
+- 상황:
+  - 폼 제출 후 로딩 중 중복 제출, 성공 후 이동/머무름, 서버 거절 표시를 화면에서 다뤄야 할 때
+  - [삭제]·[저장]처럼 한 폼에 요청 버튼이 둘일 때
 - 코드: apps/examples/docs/patterns/form/SubmitLifecycle.md
 
 ### 폼 중심 페이지 자동 포커스

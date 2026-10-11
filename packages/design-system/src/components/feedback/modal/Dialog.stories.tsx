@@ -1,5 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react-vite';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {Cross2Icon} from '@radix-ui/react-icons';
 import * as Dialog from './Dialog';
 import Button from '@/components/inputs/Button';
@@ -182,4 +182,72 @@ export const Focus: Story = {
     disableBackdropClick: false,
   },
   render: (args) => <FocusStory {...args} />,
+};
+
+type PendingAction = 'save' | 'delete';
+
+const REQUEST_MS = 2000;
+
+// 규칙: apps/examples/docs/patterns/form/SubmitLifecycle.md 「요청 버튼이 둘이면 누른 쪽만 로딩」
+function RequestButtonPairStory(args: Dialog.RootProps) {
+  const [open, setOpen] = useState(true);
+  const [pending, setPending] = useState<PendingAction>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const request = (action: PendingAction) => {
+    setPending(action);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setPending(undefined), REQUEST_MS);
+  };
+  const save = () => request('save');
+  const remove = () => request('delete');
+  const close = () => {
+    setOpen(false);
+    args.onClose();
+  };
+
+  return (
+    <div className="storyLayout">
+      <Button color="secondary" variant="outlined" onClick={() => setOpen(true)}>
+        Dialog 열기
+      </Button>
+
+      <Dialog.Root {...args} open={open} onClose={close}>
+        <Dialog.Header>
+          <Dialog.Title>기록 수정</Dialog.Title>
+          <Dialog.Close asChild>
+            <IconButton aria-label="닫기" icon={<Cross2Icon />} />
+          </Dialog.Close>
+        </Dialog.Header>
+
+        <Dialog.Content>
+          <p>모달에 [삭제]·[저장]처럼 요청 버튼이 둘이면, 누른 버튼만 로딩을 보이고 다른 버튼은 비활성으로 막습니다.</p>
+          <p>[저장]이나 [삭제]를 눌러 보세요. 요청은 2초 걸리는 것으로 흉내 냅니다.</p>
+        </Dialog.Content>
+
+        <Dialog.Footer>
+          <Button
+            color="destructive"
+            disabled={pending === 'save'}
+            loading={pending === 'delete'}
+            size="large"
+            onClick={remove}
+          >
+            삭제
+          </Button>
+          <Button disabled={pending === 'delete'} loading={pending === 'save'} size="large" onClick={save}>
+            저장
+          </Button>
+        </Dialog.Footer>
+      </Dialog.Root>
+    </div>
+  );
+}
+
+export const RequestButtonPair: Story = {
+  args: {
+    disableEscapeKeyDown: false,
+    disableBackdropClick: false,
+  },
+  render: (args) => <RequestButtonPairStory {...args} />,
 };
