@@ -68,4 +68,10 @@ $tones: (
     border-color: $fg;
     color: $fg;
   }
+
+  /* 글자는 tone 색으로 칠한 배경을 바탕색으로 뚫어 보인다 — on-inverse는 bg-inverse 전용이라 쓰지 않는다 */
+  .badge.styled.#{$tone}.solid {
+    background-color: $fg;
+    color: var(--color-bg-default);
+  }
 }

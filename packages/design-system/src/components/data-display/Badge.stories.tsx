@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-vite';
 import Badge, {type BadgeProps} from './Badge';
 
 const COLORS: NonNullable<BadgeProps['color']>[] = ['neutral', 'info', 'success', 'warning', 'danger'];
-const VARIANTS: NonNullable<BadgeProps['variant']>[] = ['soft', 'outline', 'surface'];
+const VARIANTS: NonNullable<BadgeProps['variant']>[] = ['soft', 'outline', 'surface', 'solid'];
 
 const meta: Meta<typeof Badge> = {
   title: 'Components/data-display/Badge',
