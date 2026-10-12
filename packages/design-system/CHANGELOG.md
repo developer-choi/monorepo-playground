@@ -2,6 +2,18 @@
 
 버전마다 쓰는 쪽이 알아야 할 변경을 적습니다. 올리는 규칙은 [README 「버전」](README.md#버전)에 있습니다.
 
+## 0.9.0
+
+쓰는 쪽 코드를 고칠 필요는 없습니다.
+
+### Added
+
+- `Badge`의 `size="xsmall"`: 글자 10px(`--font-size-2xs`), 줄 높이 16px(small과 같음), 여백 사방 2px입니다. 달력 칸처럼 좁은 자리에 짧은 태그를 넣을 때 씁니다. `<Badge size="xsmall">늦잠</Badge>`
+
+### Changed
+
+- `ChipProps`의 `size`가 `BadgeProps['size']`를 그대로 받지 않고 `'small' | 'medium'`만 받습니다. `Chip`은 `xsmall`을 지원하지 않습니다 — 지우기 버튼의 누르는 영역이 xsmall 여백보다 넓습니다.
+
 ## 0.8.0
 
 쓰는 쪽 코드를 고칠 필요는 없습니다. 모달 여백이 줄어 화면이 바뀝니다.
