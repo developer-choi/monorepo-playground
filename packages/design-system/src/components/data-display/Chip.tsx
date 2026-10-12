@@ -4,7 +4,9 @@ import {Cross2Icon} from '@radix-ui/react-icons';
 import Badge, {type BadgeProps} from './Badge';
 import styles from './Chip.module.scss';
 
-export interface ChipProps extends Omit<BadgeProps, 'children'> {
+export interface ChipProps extends Omit<BadgeProps, 'children' | 'size'> {
+  // xsmall은 받지 않는다 — 지우기 버튼의 누르는 영역(사방 4px)이 xsmall 여백(2px)을 넘어 뱃지 밖으로 나간다
+  size?: Exclude<BadgeProps['size'], 'xsmall'>;
   onRemove: () => void;
   removeLabel: string;
 }
@@ -27,7 +29,7 @@ export default function Chip({
   );
 }
 
-const REMOVE_ICON_SIZE_BY_CHIP_SIZE: Record<NonNullable<BadgeProps['size']>, number> = {
+const REMOVE_ICON_SIZE_BY_CHIP_SIZE: Record<NonNullable<ChipProps['size']>, number> = {
   small: 12,
   medium: 14,
 };

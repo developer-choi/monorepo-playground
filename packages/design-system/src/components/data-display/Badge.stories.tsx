@@ -58,6 +58,9 @@ export const Sizes: Story = {
   render: (args) => (
     // eslint-disable-next-line no-restricted-syntax -- Storybook 데모 나열용 컨테이너. 동적 값 아님
     <div style={{display: 'flex', alignItems: 'center', gap: 8}}>
+      <Badge {...args} size="xsmall">
+        xsmall
+      </Badge>
       <Badge {...args} size="small">
         small
       </Badge>

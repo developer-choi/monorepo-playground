@@ -36,6 +36,14 @@ $tones: (
   font-weight: 500;
 }
 
+/* 줄 높이는 small과 같은 body3을 쓰고 글자만 10px로 줄인다 — 타이포 스케일에 10px 단계가 없어서 */
+.badge.styled.xsmall {
+  @include typography.body3;
+
+  font-size: var(--font-size-2xs);
+  padding: calc(var(--spacing-xs) / 2);
+}
+
 .badge.styled.small {
   @include typography.body3;
 
