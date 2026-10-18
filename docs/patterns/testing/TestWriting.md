@@ -49,7 +49,7 @@ describe('RecentSearches', () => {
     it('검색어가 없으면 빈 상태 메시지가 표시된다', () => {
       render(<RecentSearches initialKeywords={[]} />);
 
-      expect(screen.getByRole('status')).toBeInTheDocument();
+      expect(screen.getByText('검색어 없음')).toBeInTheDocument();
     });
   });
 
@@ -69,24 +69,29 @@ describe('RecentSearches', () => {
 
 ### getByRole 우선 사용
 
-`getByRole` 외 쿼리 사용 시 사용자에게 보고한다. 워딩은 언제든 바뀔 수 있으므로 문자열에 의존하는 쿼리를 지양한다. Playwright E2E 테스트의 `page.getByRole()` 로케이터에도 동일하게 적용한다 — `getByText`·`getByLabel`·`getByTestId` 등을 써야 하면 임의로 작성하지 않고 사용자에게 보고한다.
+역할이 있는 요소(버튼·링크·입력칸·제목·목록 등)는 `getByRole(역할, {name})`으로 찾는다. 역할이 없는 문구(빈 상태 안내·설명 글)는 `getByText`로 찾는다. 사용자는 화면에 보이는 이름과 문구로 요소를 찾으므로, 문구에 의존하는 쿼리는 사용자 흉내다.
+
+역할은 보조기기 사용자에게 그 의미가 실제로 있을 때만 붙인다. 테스트에서 getByRole로 찾으려고 역할을 붙이지 않는다 — 저장 완료 알림처럼 진짜 상태 알림이면 `role="status"`가 맞고, 처음부터 떠 있는 빈 상태 문구는 아니다.
+
+`getByTestId`·DOM 구조(`closest`·`querySelector`·`previousElementSibling`·`firstElementChild`)처럼 사용자가 못 보는 기준으로 찾아야 하면 임의로 작성하지 않고 사용자에게 보고한다. Playwright E2E 테스트의 로케이터에도 동일하게 적용한다.
 
 ```tsx
-// before (컴포넌트)
-export const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
-<p>{EMPTY_KEYWORDS_MESSAGE}</p>;
-
-// before (테스트)
-import {EMPTY_KEYWORDS_MESSAGE} from './RecentSearches';
-expect(screen.getByText(EMPTY_KEYWORDS_MESSAGE)).toBeInTheDocument();
-
-// after (컴포넌트)
-const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
-<p role="status">{EMPTY_KEYWORDS_MESSAGE}</p>;
-
-// after (테스트)
+// before — 테스트에서 찾으려고 역할을 붙였다
+<p role="status">검색어 없음</p>;
 expect(screen.getByRole('status')).toBeInTheDocument();
+
+// after
+<p>검색어 없음</p>;
+expect(screen.getByText('검색어 없음')).toBeInTheDocument();
 ```
+
+출처: https://testing-library.com/docs/queries/about
+
+> Outside of forms, text content is the main way users find elements.
+
+출처: https://www.w3.org/TR/using-aria/
+
+> Do not change native semantics, unless you really have to.
 
 ### 쿼리 접두사 용도
 
@@ -236,11 +241,13 @@ describe('Dialog.Footer', () => {
 it('gender=F로 이동한다', ...);
 it('sortBy를 price_asc로 바꾸면 URL이 변경된다', ...);
 it('router.replace가 호출된다', ...);
+it('로그아웃 상태면 [장바구니]는 없다', ...);
 
 // after
 it('여성 필터를 선택하면 해당 조건으로 이동한다', ...);
 it('낮은 가격순으로 정렬을 바꾸면 URL이 변경된다', ...);
 it('선택을 확정하면 URL이 갱신된다', ...);
+it('로그아웃 상태면 [장바구니] 버튼은 안 보여야 한다', ...);
 ```
 
 ### it 이름은 조건 하나와 결과 하나
@@ -248,6 +255,7 @@ it('선택을 확정하면 URL이 갱신된다', ...);
 it 이름에는 조건을 하나까지, 결과를 하나만 쓴다. 테스트가 깨졌을 때 처음 보는 사람이 본문을 열지 않고 이름만으로 무엇이 깨졌는지 알아야 하기 때문이다. 위 「테스트 구조」의 예시들이 이 모양이다. 조건이 describe에 이미 실려 있으면 it에 다시 쓰지 않아도 된다.
 
 - 결과가 둘 이상이면 it을 나눈다. 「~하고 ~하며 ~않는다」처럼 이어 붙인 것뿐 아니라 「장바구니가 열린 채 품절 표시가 보인다」처럼 따로 확인하는 결과 하나를 곁들인 상황으로 붙인 것도 결과 둘이다. 「결제가 끝날 때까지」처럼 결과 하나가 언제까지인지 밝힌 것은 결과 하나다
+- 본문의 expect는 모두 이름이 말한 결과를 확인해야 한다. 이름에 없는 사실을 확인하는 expect가 있으면 — 다른 확인과 겹치거나 필요 없으면 지우고, 필요하지만 다른 사실이면 it을 나눈다
 - 조건이 둘이면 앞 조건을 describe로 올린다. 「~이어도」로 붙인 것도 조건 하나로 따로 센다 — 「품절이어도 예약 상품이면」은 조건 둘이다. 함수 테스트는 `describe('함수명()')` 아래 General/Boundary/Edge cases로 묶어, 경계·예외 조건이 describe에 실리게 한다
 - 결과를 이름만 보고 알 수 있게 쓴다. 무엇의 다음인지 없는 상대어(「다음 등급이 된다」), 결과 대신 과정(「할인 금액을 계산해야 한다」), 무엇이 다른지 빠진 비교(「일반 결제와 다르게 처리된다」)로 끝내지 않는다. 결과의 핵심(어느 쪽인지·얼마인지)을 문장 밖 괄호에만 덧붙여도 같다 — 값은 결과 문장 안에 넣는다
 - 「취소되어 없던 주문이 된다」처럼 같은 결과를 두 번 말하지 않는다
@@ -279,6 +287,15 @@ describe('applyCoupon()', () => {
 
 describe('CouponBanner', () => {
   it('쿠폰을 적용하면 할인 안내가 뜬다', ...);
+});
+```
+
+```typescript
+// 잘못된 예시 — 이름은 이동인데 쿠폰 문구까지 확인한다
+it('[장바구니] 버튼을 누르면 장바구니로 간다', async () => {
+  await user.click(screen.getByRole('button', {name: '장바구니'}));
+  expect(mockPush).toHaveBeenCalledWith('/cart');
+  expect(screen.getByText('쿠폰 1장')).toBeInTheDocument();
 });
 ```
 
