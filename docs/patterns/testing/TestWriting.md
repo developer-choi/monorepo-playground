@@ -49,7 +49,7 @@ describe('RecentSearches', () => {
     it('검색어가 없으면 빈 상태 메시지가 표시된다', () => {
       render(<RecentSearches initialKeywords={[]} />);
 
-      expect(screen.getByRole('status')).toBeInTheDocument();
+      expect(screen.getByText('검색어 없음')).toBeInTheDocument();
     });
   });
 
@@ -69,24 +69,29 @@ describe('RecentSearches', () => {
 
 ### getByRole 우선 사용
 
-`getByRole` 외 쿼리 사용 시 사용자에게 보고한다. 워딩은 언제든 바뀔 수 있으므로 문자열에 의존하는 쿼리를 지양한다. Playwright E2E 테스트의 `page.getByRole()` 로케이터에도 동일하게 적용한다 — `getByText`·`getByLabel`·`getByTestId` 등을 써야 하면 임의로 작성하지 않고 사용자에게 보고한다.
+역할이 있는 요소(버튼·링크·입력칸·제목·목록 등)는 `getByRole(역할, {name})`으로 찾는다. 역할이 없는 문구(빈 상태 안내·설명 글)는 `getByText`로 찾는다. 사용자는 화면에 보이는 이름과 문구로 요소를 찾으므로, 문구에 의존하는 쿼리는 사용자 흉내다.
+
+역할은 보조기기 사용자에게 그 의미가 실제로 있을 때만 붙인다. 테스트에서 getByRole로 찾으려고 역할을 붙이지 않는다 — 저장 완료 알림처럼 진짜 상태 알림이면 `role="status"`가 맞고, 처음부터 떠 있는 빈 상태 문구는 아니다.
+
+`getByTestId`·DOM 구조(`closest`·`querySelector`·`previousElementSibling`·`firstElementChild`)처럼 사용자가 못 보는 기준으로 찾아야 하면 임의로 작성하지 않고 사용자에게 보고한다. Playwright E2E 테스트의 로케이터에도 동일하게 적용한다.
 
 ```tsx
-// before (컴포넌트)
-export const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
-<p>{EMPTY_KEYWORDS_MESSAGE}</p>;
-
-// before (테스트)
-import {EMPTY_KEYWORDS_MESSAGE} from './RecentSearches';
-expect(screen.getByText(EMPTY_KEYWORDS_MESSAGE)).toBeInTheDocument();
-
-// after (컴포넌트)
-const EMPTY_KEYWORDS_MESSAGE = '최근 검색어가 없습니다.';
-<p role="status">{EMPTY_KEYWORDS_MESSAGE}</p>;
-
-// after (테스트)
+// before — 테스트에서 찾으려고 역할을 붙였다
+<p role="status">검색어 없음</p>;
 expect(screen.getByRole('status')).toBeInTheDocument();
+
+// after
+<p>검색어 없음</p>;
+expect(screen.getByText('검색어 없음')).toBeInTheDocument();
 ```
+
+출처: https://testing-library.com/docs/queries/about
+
+> Outside of forms, text content is the main way users find elements.
+
+출처: https://www.w3.org/TR/using-aria/
+
+> Do not change native semantics, unless you really have to.
 
 ### 쿼리 접두사 용도
 
