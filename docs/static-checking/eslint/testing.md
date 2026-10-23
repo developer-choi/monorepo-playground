@@ -167,4 +167,4 @@ await page.goto('/products');
 await expect(page.getByRole('listitem').first()).toBeVisible();
 ```
 
-기본값 아닌 나머지 두 값(`domcontentloaded`·`commit`)은 공식이 금지하지 않아 **지금은 막지 않습니다**. 정당한 쓰임이 있고, 아직 이 레포에서 필요해진 사례가 없어 메시지를 제대로 쓸 근거가 없기 때문입니다. 실제로 이 옵션들을 만지고 싶어지는 상황이 생기면 그때 제약 방식을 정합니다 — 검토 재료는 `backlog` 레포 `projects/monorepo-playground/inactive/lint/playwright-goto-waituntil-restriction.md`에 있습니다.
+기본값 아닌 나머지 두 값(`domcontentloaded`·`commit`)은 공식이 금지하지 않아 **지금은 막지 않습니다**. 정당한 쓰임이 있고, 아직 이 레포에서 필요해진 사례가 없어 메시지를 제대로 쓸 근거가 없기 때문입니다. 실제로 이 옵션들을 만지고 싶어지는 상황이 생기면 그때 제약 방식을 정합니다 — 검토 재료는 `backlog` 레포 `projects/monorepo-playground/dev-inactive/lint/playwright-goto-waituntil-restriction.md`에 있습니다.
