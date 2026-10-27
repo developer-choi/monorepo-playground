@@ -3,6 +3,7 @@
 ## 목차
 1. [이 값, state로 만들어야 할까요?](./step1.md)
 2. **이 상태를 어느 컴포넌트가 소유해야 할까요?** ← 현재 문서
+3. [이 상태, 직접 관리해야 할까요?](./step3.md)
 
 ---
 
@@ -358,3 +359,11 @@ function TodoListPage() {
 > Extract components and pass JSX as children to them. If you pass some data through many layers of intermediate components that don't use that data (and only pass it further down), this often means that you forgot to extract some components along the way.
 
 - 몇 단계 내려보낸다는 사실만으로는 Context로 갈 이유가 안 되고, 그냥 props로 내려보내는 것과 컴포넌트를 떼어내 `children`으로 넘기는 것을 먼저 시도하라는 뜻입니다.
+
+---
+
+## 다음 단계
+
+어디에 둘지 정한 상태 중 서버에서 받아 오는 목록은 직접 관리해야 할까요?
+
+[이 상태, 직접 관리해야 할까요?](./step3.md)
