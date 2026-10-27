@@ -280,6 +280,18 @@ export const testFilesConfig = {
         message:
           'expect() 안에서 목 내부(mock.calls 등)를 파헤치지 않습니다. 인자 검증은 toHaveBeenCalledWith + expect.objectContaining(한 겹)으로, DOM 이벤트면 클릭한 엘리먼트를 변수로 잡아 대조하세요. 꼭 꺼내야 하면 이름 붙인 헬퍼 함수로 분리합니다.',
       },
+      {
+        selector:
+          "CallExpression[callee.name='describe'] > ArrowFunctionExpression > BlockStatement > FunctionDeclaration",
+        message:
+          'describe 안에 함수를 정의하지 않습니다. 파일 아래(모듈 스코프)로 올리고, 상태는 모듈 변수나 인자로 넘기세요.',
+      },
+      {
+        selector:
+          "CallExpression[callee.name='describe'] > ArrowFunctionExpression > BlockStatement > VariableDeclaration > VariableDeclarator[init.type=/^(ArrowFunctionExpression|FunctionExpression)$/]",
+        message:
+          'describe 안에 함수를 정의하지 않습니다. 파일 아래(모듈 스코프)로 올리고, 상태는 모듈 변수나 인자로 넘기세요.',
+      },
       ...mswResolverRules,
     ],
   },
