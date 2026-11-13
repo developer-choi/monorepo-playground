@@ -2,7 +2,7 @@
 
 ### 대주제 (이 콘텐츠가 MP에 속하는가)
 
-콘텐츠 추가 전 AC `deploy/contexts/placement.md`(글로벌 분업 정책)를 본다. MP로 갈지, KA(학습 노트)·AC(공통 원칙)로 갈지 먼저 판단한다.
+콘텐츠 추가 전 AC `plugins/ac/contexts/placement.md`(글로벌 분업 정책)를 본다. MP로 갈지, KA(학습 노트)·AC(공통 원칙)로 갈지 먼저 판단한다.
 
 ### 소주제 (MP 안에서 어디로)
 
